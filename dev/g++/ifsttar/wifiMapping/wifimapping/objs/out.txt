@@ -1,0 +1,475 @@
+make[1]: Entering directory `/home/debian/dev/g++/ifsttar/wifiMapping/wifimapping/objs'
+make -f Makefile \
+		CC_OPTION="-Wall -O3 -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=gnu++0x -fmessage-length=0 -D_NDEBUG -I/home/debian/include -D__BEAGLE_BONE_BLACK_HW__ -I/usr/include -I/home/debian/dev/g++/projects/../ifsttar/wifiMapping/common/include -I/usr/include" \
+		LD_OPTION="-L/usr/lib -lstdc++ -L/home/debian/lib -lwiringBbb -L/usr/local/lib -lpthread" \
+		all
+make[2]: Entering directory `/home/debian/dev/g++/ifsttar/wifiMapping/wifimapping/objs'
+*** directories done ***
+gcc wifimapping.o mainApp.o smMgr.o mqMgr.o checkIperf.o checkGps.o checkTemp.o checkRtc.o checkTshark.o processMonitor.o -o ../bin/wifimapping -L/usr/lib -lstdc++ -L/home/debian/lib -lwiringBbb -L/usr/local/lib -lpthread -L/home/debian/lib -lbeagleboneHw -L/home/debian/lib -lbeagleboneComm -L/home/debian/lib -lbeagleboneUtils
+*** wifimapping done ***
+*** links done ***
+*** all done ***
+make[2]: Leaving directory `/home/debian/dev/g++/ifsttar/wifiMapping/wifimapping/objs'
+sudo LD_LIBRARY_PATH=/home/debian/lib ../bin/wifimapping
+>>> runnable::ctor
+>>> checkIperf::checkIperf
+>>> checkGps::checkGps
+>>> checkTemp::checkTemp
+>>> checkRtc::checkRtc
+>>> checkTshark::checkTshark
+>>> mainApp::mainApp
+>>> checkIperf::initialize
+>>> checkGps::initialize
+>>> checkTemp::initialize
+>>> checkRtc::initialize
+>>> checkTshark::initialize
+mainApp::loadPropertiesFile: Stored 9 properties
+>>> mainApp::run
+processMonitor::execute: forked process id: 6808
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+>>> runnable::ctor
+>>> guimon::mainApp::mainApp
+guimon::mainApp::mainApp: LCD initialized
+mcp320x_spi: familly:3 - #channels:8
+guimon::mainApp::mainApp: ADC initialized
+>>> guimon::mainApp::run
+processMonitor::execute: forked process id: 6810
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+>>> runnable::ctor
+iperfImpl::iperfImpl: command: iperf3 -c localhost -p 12345 -t 2000 -f m 2>&1 3>&1
+>>> iperfmon::mainApp::mainApp: iperf3 - localhost - 12345 - 2000
+>>> iperfmon::mainApp::run
+processMonitor::execute: forked process id: 6814
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+>>> runnable::ctor
+>>> tempmon::mainApp::mainApp
+mcp980x_i2c::mcp980x_i2c: Device address=0x48 - fd=8
+>>> tempmon::mainApp::run
+smMgr::open: Offset is 0 - Physical address: 0x40020000
+smMgr::open: Offset is 512 - Physical address: 0x40024200
+iperfImpl::setResult: regexec failed: Resource temporarily unavailable
+processMonitor::execute: forked process id: 6816
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+processMonitor::execute(child): 'execl' returns: No such file or directory
+processMonitor::execute: forked process id: 6817processMonitor::execute: forked process id: 0
+gpsmon::Arguments:  - debug:false - daemon:false - device:/dev/ttyAMA0 - baud rate:9600
+>>> runnable::ctor
+>>> gpsmon::mainApp::mainApp
+>>> gpsProtocolsMgr::createProtocolAnalyzer: 0
+gpsProtocolsMgr::createProtocolAnalyzer: process nmea2000
+>>> gpsProtocolsAnalyzer::gpsProtocolsAnalyzer
+<<< gpsProtocolsMgr::createProtocolAnalyzer
+>>> gpsDevicesMgr::createGpsDevice: 0
+gpsDevicesMgr::createGpsDevice: process ublox
+>>> runnable::ctor
+>>> gpsDevices::gpsDevices
+>>> gpsDeviceUblox::gpsDeviceUblox
+<<< gpsDevicesMgr::createGpsDevice
+>>> gpsDeviceUblox::initialize
+>>> serialChannel::serialChannel: /dev/ttyO2, 9600
+<<< serialChannel::serialChannel: 3 - 3
+channelManager::createChannel (3): fd= 3
+>>> gpsDeviceUblox::configure
+gpsDeviceUblox::configure: Set frequency to 1Hz
+gpsDeviceUblox::sendWithAck: Turn on all the available data 
+<<< gpsDeviceUblox::configure
+>>> mainApp::start
+>>> mainApp::run
+>>> gpsDeviceUblox::run
+smMgr::open: Offset is 0 - Physical address: 0x400bd000
+smMgr::open: Offset is 1024 - Physical address: 0x400be400
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+processMonitor::execute: forked process id: 6820
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+processMonitor::execute: forked process id: 6821
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+gpsmon::Arguments:  - debug:false - daemon:false - device:/dev/ttyAMA0 - baud rate:9600
+>>> runnable::ctor
+>>> gpsmon::mainApp::mainApp
+tsharkmon::Arguments:  - debug:false - daemon:false - interface:mon0
+>>> runnable::ctor
+>>> gpsProtocolsMgr::createProtocolAnalyzer: 0
+gpsProtocolsMgr::createProtocolAnalyzer: process nmea2000
+>>> gpsProtocolsAnalyzer::gpsProtocolsAnalyzer
+<<< gpsProtocolsMgr::createProtocolAnalyzer
+>>> gpsDevicesMgr::createGpsDevice: 0
+gpsDevicesMgr::createGpsDevice: process ublox
+>>> runnable::ctor
+>>> gpsDevices::gpsDevices
+>>> gpsDeviceUblox::gpsDeviceUblox
+<<< gpsDevicesMgr::createGpsDevice
+>>> gpsDeviceUblox::initialize
+>>> serialChannel::serialChannel: /dev/ttyO2, 9600
+>>> tsharkmon::mainApp::run
+<<< serialChannel::serialChannel: 3 - 3
+channelManager::createChannel (3): fd= 3
+>>> gpsDeviceUblox::configure
+gpsDeviceUblox::configure: Set frequency to 1Hz
+gpsDeviceUblox::sendWithAck: Turn on all the available data 
+<<< gpsDeviceUblox::configure
+>>> mainApp::start
+>>> gpsDeviceUblox::run
+>>> mainApp::run
+smMgr::open: Offset is 0 - Physical address: 0x400cb000
+smMgr::open: Offset is 1024 - Physical address: 0x400cc400
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+processMonitor::execute: forked process id: 6827
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+processMonitor::execute: forked process id: 6828
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+tsharkmon::Arguments:  - debug:false - daemon:false - interface:mon0
+>>> runnable::ctor
+tsharkImpl::tsharkImpl: command: tshark -imon0 -p -I -y IEEE802_11_RADIO -T fields -e wlan.bssid -e radiotap.datarate -e radiotap.dbm_antsignal -e wlan_mgt.ds.current_channel -e wlan_mgt.ssid wlan[0] == 0x80 2>&1 3>&1
+>>> tsharkmon::mainApp::run
+aggreg::Arguments:  - debug:false - daemon:false - type:kml - device:/home/debian/temp/aggreg.kml
+>>> runnable::ctor
+>>> aggreg::mainApp::mainApp: kml - /home/debian/temp/aggreg.kml
+>>> beagleboneStorage::kmlStorage::kmlStorage
+>>> aggreg::mainApp::run
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+processMonitor::execute: forked process id: 6833
+processMonitor::execute(parent): continue
+processMonitor::execute: forked process id: 0
+aggreg::Arguments:  - debug:false - daemon:false - type:kml - device:/home/debian/temp/aggreg.kml
+kmlStorage::store: 1403877632
+>>> runnable::ctor
+>>> aggreg::mainApp::mainApp: kml - /home/debian/temp/aggreg.kml
+>>> beagleboneStorage::kmlStorage::kmlStorage
+>>> aggreg::mainApp::run
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877632
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processGga: regexec GGA failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877632
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processGga: regexec GGA failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+smMgr::open: Offset is 3072 - Physical address: 0x400f9c00
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+smMgr::open: Offset is 3072 - Physical address: 0x4006cc00
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+tsharkImpl::setResult: regexec failed: Resource temporarily unavailable
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processGga: regexec GGA failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processGga: regexec GGA failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+kmlStorage::store: 1403877760
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+aggreg: key pressed was: 'g'
+>>> aggreg::mainApp::stop
+>>> runnable::stop
+gpsmon: key pressed was: 'g'
+>>> mainApp::stop
+>>> runnable::stop
+smMgr::open: Offset is 2048 - Physical address: 0x400da800
+pwmChipFromPin: 50
+pwmUpdate: Divisor=256 - Clock=1
+pwmUpdate: Set period to 2560
+Set duty cycle to 1280/2560
+Set duty cycle to 2560/2560
+tempmon: key pressed was: 'g'
+>>> tempmon::mainApp::stop
+>>> runnable::stop
+<<< tempmon::mainApp::run
+>>> tempmon::mainApp::~mainApp
+>>> sharedMemory::close
+>>> sharedMemory::close
+guimon: key pressed was: 'g'
+>>> guimon::mainApp::stop
+>>> runnable::stop
+aggreg: key pressed was: 'g'
+>>> aggreg::mainApp::stop
+>>> runnable::stop
+<<< guimon::mainApp::run
+<<< aggreg::mainApp::run
+>>> aggreg::mainApp::~mainApp
+>>> messageQueue::close
+>>> messageQueue::close
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+tsharkmon: key pressed was: 'g'
+>>> tsharkmon::mainApp::stop
+>>> tsharkImpl::close
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+<<< aggreg::mainApp::run
+>>> aggreg::mainApp::~mainApp
+>>> messageQueue::close
+>>> messageQueue::close
+>>> guimon::mainApp::~mainApp
+>>> messageQueue::close
+>>> messageQueue::close
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+>>> messageQueue::close
+>>> messageQueue::close
+tsharkmon: key pressed was: 'g'
+>>> tsharkmon::mainApp::stop
+>>> tsharkImpl::close
+gpsmon: key pressed was: 'g'
+>>> mainApp::stop
+>>> runnable::stop
+smMgr::open: Offset is 0 - Physical address: 0x40060000
+smMgr::open: Offset is 512 - Physical address: 0x40062200
+smMgr::open: Offset is 1024 - Physical address: 0x40063400
+smMgr::open: Offset is 2048 - Physical address: 0x40064800
+smMgr::open: Offset is 2560 - Physical address: 0x40065a00
+smMgr::open: Offset is 3072 - Physical address: 0x40066c00
+key pressed was: 'g'
+>>> mainApp::stop
+>>> runnable::stop
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+gpsNmeaAnalyzer::process: regexec Command failed: Success
+iperfmon: key pressed was: 'g'
+>>> iperfmon::mainApp::stop
+>>> iperfImpl::close
+>>> runnable::stop
+>>> runnable::stop
+tsharkImpl::acquire: fgets failed: >>> runnable::stop
+tsharkImpl::acquire: fgets failed: gpsNmeaAnalyzer::process: regexec Command failed: Success
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6808
+processMonitor::terminate: Process 6808 terminated with status 0
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6810
+iperfmon: Caught signal: 2
+>>> iperfmon::mainApp::stop
+>>> iperfImpl::close
+>>> runnable::stop
+terminate called after throwing an instance of 'std::system_error'
+  what():  Invalid argument
+processMonitor::terminate: Process 6810 terminated with status 0
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6814
+processMonitor::terminate: Process 6814 terminated with status 0
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6816
+smMgr::open: Offset is 0 - Physical address: 0x40060000
+smMgr::open: Offset is 512 - Physical address: 0x40062200
+smMgr::open: Offset is 1024 - Physical address: 0x40063400
+smMgr::open: Offset is 2048 - Physical address: 0x40064800
+smMgr::open: Offset is 2560 - Physical address: 0x40065a00
+smMgr::open: Offset is 3072 - Physical address: 0x40066c00
+Caught signal: 2
+>>> mainApp::stop
+>>> runnable::stop
+terminate called after throwing an instance of 'std::system_error'
+  what():  Resource deadlock avoided
+processMonitor::terminate: Process 6816 terminated with status 0
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6820
+gpsmon: Caught signal: 2
+>>> mainApp::stop
+>>> runnable::stop
+terminate called after throwing an instance of 'std::system_error'
+  what():  Invalid argument
+processMonitor::terminate: Process 6820 terminated with status 0
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6827
+processMonitor::terminate: Process 6827 terminated with status 11
+>>> processMonitor::terminate
+processMonitor::terminate: kill process 6833
+processMonitor::terminate: Process 6833 terminated with status 0
+<<< mainApp::run
+>>> mainApp::~mainApp
+>>> checkIperf::uninitialize
+>>> sharedMemory::close
+>>> checkGps::uninitialize
+>>> sharedMemory::close
+>>> checkTemp::uninitialize
+>>> sharedMemory::close
+>>> checkRtc::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> messageQueue::close
+>>> messageQueue::close
+>>> messageQueue::close
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> processMonitor::~processMonitor
+>>> checkTshark::~checkTshark
+>>> checkTshark::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> checkRtc::~checkRtc
+>>> checkRtc::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> checkTemp::~checkTemp
+>>> checkTemp::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> checkGps::~checkGps
+>>> checkGps::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> checkIperf::~checkIperf
+>>> checkIperf::uninitialize
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> messageQueue::close
+>>> messageQueue::close
+>>> messageQueue::close
+>>> sharedMemory::close
+>>> sharedMemory::close
+Join threads
+gpsNmeaAnalyzer::processRmc: regexec RMC failed: Success
+Power On thread exited
+make[1]: Leaving directory `/home/debian/dev/g++/ifsttar/wifiMapping/wifimapping/objs'
+<<< mainApp::run
+>>> gpsDeviceUblox::stop
+>>> runnable::stop
+<<< gpsDeviceUblox::run
+>>> mainApp::~mainApp
+>>> gpsDeviceUblox::~gpsDeviceUblox
+>>> gpsDeviceUblox::uninitialize
+>>> serialChannel::~serialChannel: 3
+abstractChannel::~abstractChannel
+>>> gpsDevices::~gpsDevices
+>>> gpsNmeaAnalyzer::~gpsNmeaAnalyzer
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> sharedMemory::close
+>>> sharedMemory::close

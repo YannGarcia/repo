@@ -1,0 +1,210 @@
+/*  
+ * Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Purpose License Version 2 as
+ * published by the Free Software Foundation
+ *
+ * Original from: github.com/jadonk/validation-scripts/blob/master/test-capemgr/ 
+ *
+ * Modified by FSCOM for IFSTTAR ITS project
+ */
+
+/dts-v1/;
+/plugin/; /* Allow undefined label references and record them */
+
+/{
+    /* Compatible with both the original and the beaglebone black */    
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+
+    /* Identification of the cape */
+    part-number = "cape-bbb-ifsttar";
+    version = "00A0";
+
+    /* State the resources this cape uses */
+    exclusive-use =
+        /* RTC MFP output */
+        "P8.7",              /* MFP */
+        /* Temp. Sensor alert */
+        "P8.8",              /* TEMP_ALERT_INT */
+        /* Gyro int. outputs */
+        "P8.9",              /* GYRO_INT1 */
+        "P8.10",             /* GYRO_INT2 */
+        /* GPS outputs */
+        "P8.11",             /* GPS_OUTPUT */
+        /* The pin headers used for LEDs */
+        "P8.12",             /* Green led */
+        "P8.13",             /* Red led */
+        /* Acc. int. outputs */
+        "P8.14",             /* ADXL345_INT1 */
+        "P8.15",             /* ADXL345_INT2 */
+        "P8.26",             /* V_FAN_MOTOR_LOCK */
+        /* LCD */
+        "P8.16",             /* LCD_EN */
+        "P8.17",             /* LCD_RW */
+        "P8.18",             /* LCD_RS */
+	"P8.39",             /* LVD_DB7 */
+	"P8.40",             /* LVD_DB6 */
+	"P8.41",             /* LVD_DB5 */
+	"P8.42",             /* LVD_DB4 */
+        /* The pin headers used for I2C#1 mapped into /dev/i2c2 - See /sys/bus/i2c/devices/i2c-* and check with physical address */
+        /*"P9.19",              i2c1_scl */
+        /*"P9.20",              i2c1_sda */
+        /*"i2c1",               the hardware ip uses */
+        /* The pin headers used for SPI Chip Select */
+        "P9.15",             /* cs_can */
+        "P9.16",             /* cs_adc */
+        /* The pin headers used for UART2 */
+        "P9.21",             /* uart2_txd */
+        "P9.22",             /* uart2_rxd */
+        "uart2",             /* the hardware ip uses */
+        /* The pin header uses for PWM#1A */
+        "P9.14",            /* pwm: ehrpwm1A */
+        "ehrpwm1A",         /* the hardware IP uses */
+        /* The pin header uses for PWM#2A */
+        "P8.19",            /* pwm: ehrpwm2A */
+        "ehrpwm2A",         /* the hardware IP uses */
+        /* The pin headers used for SPI */
+        "P9.29",            /* spi1_miso */
+        "P9.30",            /* spi1_mosi */
+        "P9.31",            /* spi1_sck */
+        "spi1";             /* the hardware ip uses */
+                    
+    fragment@0 {
+        target = <&am33xx_pinmux>;    
+        __overlay__ {
+            bbb_gpios_pins: pinmux_bbb_gpios_pins {
+            pinctrl-single,pins = <
+                    0x090 0x27  /* P8_7  36 66 INPUT - PULL DOWN - MODE7 - The RTC MFP */
+                    0x094 0x27  /* P8_8  37 67 INPUT - PULL DOWN - MODE7 - The TEMP_ALERT */
+                    0x09C 0x27  /* P8_9  39 69 INPUT - PULL DOWN - MODE7 - The GYRO_INT1 */
+                    0x098 0x27  /* P8_10 30 68 INPUT - PULL DOWN - MODE7 - The GYRO_INT2 */
+                    0x034 0x27  /* P8_11 13 45 INPUT - PULL DOWN - MODE7 - The GPS_OUTPUT */
+                    0x030 0x0F  /* P8_12 12 44 OUTPUT - NO PULL UP/DOWN - MODE7 - The green led */
+                    0x024 0x0F  /* P8_13 09 23 OUTPUT - NO PULL UP/DOWN - MODE7 - The red led */
+                    0x028 0x27  /* P8_14 10 16 INPUT - PULL DOWN - MODE7 - The ADXL345_INT1 */
+                    0x03C 0x27  /* P8_15 15 47 INPUT - PULL DOWN - MODE7 - The ADXL345_INT2 */
+                    0x038 0x0F  /* P8_16 14 46 OUTPUT - NO PULL UP/DOWN - MODE7 - LCD_EN */
+                    0x02C 0x0F  /* P8_17 11 27 OUTPUT - NO PULL UP/DOWN - MODE7 - LCD_RW */
+                    0x08C 0x0F  /* P8.18 35 65 OUTPUT - NO PULL UP/DOWN - MODE7 - LCD_RS */
+                    0x07C 0x27  /* P8_26 31 61 INPUT - PULL DOWN - MODE7 - The V_FAN_MOTOR_LOCK */
+                    0x0B8 0x2F  /* P8_39 46 76 INPUT - NO PULL UP/DOWN - MODE7 - LVD_DB7 */
+                    0x0BC 0x2F  /* P8_40 47 77 INPUT - NO PULL UP/DOWN - MODE7 - LVD_DB6 */
+                    0x0B0 0x2F  /* P8_41 44 74 INPUT - NO PULL UP/DOWN - MODE7 - LVD_DB5 */
+                    0x0B4 0x2F  /* P8_42 45 75 INPUT - NO PULL UP/DOWN - MODE7 - LVD_DB4 */
+                    0x040 0x07  /* P9_15 16 48 OUTPUT - PULL UP - MODE7 - The cs_can */
+                    0x04c 0x07  /* P9_16 19 51 OUTPUT - PULL UP - MODE7 - The cs_adc */
+                >;
+            };
+        };
+    };
+    fragment@1 {
+        target = <&ocp>;
+        __overlay__ {
+            compatible = "bone-pinmux-helper";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bbb_gpios_pins>;  /* Refer to fragment#0/pinctrl_leds overlay */
+            status = "okay";
+        };
+    };
+    /* The pin headers used for UART2 */
+    fragment@2 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+                bbb_uart2_pins: pinmux_bbb_uart2_pins {
+                pinctrl-single,pins = <
+                    0x150 0x21  /* P9_22 84 02 INPUT - PULL UP - MODE1 - UART2_RX */
+                    0x154 0x01  /* P9_21 85 03 OUTPUT - PULL UP - MODE1 - UART2_TX */
+                >;
+            };
+        };
+    };
+    fragment@3 {
+        target = <&uart3>; /* Warning: this is uart2+1 */
+        __overlay__{
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bbb_uart2_pins>;
+        };
+    };
+    /* The pin header uses for PWM#1A */
+    fragment@4 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bbb_pwm1a_pins: pinmux_bbb_pwm1a_pins {
+                pinctrl-single,pins = <
+                    0x048 0x06 /* P9_14 18 50 OUTPUT - NO PULL UP/DOWN - MODE6 */
+                >;
+            };
+        };
+    };
+    fragment@5 {
+        target = <&ocp>;
+        __overlay__ {
+            pwm_test_P9_14 {
+                compatible = "pwm_test";
+                pwm-names = "PWM_P9_14";
+                pwms = <&ehrpwm1 0 500000 1>;
+                status = "okay";
+                pinctrl-names = "default";
+                pinctrl-0 = <&bbb_pwm1a_pins>;
+                enabled = <0x0>;
+		duty = <0x0>;
+            };
+        };
+    };
+    /* The pin header uses for PWM#2A */
+    fragment@6 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bbb_pwm2a_pins: pinmux_bbb_pwm2a_pins {
+                pinctrl-single,pins = <
+                    0x020 0x04 /* P8_19 8 22 OUTPUT - NO PULL UP/DOWN - MODE4 */
+                >;
+            };
+        };
+    };
+    fragment@7 {
+        target = <&ocp>;
+        __overlay__ {
+            pwm_test_P8_19 {
+                compatible = "pwm_test";
+                pwm-names = "PWM_P8_19";
+                pwms = <&ehrpwm2 0 40000 1>;
+                status = "okay";
+                pinctrl-names = "default";
+                pinctrl-0 = <&bbb_pwm2a_pins>;
+                enabled = <0x0>;
+		duty = <0x0>;
+            };
+        };
+    };
+    /* The pin headers used for SPI */
+    fragment@8 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bbb_spi1_0_pins: pinmux_bbb_spi1_0_pins {
+                pinctrl-single,pins = <
+                    0x194 0x33 /* P9_29 101 111 INPUT - PULL UP - MODE3  - MISO*/
+                    0x198 0x13 /* P9_30 102 112 OUTPUT - PULL UP - MODE3 - MOSI */
+                    0x190 0x33 /* P9_31 100 110 INPUT - PULL UP - MODE3  - SCK (TODO shall be output) */
+                >;
+            };
+        };
+   };
+   fragment@9 {
+       target = <&spi1>;
+       __overlay__ {
+           #address-cells = <1>;
+           #size-cells = <0>;
+           status = "okay";
+           pinctrl-names = "default";
+           pinctrl-0 = <&bbb_spi1_0_pins>;
+           spidev@1 {
+               spi-max-frequency = <24000000>;
+               reg = <0>;
+               compatible = "linux,spidev";
+           };
+       };
+   };
+}; /* End of file */

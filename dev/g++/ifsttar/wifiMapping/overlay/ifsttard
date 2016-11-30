@@ -1,0 +1,52 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          ifsttard
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:      2 3 4 5
+# Default-Stop:       1
+# Short-Description: IFSTTAR CAPE loader
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+set -e
+
+CALLDATE=`date +%Y/%m/%d\ %H:%M:%S`
+LOGFILE="/var/log/ifsttar/ifsttard.log"
+CAPE_NAME=cape-bbb-ifsttar
+SLOTS=/sys/devices/bone_capemgr.9/slots
+
+if [ ! -e "${LOGFILE}" ]
+then
+        touch "${LOGFILE}"
+        chmod 640 "${LOGFILE}"
+        chown root:adm "${LOGFILE}"
+fi
+echo "Script was called: ${CALLDATE}" > ${LOGFILE}
+
+case "$1" in
+    start)
+        echo 'Starting' >> ${LOGFILE}
+	cd /lib/firmware
+	echo ${CAPE_NAME} > ${SLOTS}
+	cat ${SLOTS} >> ${LOGFILE}
+	/usr/local/sbin/airmon-ng start wlan0 >> ${LOGFILE}
+	echo "----------------- dmesg output ----------------------------------"
+	dmesg >> ${LOGFILE}
+	cd -
+    ;;
+
+    stop)
+        echo 'Stopping...' >> ${LOGFILE}
+	/usr/local/sbin/airmon-ng stop wlan0 >> ${LOGFILE}
+    ;;
+
+    *)
+        echo 'Usage: /etc/init.d/ifsttard {start|stop}'
+        exit 1
+    ;;
+esac
+
+exit 0

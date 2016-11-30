@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# Turn on debug mode
+#set -x
+
+# Colors and Prompt
+export PS1="\w\$ "
+export PS1="\D{%Y-%m-%d %H:%M:%S} \w\n\$ "
+
+export EDITOR=emacs
+set -o emacs
+
+# Home bin/lib directories
+export HOME_FRAMEWORKS=${HOME}/frameworks
+export HOME_LIB=${HOME}/lib
+export HOME_BIN=${HOME}/bin
+export HOME_ETC=${HOME}/etc
+
+# Home common include directory
+export HOME_INC=${HOME}/include
+
+# Update PATH environment variable
+export PATH=${HOME_BIN}:${PATH}
+
+# Update LD_LIBRARY_PATH environment variable
+export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
+
+if [ -d ~/repo ]
+then 
+    export PATH_DEV=~/repo/dev
+else
+    export PATH_DEV=~/dev
+fi
+
+# Cross compiler
+UNAME=`uname -n`
+if [ ${UNAME} != "beaglebone" ] && [ ${UNAME} != "raspberrypi" ] && [ ${UNAME} != "yann-FSCOM" ] # No cross compiler for cygwin
+then
+# Cross compiler paths for LPC1768, MSP432                                                                                                                                                                              
+    echo "Set up LPC environment"
+    CROSS_COMPILER_VERSION=4.9.3
+    export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-4_9-2014q4
+    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
+    export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${CROSS_COMPILER_VERSION}
+    export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
+    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
+
+# Cross compiler paths for BeagleBone Black and Raspberry PI                                                                                                                                                       
+    echo "Set up CROSS environment"
+    CROSS_COMPILER_VERSION=4.8.2
+    export CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc_arm-willtm-linux-gnueabi
+    export CROSS_COMPILER_BIN=${CROSS_COMPILER_PATH}/bin
+    export CROSS_COMPILER_INC_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/include
+    export CROSS_COMPILER_SYS_INC_PATH=${CROSS_COMPILER_INC_PATH}/c++/${CROSS_COMPILER_VERSION}
+    export CROSS_COMPILER_SYS_LIB_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/lib
+    export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_PATH}/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
+    export CROSS_COMPILER_ARM_GCC_LIB_PATH=${CROSS_COMPILER_PATH}/lib/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
+
+    export KERNEL_SRC=~/Kernel/linux/
+    export CCPREFIX=arm-linux-gnueabihf-
+    export KBUILD_OUTPUT=~/tmp
+
+    export PATH=${CROSS_COMPILER_BIN}:${PATH}
+fi
+
+# Raspberry PI specific path
+export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++/
+# BeagleBoneBlack specific path
+export PATH_DEV_BBB=${PATH_DEV}/beaglebone/g++
+# MBED specific path
+export PATH_DEV_MBED=${PATH_DEV}/mbed/g++
+# Raspberry PI/BBB path
+export PATH_DEV_CROSS=${PATH_DEV}/g++
+
+# EEA projects
+export PATH_DEV_EEA=${PATH_DEV}/eea
+export PATH_DEV_EEA_PROJECTS=${PATH_DEV_EEA}/projects
+
+# Raspberry PI/BBB projects
+export PATH_DEV_CROSS_PROJECTS=${PATH_DEV_CROSS}/projects
+
+# Add it to access internet using USB network interface
+#sudo route add default gw 192.168.7.1
+
+export SLOTS=/sys/devices/bone_capemgr.9/slots
+export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
+export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+# Add Arduino support
+if [ -d "/usr/share/arduino" ]
+then
+    export BOARD_TAG=uno
+    export MONITOR_PORT=/dev/ttyACM0
+    export MONITOR_BAUDRATE=115200
+    export ARDMK_DIR=/home/debian/frameworks/Arduino-Makefile
+    export USER_LIB_PATH=${PATH_DEV}/eea/arduino/sketchbook/libraries
+    export OBJDIR=./objs
+fi
+
+# Add TITAN support
+export TOP=${HOME_FRAMEWORKS}/titan/titan.core
+if [ -d "${HOME}/frameworks/titan.core/Install" ]
+then
+    export TTCN3_DIR=${TOP}/titan/titan.core/Install
+    export TTCN3_BROWSER=mozilla
+    export PATH=${TTCN3_DIR}/bin:${PATH}
+    export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
+    export MANPATH=${TTCN3_DIR}/man:${MANPATH}
+    export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
+    export PATH_DEV_TTCN=${HOME}/dev/ttcn3
+fi
+
+# Start ssh-agent at login
+if [ -f "/usr/bin/ssh-agent" ]
+then
+    eval `/usr/bin/ssh-agent -s`
+    ssh-add -l
+    ssh-add ~/.ssh/git_server_ssh_key_name
+fi

@@ -1,0 +1,36 @@
+############################################################################
+#
+#       Makefile for Debian BeagleBone Black.
+#
+#ident  "$Id$"
+# 
+#############################################################################
+
+#############################################################################
+# C/C++ compiler
+#############################################################################
+GLOBAL_DEF_GCC+=-fPIC 
+GLOBAL_DEF_GCC_DEBUG+=-fPIC 
+
+#############################################################################
+# Device Tree Overlay comiler
+#############################################################################
+DTC=~/frameworks/dtc/dtc
+PATH_LIB_FRMW=/lib/firmware
+
+#############################################################################
+# WiringBbb library settings
+#############################################################################
+#LIBHALL_PATH=${PATH_DEV}/projects/hal
+#LIBHALL_INC=-I$(LIBHALL_PATH)/hal
+#LIBHALL_LD=-L/usr/local/lib -lhal
+LIBHALL_INC=-I$(HOME_INC)
+LIBHALL_LD=-L$(HOME_LIB) -lhal
+
+#############################################################################
+# PICKit2 programmer
+#############################################################################
+PICKIT2=$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6/pk2cmd
+PICKIT2_IO_OPTIONS=-A5 -K -H2 -B$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6
+PICKIT2_OPTIONS=-B$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6
+PICKIT2_DAT_FILE_DIRS=$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6/

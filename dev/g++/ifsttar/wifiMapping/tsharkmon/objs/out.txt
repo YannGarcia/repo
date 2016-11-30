@@ -1,0 +1,395 @@
+make -f Makefile \
+		CC_OPTION="-Wall -O3 -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=gnu++0x -fmessage-length=0 -D_NDEBUG -I/home/debian/include -I/usr/include -I/home/debian/dev/g++/projects/../ifsttar/wifiMapping/common/include -I/usr/include" \
+		LD_OPTION="-L/usr/lib -lstdc++ -L/home/debian/lib -lwiringBbb -L/usr/local/lib -lpthread" \
+		all
+make[1]: Entering directory `/home/debian/dev/g++/ifsttar/wifiMapping/airodumpmon/objs'
+*** directories done ***
+gcc airodumpmon.o mainApp.o airodumpImpl.o smMgr.o -o ../bin/airodumpmon -L/usr/lib -lstdc++ -L/home/debian/lib -lwiringBbb -L/usr/local/lib -lpthread -L/home/debian/lib -lbeagleboneComm -L/home/debian/lib -lbeagleboneUtils
+*** airodumpmon done ***
+*** links done ***
+*** all done ***
+make[1]: Leaving directory `/home/debian/dev/g++/ifsttar/wifiMapping/airodumpmon/objs'
+airodumpmon::Arguments:  - debug:false - daemon:false - interface:mon0
+>>> runnable::ctor
+airodumpImpl::airodumpImpl: command: airodump-ng mon0 2>&1 3>&1
+>>> airodumpmon::mainApp::mainApp: airodump-ng - mon0
+>>> airodumpmon::mainApp::run
+>>> airodumpImpl::acquire
+<<< airodumpImpl::acquire (-2)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [0m[2J[?25l[2J
+
+>>> airodumpImpl::setResult: '[0m[2J[?25l[2J
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+>>> airodumpImpl::setResult: '[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1
+>>> airodumpImpl::setResult: '[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: ;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J
+>>> airodumpImpl::setResult: ';1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+>>> airodumpImpl::setResult: '[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1
+>>> airodumpImpl::setResult: '[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: ;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J
+>>> airodumpImpl::setResult: ';1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+>>> airodumpImpl::setResult: '[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1
+>>> airodumpImpl::setResult: '[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: ;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J
+>>> airodumpImpl::setResult: ';1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+>>> airodumpImpl::setResult: '[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+
+>>> airodumpImpl::setResult: '[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H[J[1;1H
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+
+>>> airodumpImpl::setResult: ' CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+
+>>> airodumpImpl::setResult: ' BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+
+>>> airodumpImpl::setResult: ' 00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+'
+BSSID = '00:1F:9F:FD:07:15 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Bbox-F4FC40 '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  62:1F:9F:FD:07:16  -62        3        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+
+>>> airodumpImpl::setResult: ' 62:1F:9F:FD:07:16  -62        3        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+'
+BSSID = '62:1F:9F:FD:07:16 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Wi-Fi '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+
+>>> airodumpImpl::setResult: ' BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H
+
+>>> airodumpImpl::setResult: '[J[1;1H
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+
+>>> airodumpImpl::setResult: ' CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+
+>>> airodumpImpl::setResult: ' BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+
+>>> airodumpImpl::setResult: ' 00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+'
+BSSID = '00:1F:9F:FD:07:15 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Bbox-F4FC40 '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+
+>>> airodumpImpl::setResult: ' 62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+'
+BSSID = '62:1F:9F:FD:07:16 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Wi-Fi '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+
+>>> airodumpImpl::setResult: ' BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H
+
+>>> airodumpImpl::setResult: '[J[1;1H
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+
+>>> airodumpImpl::setResult: ' CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+
+>>> airodumpImpl::setResult: ' BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+
+>>> airodumpImpl::setResult: ' 00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+'
+BSSID = '00:1F:9F:FD:07:15 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Bbox-F4FC40 '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+
+>>> airodumpImpl::setResult: ' 62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+'
+BSSID = '62:1F:9F:FD:07:16 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Wi-Fi '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+
+>>> airodumpImpl::setResult: ' BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H
+
+>>> airodumpImpl::setResult: '[J[1;1H
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+
+>>> airodumpImpl::setResult: ' CH -1 ][ Elapsed: 0 s ][ 2014-05-16 06:50                                         
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+
+>>> airodumpImpl::setResult: ' BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+
+>>> airodumpImpl::setResult: ' 00:1F:9F:FD:07:15  -62        6        0    0   6  54e  WPA2 CCMP   PSK  Bbox-F4FC40                                                                                  
+'
+BSSID = '00:1F:9F:FD:07:15 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Bbox-F4FC40 '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+
+>>> airodumpImpl::setResult: ' 62:1F:9F:FD:07:16  -62        4        0    0   6  54e  OPN              Bouygues Telecom Wi-Fi                                                                       
+'
+BSSID = '62:1F:9F:FD:07:16 '
+Pwr = '-62 '
+channel = '6 '
+essid = 'Wi-Fi '
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:  BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+
+>>> airodumpImpl::setResult: ' BSSID              STATION            PWR   Rate    Lost    Frames  Probe                                                                                             
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire:                                                                                                                                                                        
+
+>>> airodumpImpl::setResult: '                                                                                                                                                                       
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+>>> airodumpImpl::acquire
+airodumpImpl::acquire: [J[1;1H
+
+>>> airodumpImpl::setResult: '[J[1;1H
+'
+airodumpImpl::setResult: regexec failed: Resource temporarily unavailable
+<<< airodumpImpl::acquire (0)
+airodumpmon: key pressed was: 'd'
+>>> airodumpmon::mainApp::stop
+>>> airodumpImpl::close
+>>> runnable::stop
+<<< airodumpmon::mainApp::run
+airodumpmon::mainApp::~mainApp
+>>> airodumpImpl::~airodumpImpl
+>>> airodumpImpl::close
+*** run done ***

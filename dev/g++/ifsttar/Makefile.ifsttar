@@ -1,0 +1,44 @@
+
+########################################################################
+#
+#       Makefile for Beaglebone communication library
+#
+#       ident  "$Id$"
+#
+#############################################################################
+
+include $(PATH_DEV)/Makefile.inc
+
+#############################################################################
+# Additional paths
+
+PATH_WIFIMAPPING_PROJECT=$(PATH_IFSTTAR_PROJECTS)/wifiMapping
+
+#############################################################################
+# Common include/src paths
+
+PATH_WIFIMAPPING_COMMON_INC=$(PATH_WIFIMAPPING_PROJECT)/common/include
+PATH_WIFIMAPPING_COMMON_SRC=$(PATH_WIFIMAPPING_PROJECT)/common/src
+
+WIFIMAPPING_COMMON_INS=-I$(PATH_WIFIMAPPING_COMMON_INC)
+
+#############################################################################
+# Development framewaork paths
+
+BEAGLEBONEUTILS_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneUtils/include
+BEAGLEBONEUTILS_LD=-L$(HOME_LIB) -lbeagleboneUtils
+BEAGLEBONEGEO_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneGeo/include
+BEAGLEBONEGEO_LD=-L$(HOME_LIB) -lbeagleboneGeo
+BEAGLEBONEKML_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneKml/include -I/usr/include/kml -I/usr/include/kml/third_party/boost_1_34_1
+BEAGLEBONEKML_LD=-L$(HOME_LIB) -lbeagleboneKml -L /usr/lib -lkmlbase -lkmldom
+BEAGLEBONECOMM_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneComm/include
+BEAGLEBONECOMM_LD=-L$(HOME_LIB) -lbeagleboneComm
+BEAGLEBONELCD_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneLcd/include
+BEAGLEBONELCD_LD=-L$(HOME_LIB) -lbeagleboneLcd
+BEAGLEBONEGPS_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneGps/include
+BEAGLEBONEGPS_LD=-L$(HOME_LIB) -lbeagleboneGps
+BEAGLEBONEHW_INC=-I$(PATH_DEV_CROSS_PROJECTS)/beagleboneHw/include
+BEAGLEBONEHW_LD=-L$(HOME_LIB) -lbeagleboneHw
+
+#HARDWARE_CONFIG=__BEAGLEBONE_PI_HW__
+HARDWARE_CONFIG=__BEAGLE_BONE_BLACK_HW__

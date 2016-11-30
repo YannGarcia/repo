@@ -1,0 +1,215 @@
+/*
+ * Copyright (C) 2013 CircuitCo
+ *
+ * Virtual cape for UART4 on connector pins P9.13 P9.11
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * Original from: https://github.com/beagleboard/devicetree-source/tree/master/arch/arm/boot/dts 
+ *
+ * Modified by garcia.yann@gmail.com for libhal project
+ */
+
+/dts-v1/;
+/plugin/; /* Allow undefined label references and record them */
+
+/{
+    /* Compatible with both the original and the beaglebone black */    
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+
+    /* Identification of the cape */
+    part-number = "BB-LIBHAL";
+    version = "00A0";
+
+    /* State the resources this cape uses */
+    exclusive-use =
+        /* Shift In/Out */
+        "P8.7",             /* Shift Data */
+        "P8.8",             /* Shift clock */
+        /* The pin headers used for I2C#1 mapped into /dev/i2c2 - See /sys/bus/i2c/devices/i2c-* and check with physical address */
+        "P9.17",            /* i2c1_scl */
+        "P9.18",            /* i2c1_sda */
+        "i2c1",             /* the hardware ip uses */
+        /* The pin headers used for UART4 */
+        "P9.13",            /* uart4_txd */
+        "P9.11",            /* uart4_rxd */
+        "uart4",            /* the hardware ip uses */
+        /* The pin header uses for PWM#1A */
+        "P9.14",            /* pwm: ehrpwm1A */
+        "ehrpwm1A",         /* the hardware IP uses */
+        /* The pin headers used for SPI - You CAN NOT use SPI1 on the BeagleBone Black WITHOUT disabling the HDMI interface */
+        "P9.31",            /* spi1_sclk */
+        "P9.29",            /* spi1_d0 */
+        "P9.30",            /* spi1_d1 */
+        "P9.28",            /* spi1_cs0 */
+        "P9.42",            /* spi1_cs1 */
+        "spi1",             /* the hardware ip uses */
+        /* the pin header uses */
+        "P9.39",            /* AIN0 */
+        "P9.40",            /* AIN1 */
+        "P9.37",            /* AIN2 */
+        "P9.38",            /* AIN3 */
+        "P9.33",            /* AIN4 */
+        "P9.36",            /* AIN5 */
+        "P9.35",            /* AIN6 */
+        "tscadc";           /* the hardware IP uses */
+    
+    fragment@0 {
+        target = <&am33xx_pinmux>;    
+        __overlay__ {
+            bbb_gpios_pins: pinmux_bbb_gpios_pins {
+            pinctrl-single,pins = <
+                    0x090 0x07  /* P8_7 36 66 OUTPUT - PULL DOWN - MODE7 - Shift Data */
+                    0x094 0x07  /* P8_8 37 67 OUTPUT - PULL DOWN - MODE7 - Shift clock */
+                >;
+            };
+        };
+    };
+    fragment@1 {
+        target = <&ocp>; /* On-Chip Peripherals */
+        __overlay__ {
+            compatible = "bone-pinmux-helper"; /* Use the pinmux helper */
+            pinctrl-names = "default";
+            pinctrl-0 = <&bbb_gpios_pins>;  /* Refer to fragment#0/pinctrl_leds overlay */
+            status = "okay";
+        };
+    };
+    /* The pin headers used for I2C#1 - Mapped to /dev/i2c2 */
+    fragment@2 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bb_i2c1_pins: pinmux_bb_i2c1_pins {
+                pinctrl-single,pins = <
+                    0x158 0x72    /* spi0_d1.i2c1_sda, SLEWCTRL_SLOW | INPUT_PULLUP | MODE2 */
+                    0x15c 0x72    /* spi0_cs0.i2c1_scl, SLEWCTRL_SLOW | INPUT_PULLUP | MODE2 */
+                >;
+            };
+        };
+    };
+    fragment@3 {
+        target = <&i2c1>;    /* i2c1 is numbered correctly */
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bb_i2c1_pins>;
+            /* this is the configuration part */
+            clock-frequency = <400000>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+        };
+    };
+    /* The pin headers used for UART4 */
+    fragment@4 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bb_uart4_pins: pinmux_bb_uart4_pins {
+                pinctrl-single,pins = <
+                    0x070 0x26    /* gpmc_wait0.uart4_rxd | MODE6 */
+                    0x074 0x06    /* gpmc_wpn.uart4_txd | MODE6 */
+                >;
+            };
+        };
+    };
+    fragment@5 {
+        target = <&uart5>;    /* really uart4 */
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bb_uart4_pins>;
+        };
+    };
+    /* The pin header uses for PWM#1A */
+    fragment@6 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            pwm_P9_14: pinmux_pwm_P9_14_pins {
+                pinctrl-single,pins = <0x048  0x6>; /* P9_14 18 50 OUTPUT - NO PULL UP/DOWN - MODE6 */
+            };
+        };
+    };
+    fragment@7 {
+        target = <&ocp>;
+        __overlay__ {
+            pwm_test_P9_14 {
+                compatible    = "pwm_test";
+                pwms         = <&ehrpwm1 0 500000 1>;
+                pwm-names     = "PWM_P9_14";
+                pinctrl-names    = "default";
+                pinctrl-0    = <&pwm_P9_14>;
+                enabled        = <1>;
+                duty        = <0>;
+                status         = "okay";
+            };
+        };
+    };
+    /* The pin headers used for SPI */
+    fragment@8 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            /* default state has all gpios released and mode set to uart1 */
+            bb_spi1_pins: pinmux_bb_spi1_pins {
+                pinctrl-single,pins = <
+                    0x190 0x33    /* mcasp0_aclkx.spi1_sclk, INPUT_PULLUP | MODE3 */
+                    0x194 0x33    /* mcasp0_fsx.spi1_d0, INPUT_PULLUP | MODE3 */
+                    0x198 0x13    /* mcasp0_axr0.spi1_d1, OUTPUT_PULLUP | MODE3 */
+		    /* Managed by the application
+		    0x19c 0x13    // mcasp0_ahclkr.spi1_cs0, OUTPUT_PULLUP | MODE3
+		    0x164 0x12    // eCAP0_in_PWM0_out.spi1_cs1 OUTPUT_PULLUP | MODE2
+		    */
+                >;
+            };
+        };
+   };
+   fragment@9 {
+        target = <&spi1>;    /* spi1 is numbered correctly */
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bb_spi1_pins>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            channel@0 {
+                #address-cells = <1>;
+                #size-cells = <0>;
+                compatible = "spidev";
+                reg = <0>;
+                spi-max-frequency = <16000000>;
+                spi-cpha; // Mode 1 (CPOL = 0, CPHA = 1)
+            };
+            channel@1 {
+                #address-cells = <1>;
+                #size-cells = <0>;
+                compatible = "spidev";
+                reg = <1>;
+                spi-max-frequency = <16000000>;
+		// Mode 0 (CPOL = 0, CPHA = 0)
+            };
+        };
+   };
+   fragment@10 {
+       target = <&ocp>;
+       __overlay__ {
+           #address-cells = <1>;
+           #size-cells = <1>;
+           tscadc {
+               compatible = "ti,ti-tscadc";
+               reg = <0x44e0d000 0x1000>;
+               interrupt-parent = <&intc>;
+               interrupts = <16>;
+               ti,hwmods = "adc_tsc";
+               status = "okay";
+               adc {
+                  ti,adc-channels = <0 1 2 3 4 5 6 7>;
+               };
+           };
+           test_helper: helper {
+               compatible = "bone-iio-helper";
+               vsense-name  = "AIN0", "AIN1", "AIN2", "AIN3", "AIN4", "AIN5", "AIN6", "AIN7";
+               vsense-scale = <100     100     100     100     100     100     100     100>;
+               status = "okay";
+           };
+       };
+   };
+}; /* End of file */

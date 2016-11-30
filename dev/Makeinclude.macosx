@@ -1,0 +1,37 @@
+############################################################################
+#
+#       Makefile for MacOS X.
+#
+#ident  "$Id$"
+# 
+#############################################################################
+
+#############################################################################
+# C/C++ compiler
+#############################################################################
+#CC=gcc-4.9
+#CCP=g++-4.9
+#LD=gcc-4.9
+#AR=gcc-ar-4.9 ruv
+
+GLOBAL_DEF_GCC+=-fPIC -mmacosx-version-min=10.6
+GLOBAL_DEF_GCC_DEBUG+=-fPIC -mmacosx-version-min=10.6
+
+GLOBAL_DEF_STD_GLD=-L/usr/local/Cellar/gcc/4.9.2_1/lib/gcc/4.9 $(DEF_STD_GLD)
+
+#############################################################################
+# WiringBbb library settings
+#############################################################################
+#LIBHAL_PATH=${PATH_DEV}/projects/hal
+#LIBHAL_INC=-I$(LIBHAL_PATH)/hal
+#LIBHAL_LD=-L/usr/local/lib -lhal
+LIBHAL_INC=-I$(HOME_INC)
+LIBHAL_LD=-L$(HOME_LIB) -lhal
+
+#############################################################################
+# PICKit2 programmer
+#############################################################################
+PICKIT2=$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6/pk2cmd
+PICKIT2_IO_OPTIONS=-A5 -K -H2 -B$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6
+PICKIT2_OPTIONS=-B$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6
+PICKIT2_DAT_FILE_DIRS=$(PATH_DEV_PROJECTS)/../pk2cmdv1-20Linux2-6/
