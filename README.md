@@ -21,7 +21,7 @@ According to your OS of your board (Raspberry PI, BeagleBone, CHIP...):
     2. Update your own ~/.bash_profile to execute the development environment file
     
 ```bash
-        if [ -l ~/devenv.bash ]
+        if [ -f ~/devenv.bash ]
         then
             . ~/devenv.bash
         fi
