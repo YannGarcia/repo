@@ -36,12 +36,12 @@ fi
 UNAME=`uname -n`
 if [ ${UNAME} != "beaglebone" -a ${UNAME} != "raspberry" -a ${UNAME} != "yann-FSCOM" ] # No cross compiler available for cygwin
 then
-    # Cross compiler paths for LPC1768, MSP432
+    # Cross compiler paths for LPC1768, TI TM4C & MSP432
     echo "Set up LPC environment"
-    CROSS_COMPILER_VERSION=5.4.1
+    MBED_CROSS_COMPILER_VERSION=5.4.1
     export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-5_4-2016q2
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
-    export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${CROSS_COMPILER_VERSION}
+    export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${MBED_CROSS_COMPILER_VERSION}
     export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin	
 
@@ -112,15 +112,18 @@ then
 fi
 
 # Start ssh-agent at login
-if [ -f "/usr/bin/ssh-agent" ]
-then
-    eval `/usr/bin/ssh-agent -s`
-    ssh-add -l
-    ssh-add ~/.ssh/git_server_ssh_key_name
-fi
+#if [ -f "/usr/bin/ssh-agent" ]
+#then
+#    eval `/usr/bin/ssh-agent -s`
+#    ssh-add -l
+#    ssh-add ~/.ssh/git_server_ssh_key_name
+#fi
 
-alias gcc='gcc-4.9'
-alias cc='gcc-4.9'
-alias g++='g++-4.9'
-alias c++='c++-4.9'
-alias ar='gcc-ar-4.9'
+alias gcc='gcc-6'
+alias cc='gcc-6'
+alias g++='g++-6'
+alias c++='c++-6'
+alias ar='gcc-ar-6'
+alias pi='ssh pi@192.168.1.35'
+alias chip='ssh chip@192.168.1.27'
+alias bbb='ssh debian@192.168.1.21'

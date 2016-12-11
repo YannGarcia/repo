@@ -15,8 +15,8 @@ SHARED_LIBRARY_EXT_NAME=.a
 #  - git clone https://github.com/utzig/lm4tools.git
 # In addition: sudo apt-get install libusb-1.0
 #############################################################################
-TIVA_C_PATH=$(HOME)/frameworks/tiva/tiva-c
-LM4TOOLS_PATH=$(HOME)/frameworks/lm4tools
+TIVA_C_PATH=$(HOME)/frameworks/tiva/TivaWare_C_Series-2.1.3.156
+LM4TOOLS_PATH=$(HOME)/frameworks/tiva/lm4tools
 
 #############################################################################
 # Basic commands
@@ -112,7 +112,7 @@ STARTUP_GCC_OBJ=startup_gcc.o
 DRIVER_DEF_STD=-L$(TIVA_C_PATH)/driverlib/gcc -ldriver
 
 #############################################################################
-GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/softfp -lm -lc -lnosys -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp -lgcc
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/softfp -lm -lc -lnosys -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/$(MBED_CROSS_COMPILER_VERSION)/armv7e-m/softfp -lgcc
 GLOBAL_DEF_STD_GLD_DEBUG=-g --entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/softfp -lm -lc -lnosys -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp -lgcc
 
 #############################################################################

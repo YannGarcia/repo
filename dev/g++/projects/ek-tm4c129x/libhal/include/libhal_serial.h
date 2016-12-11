@@ -18,7 +18,7 @@ extern "C" {
    * @fn int serial_open(const char *p_device, const int p_baud_rate)
    * @brief Open and initialise the serial port (8, N)
    * @param[in] p_device    The serial device name (e.g. /dev/tty0)
-   * @param[in] p_baud_rate      The baud value
+   * @param[in] p_baud_rate The baud value
    * @return The serial file descriptor on success, -1 otherwise
    */
   extern int serial_open(const char *p_device, const int p_baud_rate);

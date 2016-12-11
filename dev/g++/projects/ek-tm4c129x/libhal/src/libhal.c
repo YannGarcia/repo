@@ -769,6 +769,9 @@ void enable_adc_periph(const pin_name p_gpio) {
   case GPIO_PORTE_BASE:
     SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
     break;
+  case GPIO_PORTB_BASE:
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
+    break;
   } // End of 'switch' statement
   GPIOPinTypeADC(
                  p_gpio & 0xffffff00, // Port register
@@ -778,27 +781,37 @@ void enable_adc_periph(const pin_name p_gpio) {
   ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 
   // Setup the correct channel
-  switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
-  case GPIO_PIN_0:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH3 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  case GPIO_PIN_1:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH2 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  case GPIO_PIN_2:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  case GPIO_PIN_3:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  case GPIO_PIN_4:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH9 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  case GPIO_PIN_5:
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 8, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
-    break;
-  } // End of 'switch' statement
-
+  if ((p_gpio & 0xffffff00) == GPIO_PORTE_BASE) {
+    switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+      case GPIO_PIN_0:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH3 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_1:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH2 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_2:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_3:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_4:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH9 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_5:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 8, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+    } // End of 'switch' statement
+  } else if ((p_gpio & 0xffffff00) == GPIO_PORTB_BASE) {
+    switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+      case GPIO_PIN_4:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH10 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      case GPIO_PIN_5:
+        ADCSequenceStepConfigure(ADC0_BASE, 3, 8, ADC_CTL_CH11 | ADC_CTL_IE | ADC_CTL_END);
+        break;
+    } // End of 'switch' statement
+  }
   // Since sample sequence 3 is now configured, it must be enabled.
   ADCSequenceEnable(ADC0_BASE, 3);
 
@@ -825,10 +838,10 @@ uint32_t gpio_to_pwm_output(const pin_name p_gpio) {
     pwm = PWM_OUT_5;
     break;
   case p62:
-    pwm = PWM_OUT_6;
+    pwm = PWM_OUT_7;
     break;
   case p63:
-    pwm = PWM_OUT_7;
+    pwm = PWM_OUT_6;
     break;
   } // End of 'switch' statement
 
@@ -911,10 +924,10 @@ uint32_t gpio_to_pwm_enable(const pin_name p_gpio) {
     pwm = PWM_OUT_5_BIT;
     break;
   case p62:
-    pwm = PWM_OUT_6_BIT;
+    pwm = PWM_OUT_7_BIT;
     break;
   case p63:
-    pwm = PWM_OUT_7_BIT;
+    pwm = PWM_OUT_6_BIT;
     break;
   } // End of 'switch' statement
 

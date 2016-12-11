@@ -168,7 +168,7 @@ dist: clean
 	@echo "*** $@ done ***"
 
 clean:
-	@$(RM) -f $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME) $(BIN).bin $(BIN)$(SHARED_LIBRARY_EXT_NAME)xf ../../$(TARGET).tar.gz $(TARGET) *.lst *.o *.d *.bin *$(SHARED_LIBRARY_EXT_NAME)xf *~  $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)\*~ $(BINDIRS)*~ $(DOCDIRS)*~
+	@$(RM) -f $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME) $(BIN).bin $(BIN)$(SHARED_LIBRARY_EXT_NAME)xf ../../$(TARGET).tar.gz $(TARGET) *.lst *.o *.d *.bin *$(SHARED_LIBRARY_EXT_NAME)xf *~  $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIRS)*~ $(BINDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -208,6 +208,8 @@ help:
 	@echo "   debug      : Build a debug version."
 	@echo "   compile    : Build the application in release mode."
 	@echo "   recompile  : Rebuild the application in release mode."
+	@echo "   test       : Build a test application for the library in release mode."
+	@echo "   test_d     : Build a test application for the library in debug mode."
 	@echo "   upload     : Flash application on device (using lm4flash)."
 	@echo "   dist       : Build a compressed archive of the application."
 	@echo "   depend     : Build the file dependencies for $(MAKE)."

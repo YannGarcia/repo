@@ -172,11 +172,11 @@ extern "C" {
    * @fn int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency)
    * @brief Set the duty cycle value of the PWM signal
    * @param[in] p_gpio      The GPIO pwm pin identifier
-   * @param[in] p_range
+   * @param[in] p_frequency
    * @return 0 on success, -1 otherwise
    * @todo To be implemented
    */
-  extern int32_t pwm_set_range(const pin_name p_gpio, const uint32_t p_range);
+  extern int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency);
   /**
    * @fn int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor)
    * @brief Set the divisor for the PWM clock

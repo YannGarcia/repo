@@ -15,6 +15,7 @@
 
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
+#include "driverlib/interrupt.h"
 #include "driverlib/uart.h"
 
 #include "libhal_serial.h"
@@ -36,13 +37,13 @@ int serial_open(const char *p_device, const int p_baud_rate) {
   GPIOPinConfigure(GPIO_PA0_U0RX);
   GPIOPinConfigure(GPIO_PA1_U0TX);
   GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-  UARTEnable(fd);
+  UARTEnable(uart_modules[fd][1]/*UART0_BASE*/);
 
   return fd;
 }
 
 void serial_close(const int p_fd) {
-  UARTEnable(p_fd);
+  UARTEnable(uart_modules[p_fd][1]/*UART0_BASE*/);
 }
 
 void serial_flush(const int p_fd) {
@@ -70,14 +71,15 @@ void serial_put_string(const int p_fd, const char *p_string) {
 
 void serial_printf(const int p_fd, const char *p_message, ...) {
   va_list argp;
-  char *buffer = (char *)malloc(1024);
+  char buffer[64]; /* = (char *)malloc(1024);*/
 
+  /*memset((void *)buffer, 0x00, 64);*/
   va_start (argp, p_message);
-  vsnprintf (buffer, 1023, p_message, argp);
+  vsnprintf (buffer, 63/*1063*/, p_message, argp);
   va_end (argp);
 
   serial_put_string(p_fd, buffer);
-  free(buffer);
+//  free(buffer);
 }
 
 int serial_data_available(const int p_fd) {
