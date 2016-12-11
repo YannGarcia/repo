@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# Turn on debug mode
+#set -x
+
+# Colors and Prompt
+export PS1="\w\$ "
+export PS1="\D{%Y-%m-%d %H:%M:%S} \w\n\$ "
+
+export EDITOR=emacs
+set -o emacs
+
+# Home working directories
+export HOME_FRAMEWORKS=${HOME}/frameworks
+export HOME_LIB=${HOME}/lib
+export HOME_BIN=${HOME}/bin
+export HOME_ETC=${HOME}/etc
+
+# Home common include directory
+export HOME_INC=${HOME}/include
+
+# Update PATH environment variable
+export PATH=${HOME_BIN}:${PATH}
+
+# Update LD_LIBRARY_PATH environment variable
+export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
+
+export PATH_DEV=~/repo/dev
+
+# Cross compiler
+UNAME=`uname -n`
+if [ ${UNAME} != "beaglebone" ] && [ ${UNAME} != "raspberry" ] && [ ${UNAME} != "yann-FSCOM" ] # No cross-compiler available for cygwin
+then
+    export CROSS_COPILER_VERSION=4.7.3
+# Cross compiler paths for BeagleBone Black
+    export BBB_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux
+    export BBB_CROSS_COMPILER_BIN=${BBB_CROSS_COMPILER_PATH}/bin
+    export BBB_CROSS_COMPILER_SYS_INC_PATH=${BBB_CROSS_COMPILER_PATH}/arm-linux-gnueabihf/include/c++/4.7.3
+    export BBB_CROSS_COMPILER_SYS_LIB_PATH=${BBB_CROSS_COMPILER_PATH}/arm-linux-gnueabihf/lib
+    export BBB_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux
+    export BBB_CROSS_COMPILER_BIN=${BBB_CROSS_COMPILER_PATH}/bin
+
+# Cross compiler paths for Raspberry PI
+    export PI_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-raspbian
+    export PI_CROSS_COMPILER_BIN=${PI_CROSS_COMPILER_PATH}/bin
+    export PI_CROSS_COMPILER_SYS_INC_PATH=${PI_CROSS_COMPILER_PATH}/arm-linux-gnueabihfn/include/c++/4.7.3
+    export PI_CROSS_COMPILER_SYS_LIB_PATH=${PI_CROSS_COMPILER_PATH}/gcc-linaro-arm-linux-gnueabihf-raspbian/lib
+
+    export KERNEL_SRC=~/Kernel/linux/
+    export CCPREFIX=arm-linux-gnueabihf-
+    export KBUILD_OUTPUT=~/tmp
+
+    export KERNEL_SRC=~/Kernel/linux/
+    export CCPREFIX=${PI_CROSS_COMPILER_BIN}/arm-linux-gnueabihf-
+    export KBUILD_OUTPUT=~/tmp
+
+# Raspberry PI projects
+    export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++
+else
+# Raspberry PI/BBB projects
+    export PATH_DEV_XX=${PATH_DEV}/g++
+fi
+
+# EEA projects
+export PATH_DEV_EEA=${PATH_DEV}/eea
+export PATH_DEV_EEA_PROJECTS=${PATH_DEV_EEA}/projects
+
+# Raspberry PI/BBB projects
+export PATH_DEV_XX_PROJECTS=${PATH_DEV_XX}/projects
+
+# Add it to access internet using USB network interface
+#sudo route add default gw 192.168.7.1
+
+export SLOTS=/sys/devices/bone_capemgr.9/slots
+export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+#Add Arduino support
+if [ -d "/usr/share/arduino" ]
+then
+    export BOARD_TAG=uno
+    export MONITOR_PORT=/dev/ttyACM0
+    export MONITOR_BAUDRATE=115200
+    export ARDMK_DIR=/home/debian/frameworks/Arduino-Makefile
+    export USER_LIB_PATH=${PATH_DEV}/eea/arduino/sketchbook/libraries
+    export OBJDIR=./objs
+fi
+
+# Add JAVA support
+export JAVA_VERSION=1.8.0_92
+export JAVA_JDK=jdk${JAVA_VERSION}
+if [ -d "${HOME_FRAMEWORKS}/${JAVA_JDK}" ]
+then
+    export JAVA_HOME=${HOME_FRAMEWORKS}/${JAVA_JDK}/bin
+else
+    unset JAVA_VERSION
+    unset JAVA_JDK
+fi
+
+# Add TITAN support
+export TOP=${HOME_FRAMEWORKS}/titan/titan.core
+if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
+then
+    export TTCN3_DIR=${TOP}/Install
+    export TTCN3_BROWSER=mozilla
+    export PATH=${TTCN3_DIR}/bin:${PATH}
+    export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
+    export MANPATH=${TTCN3_DIR}/man:${MANPATH}
+    export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
+    export PATH_DEV_TTCN=${HOME}/dev/ttcn3
+else
+    unset TOP
+fi
+
+# Start ssh-agent at login
+if [ -f "/usr/bin/ssh-agent" ]
+then
+    eval `ssh-agent -s`
+fi
