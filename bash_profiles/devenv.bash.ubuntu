@@ -25,55 +25,67 @@ export PATH=${HOME_BIN}:${PATH}
 # Update LD_LIBRARY_PATH environment variable
 export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 
-export PATH_DEV=~/repo/dev
+if [ -d ~/repo ]
+then 
+    export PATH_DEV=~/repo/dev
+else
+    export PATH_DEV=~/dev
+fi
 
 # Cross compiler
 UNAME=`uname -n`
 if [ ${UNAME} != "beaglebone" ] && [ ${UNAME} != "raspberry" ] && [ ${UNAME} != "yann-FSCOM" ] # No cross-compiler available for cygwin
 then
-    export CROSS_COPILER_VERSION=4.7.3
-# Cross compiler paths for BeagleBone Black
-    export BBB_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux
-    export BBB_CROSS_COMPILER_BIN=${BBB_CROSS_COMPILER_PATH}/bin
-    export BBB_CROSS_COMPILER_SYS_INC_PATH=${BBB_CROSS_COMPILER_PATH}/arm-linux-gnueabihf/include/c++/4.7.3
-    export BBB_CROSS_COMPILER_SYS_LIB_PATH=${BBB_CROSS_COMPILER_PATH}/arm-linux-gnueabihf/lib
-    export BBB_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux
-    export BBB_CROSS_COMPILER_BIN=${BBB_CROSS_COMPILER_PATH}/bin
+    # Cross compiler paths for LPC1768, TI TM4C & MSP432
+    echo "Set up LPC environment"
+    MBED_CROSS_COMPILER_VERSION=5.4.1
+    export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-5_4-2016q2
+    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
+    export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${MBED_CROSS_COMPILER_VERSION}
+    export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
+    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin	
 
-# Cross compiler paths for Raspberry PI
-    export PI_CROSS_COMPILER_PATH=${HOME}/frameworks/gcc-linaro-arm-linux-gnueabihf-raspbian
-    export PI_CROSS_COMPILER_BIN=${PI_CROSS_COMPILER_PATH}/bin
-    export PI_CROSS_COMPILER_SYS_INC_PATH=${PI_CROSS_COMPILER_PATH}/arm-linux-gnueabihfn/include/c++/4.7.3
-    export PI_CROSS_COMPILER_SYS_LIB_PATH=${PI_CROSS_COMPILER_PATH}/gcc-linaro-arm-linux-gnueabihf-raspbian/lib
+    # Cross compiler paths for BeagleBone Black and Raspberry PI
+    echo "Set up CROSS environment"
+    CROSS_COMPILER_VERSION=4.8.2
+    export CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc_arm-willtm-linux-gnueabi
+    export CROSS_COMPILER_BIN=${CROSS_COMPILER_PATH}/bin
+    export CROSS_COMPILER_INC_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/include
+    export CROSS_COMPILER_SYS_INC_PATH=${CROSS_COMPILER_INC_PATH}/c++/${CROSS_COMPILER_VERSION}
+    export CROSS_COMPILER_SYS_LIB_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/lib
+    export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_PATH}/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
+    export CROSS_COMPILER_ARM_GCC_LIB_PATH=${CROSS_COMPILER_PATH}/lib/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
 
     export KERNEL_SRC=~/Kernel/linux/
     export CCPREFIX=arm-linux-gnueabihf-
     export KBUILD_OUTPUT=~/tmp
 
-    export KERNEL_SRC=~/Kernel/linux/
-    export CCPREFIX=${PI_CROSS_COMPILER_BIN}/arm-linux-gnueabihf-
-    export KBUILD_OUTPUT=~/tmp
-
-# Raspberry PI projects
-    export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++
-else
-# Raspberry PI/BBB projects
-    export PATH_DEV_XX=${PATH_DEV}/g++
+    export PATH=${CROSS_COMPILER_BIN}:${PATH}
 fi
+
+# Raspberry PI specific path
+#export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++/
+# BeagleBoneBlack specific path
+#export PATH_DEV_BBB=${PATH_DEV}/beaglebone/g++
+# MBED specific path
+#export PATH_DEV_MBED=${PATH_DEV}/mbed/g++
+# Raspberry PI/BBB path
+#export PATH_DEV_CROSS=${PATH_DEV}/g++
 
 # EEA projects
 export PATH_DEV_EEA=${PATH_DEV}/eea
 export PATH_DEV_EEA_PROJECTS=${PATH_DEV_EEA}/projects
 
 # Raspberry PI/BBB projects
-export PATH_DEV_XX_PROJECTS=${PATH_DEV_XX}/projects
+export PATH_DEV_CROSS_PROJECTS=${PATH_DEV_CROSS}/projects
 
 # Add it to access internet using USB network interface
 #sudo route add default gw 192.168.7.1
 
 export SLOTS=/sys/devices/bone_capemgr.9/slots
 export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
-export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
+export CURL_CA_BUNDLE=/usr/local/etc/openssl/cert.pem
 
 #Add Arduino support
 if [ -d "/usr/share/arduino" ]
@@ -108,8 +120,6 @@ then
     export MANPATH=${TTCN3_DIR}/man:${MANPATH}
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
-else
-    unset TOP
 fi
 
 # Start ssh-agent at login
