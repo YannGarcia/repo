@@ -10,7 +10,7 @@ export PS1="\D{%Y-%m-%d %H:%M:%S} \w\n\$ "
 export EDITOR=emacs
 set -o emacs
 
-# Home bin/lib directories
+# Home working directories
 export HOME_FRAMEWORKS=${HOME}/frameworks
 export HOME_LIB=${HOME}/lib
 export HOME_BIN=${HOME}/bin
@@ -64,13 +64,13 @@ then
 fi
 
 # Raspberry PI specific path
-export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++/
+#export PATH_DEV_PI=${PATH_DEV}/raspberrypi/g++/
 # BeagleBoneBlack specific path
-export PATH_DEV_BBB=${PATH_DEV}/beaglebone/g++
+#export PATH_DEV_BBB=${PATH_DEV}/beaglebone/g++
 # MBED specific path
-export PATH_DEV_MBED=${PATH_DEV}/mbed/g++
+#export PATH_DEV_MBED=${PATH_DEV}/mbed/g++
 # Raspberry PI/BBB path
-export PATH_DEV_CROSS=${PATH_DEV}/g++
+#export PATH_DEV_CROSS=${PATH_DEV}/g++
 
 # EEA projects
 export PATH_DEV_EEA=${PATH_DEV}/eea
@@ -98,11 +98,22 @@ then
     export OBJDIR=./objs
 fi
 
+# Add JAVA support
+#export JAVA_VERSION=1.8.0_92
+#export JAVA_JDK=jdk${JAVA_VERSION}
+#if [ -d "${HOME_FRAMEWORKS}/${JAVA_JDK}" ]
+#then
+#    export JAVA_HOME=${HOME_FRAMEWORKS}/${JAVA_JDK}/bin
+#else
+#    unset JAVA_VERSION
+#    unset JAVA_JDK
+#fi
+
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
-if [ -d "${HOME}/frameworks/titan.core/Install" ]
+if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
 then
-    export TTCN3_DIR=${TOP}/titan/titan.core/Install
+    export TTCN3_DIR=${TOP}/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
