@@ -20,8 +20,10 @@ This repository contains all my staff regarding embedded development for differe
 ## 2. Setup development environment
 According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
-    1. In your home directory, create the folders bin, lib, include, tmp: ```mkdir -p bin lib include tmp 
+    1. In your home directory, create the folders bin, lib, include, tmp: ```bash mkdir -p bin lib include tmp```
+    
     2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
+    
     3. Update your own ~/.bash_profile to execute the development environment file
     
 ```bash
