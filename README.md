@@ -18,10 +18,11 @@ This repository contains all my staff regarding embedded development for differe
         - Microchip MCUs
 	
 ## 2. Setup development environment
-According to your OS of your board (Raspberry PI, BeagleBone, CHIP...):
+According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
-    1. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
-    2. Update your own ~/.bash_profile to execute the development environment file
+    1. In your home directory, create the folders bin, lib, include, tmp: ```mkdir -p bin lib include tmp 
+    2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
+    3. Update your own ~/.bash_profile to execute the development environment file
     
 ```bash
         if [ -f ~/devenv.bash ]
@@ -29,6 +30,8 @@ According to your OS of your board (Raspberry PI, BeagleBone, CHIP...):
             . ~/devenv.bash
         fi
 ```	
+
+If you do not want to follow these steps, update the devenv.bash accordingly by modifying variables HOME_BIN, HOME_INC, HOME_LIB...
 
 ## 3. Hardware testing ##
 The hardware testing is a special hardware used to validate embedded development.
