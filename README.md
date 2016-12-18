@@ -57,5 +57,7 @@ Here is a list of the tools I use to develop my projects:
     5. Texas Instrument specific
         - Code Composer Studio (CCS)
 
+    6. Code documentation
+    	- Doxygen
 
 That's all Folks
