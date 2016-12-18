@@ -1,15 +1,16 @@
 
 # repo #
 
-Welcome to mase repository for all my developments
+Welcome to my working repository for all my electronics projects & developments
 
 ## 1. Introduction
-This development repository contains all my staff regarding embedded development for different kind of hardware
+This repository contains all my staff regarding embedded development for different kind of hardware
 
     1. Hardware Linux based:
         - Raspberry PI
         - BeagleBone
         - NewThing C.H.I.P
+	
     2. BareMetal Hardware:
         - MBED, based on LPC1768FBD100
         - TI LanchPad TM4C1xxx
