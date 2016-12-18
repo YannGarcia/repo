@@ -44,13 +44,38 @@ Digital testing includes:
     * ADC testing capability
     * DAC testing capability
 
-### Sensors cqpqbilities ###
+### Sensors capabilities ###
     * Gyroscope, Accelerometer
     * Hall effect
     * 
 
 ### Schematic ###
+TODO
 
 ### PCB and realisation ###
+TODO
 
-END
+## Tools ##
+Here is a list of the tools I use to develop my projects:
+
+    1. Electronic schematics & PCB design 
+        - Eagle
+        - DesignSpark PCB (Windows only) (https://www.rs-online.com/designspark/pcb-software)
+        - Fritzing (http://fritzing.org/home/)
+
+    2. Digital analyzer
+        - Saleae Logic (https://www.saleae.com/?gclid=Cj0KEQiAhNnCBRCqkP6bvOjz_IwBEiQAMn_TMQpUtSRAZjHYZiuPgMPIOkSjVyFC7Ki9zCnTHwnSNB4aAnKW8P8HAQ)
+
+    3. Compiler
+        - GCC for C/C++ develpment for Hardware Linux based
+        - GNU ARM Embedded Toolchain for Baremetal hardware (https://launchpad.net/gcc-arm-embedded)
+
+    4. Simulation
+        - LTspice XII
+        - Matlab R2015a
+
+    5. Texas Instrument specific
+        - Code Composer Studio (CCS)
+
+
+That's all Folks
