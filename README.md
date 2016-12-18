@@ -3,7 +3,7 @@
 
 Welcome to my working repository for all my electronics projects & developments
 
-## 1. Introduction
+## Introduction
 This repository contains all my staff regarding embedded development for different kind of hardware
 
     1. Hardware Linux based:
@@ -17,7 +17,7 @@ This repository contains all my staff regarding embedded development for differe
         - TI LaunchPad MSP432P01
         - Microchip MCUs
 	
-## 2. Setup development environment
+## Setup development environment
 According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
     1. In your home directory, create the folders bin, lib, include, tmp: ```bash mkdir -p bin lib include tmp```
@@ -34,32 +34,6 @@ According to your OS (Linux based or MAC OX X) for cross-compiling or the board 
 ```	
 
 If you do not want to follow these steps, update the devenv.bash accordingly by modifying variables HOME_BIN, HOME_INC, HOME_LIB...
-
-## 3. Hardware testing ##
-The hardware testing is a special hardware used to validate embedded development.
-This hardware provides test capabilities for both Digital and analog testing. It provides also diffrerent kind of sensors..
-
-### 1. Digital testing ###
-Digital testing includes:
-    * LED switch on/off
-    * Interrupt checking, debouncing...
-    * external interrupt
-    * Transistor command
-
-### 2. Analog testing ###
-    * ADC testing capability
-    * DAC testing capability
-
-### Sensors capabilities ###
-    * Gyroscope, Accelerometer
-    * Hall effect
-    * 
-
-### Schematic ###
-TODO
-
-### PCB and realisation ###
-TODO
 
 ## Tools ##
 Here is a list of the tools I use to develop my projects:
