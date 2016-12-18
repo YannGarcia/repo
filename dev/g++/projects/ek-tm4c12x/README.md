@@ -10,16 +10,28 @@
 
     ```bash
     # Change to libhal directory
+    
     cd ~/repo/dev/g++/projects/ek-tm4c12x/libhal/objs
+    
     # Display help 
+    
     make help
+    
     # Clean up
+    
     make clean
+    
     # Build the library
+    
     make compile
+    
     # Build the demo application
+    
     make test
+    
     # Upload to the baremetal
+    
     make upload
+    
     ```
 
