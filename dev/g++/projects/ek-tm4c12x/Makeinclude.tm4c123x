@@ -1,0 +1,64 @@
+############################################################################
+#
+#       Makefile for TI TIVA C Series TM4C123x cross-compiler.
+#
+#ident  "$Id$"
+#
+###################################################################cd##########
+
+#############################################################################
+# Compiler CPU/FPU options.
+#############################################################################
+#PART=TM4C123GH6PMI
+#BOARD_PATH=$(TIVA_C_PATH)/boards/ek-tm4c1294xl
+TARGET_IS=TM4C123_RA1
+CPU=-mcpu=cortex-m4
+FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+
+#############################################################################
+# Flags to pass to the assembler.
+#############################################################################
+AFLAGS= \
+	-mthumb \
+	${CPU}  \
+	${FPU}  \
+	-MD
+
+#############################################################################
+# Flags to pass to the compiler.
+#############################################################################
+GLOBAL_DEF_GCC= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(TARGET_IS) \
+	-Dgcc \
+	-Os
+
+GLOBAL_DEF_GCC_DEBUG= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-DPART_$(PART) \
+	-Dgcc \
+	-g \
+	-O0
+
+#############################################################################
+# Startup code for GCC cross compiler.
+#############################################################################
+STARTUP_GCC=startup_gcc_tm4c123x.c
+STARTUP_GCC_OBJ=startup_gcc_tm4c123x.o

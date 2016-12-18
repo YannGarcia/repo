@@ -12,7 +12,7 @@ include $(PATH_DEV)/Makefile.inc
 #############################################################################
 # List of projects
 
-projects=blinky hello libhal
+projects=hello libhal
 
 clean:
 	@for project in $(projects); do \

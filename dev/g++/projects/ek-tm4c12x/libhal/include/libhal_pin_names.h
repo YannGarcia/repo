@@ -1,19 +1,12 @@
 /**
- * @file    pin_names.h
- * @brief   Main header file for the Hardware Abstract Layer pins mapping.
- * @author garciay.yann@gmail.com
+ * @file      libhal_pin_names.h
+ * @brief     Main header file for the Hardware Abstract Layer pins mapping.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
-#if !defined(__TM4C129x_PIN_NAMES_H__)
-#define __TM4C129x_PIN_NAMES_H__
-
-/** @def Flag to define TM4C1294NCPDT board
- */
-#define TM4C1294NCPDT_BOARD 1
-
-#if defined(TM4C1294NCPDT_BOARD)
+#pragma once
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -22,10 +15,12 @@
 #include "inc/hw_memmap.h"
 #include "driverlib/gpio.h"
 
+#if defined(TM4C1294NCPDT_BOARD) || defined(TM4C129ENCPDT_BOARD)
 
 /** @enum pin_names_t
  * @brief Describes the pin name/pin kernel number
- * @see SPMU365B Table 2-1. BoosterPack 1 GPIO and Signal Muxing
+ * @see Tiva™ TM4C129DNCPDT Microcontroller Table 10-2. GPIO Pins and Alternate Functions
+ * @see SPMU365C Table 2-1. BoosterPack 1 GPIO and Signal Muxing, MCI Pin column
  */
 typedef enum {
   p1 = GPIO_PORTD_BASE | GPIO_PIN_0,
@@ -55,8 +50,8 @@ typedef enum {
   p84 = GPIO_PORTL_BASE | GPIO_PIN_3,
   p107 = GPIO_PORTN_BASE | GPIO_PIN_0,  /* On board LED2 */
   p108 = GPIO_PORTN_BASE | GPIO_PIN_1,  /* On board LED1 */
-  p116 = GPIO_PORTJ_BASE | GPIO_PIN_0,  /* On board PUSH1 */
-  p117 = GPIO_PORTJ_BASE | GPIO_PIN_1,  /* On board PUSH2 */
+  p116 = GPIO_PORTJ_BASE | GPIO_PIN_0,  /* On board Switch1 */
+  p117 = GPIO_PORTJ_BASE | GPIO_PIN_1,  /* On board Switch2 */
 
   A0 = GPIO_PORTE_BASE | GPIO_PIN_3, /* MCU pin #12 */
   A1 = GPIO_PORTE_BASE | GPIO_PIN_2, /* MCU pin #13 */
@@ -68,12 +63,32 @@ typedef enum {
   NC = 0xffffffff
 } pin_names_t;
 
+#elif defined(TM4C123_BOARD)
+
+/** @enum pin_names_t
+ * @brief Describes the pin name/pin kernel number
+ * @see Tiva™ TM4C1233H6PM Microcontroller Table 10-2. GPIO Pins and Alternate Functions
+ * @see SPMU296–April 2013 Table 2-1. BoosterPack 1 GPIO and Signal Muxing, MCI Pin column
+ */
+typedef enum {
+  p1 = GPIO_PORTB_BASE | GPIO_PIN_6,
+  p4 = GPIO_PORTB_BASE | GPIO_PIN_7,
+  p5 = GPIO_PORTF_BASE | GPIO_PIN_4, /* On board Swith 1 */
+
+  p28 = GPIO_PORTF_BASE | GPIO_PIN_0, /* On board Swith 2 */
+  p29 = GPIO_PORTF_BASE | GPIO_PIN_1, /* On board RGB led Red */
+  p30 = GPIO_PORTF_BASE | GPIO_PIN_2, /* On board RGB led Blue */
+  p31 = GPIO_PORTF_BASE | GPIO_PIN_3, /* On board RGB led Green */
+  
+  NC = 0xffffffff
+} pin_names_t;
+
+#else /* TM4C1294NCPDT_BOARD, TM4C123_BOARD */
+
+#error "TM4C129x board flag was not defined"
+
+#endif /* TM4C1294NCPDT_BOARD, TM4C123_BOARD */
+
 /**
  */
 typedef pin_names_t pin_name;
-
-#else /* TM4C1294NCPDT_BOARD */
-#error "TM4C129x board flag was not defined"
-#endif /* TM4C1294NCPDT_BOARD */
-
-#endif /* __TM4C129x_PIN_NAMES_H__ */

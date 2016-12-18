@@ -2,7 +2,6 @@
  * @file    libhal.c
  * @brief   Main implementation file for the Hardware Abstract Layer library.
  * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
  * @license This project is released under the MIT License
  * @version 0.1
  */
@@ -261,9 +260,9 @@ digital_state_t digital_read(const pin_name p_gpio) {
     pin_mode(p_gpio, gpio_modes_digital_input);
   }
   /* Read value */
-  c = GPIOPinRead(
-                  p_gpio & 0xffffff00, // Port register
-                  p_gpio & 0xff        // Port number
+  c = ROM_GPIOPinRead(
+		          (uint32_t)p_gpio & 0xffffff00, // Port register
+		          (uint8_t)p_gpio & 0xff         // Port number
                  );
   uint8_t criteria = (context_handles[gpio_idx].types.digital.pud == pud_up) ? p_gpio & 0xff : 0x00;
   return ((c & p_gpio & 0xff) == criteria) ? digital_state_low : digital_state_high;
@@ -289,8 +288,8 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
 
   // Write value
   GPIOPinWrite(
-               p_gpio & 0xffffff00, // Port register
-               p_gpio & 0xff,       // Port number
+               (uint32_t)p_gpio & 0xffffff00, // Port register
+			   (uint8_t)p_gpio & 0xff,        // Port number
                (p_value == digital_state_low) ? 0 : p_gpio & 0xff
               );
 

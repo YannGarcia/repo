@@ -1,13 +1,15 @@
 
 ########################################################################
 #
-#       Makefile for TIVA-C LaunchPad HAL (Hardware Abstract Level) support support library
+#       Makefile for TIVA-C LaunchPad HAL (Hardware Abstract Level) support library
 #       The same libraries exists for Raspeberry PI and MBed LPC1768 and BeagleBoneBlack
 #
 #       ident  "$Id$"
 #
 #############################################################################
 
+#############################################################################
+# Include generic Makefiles
 include $(PATH_DEV)/Makefile.inc
 include ../../Makefile.inc
 
@@ -101,13 +103,12 @@ $(LIB): $(LIB_OBJS)
 	@echo "*** $@ done ***"
 
 $(TEST_TARGET): $(TEST_OBJ)
-#	$(LD) $(TEST_OBJ) -o$(BIN)$(SHARED_LIBRARY_EXT_NAME)xf -L$(HOME_LIB) -lhal $(LD_OPTION) -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 	$(LD) $(TEST_OBJ) -o$(BIN)$(SHARED_LIBRARY_EXT_NAME)xf -L$(HOME_LIB) -lhal $(LD_OPTION)
 	$(OBJCOPY) -O binary $(BIN)$(SHARED_LIBRARY_EXT_NAME)xf $(BIN).bin
 	@echo "*** $@ done ***"
 
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.c)
-	$(CC) $(GLOBAL_DEF_GPP) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
+	$(CC) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
 $(LIBHAL_OBJ): $(SRCDIRS)$(LIBHAL_OBJ:.o=.c)
 	$(CC) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LIBHAL_OBJ)
@@ -146,14 +147,14 @@ debug :
 
 test : compile
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS)" \
-		LD_OPTION="$(LD_RELEASE_OPTIONS) $(LD_INS)" \
+		CC_OPTION="$(CC_RELEASE_OPTIONS)" \
+		LD_OPTION="$(LD_RELEASE_OPTIONS)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD_DEBUG) $(LD_INS)" \
+		CC_OPTION="$(CC_DEBUG_OPTIONS)" \
+		LD_OPTION="$(LD_DEBUG_OPTIONS)" \
 		directories $(TEST_TARGET)
 
 directories :
@@ -167,7 +168,7 @@ dist: clean
 	cd -
 	@echo "*** $@ done ***"
 
-clean:
+clean: cleanlinks
 	@$(RM) -f $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME) $(BIN).bin $(BIN)$(SHARED_LIBRARY_EXT_NAME)xf ../../$(TARGET).tar.gz $(TARGET) *.lst *.o *.d *.bin *$(SHARED_LIBRARY_EXT_NAME)xf *~  $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIRS)*~ $(BINDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"

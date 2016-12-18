@@ -1,8 +1,7 @@
 /**
  * @file    libhal.h
  * @brief   Main header file for the Hardware Abstract Layer library.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @author  garciay.yann@gmail.com
  * @license This project is released under the MIT License
  * @version 0.1
  */
