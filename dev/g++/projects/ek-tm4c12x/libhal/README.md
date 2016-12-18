@@ -1,36 +1,51 @@
-# libhal project #
+# libhal project
 
-## Introduction ##
+## Introduction
 The name libhal stands for library for Hardware Abstract Layer. The idea is to prpvide the same interface for all my electronic hardware (Linux base hardware or Baremetal hardware)
 
 
-## How to build the project ##
+## How to build the project
+Pleas foLlow the steps below:
 
+```bash
+        # Change to libhal directory    
+        cd ~/repo/dev/g++/projects/ek-tm4c12x/libhal/objs
+        # Display help 
+        make help
+        # Clean up
+        make clean
+        # Build the library
+        make compile
+        # Build the demo application
+        make test
+        # Upload to the baremetal
+        make upload
+```
 
-## Hardware testing ##
+## Hardware testing
 The hardware testing is a special hardware used to validate embedded development.
 This hardware provides test capabilities for both Digital and analog testing. It provides also diffrerent kind of sensors..
 
-### 1. Digital testing ###
+### Digital testing
 Digital testing includes:
     * LED switch on/off
     * Interrupt checking, debouncing...
     * external interrupt
     * Transistor command
 
-### 2. Analog testing ###
+### Analog testing
     * ADC testing capability
     * DAC testing capability
 
-### Sensors capabilities ###
+### Sensors capabilities
     * Gyroscope, Accelerometer
     * Hall effect
     * 
 
-### Schematic ###
+### Schematic
 TODO
 
-### PCB and realisation ###
+### PCB and realisation
 TODO
 
 
