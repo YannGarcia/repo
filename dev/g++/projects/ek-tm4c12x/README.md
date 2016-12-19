@@ -1,4 +1,4 @@
-# TIVA-C LaunchPad HAL (Hardware Abstract Level) #
+# TIVA-C LaunchPad HAL (Hardware Abstract Level)
 
 1. To select the TI board to be used to generate the library, open Makefile.inc file and modify PART value (see http://dev.ti.com/tirex/#/?link=Software%2FTM4C%20ARM%20Cortex-M4F%20MCU)
 
@@ -23,5 +23,6 @@
         make upload
 ```
 
+5. The file Makefile provides a way to build all project in ek-tm4c12x in one command, check make help
 
 That's all folks
