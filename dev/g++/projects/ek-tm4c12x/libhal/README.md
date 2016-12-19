@@ -20,6 +20,8 @@ Pleas foLlow the steps below:
         make test
         # Upload to the baremetal
         make upload
+        # Generate documentation
+        make gendoc
 ```
 
 ## Hardware testing
