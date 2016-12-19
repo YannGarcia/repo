@@ -6,7 +6,9 @@
 
 3. On Linux based OS and MAC OS X, use lm4tool to upload baremetal binary file to the board (see https://github.com/utzig/lm4tools)
 
-4. Usage example:
+4. The file Makefile provides a way to build all project in ek-tm4c12x in one command, see clause below
+
+5. Usage example:
 
 ```bash
         # Change to libhal directory    
@@ -22,7 +24,5 @@
         # Upload to the baremetal
         make upload
 ```
-
-5. The file Makefile provides a way to build all project in ek-tm4c12x in one command, check make help
 
 That's all folks
