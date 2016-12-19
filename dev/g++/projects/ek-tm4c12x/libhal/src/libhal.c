@@ -260,7 +260,7 @@ digital_state_t digital_read(const pin_name p_gpio) {
     pin_mode(p_gpio, gpio_modes_digital_input);
   }
   /* Read value */
-  c = ROM_GPIOPinRead(
+  c = GPIOPinRead(
 		          (uint32_t)p_gpio & 0xffffff00, // Port register
 		          (uint8_t)p_gpio & 0xff         // Port number
                  );
