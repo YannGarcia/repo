@@ -65,6 +65,8 @@ It provides the followings features (http://www.ti.com/tool/BOOSTXL-EDUMKII):
     * Microphone
     * 2-Axis Joystick with Pushbutton
 
+See http://www.ti.com/tool/BOOSTXL-EDUMKII for BoosterPacks compatibiliy.
+
 TODO Continue
 
 That's all Folks
