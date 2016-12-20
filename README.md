@@ -46,9 +46,10 @@ Here is a list of the tools I use to develop my projects:
     2. Digital analyzer
         - Saleae Logic (https://www.saleae.com/?gclid=Cj0KEQiAhNnCBRCqkP6bvOjz_IwBEiQAMn_TMQpUtSRAZjHYZiuPgMPIOkSjVyFC7Ki9zCnTHwnSNB4aAnKW8P8HAQ)
 
-    3. Compiler
+    3. Compilers
         - GCC for C/C++ develpment for Hardware Linux based
         - GNU ARM Embedded Toolchain for Baremetal hardware (https://launchpad.net/gcc-arm-embedded)
+	- XCode (MAC OS X)
 
     4. Simulation
         - LTspice XII
@@ -56,6 +57,10 @@ Here is a list of the tools I use to develop my projects:
 
     5. Texas Instrument specific
         - Code Composer Studio (CCS)
+
+    7. Serial communication
+    	- GNU screen (Linux, MAC OS X)
+	- PuTTY (Windows)
 
     6. Code documentation
     	- Doxygen
