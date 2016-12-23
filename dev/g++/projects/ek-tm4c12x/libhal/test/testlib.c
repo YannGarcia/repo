@@ -1,10 +1,13 @@
 /**
- * @file    main.c
- * @brief   Application to validate libhal libary
- * @author  garciay.yann@gmail.com
- * @license This project is released under the MIT License
- * @version 1.0
- * @see http://www.ti.com/tool/ek-tm4c1294xl
+ * @file      main.c
+ * @brief     Application to validate libhal libary
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   1.0
+ * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
+ * @see       EK-TM4C129EXL Firmware Development Package User's Guide
+ * @see       EK-TM4C1294XL Firmware Development Package User's Guide
  */
 
 #include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TI launchpads */
@@ -36,6 +39,8 @@ void set_debug_state(const uint8_t p_state);
  */
 int32_t main(void) {
   uint8_t debug_state = 0;
+  int32_t uart0;
+  uint32_t counter = 0;
 
   /* Initialise the HAL */
   libhal_setup();
@@ -49,7 +54,11 @@ int32_t main(void) {
   pin_mode(SW2, gpio_modes_digital_input);
   pull_up_dn_control(SW2, pud_up);         /* Configuration of the pull-up is required for USR_SW2 */
 
+  uart0 = serial_open("/dev/tty0", 115200);
+
   while (true) {
+	serial_printf(uart0, "Please push User button #2 (%d)\r\n", counter++);
+
     /* Wait event on Switch1 */
     while (digital_read(SW2) == digital_state_low);
 
@@ -59,8 +68,8 @@ int32_t main(void) {
     /* Change debug state */
     set_debug_state(debug_state);
 
-    /* wait for 500 ms */
-    wait_ms(500);
+    /* wait for 50 ms for button debouncing */
+    wait_ms(50);
   } /* End of 'while' statement */
 
   return 0;

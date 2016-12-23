@@ -5,6 +5,9 @@
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
+ * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
+ * @see       EK-TM4C129EXL Firmware Development Package User's Guide
+ * @see       EK-TM4C1294XL Firmware Development Package User's Guide
  */
 #pragma once
 
@@ -14,6 +17,10 @@
 #include "inc/hw_gpio.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/gpio.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #if defined(TM4C1294NCPDT_BOARD) || defined(TM4C129ENCPDT_BOARD)
 
@@ -92,3 +99,8 @@ typedef enum {
 /**
  */
 typedef pin_names_t pin_name;
+
+#ifdef __cplusplus
+}
+#endif
+

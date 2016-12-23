@@ -4,6 +4,7 @@
  * @author  garciay.yann@gmail.com
  * @license This project is released under the MIT License
  * @version 0.1
+ * @see Tiva™ TM4C129ENCPDT Microcontroller
  */
 #include <stdio.h>
 #include <stdint.h>
@@ -104,9 +105,9 @@ typedef struct {
 
 static uint8_t is_initialised = FALSE;                  /*!< Indicate if the library was initialized by the process */
 static uint32_t sys_clock = 0;                          /*!< Indicate the configured system clock frequency in Hz */
-//static gpio_context * context_handles[MAX_GPIO_ID];     /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
+//static gpio_context * context_handles[MAX_GPIO_ID];   /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
 static gpio_context context_handles[MAX_GPIO_ID];       /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
-//static uint64_t time_ms, time_us;                       /*!< Time for easy calculations */
+//static uint64_t time_ms, time_us;                     /*!< Time for easy calculations */
 
 /**
  * @fn void initialise_time(void)
@@ -125,7 +126,8 @@ uint32_t gpio_to_pwm_enable(const pin_name p_gpio);
 
 /**
  * @fn void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode)
- * @brief Configure the device pins for the standard usages on the EK-TM4C1294XL
+ * @brief Configure the device pins for the standard usages on the EK-TM4C129x
+ * @see Tiva™ TM4C129ENCPDT Microcontroller Clause 10
  */
 static void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode);
 

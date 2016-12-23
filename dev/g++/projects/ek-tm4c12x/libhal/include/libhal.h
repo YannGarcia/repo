@@ -1,9 +1,13 @@
 /**
- * @file    libhal.h
- * @brief   Main header file for the Hardware Abstract Layer library.
- * @author  garciay.yann@gmail.com
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      libhal.h
+ * @brief     Main header file for the Hardware Abstract Layer library.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
+ * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
+ * @see       EK-TM4C129EXL Firmware Development Package User's Guide
+ * @see       EK-TM4C1294XL Firmware Development Package User's Guide
  */
 #pragma once
 
@@ -18,59 +22,52 @@
 #define    HAL_MODE_PIFACE         4
 #define    HAL_MODE_UNINITIALISED -1
 
-/** @enum GPIO modes
- */
-typedef enum {
-  gpio_modes_digital_input,
-  gpio_modes_digital_output,
-  gpio_modes_adc_input,
-  gpio_modes_pwm_output,
-  gpio_modes_clock
-} gpio_modes_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/** @enum Digital GPIO state
- */
-typedef enum {
-  digital_state_low,                /*!< Low digital GPIO level state (Vss) */
-  digital_state_high,               /*!< High digital GPIO level state (Vcc) */
-  digital_state_error
-} digital_state_t;
+  /** @enum GPIO modes
+   */
+  typedef enum {
+    gpio_modes_digital_input,
+    gpio_modes_digital_output,
+    gpio_modes_adc_input,
+    gpio_modes_pwm_output,
+    gpio_modes_clock
+  } gpio_modes_t;
 
-/** @enum Pull-up/pull-down mode
- */
-typedef enum {
-  pud_off,                          /*!< Pull-up/pull-down unset */
-  pud_down,                         /*!< Pull-down set */
-  pud_up,                           /*!< Pull-up set */
-  pud_push_pull                     /*!< Push-pull set */
-} pud_t;
+  /** @enum Digital GPIO state
+   */
+  typedef enum {
+    digital_state_low,                /*!< Low digital GPIO level state (Vss) */
+    digital_state_high,               /*!< High digital GPIO level state (Vcc) */
+    digital_state_error
+  } digital_state_t;
 
-/* PWM */
+  /** @enum Pull-up/pull-down mode
+   */
+  typedef enum {
+    pud_off,                          /*!< Pull-up/pull-down unset */
+    pud_down,                         /*!< Pull-down set */
+    pud_up,                           /*!< Pull-up set */
+    pud_push_pull                     /*!< Push-pull set */
+  } pud_t;
+
+  /* PWM */
 
 #define    HAL_PWM_MODE_MS          0
 #define    HAL_PWM_MODE_BAL         1
 
-/** @enum Interrupt levels
- */
-typedef enum {
-  isr_levels_setup,
-  isr_levels_edge_falling,
-  isr_levels_edge_rising,
-  isr_levels_edge_both
-} isr_levels_t;
-/* Threads */
+  /** @enum Interrupt levels
+   */
+  typedef enum {
+    isr_levels_setup,
+    isr_levels_edge_falling,
+    isr_levels_edge_rising,
+    isr_levels_edge_both
+  } isr_levels_t;
 
-#define    HAL_THREAD(X)    void *X (void *p_void)
-
-/* Failure modes */
-
-#define    HAL_FATAL           (1==1)
-#define    HAL_ALMOST          (1==2)
-
-/* Function prototypes */
-#ifdef __cplusplus
-extern "C" {
-#endif
+  /* Function prototypes */
 
   /**
    * @fn int32_t libhal_failure(const int32_t p_code, const char *p_message, ...)

@@ -9,7 +9,7 @@
 #############################################################################
 # Compiler CPU/FPU options.
 #############################################################################
-TARGET_IS=TM4C129_RA0
+TARGET_IS=TM4C129_RA1
 CPU=-mcpu=cortex-m4
 FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
@@ -54,7 +54,7 @@ GLOBAL_DEF_GCC_DEBUG= \
 	-O0 \
 	-I$(TIVA_C_PATH) 
 
-GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/fpu -lm -lc -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu -lgcc
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/fpu -lm -lc -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu -lgcc
 GLOBAL_DEF_STD_GLD_DEBUG=$(GLOBAL_DEF_STD_GLD)
  
 #############################################################################
