@@ -24,7 +24,7 @@ Pleas foLlow the steps below:
         make gendoc
 ```
 
-## Hardware testing
+## Developing your hardware testing
 The hardware testing is a special hardware used to validate embedded development.
 This hardware provides test capabilities for both Digital and analog testing. It provides also diffrerent kind of sensors..
 
@@ -36,7 +36,7 @@ Digital testing includes:
     * Transistor command
 
 ### Analog testing
-    * ADC testing capability
+    * ADC testing capabilityIt provides the following features
     * DAC testing capability
 
 ### Sensors capabilities
@@ -50,5 +50,23 @@ TODO
 ### PCB and realisation
 TODO
 
+## Using the TI Educational BoosterPack MKII
+It provides the followings features (http://www.ti.com/tool/BOOSTXL-EDUMKII):
+
+    * TI OPT3001 Light Sensor
+    * TI TMP006 Temperature Sensor
+    * Servo Motor Connector
+    * 3-Axis Accelerometer
+    * User Push Buttons
+    * RGB Multi-color LED
+    * Buzzer
+    * 40-pin Stackable BoosterPack Connector
+    * Color TFT LCD Display
+    * Microphone
+    * 2-Axis Joystick with Pushbutton
+
+See http://www.ti.com/tool/BOOSTXL-EDUMKII for BoosterPacks compatibiliy.
+
+TODO Continue
 
 That's all Folks
