@@ -291,7 +291,7 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
   // Write value
   GPIOPinWrite(
                (uint32_t)p_gpio & 0xffffff00, // Port register
-			   (uint8_t)p_gpio & 0xff,        // Port number
+               (uint8_t)p_gpio & 0xff,        // Port number
                (p_value == digital_state_low) ? 0 : p_gpio & 0xff
               );
 

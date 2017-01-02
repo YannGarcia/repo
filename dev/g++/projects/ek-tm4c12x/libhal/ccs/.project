@@ -36,6 +36,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal.c</locationURI>
 		</link>
 		<link>
+			<name>libhal_i2c.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_i2c.c</locationURI>
+		</link>
+		<link>
 			<name>libhal_serial.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_serial.c</locationURI>

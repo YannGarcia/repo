@@ -12,6 +12,7 @@
 
 #include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TI launchpads */
 #include "libhal_serial.h"
+#include "libhal_i2c.h"
 
 /**
  * @defgroup Booststarter #1 pin assignment
