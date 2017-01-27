@@ -36,7 +36,7 @@ extern "C" {
    * @fn int32_t libhal_i2c_read(const int32_t p_fd)
    * @brief Read one byte from openend I2C bus
    * @param[in] p_fd    The I2C file descriptor 
-   * @return The number of read bytes on success, -1 otherwise
+   * @return The 8-bits read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_read(const int32_t p_fd);
   /**
@@ -57,7 +57,7 @@ extern "C" {
   extern int32_t libhal_i2c_read_register16(const int32_t p_fd, const uint8_t p_register);
   /**
    * @fn int32_t libhal_i2c_ext_read_register8(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register)
-   * @brief Read a 8-bits value from a 16 bit address register on the device
+   * @brief Read a 8-bits value from a 16 bit address register on the device, MSB first
    * @param[in] p_fd             The I2C file descriptor 
    * @param[in] p_device_address The I2C device address
    * @param[in] p_register       The 8 bits length register to be read 
@@ -92,7 +92,7 @@ extern "C" {
   extern int32_t libhal_i2c_write_register8(const int32_t p_fd, const uint8_t p_register, const uint8_t p_value);
   /**
    * @fn int32_t libhal_i2c_write_register16(const int32_t p_fd, const uint32_t p_register, const uint16_t p_value)
-   * @brief Write one byte from openend I2C bus
+   * @brief Write one byte from openend I2C bus to the 16 bits address register, MSB first
    * @param[in] p_fd        The I2C file descriptor 
    * @param[in] p_register  The register to write
    * @param[in] p_value     The 16-bits value to write
@@ -111,7 +111,7 @@ extern "C" {
   extern int32_t libhal_i2c_ext_write_register8(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register, const uint8_t p_value);
   /**
    * @fn int32_t libhal_i2c_ext_write_register16(const int32_t p_fd, const uint8_t p_device_address, const uint32_t p_register, const uint16_t p_value)
-   * @brief Write one byte from openend I2C bus to the 16 bits address register
+   * @brief Write one byte from openend I2C bus to the 16 bits address register, MSB first
    * @param[in] p_fd             The I2C file descriptor 
    * @param[in] p_device_address The I2C device address
    * @param[in] p_register       The register to write

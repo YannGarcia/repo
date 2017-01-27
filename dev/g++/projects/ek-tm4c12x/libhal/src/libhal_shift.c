@@ -34,13 +34,13 @@ void libhal_shift_out(const pin_name p_data_pin, const pin_name p_clock_pin, con
 
   if (p_order == shift_modes_msb_first) {
     for (i = 7 ; i >= 0 ; --i) {
-      digital_write(p_data_pin, p_register & (1 << i));
+      digital_write(p_data_pin, (digital_state_t)(p_register & (1 << i)));
       digital_write(p_clock_pin, digital_state_high);
       digital_write(p_clock_pin, digital_state_low);
     } // End of 'for' statement
   } else {
     for (i = 0 ; i < 8 ; ++i) {
-      digital_write(p_data_pin, p_register & (1 << i));
+      digital_write(p_data_pin, (digital_state_t)(p_register & (1 << i)));
       digital_write(p_clock_pin, digital_state_high);
       digital_write(p_clock_pin, digital_state_low);
     } // End of 'for' statement

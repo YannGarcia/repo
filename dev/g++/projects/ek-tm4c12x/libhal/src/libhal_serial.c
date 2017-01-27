@@ -21,7 +21,8 @@
 
 #include "libhal_serial.h"
 
-uint32_t uart_modules[3][7] = {
+// UART module parameters
+static uint32_t uart_modules[3][7] = {
   { SYSCTL_PERIPH_UART0, UART0_BASE, GPIO_PA0_U0RX, GPIO_PA1_U0TX, GPIO_PORTA_BASE, GPIO_PIN_0, GPIO_PIN_1 },
   { SYSCTL_PERIPH_UART1, UART1_BASE, GPIO_PB0_U1RX, GPIO_PB1_U1TX, GPIO_PORTB_BASE, GPIO_PIN_0, GPIO_PIN_1 },
   { SYSCTL_PERIPH_UART2, UART2_BASE, GPIO_PA6_U2RX, GPIO_PA7_U2TX, GPIO_PORTA_BASE, GPIO_PIN_6, GPIO_PIN_7 }
@@ -66,18 +67,18 @@ void serial_put_string(const int32_t p_fd, const char *p_string) {
   uint8_t *ptr = (uint8_t *)p_string;
   while(ui32Count--) {
     // Write the next character to the UART
-    UARTCharPutNonBlocking(UART0_BASE, *ptr++);
+    UARTCharPutNonBlocking(uart_modules[p_fd][1]/*UART0_BASE*/, *ptr++);
   } // End of 'while' statement
 }
 
 void serial_printf(const int32_t p_fd, const char *p_message, ...) {
   va_list argp;
-  char buffer[64]; /* = (char *)malloc(1024);*/
+  static char buffer[64]; /* = (char *)malloc(1024);*/
   int32_t length;
 
   memset((void *)buffer, 0x00, 64);
   va_start (argp, p_message);
-  length = vsnprintf (buffer, 63/*1063*/, p_message, argp);
+  length = vsnprintf (&buffer[0], 63/*1063*/, p_message, argp);
   va_end (argp);
   buffer[length] = NULL;
 

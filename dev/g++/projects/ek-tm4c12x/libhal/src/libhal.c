@@ -263,8 +263,8 @@ digital_state_t digital_read(const pin_name p_gpio) {
   }
   /* Read value */
   c = GPIOPinRead(
-		          (uint32_t)p_gpio & 0xffffff00, // Port register
-		          (uint8_t)p_gpio & 0xff         // Port number
+                  (uint32_t)p_gpio & 0xffffff00, // Port register
+                  (uint8_t)p_gpio & 0xff         // Port number
                  );
   uint8_t criteria = (context_handles[gpio_idx].types.digital.pud == pud_up) ? p_gpio & 0xff : 0x00;
   return ((c & p_gpio & 0xff) == criteria) ? digital_state_low : digital_state_high;
@@ -293,6 +293,44 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
                (uint32_t)p_gpio & 0xffffff00, // Port register
                (uint8_t)p_gpio & 0xff,        // Port number
                (p_value == digital_state_low) ? 0 : p_gpio & 0xff
+              );
+
+  return;
+}
+
+void digital_toggle(const pin_name p_gpio) {
+  /* Sanity check */
+  uint8_t gpio_idx = gpio_to_index(p_gpio);
+  if (gpio_idx > MAX_GPIO_ID) {
+    fprintf(stderr, "digital_toggle: Wrong parameter\n");
+    return;
+  }
+
+  //  if (context_handles[gpio_idx] == NULL) {
+  if (context_handles[gpio_idx].gpio == NC) {
+    // Allocation GPIO
+    if (create_new_context(p_gpio, gpio_access_weak, gpio_types_digital) < 0) {
+      return;
+    }
+    // Set direction out
+    pin_mode(p_gpio, gpio_modes_digital_output);
+  }
+
+  // Toggle low -> high -> low
+  GPIOPinWrite(
+               (uint32_t)p_gpio & 0xffffff00, // Port register
+               (uint8_t)p_gpio & 0xff,        // Port number
+               digital_state_low
+              );
+  GPIOPinWrite(
+               (uint32_t)p_gpio & 0xffffff00, // Port register
+               (uint8_t)p_gpio & 0xff,        // Port number
+               digital_state_high
+              );
+  GPIOPinWrite(
+               (uint32_t)p_gpio & 0xffffff00, // Port register
+               (uint8_t)p_gpio & 0xff,        // Port number
+               digital_state_low
               );
 
   return;

@@ -129,9 +129,14 @@ extern "C" {
    * @brief Write the value of a GPIO pin
    * @param[in] p_gpio      The GPIO identifier to be changed
    * @param[in] p_value     The value to write
-   * @return The digital GPIO state on success, digital_state_error otherwise
    */
   extern void digital_write(const pin_name p_gpio, const digital_state_t p_value);
+  /**
+   * @fn void digital_toggle(const pin_name p_gpio)
+   * @brief Toggle the value of a GPIO pin (low -> high -> low)
+   * @param[in] p_gpio      The GPIO identifier to be toggled
+   */
+  extern void digital_toggle(const pin_name p_gpio);
   /**
    * @fn int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value)
    * @brief Set up a GPIO pin as output PWM

@@ -55,6 +55,8 @@ typedef enum {
   p82 = GPIO_PORTL_BASE | GPIO_PIN_1,
   p83 = GPIO_PORTL_BASE | GPIO_PIN_2,
   p84 = GPIO_PORTL_BASE | GPIO_PIN_3,
+  p91 = GPIO_PORTB_BASE | GPIO_PIN_2,   /* I2C SDL */
+  p92 = GPIO_PORTB_BASE | GPIO_PIN_3,   /* I2C SDA */
   p107 = GPIO_PORTN_BASE | GPIO_PIN_0,  /* On board LED2 */
   p108 = GPIO_PORTN_BASE | GPIO_PIN_1,  /* On board LED1 */
   p116 = GPIO_PORTJ_BASE | GPIO_PIN_0,  /* On board Switch1 */
