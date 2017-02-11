@@ -100,14 +100,23 @@ extern "C" {
    */
   extern void libhal_shutdown_sys(void);
   /**
-   * @fn void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
+   * @fn int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
    * @brief Sets the mode of the specifed pin
    * @remark This function shall be called once in the process
    * @param[in] p_gpio      The GPIO identifier to be changed
    * @param[in] p_mode      The mode to be set
    * @return 0 on success, -1 otherwise
    */
-  extern void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode);
+  extern int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode);
+  /**
+   * @fn int32_t pins_mode(const pin_name * p_gpios, const uint32_t p_len, const gpio_modes_t p_mode)
+   * @brief Sets the mode of the specifed pin
+   * @remark This function shall be called once in the process
+   * @param[in] p_gpio      The GPIO identifier to be changed
+   * @param[in] p_mode      The mode to be set
+   * @return 0 on success, -1 otherwise
+   */
+  extern int32_t pins_mode(const pin_name * p_gpios, const uint8_t p_len, const gpio_modes_t p_mode);
   /**
    * @fn void pull_up_dn_control(const pin_name p_gpio, const pud_t p_pud)
    * @brief Control the internal pull-up/down resistors on a GPIO pin
@@ -146,19 +155,31 @@ extern "C" {
    */
   extern int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value);
   /**
-   * @fn int32_t analog_read(const pin_name p_gpio)
+   * @fn float analog_read(const pin_name p_gpio)
    * @brief Read the analog value of the specified GPIO
-   * @param p_gpio The analog input GPIO
+   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        It uses the sequencer number SS3, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
+   * @param[in] p_gpio The analog input GPIO
    * @return The ADC value on success, LONG_MAX on error
    */
   extern float analog_read(const pin_name p_gpio);
+  /**
+   * @fn void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values)
+   * @brief Read multiple analog channels at the same time
+   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        It uses the sequencer number SS0, SS1 or SS2, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
+   * @param[in] p_gpios      The analog inputs
+   * @param[in] p_len        The number of analog inputs (and values to return)
+   * @param[out] p_values    The read values on success, LONG_MAX on error
+   */
+  extern void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values);
   /*  extern void analog_write(const pin_name p_gpio, int32_t p_value);*/
   /**
    * @fn void board_revision(void)
    * @brief Retrieve the number representing the hardware revision of the board
    * @return The revision board on success, -1 otherwise
    */
-  extern int32_t  board_revision(void);
+  extern int32_t board_revision(void);
 
   extern void digitalWriteByte(const uint8_t p_value);
 

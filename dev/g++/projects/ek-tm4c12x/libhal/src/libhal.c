@@ -16,9 +16,6 @@
 #include <ctype.h>
 #include <errno.h>
 #include <time.h>
-//#include <sys/stat.h>
-//#include <sys/wait.h>
-//#include <sys/time.h>
 
 #include "inc/hw_types.h"
 #include "driverlib/rom.h"
@@ -47,8 +44,11 @@
 /* Number of pins */
 #define MAX_GPIO_ID 255                                 /*!< Maximal GPIO index value */
 
+/* Maximal simultaneous analog GPIOs */
+#define MAX_ANALOG_GPIO 8                               /*< Maximal simultaneous analog GPIOs */
+
 /** @enum gpioMode
- * @brief GPIO access mode
+ *  @brief GPIO access mode
  */
 typedef enum {
   gpio_access_shared,                                    /*!< GPIO access is shared */
@@ -57,7 +57,7 @@ typedef enum {
 } gpio_access_t;
 
 /** @enum gpio_types_t
- * @brief GPIO type
+ *  @brief GPIO type
  */
 typedef enum {
   gpio_types_digital,                                  /*!< GPIO digital type */
@@ -72,30 +72,36 @@ typedef struct {
 } gpio_callback_t;
 
 /** @struct digital GPIO user interface
- * @brief This structure describes the digital GPIO user interface
+ *  @brief This structure describes the digital GPIO user interface
  */
 typedef struct {
-  gpio_callback_t callback;                            /*!< ISR callback */
-  pud_t pud;                                           /*!< Pad configuration */
+  gpio_callback_t callback;                             /*!< ISR callback */
+  pud_t pud;                                            /*!< Pull-Up configuration */
 } digital_context_t;
 
 /** @struct ADC GPIO user interface
- * @brief This structure describes the ADC GPIO user interface
+ *  @brief This structure describes the ADC GPIO user interface
  */
 typedef struct {
   gpio_callback_t callback;                            /*!< ISR callback */
 } adc_context_t;
 
+/** @struct PWM user interface
+ *  @brief This structure describes the PWM user interface
+ */
 typedef struct {
   float frequency;                                      /*!< The PWM signal frequency */
   uint32_t divisor;                                     /*!< Divisor to apply for the PWM base frequency */
   float duty_cycle;                                     /*!< Duty cycle of the PWM signal (in ns) */
 } pwm_context_t;
 
+/** @struct GPIOs configuration
+ *  @brief This structure describes the GPIOs configuration
+ */
 typedef struct {
   pin_name gpio;                                        /*!< Gpio port number */
   int32_t shared;                                       /*!< Gpio shared counter. Default: 0 (not shared) */
-  gpio_types_t type;
+  gpio_types_t type;                                    /*!< Gpio type (digital, analog...) */
   union {
     digital_context_t digital;
     pwm_context_t pwm;                                  /*!< The PWM chip set number */
@@ -103,10 +109,22 @@ typedef struct {
   } types;
 } gpio_context;
 
+typedef struct { // FIXME analog_gpios & num_configured_analog_gpios seems to be useless for analog_read
+  gpio_context *analog_gpios[MAX_ANALOG_GPIO];          /*!< The analog GPIOs list */
+  uint8_t num_configured_analog_gpios;                  /*!< The number of analog GPIOs used */
+  uint32_t base_address;                                /*!< The ADC base address */
+  bool initialised;                                     /*!< Set to true if the ADC is initialised */
+  uint8_t sequencer;                                    /*!< The sequencer to be used */
+  uint32_t samples[8]; // Sequence 3 has a FIFO depth of 1
+                              // 8: maximal number of channels on  SS0
+} adc_configuration_;
+static uint32_t gpio_idx[8]; // Reused several times in the function
+                             // 8: maximal number of channels on  SS0
+
 static uint8_t is_initialised = FALSE;                  /*!< Indicate if the library was initialized by the process */
 static uint32_t sys_clock = 0;                          /*!< Indicate the configured system clock frequency in Hz */
-//static gpio_context * context_handles[MAX_GPIO_ID];   /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
 static gpio_context context_handles[MAX_GPIO_ID];       /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
+static adc_configuration_ adc_configuration;            /*!< adc configuration */
 //static uint64_t time_ms, time_us;                     /*!< Time for easy calculations */
 
 /**
@@ -114,15 +132,24 @@ static gpio_context context_handles[MAX_GPIO_ID];       /*!< context_handles: Ma
  * @brief Initialise internal time variables
  */
 static void initialise_time(void);
+/**
+ * @fn int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_gpio_access, const gpio_types_t p_gpio_type)
+ * @brief Create and initialise a new GPIO context
+ */
 static int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_gpio_access, const gpio_types_t p_gpio_type);
+/**
+ * @fn int32_t free_context(const pin_name p_gpio)
+ * @brief Free a new GPIO context
+ */
 static int32_t free_context(const pin_name p_gpio);
 static void pwm_update(gpio_context *p_gpio);
 static uint8_t gpio_to_index(const pin_name p_gpio);
 static void enable_adc_periph(const pin_name p_gpio);
-uint32_t gpio_to_pwm_output(const pin_name p_gpio);
-uint32_t gpio_to_pwm_pinmap(const pin_name p_gpio);
-uint32_t gpio_to_pwm_module(const pin_name p_gpio);
-uint32_t gpio_to_pwm_enable(const pin_name p_gpio);
+static void enable_adcs_periph(const pin_name * p_gpio, const uint32_t p_len);
+static uint32_t gpio_to_pwm_output(const pin_name p_gpio); // TODO Check if this function is really useful
+static uint32_t gpio_to_pwm_pinmap(const pin_name p_gpio); // TODO Check if this function is really useful
+static uint32_t gpio_to_pwm_module(const pin_name p_gpio); // TODO Check if this function is really useful
+static uint32_t gpio_to_pwm_enable(const pin_name p_gpio); // TODO Check if this function is really useful
 
 /**
  * @fn void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode)
@@ -136,12 +163,12 @@ int32_t libhal_setup(void)
   return libhal_setup_sys();
 }
 
-void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
+int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
 {
   /* Sanity check */
   uint8_t gpio_idx = gpio_to_index(p_gpio);
   if (gpio_idx > MAX_GPIO_ID) {
-    return;
+    return -1;
   }
 
   //  if (context_handles[gpio_idx] == NULL) {
@@ -152,19 +179,19 @@ void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
     case gpio_modes_digital_output:
       /* Allocation GPIO */
       if (create_new_context(p_gpio, gpio_access_weak, gpio_types_digital) < 0) {
-        return;
+        return -1;
       }
       break;
     case gpio_modes_pwm_output:
       /* Allocation GPIO */
       if (create_new_context(p_gpio, gpio_access_weak, gpio_types_pwm) < 0) {
-        return;
+        return -1;
       }
       break;
     case gpio_modes_adc_input:
       /* Allocation GPIO */
       if (create_new_context(p_gpio, gpio_access_weak, gpio_types_adc) < 0) {
-        return;
+        return -1;
       }
       break;
     case gpio_modes_clock:
@@ -211,7 +238,94 @@ void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
     break;
   } /* End of 'switch' statement */
 
-  return;
+  return 0;
+} /* End of function pin_mode */
+
+int32_t pins_mode(const pin_name * p_gpios, const uint8_t p_len, const gpio_modes_t p_mode)
+{
+  /* Sanity checks */
+  if (p_len == 1) {
+    return -1;
+  }
+
+  uint8_t gpio;
+  for (gpio = 0; gpio < p_len; gpio++) {
+    uint8_t gpio_idx = gpio_to_index(*(p_gpios + gpio));
+    if (gpio_idx > MAX_GPIO_ID) {
+      return -1;
+    }
+
+    if (context_handles[gpio_idx].gpio == NC) {
+      switch (p_mode) {
+      case gpio_modes_digital_input:
+        /* No break; */
+      case gpio_modes_digital_output:
+        /* Allocation GPIO */
+        if (create_new_context(*(p_gpios + gpio), gpio_access_weak, gpio_types_digital) < 0) {
+          return -1;
+        }
+        break;
+      case gpio_modes_pwm_output:
+        /* Allocation GPIO */
+        if (create_new_context(*(p_gpios + gpio), gpio_access_weak, gpio_types_pwm) < 0) {
+          return -1;
+        }
+        break;
+      case gpio_modes_adc_input:
+        /* Allocation GPIO */
+        if (create_new_context(*(p_gpios + gpio), gpio_access_weak, gpio_types_adc) < 0) {
+          return -1;
+        }
+        break;
+      case gpio_modes_clock:
+        /* TODO To be implemented */
+        break;
+      } /* End of 'switch' statement */
+    }
+
+    /* Set the direction */
+    switch (p_mode) {
+      case gpio_modes_digital_input:
+        /* Set gpio_modes_digital_input mode */
+        GPIOPinTypeGPIOInput(
+                            *(p_gpios + gpio) & 0xffffff00, /* Port register */
+                            *(p_gpios + gpio) & 0xff      /* Port number */
+                            );
+        break;
+      case gpio_modes_digital_output:
+        /* Set gpio_modes_digital_outut mode */
+        GPIOPinTypeGPIOOutput(
+                              *(p_gpios + gpio) & 0xffffff00, /* Port register */
+                              *(p_gpios + gpio) & 0xff      /* Port number */
+                              );
+        break;
+      case gpio_modes_adc_input:
+        // Processed outside
+        break;
+      case gpio_modes_pwm_output:
+        // Configure the GPIO for PWM
+        GPIOPinConfigure(gpio_to_pwm_pinmap(*(p_gpios + gpio)));
+        GPIOPinTypePWM(
+                       *(p_gpios + gpio) & 0xffffff00, /* Port register */
+                       *(p_gpios + gpio) & 0xff      /* Port number */
+                       );
+        // Configure the PWM generator for count down mode with immediate updates to the parameters
+        PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+        // Disable the PWM dead band output
+        PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)));
+        // Setup PWM module
+        pwm_update(&context_handles[gpio_idx]);
+        break;
+      case gpio_modes_clock:
+        /* TODO To be implemented */
+        break;
+    } /* End of 'switch' statement */
+  } // End of 'for' statement
+  if (p_mode == gpio_modes_adc_input) {
+    enable_adcs_periph(p_gpios, p_len);
+  }
+
+  return 0;
 } /* End of function pin_mode */
 
 int32_t pull_up_dn_control(const pin_name p_gpio, const pud_t p_pud) {
@@ -252,7 +366,6 @@ digital_state_t digital_read(const pin_name p_gpio) {
   }
 
   /* On-Board Pin */
-  //  if (context_handles[gpio_idx] == NULL) {
   if (context_handles[gpio_idx].gpio == NC) {
     /* Allocation GPIO */
     if (create_new_context(p_gpio, gpio_access_weak, gpio_types_digital) < 0) {
@@ -278,7 +391,6 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
     return;
   }
 
-  //  if (context_handles[gpio_idx] == NULL) {
   if (context_handles[gpio_idx].gpio == NC) {
     // Allocation GPIO
     if (create_new_context(p_gpio, gpio_access_weak, gpio_types_digital) < 0) {
@@ -332,7 +444,6 @@ void digital_toggle(const pin_name p_gpio) {
                (uint8_t)p_gpio & 0xff,        // Port number
                digital_state_low
               );
-
   return;
 }
 
@@ -403,38 +514,150 @@ int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor) {
 } // End of function pwm_set_clock
 
 float analog_read(const pin_name p_gpio) {
-  // Sanity check
+  /* Sanity checks */
+  uint8_t channel= 0;
   uint8_t gpio_idx = gpio_to_index(p_gpio);
   if (gpio_idx > MAX_GPIO_ID) {
     fprintf(stderr, "analog_read: Wrong parameter\n");
     return (float)LONG_MAX;
   }
 
-  //  if (context_handles[gpio_idx] == NULL) {
   if (context_handles[gpio_idx].gpio == NC) {
     // Allocation GPIO
     if (create_new_context(p_gpio, gpio_access_weak, gpio_types_adc) < 0) {
       return (float)LONG_MAX;
     }
-    // Set direction out
+    // Set GPIO pin mode
     pin_mode(p_gpio, gpio_modes_adc_input);
   }
 
+  // Setup the correct channel
+  if ((p_gpio & 0xffffff00) == GPIO_PORTE_BASE) {
+    switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+      case GPIO_PIN_0:
+        channel = ADC_CTL_CH3;
+        break;
+      case GPIO_PIN_1:
+        channel = ADC_CTL_CH2;
+        break;
+      case GPIO_PIN_2:
+        channel = ADC_CTL_CH1;
+        break;
+      case GPIO_PIN_3:
+        channel = ADC_CTL_CH0;
+        break;
+      case GPIO_PIN_4:
+        channel = ADC_CTL_CH9;
+        break;
+      case GPIO_PIN_5:
+        channel = ADC_CTL_CH8;
+        break;
+    } // End of 'switch' statement
+  } else if ((p_gpio & 0xffffff00) == GPIO_PORTB_BASE) {
+    switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+      case GPIO_PIN_4:
+        channel = ADC_CTL_CH10;
+        break;
+      case GPIO_PIN_5:
+        channel = ADC_CTL_CH11;
+        break;
+    } // End of 'switch' statement
+  }
+  ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, channel | ADC_CTL_IE | ADC_CTL_END);
+
   // Trigger the ADC conversion
-  ADCProcessorTrigger(ADC0_BASE, 3);
+  ADCProcessorTrigger(adc_configuration.base_address, 3);
   // Wait result
-  while(!ADCIntStatus(ADC0_BASE, 3, false));
+  while(!ADCIntStatus(adc_configuration.base_address, 3, false));
   // Clear the ADC interrupt flag.
-  ADCIntClear(ADC0_BASE, 3);
+  ADCIntClear(adc_configuration.base_address, 3);
   // Read ADC Value.
-  uint32_t sample[1]; // Sequence 3 has a FIFO depth of 1
-  if (ADCSequenceDataGet(ADC0_BASE, 3, sample) != 1) {
+  if (ADCSequenceDataGet(adc_configuration.base_address, 3, adc_configuration.samples) != 1) {
     return (float)LONG_MAX;
   }
 
   /* return value; */
-  float value = (float)(sample[0] & 0x0fff) * 3.3 / 4096.0; // See Tiva� TM4C1294NCPDT Microcontroller DATA SHEET Clause 15.3.4.1 Voltage Reference
+  float value = (float)(adc_configuration.samples[0] & 0x0fff) * 3.3 / 4096.0; // See Tiva� TM4C1294NCPDT Microcontroller DATA SHEET Clause 15.3.4.1 Voltage Reference
   return (float)value;
+} // End of function analogRead
+
+void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float *p_values) {
+  /* Sanity checks */
+  uint8_t gpio;
+  bool reconfigure = false;
+  for (gpio = 0; gpio < p_len; gpio++) {
+    *(p_values + gpio) = (float)LONG_MAX;
+    gpio_idx[gpio] = gpio_to_index(*(p_gpios + gpio));
+    if (gpio_idx[gpio] > MAX_GPIO_ID) {
+      fprintf(stderr, "analog_read: Wrong parameter\n");
+      return;
+    }
+    if (context_handles[gpio_idx[gpio]].gpio == NC) {
+      reconfigure = true; // Shall call pins_mode
+      // Allocation GPIO
+      if (create_new_context(*(p_gpios + gpio), gpio_access_weak, gpio_types_adc) < 0) {
+        return;
+      }
+    }
+  } // End of 'for' statement
+  if (reconfigure) {// Set GPIO pin mode
+    pins_mode(p_gpios, p_len, gpio_modes_adc_input);
+  }
+  // Setup the correct channel
+  for (gpio = 0; gpio < p_len; gpio++) {
+      if ((*(p_gpios + gpio) & 0xffffff00) == GPIO_PORTE_BASE) {
+        switch (*(p_gpios + gpio) & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+          case GPIO_PIN_0:
+            gpio_idx[gpio] = ADC_CTL_CH3;
+            break;
+          case GPIO_PIN_1:
+            gpio_idx[gpio] = ADC_CTL_CH2;
+            break;
+          case GPIO_PIN_2:
+            gpio_idx[gpio] = ADC_CTL_CH1;
+            break;
+          case GPIO_PIN_3:
+            gpio_idx[gpio] = ADC_CTL_CH0;
+            break;
+          case GPIO_PIN_4:
+            gpio_idx[gpio] = ADC_CTL_CH9;
+            break;
+          case GPIO_PIN_5:
+            gpio_idx[gpio] = ADC_CTL_CH8;
+            break;
+        } // End of 'switch' statement
+      } else if ((*(p_gpios + gpio) & 0xffffff00) == GPIO_PORTB_BASE) {
+        switch (*(p_gpios + gpio) & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+          case GPIO_PIN_4:
+            gpio_idx[gpio] = ADC_CTL_CH10;
+            break;
+          case GPIO_PIN_5:
+            gpio_idx[gpio] = ADC_CTL_CH11;
+            break;
+        } // End of 'switch' statement
+      }
+      ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, gpio_idx[gpio] | ADC_CTL_IE);
+  } // End of 'for' statement
+  // The last channel shall contain the flag ADC_CTL_END
+  ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, p_len - 1, gpio_idx[p_len - 1] | ADC_CTL_IE | ADC_CTL_END);
+
+  // Trigger the ADC conversion
+  ADCProcessorTrigger(adc_configuration.base_address, adc_configuration.sequencer);
+  // Wait result
+  while(!ADCIntStatus(adc_configuration.base_address, adc_configuration.sequencer, false));
+  // Clear the ADC interrupt flag.
+  ADCIntClear(adc_configuration.base_address, adc_configuration.sequencer);
+  // Read ADC Value.
+  if (ADCSequenceDataGet(adc_configuration.base_address, adc_configuration.sequencer, adc_configuration.samples) != 1) {
+    return;
+  }
+
+  /* convert values */
+  for (gpio = 0; gpio < p_len; gpio++) {
+    *(p_values + gpio) = (float)(adc_configuration.samples[gpio] & 0x0fff) * 3.3 / 4096.0; // See Tiva� TM4C1294NCPDT Microcontroller DATA SHEET Clause 15.3.4.1 Voltage Reference
+  } // End of 'for' statement
+
+  return;
 } // End of function analogRead
 
 void wait_ms(const uint32_t p_delay_ms)
@@ -503,7 +726,7 @@ int32_t board_revision(void) {
 int32_t libhal_setup_sys(void) {
   int32_t revision;
 
-  // Sanity check
+  /* Sanity checks */
   if (is_initialised == TRUE) {
     return -1;
   }
@@ -515,8 +738,10 @@ int32_t libhal_setup_sys(void) {
   initialise_time();
 
   // Initalize context_handles table
-  //  memset((void *)context_handles, 0x00, MAX_GPIO_ID * sizeof(gpio_context *));
   memset((void *)&context_handles, 0xff, sizeof(gpio_context) * MAX_GPIO_ID);
+
+  // Initalize adc_configuration table
+  memset((void *)&adc_configuration, 0x00, sizeof(adc_configuration));
 
   // Initialize interrupt handler
   /* memset((void *)&isr_fds, 0x00, sizeof(isr_fds)); */
@@ -568,7 +793,7 @@ int32_t libhal_failure(const uint8_t p_code, const char *p_message, ...) {
 int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_gpio_access, const gpio_types_t p_gpio_type) {
   gpio_context *gpio = NULL;
 
-  // Sanity checks
+  /* Sanity checks */
   uint8_t gpio_idx = gpio_to_index(p_gpio);
   if (gpio_idx > MAX_GPIO_ID) {
     return -1;
@@ -618,7 +843,7 @@ int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_gpio_acc
 int32_t free_context(const pin_name p_gpio) {
   //  gpio_context * gpio;
 
-  // Sanity checks
+  /* Sanity checks */
   uint8_t gpio_idx = gpio_to_index(p_gpio);
   if ((gpio_idx > MAX_GPIO_ID) || (context_handles[gpio_idx].gpio == NC/*context_handles[gpio_idx] == NULL*/)) {
     return -1;
@@ -804,58 +1029,144 @@ void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode) {
 }
 
 void enable_adc_periph(const pin_name p_gpio) {
+  uint8_t gpio_idx = gpio_to_index(p_gpio);
+
   switch (p_gpio & 0xffffff00) {
-  case GPIO_PORTE_BASE:
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
-    break;
-  case GPIO_PORTB_BASE:
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
-    break;
+    case GPIO_PORTE_BASE:
+    case GPIO_PORTB_BASE:
+      if (!adc_configuration.initialised) {
+        adc_configuration.initialised = true;
+        adc_configuration.base_address = ADC0_BASE; // TODO Check to use use ADC1_BASE or keep it for PWM?
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
+        while(!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0));
+        // Configure the ADC to use PLL at 480 MHz divided by 24 to get an ADC clock of 20 MHz
+        ADCClockConfigSet(adc_configuration.base_address, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, 24);
+        // Configures the trigger source and priority of a sample sequence
+        ADCSequenceConfigure(adc_configuration.base_address, 3, ADC_TRIGGER_PROCESSOR, 2/*Priotity between 0 & 3*/);
+        ADCReferenceSet(adc_configuration.base_address, ADC_REF_INT);
+      }
+      break;
   } // End of 'switch' statement
   GPIOPinTypeADC(
                  p_gpio & 0xffffff00, // Port register
                  p_gpio & 0xff        // Port number
                  );
-  // Configures the trigger source and priority of a sample sequence
-  ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
-
   // Setup the correct channel
   if ((p_gpio & 0xffffff00) == GPIO_PORTE_BASE) {
     switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
       case GPIO_PIN_0:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH3 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH3); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_1:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH2 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH2); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_2:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH1); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_3:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH0); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_4:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH9 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH9); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_5:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 8, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH8); // | ADC_CTL_IE | ADC_CTL_END);
         break;
     } // End of 'switch' statement
   } else if ((p_gpio & 0xffffff00) == GPIO_PORTB_BASE) {
     switch (p_gpio & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
       case GPIO_PIN_4:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH10 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH10); // | ADC_CTL_IE | ADC_CTL_END);
         break;
       case GPIO_PIN_5:
-        ADCSequenceStepConfigure(ADC0_BASE, 3, 8, ADC_CTL_CH11 | ADC_CTL_IE | ADC_CTL_END);
+        ADCSequenceStepConfigure(adc_configuration.base_address, 3, 0, ADC_CTL_CH11); // | ADC_CTL_IE | ADC_CTL_END);
         break;
     } // End of 'switch' statement
   }
   // Since sample sequence 3 is now configured, it must be enabled.
-  ADCSequenceEnable(ADC0_BASE, 3);
+  ADCSequenceEnable(adc_configuration.base_address, 3);
 
   // Clear the interrupt status flag.  This is done to make sure the interrupt flag is cleared before we sample.
-  ADCIntClear(ADC0_BASE, 3);
+  ADCIntClear(adc_configuration.base_address, 3);
+}
+
+void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
+  // Select the correct sequencer
+  uint8_t gpio;
+  for (gpio = 0; gpio < p_len; gpio++) {
+    adc_configuration.analog_gpios[adc_configuration.num_configured_analog_gpios] = &context_handles[gpio_to_index(*(p_gpios + gpio))];
+    adc_configuration.num_configured_analog_gpios += 1;
+  } // End of 'for' statement
+  switch (adc_configuration.num_configured_analog_gpios) {
+    case 4:
+      adc_configuration.sequencer = 2;
+      break;
+    default:
+      adc_configuration.sequencer = 0;
+      break;
+  } // End of 'switch' staement
+  // Setup ADC peripheral
+  for (gpio = 0; gpio < p_len; gpio++) {
+    switch (*(p_gpios + gpio) & 0xffffff00) {
+      case GPIO_PORTE_BASE:
+      case GPIO_PORTB_BASE:
+        if (!adc_configuration.initialised) {
+          adc_configuration.initialised = true;
+          adc_configuration.base_address = ADC0_BASE; // TODO Check to use use ADC1_BASE or keep it for PWM?
+          SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
+          while(!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0));
+          // Configure the ADC to use PLL at 480 MHz divided by 24 to get an ADC clock of 20 MHz
+          ADCClockConfigSet(adc_configuration.base_address, ADC_CLOCK_SRC_PLL | ADC_CLOCK_RATE_FULL, 24);
+          // Configures the trigger source and priority of a sample sequence
+          ADCSequenceConfigure(adc_configuration.base_address, adc_configuration.sequencer, ADC_TRIGGER_PROCESSOR, 2/*Priotity between 0 & 3*/);
+        }
+        break;
+    } // End of 'switch' statement
+    GPIOPinTypeADC(
+                   *(p_gpios + gpio) & 0xffffff00, // Port register
+                   *(p_gpios + gpio) & 0xff        // Port number
+                   );
+  } // End of 'for' statement
+
+  // Setup the channels
+  for (gpio = 0; gpio < p_len; gpio++) {
+    if ((*(p_gpios + gpio) & 0xffffff00) == GPIO_PORTE_BASE) {
+      switch (*(p_gpios + gpio) & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+        case GPIO_PIN_0:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH3); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_1:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH2); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_2:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH1); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_3:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH0); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_4:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH9); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_5:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH8); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      } // End of 'switch' statement
+    } else if ((*(p_gpios + gpio) & 0xffffff00) == GPIO_PORTB_BASE) {
+      switch (*(p_gpios + gpio) & 0xff) { // GPIO_PORTE_BASE TODO Add support for other port
+        case GPIO_PIN_4:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH10); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+        case GPIO_PIN_5:
+        ADCSequenceStepConfigure(adc_configuration.base_address, adc_configuration.sequencer, gpio, ADC_CTL_CH11); // | ADC_CTL_IE | ADC_CTL_END);
+        break;
+      } // End of 'switch' statement
+    }
+  } // End of 'for' statement
+  // Since sample sequence 3 is now configured, it must be enabled.
+  ADCSequenceEnable(adc_configuration.base_address, adc_configuration.sequencer);
+
+  // Clear the interrupt status flag.  This is done to make sure the interrupt flag is cleared before we sample.
+  ADCIntClear(adc_configuration.base_address, adc_configuration.sequencer);
 }
 
 uint32_t gpio_to_pwm_output(const pin_name p_gpio) {

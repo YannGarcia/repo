@@ -67,6 +67,7 @@ typedef enum {
   A2 = GPIO_PORTE_BASE | GPIO_PIN_1, /* MCU pin #14 */
   A3 = GPIO_PORTE_BASE | GPIO_PIN_0, /* MCU pin #15 */
 
+  A8 = GPIO_PORTE_BASE | GPIO_PIN_5, /* MCU pin #124 */
   A9 = GPIO_PORTE_BASE | GPIO_PIN_4, /* MCU pin #123 */
 
   SDA0 = GPIO_PORTB_BASE | GPIO_PIN_3,

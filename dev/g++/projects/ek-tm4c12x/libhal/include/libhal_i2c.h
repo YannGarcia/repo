@@ -125,7 +125,7 @@ extern "C" {
    * @param[in] p_fd The file descriptor to close
    * @return 0 on success, -1 otherwise
    */
-  int32_t libhal_i2c_close(const int32_t p_fd);
+  extern int32_t libhal_i2c_close(const int32_t p_fd);
 
 #ifdef __cplusplus
 }

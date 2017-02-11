@@ -30,6 +30,15 @@
 #define L_GREEN    p45
 #define L_BLUE     p49
 #define LIGHT_INT  p22 /** TI OPT3001 Light Sensor on BOOSTXL-EDUMKII Educational BoosterPack™ Mark II Plug-in Module See SLAU599–August 2015 Clause 2.1.2 TI OPT3001 Light Sensor */
+
+#define J_SW       p23 /** Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_X        A9  /** Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_Y        A0  /** Horizontal Y-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+
+#define A_X        A3
+#define A_Y        A2
+#define A_Z        A1
+
 /** @} */
 
 /**
@@ -82,6 +91,21 @@ int32_t main(void) {
   wait_us(1);
   // Read High Limit
   data = libhal_i2c_read_register16(i2c0, 0x03); // See SBOS681B –JULY 2014–REVISED DECEMBER 2014 Clause 7.6.1 Internal Registers
+  wait_us(1);
+  debug_state += 1;
+  set_debug_state(debug_state);
+
+  // Setup Joystick
+  pin_mode(J_SW, gpio_modes_digital_input);
+  pin_mode(J_X, gpio_modes_adc_input);
+  pin_mode(J_Y, gpio_modes_adc_input);
+  float j_x = analog_read(J_X);
+  float j_y = analog_read(J_Y);
+  // Setup accelerator
+  const pin_name acc_pins[3] = {A_X, A_Y, A_Z};
+  float values[3] = {0};
+  pins_mode(acc_pins, 3, gpio_modes_adc_input);
+  analog_multiple_read(acc_pins, 3, values);
   debug_state += 1;
   set_debug_state(debug_state);
 
@@ -90,6 +114,8 @@ int32_t main(void) {
 
     /* Wait event on Switch1 */
     while (digital_read(SW2) == digital_state_low);
+    /* wait for 70 ms for button debouncing */
+    wait_ms(70);
 
     /* Increment debug_state */
     debug_state = (debug_state + 1) % 8;
@@ -103,8 +129,11 @@ int32_t main(void) {
 //    digital_toggle(L_BLUE); // Marker between two I2C transactions
     serial_printf(uart0, "Light sensor value: %d\r\n", data);
 
-    /* wait for 50 ms for button debouncing */
-    wait_ms(50);
+    j_x = analog_read(J_X);
+    j_y = analog_read(J_Y);
+    serial_printf(uart0, "Joystick position: (%f, %f)\r\n", j_x, j_y);
+    analog_multiple_read(acc_pins, 3, values);
+    serial_printf(uart0, "Accelerator (X, Y, Z): (%f, %f, %f)\r\n", values[0], values[2], values[2]);
   } /* End of 'while' statement */
 
   return 0;
