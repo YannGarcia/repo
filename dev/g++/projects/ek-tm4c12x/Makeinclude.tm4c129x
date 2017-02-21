@@ -1,0 +1,64 @@
+############################################################################
+#
+#       Makefile for TI TIVA C Series TM4C129x cross-compiler.
+#
+#ident  "$Id$"
+#
+#############################################################################
+
+#############################################################################
+# Compiler CPU/FPU options.
+#############################################################################
+TARGET_IS=TM4C129_RA1
+CPU=-mcpu=cortex-m4
+FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+
+#############################################################################
+# Flags to pass to the compiler.
+#############################################################################
+GLOBAL_DEF_GCC= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(TARGET_IS) \
+	-D$(PART)_BOARD \
+	-Dgcc \
+	-c \
+	-Os \
+	-I$(TIVA_C_PATH) 
+
+GLOBAL_DEF_GCC_DEBUG= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(TARGET_IS) \
+	-D$(PART)_BOARD \
+	-DDEBUG \
+	-Dgcc \
+	-c \
+	-g \
+	-O0 \
+	-I$(TIVA_C_PATH) 
+
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/fpu -lm -lc -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu -lgcc
+GLOBAL_DEF_STD_GLD_DEBUG=$(GLOBAL_DEF_STD_GLD)
+ 
+#############################################################################
+# Startup code for GCC cross compiler.
+#############################################################################
+STARTUP_GCC=startup_gcc_tm4c129x.c
+STARTUP_GCC_OBJ=startup_gcc_tm4c129x.o
