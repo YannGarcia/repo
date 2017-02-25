@@ -111,9 +111,9 @@ fi
 
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
-if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
+export TTCN3_DIR=${TOP}/Install
+if [ -d ${TTCN3_DIR} ]
 then
-    export TTCN3_DIR=${TOP}/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
