@@ -618,13 +618,13 @@ static unique_ptr<Test::Output> cmdline(int p_argc, char* p_argv[]) {
  * @param[in] p_argv List of the arguments
  */
 int main(int p_argc, char* p_argv[]) {
-  cout << "Warning, some test required the launch in another session some netcast UDP and TCP listener" << endl;
+  cout << "Warning, some test required to launch in another terminal some netcast UDP and TCP listener" << endl;
   try {
     Test::Suite ts;
-    ts.add(unique_ptr<Test::Suite>(new socket_address_test_suite));
+    //ts.add(unique_ptr<Test::Suite>(new socket_address_test_suite));
     //ts.add(unique_ptr<Test::Suite>(new channel_manager_udp_test_suite));
-    // ts.add(unique_ptr<Test::Suite>(new channel_manager_t_udp_test_suite));
-    // ts.add(unique_ptr<Test::Suite>(new channel_manager_tcp_test_suite));
+    //ts.add(unique_ptr<Test::Suite>(new channel_manager_t_udp_test_suite));
+    ts.add(unique_ptr<Test::Suite>(new channel_manager_tcp_test_suite));
 
     // Run the tests
     unique_ptr<Test::Output> output(cmdline(p_argc, p_argv));

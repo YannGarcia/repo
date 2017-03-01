@@ -21,6 +21,8 @@ namespace comm {
   namespace network {
 
     ipv4_socket::ipv4_socket(const socket_address & p_remote_address, const channel_type p_type) {
+      std::clog << ">>> ipv4_socket::ipv4_socket: " << p_remote_address.to_string() << " - " <<  static_cast<unsigned int>(p_type) << std::endl;
+
       uint32_t proto;
       uint32_t type;
       _type = p_type;
@@ -54,20 +56,22 @@ namespace comm {
       // Construct the remote sockaddr_in structure
       ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
       _remote.sin_family = PF_INET;
-      ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
       _remote.sin_port = htons(p_remote_address.port());
+      ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
       // Reset _host, note used
       ::memset((void *)&_host, 0x00, sizeof(_host));
     } // End of ctor
 
     ipv4_socket::ipv4_socket(const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) : ipv4_socket(p_remote_address, p_type) {
+      std::clog << ">>> ipv4_socket::ipv4_socket: " << p_host_address.to_string() << " - " << p_remote_address.to_string() << " - " << static_cast<unsigned int>(p_type) << std::endl;
+
       // Construct the host sockaddr_in structure
       ::memset((void *)&_host, 0x00, sizeof(struct sockaddr_in));
       _host.sin_family = PF_INET;
       ::memcpy((void *)&_host.sin_addr, p_host_address.addr(), p_host_address.length());
       _host.sin_port = htons(p_host_address.port());
     } // End of ctor
-
+    
     ipv4_socket::~ipv4_socket() {
       close();
       ::memset((void *)&_host, 0x00, sizeof(_host));
@@ -99,7 +103,7 @@ namespace comm {
     }
     
     const int32_t ipv4_socket::bind() const {
-      // std::clog << ">>> ipv4_socket::bind: " << _socket << std::endl;
+      std::clog << ">>> ipv4_socket::bind: " << _socket << std::endl;
 
       if (::bind(_socket, reinterpret_cast<const struct sockaddr *>(&_host), sizeof(struct sockaddr)) == -1) {
 	return process_result();
@@ -109,7 +113,7 @@ namespace comm {
     } // End of bind
     
     const int32_t ipv4_socket::listen(const uint32_t p_backlog) const {
-      // std::clog << ">>> ipv4_socket::listen: " << _socket << ", " << p_backlog << std::endl;
+      std::clog << ">>> ipv4_socket::listen: " << _socket << ", " << p_backlog << std::endl;
 
       if (::listen(_socket, p_backlog) == -1) {
 	return process_result();

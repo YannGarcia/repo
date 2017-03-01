@@ -18,7 +18,7 @@ namespace comm {
       if (p_host_address.is_ipv4()) {
 	_socket.reset(static_cast<ipvx_socket *>(new ipv4_socket(p_host_address, p_type)));
       } else {
-	  _socket.reset(static_cast<ipvx_socket *>(new ipv6_socket(p_host_address, p_type)));
+	_socket.reset(static_cast<ipvx_socket *>(new ipv6_socket(p_host_address, p_type)));
       }
     } // End of ctor
 
