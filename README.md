@@ -70,9 +70,15 @@ Here is a list of the tools I use to develop my projects:
     7. C++ test unit framework
         - cpptest: http://cpptest.sourceforge.net/
 	           CppTest is released under the GNU Lesser General Public License
-	  NOTE For MAC OS X, I have to use the following configure settings
-	  ```
-	  ./configure CC=gcc-6 CXX=g++-6 AR=/usr/bin/ar
-	  ```
-	  
+	  NOTE For MAC OS X, I had to use the following configure settings
+	       ```
+	       ./configure CC=gcc-6 CXX=g++-6 AR=/usr/bin/ar
+	       ```
+	       For raspberry pi, I had to use the following configure settings
+	       ```
+	       ./configure CXXFLAGS="-g -O2 -std=c++11"
+	       ```
+	       I had also to replace std::auto_ptr by std::unique_ptr (in <memory>)
+	       
+	       
 That's all Folks
