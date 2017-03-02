@@ -35,7 +35,17 @@ namespace logger {
     struct timeval _timeval;
     
   public:
+    /**
+     * @brief Constructor
+     *        Create a new instance of the logger class
+     * @param[in] p_logger_name         The name of this instance of the logger class 
+     * @param[in] p_file_name           The full path name to store logs
+     * @param[in] p_logger_level_filter The authorised log level
+     */
     logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::info) : _name(p_logger_name), _os(p_file_name, std::ofstream::out | std::ofstream::trunc), _levels(p_logger_level_filter), _timestamp() { if (!_os.is_open()) throw std::runtime_error("logger::logger: Failed to open log file"); };
+    /**
+     * @brief Destructor
+     */
     virtual ~logger() { _os.close(); };
 
     inline bool is_trace_set() { return ((_levels & logger_levels_t::trace) != 0x00); };

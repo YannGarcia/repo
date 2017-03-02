@@ -1,16 +1,15 @@
 /**
- * @File    logger.cpp
- * @brief   Implementation header file for the lightweight logger library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @File      logger.cpp
+ * @brief     Implementation header file for the lightweight logger library.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include "logger.h"
 
 namespace logger {
 
-  
   const std::string & logger::get_timestamp() {
     static const char mon_name[][4] = {
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",

@@ -111,6 +111,7 @@ fi
 
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
+export TTCN3_DIR=${TOP}/Install
 if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
 then
     export TTCN3_DIR=${TOP}/Install
@@ -135,6 +136,7 @@ alias cc='gcc-6'
 alias g++='g++-6'
 alias c++='c++-6'
 alias ar='gcc-ar-6'
-alias pi='ssh pi@192.168.1.35'
+alias pi='ssh pi@192.168.1.36'
 alias chip='ssh chip@192.168.1.27'
 alias bbb='ssh debian@192.168.1.21'
+alias imac='ssh yann@192.168.1.46'

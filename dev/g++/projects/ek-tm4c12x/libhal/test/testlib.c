@@ -2,7 +2,7 @@
  * @file      main.c
  * @brief     Application to validate libhal libary
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   1.0
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
@@ -57,6 +57,7 @@ int32_t main(void) {
   int32_t uart0;           /** UART handle */
   int32_t i2c0;            /** I2C bus 0 handle */
   uint32_t counter = 0;    /** Counter */
+  char float2str[64];
 
   /* Initialise the HAL */
   libhal_setup();
@@ -114,8 +115,8 @@ int32_t main(void) {
 
     /* Wait event on Switch1 */
     while (digital_read(SW2) == digital_state_low);
-    /* wait for 70 ms for button debouncing */
-    wait_ms(70);
+    /* wait for 170 ms for button debouncing */
+    wait_ms(170);
 
     /* Increment debug_state */
     debug_state = (debug_state + 1) % 8;
@@ -131,7 +132,10 @@ int32_t main(void) {
 
     j_x = analog_read(J_X);
     j_y = analog_read(J_Y);
-    serial_printf(uart0, "Joystick position: (%f, %f)\r\n", j_x, j_y);
+    ftoa(j_x, float2str);
+    serial_printf(uart0, "Joystick position: (%s, ", float2str);
+    ftoa(j_y, float2str);
+    serial_printf(uart0, "%s)\r\n", float2str);
     analog_multiple_read(acc_pins, 3, values);
     serial_printf(uart0, "Accelerator (X, Y, Z): (%f, %f, %f)\r\n", values[0], values[2], values[2]);
   } /* End of 'while' statement */

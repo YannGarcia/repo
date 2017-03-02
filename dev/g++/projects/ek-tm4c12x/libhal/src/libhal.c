@@ -2,6 +2,7 @@
  * @file    libhal.c
  * @brief   Main implementation file for the Hardware Abstract Layer library.
  * @author  garciay.yann@gmail.com
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license This project is released under the MIT License
  * @version 0.1
  * @see Tiva™ TM4C129ENCPDT Microcontroller
@@ -702,6 +703,10 @@ uint32_t elapse_us(void) {
 
 uint32_t get_sys_clock_freq(void) {
   return sys_clock;
+}
+
+int64_t map(int64_t p_value, int64_t p_in_min, int64_t p_in_max, int64_t p_out_min, int64_t p_out_max) {
+  return (p_value - p_in_min) * (p_out_max - p_out_min) / (p_in_max - p_in_min) + p_out_min;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

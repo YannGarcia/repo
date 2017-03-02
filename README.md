@@ -6,12 +6,14 @@ Welcome to my working repository for all my electronics projects & developments
 ## Introduction
 This repository contains all my staff regarding embedded development for different kind of hardware
 
-    1. Hardware Linux based:
+    1. OS development environment to co compile or cross-compile projects (see bash_profiles README)
+	
+    2. Hardware Linux based:
         - Raspberry PI
         - BeagleBone
         - NewThing C.H.I.P
 	
-    2. BareMetal Hardware:
+    3. BareMetal Hardware:
         - MBED, based on LPC1768FBD100
         - TI LanchPad TM4C1xxx
         - TI LaunchPad MSP432P01
@@ -65,4 +67,12 @@ Here is a list of the tools I use to develop my projects:
     6. Code documentation
     	- Doxygen
 
+    7. C++ test unit framework
+        - cpptest: http://cpptest.sourceforge.net/
+	           CppTest is released under the GNU Lesser General Public License
+	  NOTE For MAC OS X, I have to use the following configure settings
+	  ```
+	  ./configure CC=gcc-6 CXX=g++-6 AR=/usr/bin/ar
+	  ```
+	  
 That's all Folks

@@ -7,7 +7,6 @@
 #############################################################################
 
 include $(PATH_DEV)/Makefile.inc
-LD=g++
 
 #############################################################################
 # Override CC, CCP and LD in case of cross compiler
@@ -243,10 +242,11 @@ help:
 	@echo "   run_d        : Build and execute the test application in debug mode."
 	@echo "   run_v        : Build and execute the test application in debug mode, using Valgrind."
 	@echo "   dist         : Build a compressed archive of the applicatione."
-	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
+	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."
+	@echo "   gcc version  : $(shell $(CCP) -v)"
 	@echo
 	@echo "Without option it compilates in optimized mode."
 	@echo
@@ -256,8 +256,3 @@ help:
 # Dependencies sections.
 
 # DO NOT DELETE
-
-
-
-
-

@@ -2,7 +2,7 @@
  * @file      libhal_serial.h
  * @brief     Main header file for the Serial Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
@@ -76,6 +76,8 @@ extern "C" {
    * @remark This function will time-out after 10 seconds (\see serial_open)
    */
   extern int32_t serial_get_char(const int32_t p_fd);
+  extern void itoa(long unsigned int value, char* result, int base);
+  extern void ftoa(float Value, char* Buffer);
 
 #ifdef __cplusplus
 }

@@ -2,7 +2,7 @@
  * @file      libhal.h
  * @brief     Main header file for the Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
@@ -260,6 +260,13 @@ extern "C" {
    * @return The current system clock frequency in Hz
    */
   extern uint32_t get_sys_clock_freq(void);
+
+  /**
+   * @fn int64_t map(int64_t p_value, int64_t p_in_min, int64_t p_in_max, int64_t p_out_min, int64_t p_out_max)
+   * @brief Re-maps a number from one range to another
+   * @return The re-mapped value
+   */
+  extern int64_t map(int64_t p_value, int64_t p_in_min, int64_t p_in_max, int64_t p_out_min, int64_t p_out_max);
 
 #ifdef __cplusplus
 }

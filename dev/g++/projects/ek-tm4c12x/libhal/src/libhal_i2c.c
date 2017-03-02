@@ -2,7 +2,7 @@
  * @file      libhal_i2c.c
  * @brief     Implementation file for the I2C Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  */

@@ -1,4 +1,4 @@
-#logger
+#logger framework for embedded application
 
 This is a basic lightweight logger framework to be used in embedded application running on hardware such as raspberry or BeagleBone.
 
@@ -9,6 +9,9 @@ The logger framework provides the following features
 * Date/Time stamped output
 * File output
 * A logger factory provides a unique access to the 'named' logger instances
+
+##Documentation
+In a terminal, execute the command make gendoc to generate the documentation
 
 ##Usage
 The logger framework is quite simple to use and very intuitive.
