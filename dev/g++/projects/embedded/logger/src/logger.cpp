@@ -10,26 +10,58 @@
 
 namespace logger {
 
+  void logger::set_start_time() {
+    ::gettimeofday(&_start_time_val, NULL);
+    _time = _start_time_val.tv_sec;
+    _start_time = ::localtime(&_time);
+  }
+  
   const std::string & logger::get_timestamp() {
     static const char mon_name[][4] = {
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
-    static char _buffer[26];
-    ::gettimeofday(&_timeval, NULL);
-    _time = _timeval.tv_sec;
+    static char _buffer[32];
+    ::gettimeofday(&_time_val, NULL);
+    _time = _time_val.tv_sec;
     _tm = ::localtime(&_time);
-    ::sprintf(
-	      _buffer,
-	      "%4d/%.3s/%02d %02d:%02d:%02d.%06ld",
-	      _tm->tm_year + 1900,
-	      mon_name[_tm->tm_mon],
-	      _tm->tm_mday,
-	      _tm->tm_hour,
-	      _tm->tm_min,
-	      _tm->tm_sec,
-	      _timeval.tv_usec
-	      );
+    if (_time_format == logger_time_formats_t::seconds) {
+      struct timeval diff = {0};
+      if (_time_val.tv_usec < _start_time_val.tv_usec) {
+	diff.tv_sec = _tm->tm_sec - _start_time->tm_sec - 1;
+	diff.tv_usec = _time_val.tv_usec + (1000000L - _start_time_val.tv_usec);
+      } else {
+	diff.tv_sec = _tm->tm_sec - _start_time->tm_sec;
+	diff.tv_usec = _time_val.tv_usec - _start_time_val.tv_usec;
+      }
+      ::sprintf(
+		_buffer,
+		"%ld.%06ld",
+		diff.tv_sec,
+		diff.tv_usec
+		);
+    } else if (_time_format == logger_time_formats_t::time) {
+      ::sprintf(
+		_buffer,
+		"%02d:%02d:%02d.%06ld",
+		_tm->tm_hour,
+		_tm->tm_min,
+		_tm->tm_sec,
+		_time_val.tv_usec
+		);
+    } else {
+      ::sprintf(
+		_buffer,
+		"%4d/%.3s/%02d %02d:%02d:%02d.%06ld",
+		_tm->tm_year + 1900,
+		mon_name[_tm->tm_mon],
+		_tm->tm_mday,
+		_tm->tm_hour,
+		_tm->tm_min,
+		_tm->tm_sec,
+		_time_val.tv_usec
+		);
+    }
     _timestamp.assign(_buffer);
     
     return _timestamp;

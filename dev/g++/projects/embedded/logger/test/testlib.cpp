@@ -45,6 +45,11 @@ private:
 
     TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log"));
     TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log"));
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_trace_set() == false);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_debug_set() == false);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_info_set() == true);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_warning_set() == true);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_error_set() == true);
   }
   
   /**
@@ -52,13 +57,13 @@ private:
    * @see logger::logger_factory
    */
   void test_logger_2() {
-    std::string s("logger1");
+    std::string s("logger2");
     TEST_THROWS_NOTHING(logger_factory::get_instance());
 
-    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger2.log"));
     
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger info"));
-    TEST_THROWS(logger_factory::get_instance().get_logger(std::string("logger2")).info("Test logger"), std::invalid_argument);
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger2 info"));
+    TEST_THROWS_MSG(logger_factory::get_instance().get_logger(std::string("logger")).info("Test logger"), std::invalid_argument, "logger_factory::get_logger");
   }
   
   /**
@@ -66,16 +71,16 @@ private:
    * @see logger::logger_factory
    */
   void test_logger_3() {
-    std::string s("logger1");
+    std::string s("logger3");
     TEST_THROWS_NOTHING(logger_factory::get_instance());
 
-    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger3.log"));
     
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).trace("Test logger trace"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).debug("Test logger debug"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger info"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).warning("Test logger warning"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).error(std::string("Test logger error")));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).trace("Test logger3 trace"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).debug("Test logger3 debug"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger3 info"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).warning("Test logger3 warning"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).error(std::string("Test logger3 error")));
   }
   
   /**
@@ -83,16 +88,22 @@ private:
    * @see logger::logger_factory
    */
   void test_logger_4() {
-    std::string s("logger1");
+    std::string s("logger4");
     TEST_THROWS_NOTHING(logger_factory::get_instance());
 
-    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log", logger_levels_t::trace));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger4.log", logger_levels_t::trace, logger_time_formats_t::time));
     
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).trace("Test logger trace"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).debug("Test logger debug"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger info"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).warning("Test logger warning"));
-    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).error(std::string("Test logger error")));
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_trace_set() == true);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_debug_set() == false);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_info_set() == false);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_warning_set() == false);
+    TEST_ASSERT(logger_factory::get_instance().get_logger(s).is_error_set() == false);
+
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).trace("Test logger4 trace"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).debug("Test logger4 debug"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).info("Test logger4 info"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).warning("Test logger4 warning"));
+    TEST_THROWS_NOTHING(logger_factory::get_instance().get_logger(s).error(std::string("Test logger4 error")));
   }
   
   /**
@@ -100,10 +111,10 @@ private:
    * @see logger::logger_factory
    */
   void test_logger_5() {
-    std::string s("logger1");
+    std::string s("logger5");
     TEST_THROWS_NOTHING(logger_factory::get_instance());
 
-    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log", logger_levels_t::trace));    
+    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger5.log", logger_levels_t::trace));    
     TEST_THROWS_NOTHING(logger_factory::get_instance().remove_logger(s));
     TEST_THROWS(logger_factory::get_instance().get_logger(s), std::invalid_argument);
   }
@@ -113,9 +124,9 @@ private:
    *        Variable arguments
    */
   void test_logger_6() {
-    std::string s("logger1");
-    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger1.log", logger_levels_t::trace | logger_levels_t::error));
-    logger_factory::get_instance().get_logger(s).error("This a multiple variable error: %d - %s", 666, "The devil is in the details");
+    std::string s("logger6");
+    TEST_THROWS_NOTHING(logger_factory::get_instance().add_logger(s, "/tmp/logger6.log", logger_levels_t::trace | logger_levels_t::error));
+    logger_factory::get_instance().get_logger(s).error("Test logger6: This a multiple variable error: %d - %s", 666, "The devil is in the details");
     TEST_THROWS_NOTHING(logger_factory::get_instance().remove_logger(s));
   }
   
@@ -189,6 +200,8 @@ int main(int p_argc, char* p_argv[]) {
     cout << "unexpected exception encountered\n";
     return EXIT_FAILURE;
   }
-  
+
+  cout << "Please, do not forget to remove /tmp/logger<n>.log after checks" << endl;
+  system("for i in `ls /tmp/logger*.log`; do cat $i; done");
   return EXIT_SUCCESS;
 }

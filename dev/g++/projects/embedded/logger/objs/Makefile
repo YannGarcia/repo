@@ -95,8 +95,9 @@ LOGGER_OBJ=logger.o
 LOGGER_FACTORY_INC=logger_factory.h
 LOGGER_INC=logger.h
 LOGGER_LEVELS_INC=logger_levels.h
+LOGGER_TIME_FORMATS_INC=logger_time_formats.h
 
-INC_MODULES=$(LOGGER_FACTORY_INC) $(LOGGER_INC) $(LOGGER_LEVELS_INC)
+INC_MODULES=$(LOGGER_FACTORY_INC) $(LOGGER_INC) $(LOGGER_LEVELS_INC) $(LOGGER_TIME_FORMATS_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -195,6 +196,9 @@ ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_FACTORY_INC)))
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_LEVELS_INC)))
 	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_LEVELS_INC) $(HOME_INC)/$(LOGGER_LEVELS_INC)
+endif
+ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_TIME_FORMATS_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_TIME_FORMATS_INC) $(HOME_INC)/$(LOGGER_TIME_FORMATS_INC)
 endif
 	@echo "*** $@ done ***"
 

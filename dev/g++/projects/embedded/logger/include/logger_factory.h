@@ -52,10 +52,13 @@ namespace logger {
 
     /**
      * @brief Register a new named logger instance
-     * @param[in] p_logger_name The logger instance name
+     * @param[in] p_logger_name         The name of this instance of the logger class 
+     * @param[in] p_file_name           The full path name to store logs
+     * @param[in] p_logger_level_filter The authorised log level. Default: logger_levels_t::info | logger_levels_t::warning | logger_levels_t::error
+     * @param[in] p_logger_time_format  The timestamp format to use. Default: logger_time_formats_t::datetime
      * @remark If the logger named already exists, nothing is done 
      */
-    inline void add_logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::info | logger_levels_t::warning | logger_levels_t::error);
+    inline void add_logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::info | logger_levels_t::warning | logger_levels_t::error, const logger_time_formats_t p_logger_time_format = logger_time_formats_t::datetime);
     
     /**
      * @brief Unregister an existing named logger instance
@@ -75,10 +78,10 @@ namespace logger {
     return *_loggers.at(it->first);
   };
   
-  void logger_factory::add_logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter) {
+  void logger_factory::add_logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter, const logger_time_formats_t p_logger_time_format) {
     std::map<std::string, std::shared_ptr<logger> >::iterator it = _loggers.find(p_logger_name);
     if (it == _loggers.end()) {
-      _loggers.insert(std::pair<std::string, std::shared_ptr<logger> >(p_logger_name, std::shared_ptr<logger>(new logger(p_logger_name, p_file_name, p_logger_level_filter))));
+      _loggers.insert(std::pair<std::string, std::shared_ptr<logger> >(p_logger_name, std::shared_ptr<logger>(new logger(p_logger_name, p_file_name, p_logger_level_filter, p_logger_time_format))));
     }
   };
   

@@ -18,6 +18,7 @@
 #include <sys/time.h>
 
 #include "logger_levels.h"
+#include "logger_time_formats.h"
 
 namespace logger {
 
@@ -29,10 +30,13 @@ namespace logger {
     std::string _name;
     std::ofstream _os;
     uint8_t _levels;
+    uint8_t _time_format;
     std::string _timestamp;
+    struct timeval _start_time_val;
+    struct tm *_start_time;
     time_t _time;
     struct tm * _tm;
-    struct timeval _timeval;
+    struct timeval _time_val;
     
   public:
     /**
@@ -40,9 +44,10 @@ namespace logger {
      *        Create a new instance of the logger class
      * @param[in] p_logger_name         The name of this instance of the logger class 
      * @param[in] p_file_name           The full path name to store logs
-     * @param[in] p_logger_level_filter The authorised log level
+     * @param[in] p_logger_level_filter The authorised log level. Default: logger_levels_t::error
+     * @param[in] p_logger_time_format  The timestamp format to use. Default: logger_time_formats_t::datetime
      */
-    logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::info) : _name(p_logger_name), _os(p_file_name, std::ofstream::out | std::ofstream::trunc), _levels(p_logger_level_filter), _timestamp() { if (!_os.is_open()) throw std::runtime_error("logger::logger: Failed to open log file"); };
+  logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::error, const logger_time_formats_t p_logger_time_format = logger_time_formats_t::datetime) : _name(p_logger_name), _os(p_file_name, std::ofstream::out | std::ofstream::trunc), _levels(p_logger_level_filter), _time_format(p_logger_time_format), _timestamp(), _start_time(NULL), _tm(NULL) { if (!_os.is_open()) throw std::runtime_error("logger::logger: Failed to open log file"); };
     /**
      * @brief Destructor
      */
@@ -66,6 +71,8 @@ namespace logger {
     void warning(const char * p_fmt, ...);
     void error(const char * p_fmt, ...);
 
+    void set_start_time();
+    
   private:
     inline void log(const logger_levels_t p_level, const std::string & p_string) { _os << get_timestamp() << " logger " << p_string << std::endl; };
     void log(const logger_levels_t p_level, const std::string & p_fmt, ::va_list p_args);

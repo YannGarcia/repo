@@ -114,7 +114,6 @@ export TOP=${HOME_FRAMEWORKS}/titan/titan.core
 export TTCN3_DIR=${TOP}/Install
 if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
 then
-    export TTCN3_DIR=${TOP}/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
