@@ -86,7 +86,7 @@ Here is a list of the tools I use to develop my projects:
 	       ./configure CXXFLAGS="-g -O2 -std=c++11"
 	       ```
          
-	       I had also to replace std::auto_ptr by std::unique_ptr (in <memory>)
+	       With gcc-6, I had also to replace std::auto_ptr by std::unique_ptr (in <memory>) because of std::auto_ptr was deprecated
 	       
     8. C++ instrumentation framework & profiling
         - Valgrind (http://valgrind.org)
