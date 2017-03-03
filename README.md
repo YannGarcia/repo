@@ -22,18 +22,22 @@ This repository contains all my staff regarding embedded development for differe
 ## Setup development environment
 According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
-    1. In your home directory, create the folders bin, lib, include, tmp: ```bash mkdir -p bin lib include tmp```
+    1. In your home directory, create the folders bin, lib, include, tmp
+    
+    ```
+    mkdir -p bin lib include tmp
+    ```
     
     2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
     
-    3. Update your own ~/.bash_profile to execute the development environment file
+    3. Update your own ~/.bash_profile to execute the development environment file  
     
-```bash
+    ```
         if [ -f ~/devenv.bash ]
         then
             . ~/devenv.bash
         fi
-```	
+    ```	
 
 If you do not want to follow these steps, update the devenv.bash accordingly by modifying variables HOME_BIN, HOME_INC, HOME_LIB...
 
@@ -71,13 +75,17 @@ Here is a list of the tools I use to develop my projects:
         - cpptest: http://cpptest.sourceforge.net/
 	           CppTest is released under the GNU Lesser General Public License
 	  NOTE For MAC OS X, I had to use the following configure settings
+    
 	       ```
 	       ./configure CC=gcc-6 CXX=g++-6 AR=/usr/bin/ar
 	       ```
+         
 	       For raspberry pi, I had to use the following configure settings
+         
 	       ```
 	       ./configure CXXFLAGS="-g -O2 -std=c++11"
 	       ```
+         
 	       I had also to replace std::auto_ptr by std::unique_ptr (in <memory>)
 	       
 	       
