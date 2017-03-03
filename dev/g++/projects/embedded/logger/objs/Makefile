@@ -250,7 +250,6 @@ help:
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."
-	@echo "   gcc version  : $(shell $(CCP) -v)"
 	@echo
 	@echo "Without option it compilates in optimized mode."
 	@echo

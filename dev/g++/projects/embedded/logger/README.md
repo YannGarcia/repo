@@ -1,3 +1,4 @@
+
 #logger framework for embedded application
 
 This is a basic lightweight logger framework to be used in embedded application running on hardware such as raspberry or BeagleBone.
@@ -19,14 +20,18 @@ The logger framework is quite simple to use and very intuitive.
 ### Create an instance of the logger
 There are two way to create an instance of the logger:
 * Using the logger_factory to create an instance of the logger
+
 ```
 std::string s("MyLogger");
 logger_factory::get_instance().add_logger(s, "/tmp/Mylogger.log", logger_levels_t::trace);
 ```
+
 * Create an instance of the logger
+
 ```
 logger l();
 ```
+
 ### Set log level
 TODO
 
@@ -52,11 +57,33 @@ logger_factory::get_instance().remove_logger(s);
 
 ##Building with logger
 When building your project, you need to add the framework logger directory in your build path:
+
 ```
 -I <path-to-Logger-dir>
 ```
+
 You also need to link against liblogger.so:
+
 ```
 -L <path-to-SimpleLogger-dir> -llogger
 ```
+
+##Make options
+The make options are:
+  - help         : This menu.
+  - clean        : Erase objects, binaries and temporary files.
+  - debug        : Build a debug version.
+  - compile      : Build the application in release mode.
+  - recompile    : Rebuild the application in release mode.
+  - rel          : Clean and rebuild the application in release mode.
+  - test         : Build the test application.
+  - test_d       : Build the test application in debug mod.
+  - run          : Build and execute the test application.
+  - run_d        : Build and execute the test application in debug mode.
+  - run_v        : Build and execute the test application in debug mode, using Valgrind.
+  - dist         : Build a compressed archive of the applicatione.
+  - install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx.
+  - install-devel: Same as 'install' plus include files.
+  - depend       : Build the file dependencies for $(MAKE).
+  - gendoc       : Build the Doxygen documantation.
 
