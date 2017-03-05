@@ -1,6 +1,6 @@
 /**
  * @file      libhal_pin_names.h
- * @brief     Main header file for the Hardware Abstract Layer pins mapping.
+ * @brief     Header file for the Hardware Abstract Layer pins mapping.
  * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
@@ -41,6 +41,13 @@ typedef enum {
   p29 = GPIO_PORTH_BASE | GPIO_PIN_0,
   p30 = GPIO_PORTH_BASE | GPIO_PIN_1,
   p33 = GPIO_PORTA_BASE | GPIO_PIN_0,
+  p34 = GPIO_PORTA_BASE | GPIO_PIN_1,
+  p35 = GPIO_PORTA_BASE | GPIO_PIN_2,
+  p36 = GPIO_PORTA_BASE | GPIO_PIN_3,
+  p37 = GPIO_PORTA_BASE | GPIO_PIN_4,
+  p38 = GPIO_PORTA_BASE | GPIO_PIN_5,
+  p40 = GPIO_PORTA_BASE | GPIO_PIN_6,
+  p41 = GPIO_PORTA_BASE | GPIO_PIN_7,
   p42 = GPIO_PORTF_BASE | GPIO_PIN_0,   /* On board LED4 */
   p43 = GPIO_PORTF_BASE | GPIO_PIN_1,
   p44 = GPIO_PORTF_BASE | GPIO_PIN_2,

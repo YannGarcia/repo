@@ -1,10 +1,10 @@
 /**
- * @file    libhal_shift.c
- * @brief   Main implementation file for the Hardware Abstract Layer library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      libhal_shift.c
+ * @brief     Implementation file for the Hardware Abstract Layer library.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include "libhal_shift.h"
 

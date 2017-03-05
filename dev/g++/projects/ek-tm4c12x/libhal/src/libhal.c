@@ -1,11 +1,11 @@
 /**
- * @file    libhal.c
- * @brief   Main implementation file for the Hardware Abstract Layer library.
- * @author  garciay.yann@gmail.com
+ * @file      libhal.c
+ * @brief     Main implementation file for the Hardware Abstract Layer library.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
- * @see Tiva™ TM4C129ENCPDT Microcontroller
+ * @license   This project is released under the MIT License
+ * @version   0.1
+ * @see       Tiva™ TM4C129ENCPDT Microcontroller
  */
 #include <stdio.h>
 #include <stdint.h>

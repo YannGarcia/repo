@@ -1,6 +1,6 @@
 /**
  * @file      libhal_shift.h
- * @brief     Main header file for the Hardware Abstract Layer library.
+ * @brief     Header file for the Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License

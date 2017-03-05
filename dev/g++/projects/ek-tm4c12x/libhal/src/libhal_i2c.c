@@ -27,10 +27,10 @@ static uint32_t i2c_modules[1][8] = {
 int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_address) {
   // TODO sanity checks
   uint8_t fd = p_i2c_bus_id;
-  // Enable the I2C0 peripheral
+  // Enable the I2Cx peripheral
   SysCtlPeripheralEnable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/); // FIXME Use flags instead of 0..7 integer values
   SysCtlPeripheralReset(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
-  // Configure the pin muxing for I2C0 functions on port B2 and B3.
+  // Configure the pin muxing for I2Cx functions on port B2 and B3.
   GPIOPinConfigure(i2c_modules[fd][3]/*GPIO_PB2_I2C0SCL*/);
   GPIOPinConfigure(i2c_modules[fd][2]/*GPIO_PB3_I2C0SDA*/);
   // Select the I2C function for these pins.
@@ -40,7 +40,7 @@ int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_addr
   SysCtlPeripheralDisable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
   SysCtlPeripheralReset(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
   SysCtlPeripheralEnable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
-  // Wait for the I2C0 module to be ready
+  // Wait for the I2Cx module to be ready
   while(!SysCtlPeripheralReady(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/));
   // Initialize Master and Slave
   I2CMasterInitExpClk(i2c_modules[fd][1]/*I2C0_BASE*/, get_sys_clock_freq(), true/*Fast mode: 0.4KHz*/);
@@ -135,6 +135,7 @@ int32_t libhal_i2c_ext_read_register8(const int32_t p_fd, const uint8_t p_device
 }
 
 int32_t libhal_i2c_ext_read_register16(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register) {
+    // TODO sanity checks
   uint32_t data;
   uint32_t address = i2c_modules[p_fd][7];
   i2c_modules[p_fd][7] = p_device_address;

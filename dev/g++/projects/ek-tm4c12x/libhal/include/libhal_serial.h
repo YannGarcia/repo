@@ -1,6 +1,6 @@
 /**
  * @file      libhal_serial.h
- * @brief     Main header file for the Serial Hardware Abstract Layer library.
+ * @brief     Header file for the Serial Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
