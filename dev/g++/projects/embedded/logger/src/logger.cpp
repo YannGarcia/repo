@@ -10,6 +10,15 @@
 
 namespace logger {
 
+  /* TODO To be continued
+  template<typename T> 
+  logger & operator <<(logger &p_logger, const logger_levels_t p_logger_level, T const & p_value) { 
+    if (is_set(p_logger_level)) { 
+      _os << p_value; 
+    } 
+    return p_logger; 
+  }*/
+  
   void logger::set_start_time() {
     ::gettimeofday(&_start_time_val, NULL);
     _time = _start_time_val.tv_sec;

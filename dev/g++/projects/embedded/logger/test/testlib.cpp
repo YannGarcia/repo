@@ -32,6 +32,7 @@ public:
     TEST_ADD(logger_test_suite::test_logger_4);
     TEST_ADD(logger_test_suite::test_logger_5);
     TEST_ADD(logger_test_suite::test_logger_6);
+    //TEST_ADD(logger_test_suite::test_logger_7);
   }
 	
 private:
@@ -129,6 +130,25 @@ private:
     logger_factory::get_instance().get_logger(s).error("Test logger6: This a multiple variable error: %d - %s", 666, "The devil is in the details");
     TEST_THROWS_NOTHING(logger_factory::get_instance().remove_logger(s));
   }
+  
+  /**
+   * @brief Test case for @see logger::logger
+   */
+  /* TODO To be continued
+  void test_logger_7() {
+    logger::logger l("", "/tmp/logger7.log", logger_levels_t::all, logger_time_formats_t::time);
+    
+    TEST_ASSERT(l.is_trace_set() == true);
+    TEST_ASSERT(l.is_debug_set() == true);
+    TEST_ASSERT(l.is_info_set() == true);
+    TEST_ASSERT(l.is_warning_set() == true);
+    TEST_ASSERT(l.is_error_set() == true);
+
+    l << logger_levels_t::trace << "Test logger7 trace\n";
+    l << logger_levels_t::info << "Test logger7 info\n";
+    l << logger_levels_t::warning << "Test logger7 warning\n";
+    l << logger_levels_t::error << "Test logger7 error\n";
+    }*/
   
 };
 
