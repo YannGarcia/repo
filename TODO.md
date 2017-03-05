@@ -32,5 +32,16 @@ The main objective is to basic lightweight software libraries such as logging, c
 * Rebuild framework with ARM compiler
 * Apply it to LaunchPad TM4C
 
+## Project review
+* Makefile
+  - Review help
+* Doxygen
+  - Review docs/o2.cfg
+  - Add doxygen tags in code
+  - Review file header
+  - Review README & Mainpage
+* Test code review
+  - Enhance test units
+
 
 That's all folks
