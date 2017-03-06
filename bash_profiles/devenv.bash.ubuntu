@@ -23,7 +23,12 @@ export HOME_INC=${HOME}/include
 export PATH=${HOME_BIN}:${PATH}
 
 # Update LD_LIBRARY_PATH environment variable
-export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
+if [ ${LD_LIBRARY_PATH} == ""]
+then
+    export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib
+else 
+    export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
+fi
 
 if [ -d ~/repo ]
 then 
@@ -120,6 +125,8 @@ then
     export MANPATH=${TTCN3_DIR}/man:${MANPATH}
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
+    # ITS support
+    export PATH_DEV_ITS=~/tmp/TriesAndDelete/etsi_its
 fi
 
 # Start ssh-agent at login

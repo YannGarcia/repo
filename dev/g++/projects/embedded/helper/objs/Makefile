@@ -298,7 +298,7 @@ help:
 	@echo "   run_d        : Build and execute the test application in debug mode."
 	@echo "   run_v        : Build and execute the test application in debug mode, using Valgrind."
 	@echo "   dist         : Build a compressed archive of the application."
-	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
+	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."
@@ -311,8 +311,3 @@ help:
 # Dependencies sections.
 
 # DO NOT DELETE
-
-
-
-
-
