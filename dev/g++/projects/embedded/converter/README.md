@@ -23,7 +23,11 @@ There are two way to create an instance of the logger:
 
 ```
 std::string s("MyLogger");
+<<<<<<< HEAD
 converter::get_instance().add_logger(s, "/tmp/Mylogger.log", logger_levels_t::trace);
+=======
+logger_factory::get_instance().add_logger(s, "/tmp/Mylogger.log", logger_levels_t::trace);
+>>>>>>> ab78568f8b7b855924e67049893a4f5d6ed38e7f
 ```
 
 * Create an instance of the logger
@@ -42,23 +46,45 @@ TODO
 Here is a sample code indicating how to use the type converter library:
 
 ```
+<<<<<<< HEAD
 converter::get_instance().bin_to_bcd(0x0A);
 ...
 std::string frombytes("Hello");
 std::vector<uint8_t> to_bytes(converter::get_instance().string_to_bytes(frombytes));
+=======
+std::string s("MyLogger");
+logger_factory::get_instance().add_logger(s, "/tmp/Mylogger.log", logger_levels_t::trace);
+...
+logger_factory::get_instance().get_logger(s).trace("Test logger trace");
+logger_factory::get_instance().get_logger(s).debug("Test logger debug");
+logger_factory::get_instance().get_logger(s).info("Test logger info");
+logger_factory::get_instance().get_logger(s).warning("Test logger warning");
+...
+logger_factory::get_instance().get_logger(s).error(std::string("Test logger error")));logger_factory::get_instance().get_logger(s).error("This a multiple variable error: %d - %s", 666, "The devil is in the details");
+...
+logger_factory::get_instance().remove_logger(s);
+>>>>>>> ab78568f8b7b855924e67049893a4f5d6ed38e7f
 ```
 
 ##Building with logger
 When building your project, you need to add the framework logger directory in your build path:
 
 ```
+<<<<<<< HEAD
 -I <path-to-converter-dir>
+=======
+-I <path-to-Logger-dir>
+>>>>>>> ab78568f8b7b855924e67049893a4f5d6ed38e7f
 ```
 
 You also need to link against liblogger.so:
 
 ```
+<<<<<<< HEAD
 -L <path-to-converter-dir> -llogger
+=======
+-L <path-to-SimpleLogger-dir> -llogger
+>>>>>>> ab78568f8b7b855924e67049893a4f5d6ed38e7f
 ```
 
 ##Make options
