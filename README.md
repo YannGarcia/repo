@@ -2,7 +2,7 @@
 # repo #
 
 Welcome to my working repository for all my electronics projects & developments
-### Build status - Mac Os X, gcc-6
+### Build status - Mac Os X, Linux, Cygwin gcc-6
 [![Build Status](https://travis-ci.org/YannGarcia/repo/repo.png)](https://travis-ci.org/YannGarcia/repo)
 
 
