@@ -3,3 +3,33 @@ language: cpp
 compiler:
   - gcc
  
+addons:
+  apt:
+    sources:
+    packages:
+       - gcc-4.9
+       - g++-4.9
+
+cache components
+
+before_install
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libxml2-dev
+
+install
+
+before_script
+
+script
+
+before_cache
+
+after_success or after_failure
+
+before_deploy
+
+deploy
+
+after_deploy
+
+after_script
