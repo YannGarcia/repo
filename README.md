@@ -94,4 +94,7 @@ Here is a list of the tools I use to develop my projects:
     8. C++ instrumentation framework & profiling
         - Valgrind (http://valgrind.org)
 	       
+    9. Continous build integration with TRAVIS CI
+        - See .travis.yml and trigger_build.bash
+	       
 That's all Folks
