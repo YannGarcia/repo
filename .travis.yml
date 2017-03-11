@@ -11,7 +11,14 @@ branches:
     - master
 env: 
   global
-    - . ./bash_profile/devenv.bash.ubuntu
+    - HOME_FRAMEWORKS=${HOME}/frameworks
+    - HOME_LIB=${HOME}/lib
+    - HOME_BIN=${HOME}/bin
+    - HOME_ETC=${HOME}/etc
+    - HOME_INC=${HOME}/include
+    - PATH=${HOME_BIN}:${PATH}
+    - LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
+    - PATH_DEV=~/repo/dev
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
@@ -23,12 +30,12 @@ before_install:
 install:
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
-  - ./install.bash
+  - bash ./install.bash
 before_script:
   - gcc --version
   - gcc -v
   - g++ -v
-script: ./build.bash
+script: bash ./build.bash
 after_success: true
 after_failure: true
 before_deploy: true
