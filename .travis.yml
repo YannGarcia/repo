@@ -1,35 +1,36 @@
 language: cpp
-
+sudo: false
+dist: trusty
 compiler:
   - gcc-4.9
- 
+os:
+  - linux
 addons:
   apt:
     sources:
     packages:
        - gcc-4.9
        - g++-4.9
-
-cache components
-
+branches:
+  only:
+    - master
+env: 
+  global
+    - . ./bash_profile/devenv.bash.ubuntu
 before_install
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libxml2-dev
-
-install
-
-before_script
-
-script
-
-before_cache
-
-after_success or after_failure
-
-before_deploy
-
-deploy
-
-after_deploy
-
-after_script
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
+  - sudo apt-get install gcc-4.8 -y
+  - wget "https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2"
+  - tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 ${HOME_FRAMEWORKS}
+install:
+before_script: true
+script: true
+after_success: true
+after_failure: true
+before_deploy: true
+deploy: true
+after_deploy: true
+notifications:
+  email: true
+after_script: true
