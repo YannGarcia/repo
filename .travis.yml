@@ -2,29 +2,31 @@ language: cpp
 sudo: false
 dist: trusty
 compiler:
-  - gcc-4.9
+  - gcc
+  - g++
 os:
   - linux
-addons:
-  apt:
-    sources:
-    packages:
-       - gcc-4.9
-       - g++-4.9
 branches:
   only:
     - master
 env: 
   global
     - . ./bash_profile/devenv.bash.ubuntu
-before_install
+before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
   - sudo apt-get install gcc-4.8 -y
   - wget "https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2"
   - tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 ${HOME_FRAMEWORKS}
+  - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
+  - tar xvzf cpptest-1.1.2.tar.gz ${HOME_FRAMEWORKS}
 install:
-before_script: true
+  - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
+  - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
+before_script:
+  - gcc --version
+  - gcc -v
+  - g++ -v
 script: true
 after_success: true
 after_failure: true
