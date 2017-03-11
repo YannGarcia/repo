@@ -23,11 +23,12 @@ before_install:
 install:
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
+  - ./install.bash
 before_script:
   - gcc --version
   - gcc -v
   - g++ -v
-script: true
+script: ./build.bash
 after_success: true
 after_failure: true
 before_deploy: true
