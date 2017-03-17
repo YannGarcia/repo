@@ -20,14 +20,18 @@ env:
     - LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
     - PATH_DEV=~/repo/dev
 before_install:
-  - uname -a
-  - pwd
-  - ls -ltr
+  - sudo apt-get update
+  - sudo apt-get upgrade -y
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
-  - sudo apt-get install gcc-4.8 -y
-  - wget "https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2"
-  - tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 ${HOME_FRAMEWORKS}
+  - sudo apt-get update
+  - sudo apt-get install gcc-4.9 -y
+  - make -v
+  - pwd
+  - mkdir ${HOME_FRAMEWORKS}
+  - ls -ltr
+  - ls -ltr ..
+#  - wget "https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2"
+#  - tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 ${HOME_FRAMEWORKS}
   - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
   - tar xvzf cpptest-1.1.2.tar.gz ${HOME_FRAMEWORKS}
 install:
