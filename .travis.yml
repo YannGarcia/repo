@@ -1,5 +1,5 @@
 language: cpp
-sudo: false
+sudo: true
 dist: trusty
 compiler:
   - gcc
@@ -20,6 +20,9 @@ env:
     - LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
     - PATH_DEV=~/repo/dev
 before_install:
+  - uname -a
+  - pwd
+  - ls -ltr
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
   - sudo apt-get install gcc-4.8 -y
