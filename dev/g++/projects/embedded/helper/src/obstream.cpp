@@ -1,10 +1,10 @@
 /**
- * @file    obstream.cpp
- * @brief   Main implementation file for output binary stream.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      obstream.cpp
+ * @brief     Implementation file for output binary stream.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <iostream>
 #include <iomanip>

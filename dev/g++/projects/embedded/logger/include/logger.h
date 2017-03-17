@@ -27,25 +27,25 @@ namespace logger {
    * @brief This class provide a set of methods for lightweight logging
    */
   class logger {
-    /**<! Logger name */
+    /*!< Logger name */
     std::string _name;
-    /**<! Output stream instance */
+    /*!< Output stream instance */
     std::ofstream _os;
-    /**<! Authorised logger levels */
+    /*!< Authorised logger levels */
     uint8_t _levels;
-    /**<! Choosen date/time format */
+    /*!< Choosen date/time format */
     uint8_t _time_format;
-    /**<! Date/time value convertion */
+    /*!< Date/time value convertion */
     std::string _timestamp;
-    /**<! Start date/time value used by gettimeofday() (required for very long time execution) */
+    /*!< Start date/time value used by gettimeofday() (required for very long time execution) */
     struct timeval _start_time_val;
-    /**<! Start date/time value (required for very long time execution */
+    /*!< Start date/time value (required for very long time execution */
     struct tm *_start_time;
-    /**<! Current date/time value used by gettimeofday() */
+    /*!< Current date/time value used by gettimeofday() */
     struct timeval _time_val;
-    /**<! Start date/time value (required for very long time execution */
+    /*!< Start date/time value (required for very long time execution */
     struct tm * _tm;
-    /**<! Local time convertion */
+    /*!< Local time convertion */
     time_t _time;
     
   public:

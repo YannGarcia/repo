@@ -130,6 +130,10 @@ namespace helpers {
      * @param[in] p_time The time to convert in time_t format
      * @return The time string formated
      * @see http://www.unixtimestamp.com/
+     * @code
+     * std::string result = time_to_string(1489755780);
+     * result.compare("Fri, 17 Mar 2017 14:03:00 +0100") == 0 //when date/time location is Paris (UTC + 1)
+     * @endcode
      */
     std::string time_to_string(const time_t p_time);
     /**

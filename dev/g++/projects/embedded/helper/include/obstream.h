@@ -1,10 +1,10 @@
 /**
- * @file    obstream.h
- * @brief   Main header file for output binary stream.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      obstream.h
+ * @brief     Header file for output binary stream.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 
@@ -18,6 +18,7 @@ namespace helpers {
    * @class Output binary stream
    */
   class obstream {
+    /*!< Bit masks */
     static uint8_t g_masks[];
     
   public:

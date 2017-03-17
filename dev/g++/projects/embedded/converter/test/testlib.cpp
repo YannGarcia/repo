@@ -56,14 +56,20 @@ private:
    * @brief Test case for @see converter::bin_to_bcd
    */
   void test_bin_to_bcd() {
+    TEST_ASSERT((int)converter::get_instance().bin_to_bcd(0x00) == (int)0x00);
+    TEST_ASSERT((int)converter::get_instance().bin_to_bcd(0x01) == (int)0x01);
     TEST_ASSERT((int)converter::get_instance().bin_to_bcd(0x0A) == (int)0x10);
+    TEST_ASSERT((int)converter::get_instance().bin_to_bcd(0x0F) == (int)0x15);
   }
 
   /**
    * @brief Test case for @see converter::bcd_to_bin
    */
   void test_bcd_to_bin() {
+    TEST_ASSERT((int)converter::get_instance().bcd_to_bin(0x00) == (int)0x00);
+    TEST_ASSERT((int)converter::get_instance().bcd_to_bin(0x01) == (int)0x01);
     TEST_ASSERT((int)converter::get_instance().bcd_to_bin(0x13) == (int)0x0D);
+    TEST_ASSERT((int)converter::get_instance().bcd_to_bin(0x15) == (int)0x0F);
   }
 
   /**
@@ -222,10 +228,13 @@ private:
   }
 
   void test_time_to_string_1() {
-    time_t current_time = 1428414775;
+    time_t current_time = 1489755780;
     std::string str = converter::get_instance().time_to_string(current_time);
-    //    cout << "test_time_to_string_1: " << str << "\r" << endl;
-    TEST_ASSERT(str.compare("Tue, 07 Apr 2015 13:52:55 +0000") == 0); // http://www.unixtimestamp.com/
+    //cout << "test_time_to_string_1: " << str << "\r" << endl;
+    std::string result("Fri, 17 Mar 2017 14:03:00 +0100");
+    //cout << "test_time_to_string_1: " << result << "\r" << endl;
+    //cout << "test_time_to_string_1: " << str.compare(result) << "\r" << endl;
+    TEST_ASSERT(str.compare(result) == 0); // http://www.unixtimestamp.com/
   }
 
   /**
@@ -247,7 +256,7 @@ private:
     for (auto it = tokens.begin(); it != tokens.end(); ++it) {
       std::clog << "   " << *it << std::endl;
     }
-    TEST_ASSERT(tokens.size() == 3);
+    TEST_ASSERT(tokens.size() == 4);
   }
 };
 

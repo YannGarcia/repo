@@ -36,11 +36,11 @@ before_script:
   - gcc -v
   - g++ -v
 script: bash ./build.bash
+after_script: true
 after_success: true
 after_failure: true
-before_deploy: true
-deploy: true
-after_deploy: true
+#before_deploy: true
+#deploy: true
+#after_deploy: true
 notifications:
   email: true
-after_script: true

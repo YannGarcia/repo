@@ -72,6 +72,10 @@ help:
 	@echo "   compile      : Build the full application in release mode."
 	@echo "   debug    : Build the full application in debug mode."
 	@echo "   gendoc       : Build Doxygen documentation."
-	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
+	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   test         : ."
+	@echo "*** $@ done ***"
+
+#############################################################################
+# DO NOT DELETE
