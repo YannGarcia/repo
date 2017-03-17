@@ -1,4 +1,3 @@
-# travis-ci configuration file
 language: cpp
 sudo: true
 dist: trusty
