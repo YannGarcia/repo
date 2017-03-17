@@ -1,6 +1,3 @@
-# travis-ci file for continuous build mechanism
-# Local directory: $HOME/repo
-# sudo required for GNU gcc-4.9 installation
 language: cpp
 sudo: true
 dist: trusty
