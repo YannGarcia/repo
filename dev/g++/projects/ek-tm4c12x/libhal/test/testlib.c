@@ -1,4 +1,4 @@
-/**
+/*!<
  * @file      main.c
  * @brief     Application to validate libhal libary
  * @author    garciay.yann@gmail.com
@@ -13,50 +13,57 @@
 #include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TI launchpads */
 #include "libhal_serial.h"
 #include "libhal_i2c.h"
+#include "libhal_spi.h"
 
-/**
+/*!<
  * @defgroup Booststarter #1 pin assignment
  *
  * @{
  */
-#define LED3       p108      /** On board LED1, used for debug - MSB 4 bytes state machine status */
-#define LED2       p107      /** On board LED2, used for debug */
-#define LED1       p46       /** On board LED3, used for debug */
-#define LED0       p42       /** On board LED4, used for debug - LSB 4 bytes state machine status */
-#define SW1        p116      /** On board Switch1 */
-#define SW2        p117      /** On board Switch2 */
+#define LED3       p108      /*!< On board LED1, used for debug - MSB 4 bytes state machine status */
+#define LED2       p107      /*!< On board LED2, used for debug */
+#define LED1       p46       /*!< On board LED3, used for debug */
+#define LED0       p42       /*!< On board LED4, used for debug - LSB 4 bytes state machine status */
+#define SW1        p116      /*!< On board Switch1 */
+#define SW2        p117      /*!< On board Switch2 */
 
 #define L_RED      p44
 #define L_GREEN    p45
 #define L_BLUE     p49
-#define LIGHT_INT  p22 /** TI OPT3001 Light Sensor on BOOSTXL-EDUMKII Educational BoosterPack™ Mark II Plug-in Module See SLAU599–August 2015 Clause 2.1.2 TI OPT3001 Light Sensor */
+#define LIGHT_INT  p22 /*!< TI OPT3001 Light Sensor on BOOSTXL-EDUMKII Educational BoosterPack™ Mark II Plug-in Module See SLAU599–August 2015 Clause 2.1.2 TI OPT3001 Light Sensor */
 
-#define J_SW       p23 /** Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
-#define J_X        A9  /** Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
-#define J_Y        A0  /** Horizontal Y-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_SW       p23 /*!< Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_X        A9  /*!< Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_Y        A0  /*!< Horizontal Y-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
 
-#define A_X        A3
-#define A_Y        A2
-#define A_Z        A1
+#define A_X        A3  /*!< Accelerometer, X-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Y        A2  /*!< Accelerometer, Y-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Z        A1  /*!< Accelerometer, Z-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
 
-/** @} */
+#define TFT_CS     p109 /*!< TFT /CS - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_MOSI   p2   /*!< TFT SPI MOSI - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_CLK    p4   /*!< TFT SPI clock - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RESET  p32  /*!< TFT reset - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RS     p84  /*!< TFT rs - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
 
-/**
+/*!< @} */
+
+/*!<
  * @fn void set_debug_state(const uint8_t p_state)
  * @brief Display the current debug state using the four on-board LEDs
  * @param[in] p_state The state value to display (between 0b0000 to 0b1111)
  */
 void set_debug_state(const uint8_t p_state);
 
-/**
+/*!<
  * @brief Main function of the bouncing robot software application
  * @return Shall never returned
  */
 int32_t main(void) {
-  uint8_t debug_state = 0; /** Debug state status */
-  int32_t uart0;           /** UART handle */
-  int32_t i2c0;            /** I2C bus 0 handle */
-  uint32_t counter = 0;    /** Counter */
+  uint8_t debug_state = 0; /*!< Debug state status */
+  int32_t uart0;           /*!< UART handle */
+  int32_t i2c0;            /*!< I2C bus 0 handle */
+  uint32_t counter = 0;    /*!< Counter */
   char float2str[64];
 
   /* Initialise the HAL */
@@ -96,12 +103,18 @@ int32_t main(void) {
   debug_state += 1;
   set_debug_state(debug_state);
 
+  // Setupt TFT screen
+  pin_mode(TFT_CS, gpio_modes_digital_output); // SPI /CS
+  digital_write(TFT_CS, digital_state_high);
+  int32_t tft_hd = libhal_spi_setup(2, 10000000);
+
   // Setup Joystick
   pin_mode(J_SW, gpio_modes_digital_input);
   pin_mode(J_X, gpio_modes_adc_input);
   pin_mode(J_Y, gpio_modes_adc_input);
   float j_x = analog_read(J_X);
   float j_y = analog_read(J_Y);
+
   // Setup accelerator
   const pin_name acc_pins[3] = {A_X, A_Y, A_Z};
   float values[3] = {0};

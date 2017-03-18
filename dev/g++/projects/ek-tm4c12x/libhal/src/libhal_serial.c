@@ -26,6 +26,8 @@ static uint32_t uart_modules[3][7] = {
   { SYSCTL_PERIPH_UART1, UART1_BASE, GPIO_PB0_U1RX, GPIO_PB1_U1TX, GPIO_PORTB_BASE, GPIO_PIN_0, GPIO_PIN_1 },
   { SYSCTL_PERIPH_UART2, UART2_BASE, GPIO_PA6_U2RX, GPIO_PA7_U2TX, GPIO_PORTA_BASE, GPIO_PIN_6, GPIO_PIN_7 }
 };
+#define UART_MODULE_MAX 3
+
 /*!< Mapping from an integer between 0 and 15 to its ASCII character equivalent. */
 static const char * const uint8_to_hex = "0123456789abcdef";
 

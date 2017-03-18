@@ -30,10 +30,10 @@ extern "C" {
  * @see SPMU365C Table 2-1. BoosterPack 1 GPIO and Signal Muxing, MCI Pin column
  */
 typedef enum {
-  p1 = GPIO_PORTD_BASE | GPIO_PIN_0,
-  p2 = GPIO_PORTD_BASE | GPIO_PIN_1,
+  p1 = GPIO_PORTD_BASE | GPIO_PIN_0,    /* SSI2: SPI MISO */
+  p2 = GPIO_PORTD_BASE | GPIO_PIN_1,    /* SSI2: SPI MOSI */
   p3 = GPIO_PORTD_BASE | GPIO_PIN_2,
-  p4 = GPIO_PORTD_BASE | GPIO_PIN_3,
+  p4 = GPIO_PORTD_BASE | GPIO_PIN_3,    /* SSI2: SPI CLK */
   p22 = GPIO_PORTC_BASE | GPIO_PIN_7,
   p23 = GPIO_PORTC_BASE | GPIO_PIN_6,
   p24 = GPIO_PORTC_BASE | GPIO_PIN_5,
@@ -58,6 +58,7 @@ typedef enum {
   p61 = GPIO_PORTK_BASE | GPIO_PIN_6,
   p62 = GPIO_PORTK_BASE | GPIO_PIN_5,
   p63 = GPIO_PORTK_BASE | GPIO_PIN_4,
+  p75 = GPIO_PORTM_BASE | GPIO_PIN_3,   /* PWM */
   p81 = GPIO_PORTL_BASE | GPIO_PIN_0,
   p82 = GPIO_PORTL_BASE | GPIO_PIN_1,
   p83 = GPIO_PORTL_BASE | GPIO_PIN_2,
@@ -66,6 +67,7 @@ typedef enum {
   p92 = GPIO_PORTB_BASE | GPIO_PIN_3,   /* I2C SDA */
   p107 = GPIO_PORTN_BASE | GPIO_PIN_0,  /* On board LED2 */
   p108 = GPIO_PORTN_BASE | GPIO_PIN_1,  /* On board LED1 */
+  p109 = GPIO_PORTN_BASE | GPIO_PIN_2,
   p116 = GPIO_PORTJ_BASE | GPIO_PIN_0,  /* On board Switch1 */
   p117 = GPIO_PORTJ_BASE | GPIO_PIN_1,  /* On board Switch2 */
 

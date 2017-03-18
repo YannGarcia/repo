@@ -18,11 +18,12 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 
-// I2C module parameters
+/*!< I2C module parameters */
 static uint32_t i2c_modules[1][8] = {
   { SYSCTL_PERIPH_I2C0, I2C0_BASE, GPIO_PB3_I2C0SDA, GPIO_PB2_I2C0SCL, GPIO_PORTB_BASE, GPIO_PIN_3, GPIO_PIN_2, 0xFFFFFFFF }
   // TODO support of multiple modules
 };
+#define I2C_MODULE_MAX 1
 
 int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_address) {
   // TODO sanity checks

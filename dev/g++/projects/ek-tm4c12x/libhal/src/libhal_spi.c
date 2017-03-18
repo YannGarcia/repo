@@ -17,11 +17,14 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 
-// SPI module parameters
-static uint32_t spi_modules[1][10] = {
-  { SYSCTL_PERIPH_SSI0, SSI0_BASE, GPIO_PA4_SSI0XDAT0, GPIO_PA5_SSI0XDAT1, GPIO_PA2_SSI0CLK, GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_2, 0xFFFFFFFF }
+/*!< SPI module parameters */
+static uint32_t spi_modules[3][11] = {
+  { SYSCTL_PERIPH_SSI0, SSI0_BASE, GPIO_PA4_SSI0XDAT0, GPIO_PA5_SSI0XDAT1, GPIO_PA2_SSI0CLK, GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_PIN_5, GPIO_PORTA_BASE, GPIO_PIN_2, 0xFFFFFFFF },
+  { SYSCTL_PERIPH_SSI1, SSI1_BASE, GPIO_PE4_SSI1XDAT0, GPIO_PE5_SSI1XDAT1, GPIO_PB5_SSI1CLK, GPIO_PORTE_BASE, GPIO_PIN_4, GPIO_PIN_5, GPIO_PORTB_BASE, GPIO_PIN_5, 0xFFFFFFFF },
+  { SYSCTL_PERIPH_SSI2, SSI2_BASE, GPIO_PD1_SSI2XDAT0, GPIO_PD0_SSI2XDAT1, GPIO_PD3_SSI2CLK, GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_1, GPIO_PORTD_BASE, GPIO_PIN_3, 0xFFFFFFFF }
   // TODO support of multiple modules
 };
+#define SPI_CHANNEL_MAX 3
 
 int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
   // TODO sanity checks
@@ -35,7 +38,7 @@ int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
   // Select the SSIx function for these pins.
   GPIOPinTypeSSI(spi_modules[p_channel][5]/*GPIO_PORTA_BASE*/, spi_modules[p_channel][6]/*GPIO_PIN_4*/);
   GPIOPinTypeSSI(spi_modules[p_channel][5]/*GPIO_PORTA_BASE*/, spi_modules[p_channel][7]/*GPIO_PIN_5*/);
-  GPIOPinTypeSSI(spi_modules[p_channel][5]/*GPIO_PORTA_BASE*/, spi_modules[p_channel][8]/*GPIO_PIN_2*/);
+  GPIOPinTypeSSI(spi_modules[p_channel][8]/*GPIO_PORTA_BASE*/, spi_modules[p_channel][9]/*GPIO_PIN_2*/);
   // Stop the Clock, Reset and Enable SSI Module in Master Function
   SysCtlPeripheralDisable(spi_modules[p_channel][0]/*SYSCTL_PERIPH_SSI0*/);
   SysCtlPeripheralReset(spi_modules[p_channel][0]/*SYSCTL_PERIPH_SSI0*/);
@@ -46,13 +49,13 @@ int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
   SSIConfigSetExpClk(spi_modules[p_channel][1]/*SSI0_BASE*/, get_sys_clock_freq(), SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, p_speed, 8);
   SSIEnable(spi_modules[p_channel][1]/*SSI0_BASE*/);
   // Set device address
-  spi_modules[p_channel][9] = p_channel;
+  spi_modules[p_channel][10] = p_channel;
   return 0;
 }
 
 int32_t libhal_spi_get_fd(const uint8_t p_channel) {
   // TODO sanity checks
-  return spi_modules[p_channel][9];
+  return spi_modules[p_channel][10];
 }
 
 int32_t libhal_spi_data_read_write(const uint8_t p_channel, uint8_t *p_buffer, const uint32_t p_length) {
@@ -93,7 +96,7 @@ int32_t libhal_spi_close(const uint8_t p_channel) {
   SSIDisable(spi_modules[p_channel][1]/*SSI0_BASE*/);
   SysCtlPeripheralDisable(spi_modules[p_channel][0]/*SYSCTL_PERIPH_SSI0*/);
   // Reset default slave address
-  spi_modules[p_channel][9] = 0xFFFFFFFF;
+  spi_modules[p_channel][10] = 0xFFFFFFFF;
 
   return 0;
 }
