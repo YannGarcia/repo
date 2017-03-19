@@ -11,24 +11,25 @@ branches:
     - master
 env: 
   global
-    - HOME=`pwd`
-    - HOME_FRAMEWORKS=${HOME}/frameworks
-    - HOME_LIB=${HOME}/lib
-    - HOME_BIN=${HOME}/bin
-    - HOME_ETC=${HOME}/etc
-    - HOME_INC=${HOME}/include
-    - PATH=${HOME_BIN}:${PATH}
-    - LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
-    - PATH_DEV=~/repo/dev
+    - export HOME=`pwd`
+    - export HOME_FRAMEWORKS=${HOME}/frameworks
+    - export HOME_LIB=${HOME}/lib
+    - export HOME_BIN=${HOME}/bin
+    - export HOME_ETC=${HOME}/etc
+    - export HOME_INC=${HOME}/include
+    - export PATH=${HOME_BIN}:${PATH}
+    - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
+    - export PATH_DEV=~/repo/dev
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update
   - sudo apt-get install gcc-4.9 -y
+  - mkdir -p ${HOME_FRAMEWORKS}
   - cd ${HOME_FRAMEWORKS}
   - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
   - tar xvzf cpptest-1.1.2.tar.gz
   - ls -ltr ${HOME_FRAMEWORKS}
-  - cd ${HOME_FRAMEWORKS}/cpptest-1.1.2
+  - cd ./cpptest-1.1.2
   - find . -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - find .  -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - cd ${HOME}
