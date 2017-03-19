@@ -11,7 +11,6 @@ branches:
     - master
 env: 
   global
-# TODO Replace by . ./bash_profiles/devenv.bash.ubuntu
     - HOME_FRAMEWORKS=${HOME}/frameworks
     - HOME_LIB=${HOME}/lib
     - HOME_BIN=${HOME}/bin
@@ -21,9 +20,6 @@ env:
     - LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
     - PATH_DEV=~/repo/dev
 before_install:
-# Full update failed
-#  - sudo apt-get update
-#  - sudo apt-get upgrade -y
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update
   - sudo apt-get install gcc-4.9 -y
@@ -31,13 +27,10 @@ before_install:
   - mkdir ${HOME_FRAMEWORKS}
   - ls -ltr
   - ls -ltr ..
-#  - wget "https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2"
-#  - tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 ${HOME_FRAMEWORKS}
   - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
   - tar xvzf cpptest-1.1.2.tar.gz ${HOME_FRAMEWORKS}
   - ls -ltr ${HOME_FRAMEWORKS}
 install:
-# Update cpptest: std::auto_ptr becomes std::unique_ptr
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - find ${HOME_FRAMEWORKS}/cpptest-1.1.2/ -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
   - bash ./install.bash
@@ -50,8 +43,5 @@ script: ${HOME}/repo/build.bash
 after_script: true
 after_success: true
 after_failure: true
-#before_deploy: true
-#deploy: true
-#after_deploy: true
 notifications:
   email: true
