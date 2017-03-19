@@ -19,22 +19,10 @@ env:
     - export HOME_INC=${HOME}/include
     - export PATH=${HOME_BIN}:${PATH}
     - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
-    - export PATH_DEV=~/repo/dev
-before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update
-  - sudo apt-get install gcc-4.9 -y
-  - mkdir -p ${HOME_FRAMEWORKS}
-  - cd ${HOME_FRAMEWORKS}
-  - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
-  - tar xvzf cpptest-1.1.2.tar.gz
-  - ls -ltr ${HOME_FRAMEWORKS}
-  - cd ./cpptest-1.1.2
-  - find . -name "*.h*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
-  - find .  -name "*.c*" -type f -exec sed -i 's/auto_ptr/unique_ptr/g' {} \;
-  - cd ${HOME}
+    - export PATH_DEV=${HOME}/dev
+before_install: true
 install:
-  - bash ./install.bash
+  - bash ${HOME}/install.bash
 before_script:
   - gcc --version
   - gcc -v
@@ -42,7 +30,8 @@ before_script:
   - make -v
 script: ${HOME}/repo/build.bash
 after_script: true
-after_success: true
+after_success:
+  - bash ${HOME}/test.bash
 after_failure: true
 notifications:
   email: true
