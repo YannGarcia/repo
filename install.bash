@@ -4,7 +4,7 @@ set -evx
 OLD_PWD=`pwd`
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-4.9 -y
+sudo apt-get install gcc-4.9 g++-4.9 gdb -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
 gcc -v
 g++ -v
