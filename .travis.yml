@@ -24,11 +24,14 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install gcc-4.9 -y
   - pwd
+  - id
+  - whoami
   - echo ${HOME}
   - echo ${HOME_FRAMEWORKS}
-  - mkdir ${HOME_FRAMEWORKS}
+  - mkdir -p ${HOME_FRAMEWORKS}
   - ls -ltr
   - ls -ltr ..
+  - cd ${HOME_FRAMEWORKS}
   - wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz
   - tar xvzf cpptest-1.1.2.tar.gz ${HOME_FRAMEWORKS}
   - ls -ltr ${HOME_FRAMEWORKS}
