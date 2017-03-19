@@ -24,6 +24,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install gcc-4.9 -y
   - pwd
+  - echo ${HOME}
+  - echo ${HOME_FRAMEWORKS}
   - mkdir ${HOME_FRAMEWORKS}
   - ls -ltr
   - ls -ltr ..
