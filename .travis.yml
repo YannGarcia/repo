@@ -11,6 +11,7 @@ branches:
     - master
 env: 
   global
+    - HOME=`pwd`
     - HOME_FRAMEWORKS=${HOME}/frameworks
     - HOME_LIB=${HOME}/lib
     - HOME_BIN=${HOME}/bin
