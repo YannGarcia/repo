@@ -28,6 +28,6 @@ script: ${HOME}/build.bash
 after_script: true
 after_success:
   - bash ${HOME}/test.bash
-after_failure: true
+after_failure: false
 notifications:
   email: true
