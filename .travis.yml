@@ -23,12 +23,8 @@ env:
 before_install: true
 install:
   - bash ${HOME}/install.bash
-before_script:
-  - gcc --version
-  - gcc -v
-  - g++ -v
-  - make -v
-script: ${HOME}/repo/build.bash
+before_script: true
+script: ${HOME}/build.bash
 after_script: true
 after_success:
   - bash ${HOME}/test.bash
