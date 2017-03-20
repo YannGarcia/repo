@@ -1,5 +1,5 @@
 
-#type converter library for embedded application
+#Type converter library for embedded application
 
 This is a basic lightweight type converter library to be used in embedded application running on hardware such as raspberry or BeagleBone.
 

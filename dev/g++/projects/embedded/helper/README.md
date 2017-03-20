@@ -1,64 +1,35 @@
 
-#type converter library for embedded application
+#Helper library for embedded application
 
-This is a basic lightweight type converter library to be used in embedded application running on hardware such as raspberry or BeagleBone.
+This is a basic Helper library to be used in embedded application running on hardware such as raspberry or BeagleBone.
 
 ##Features
-The type converter library provides the following features
-* Level of the log message
-* Log, trace warning and error methods
-* Date/Time stamped output
-* File output
-* A logger factory provides a unique access to the 'named' logger instances
+The Helper library provides the following features
+* Input/Output bit stream
+* Basic thread support
+* Date/Time support
+* Command line parser
 
 ##Documentation
 In a terminal, execute the command make gendoc to generate the documentation
 
 ##Usage
-The type converter library is quite simple to use and very intuitive.
+The Helper library is quite simple to use and very intuitive.
 
-### Create an instance of the logger
-There are two way to create an instance of the logger:
-* Using the logger_factory to create an instance of the logger
-
-```
-std::string s("MyLogger");
-converter::get_instance().add_logger(s, "/tmp/Mylogger.log", logger_levels_t::trace);
-```
-
-* Create an instance of the logger
-
-```
-logger l();
-```
-
-### Set log level
+### Create an instance of the Helper library
 TODO
 
-### Set Date/Time format
-TODO
-
-### Code sample
-Here is a sample code indicating how to use the type converter library:
+##Building with Helper library
+When building your project, you need to add the Helper directory in your build path:
 
 ```
-converter::get_instance().bin_to_bcd(0x0A);
-...
-std::string frombytes("Hello");
-std::vector<uint8_t> to_bytes(converter::get_instance().string_to_bytes(frombytes));
+-I <path-to-helper-dir>
 ```
 
-##Building with logger
-When building your project, you need to add the framework logger directory in your build path:
+You also need to link against libhelper.so:
 
 ```
--I <path-to-converter-dir>
-```
-
-You also need to link against liblogger.so:
-
-```
--L <path-to-converter-dir> -llogger
+-L <path-to-helperer-dir> -lhelper
 ```
 
 ##Make options
@@ -79,4 +50,3 @@ The make options are:
   - install-devel: Same as 'install' plus include files.
   - depend       : Build the file dependencies for $(MAKE).
   - gendoc       : Build the Doxygen documantation.
-
