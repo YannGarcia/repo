@@ -2,7 +2,7 @@
 set -evx
 
 # Create bin/lib/include directories
-mkdir -p ${HOME_LIB} ${HOME_INCLUDE} ${HOME_BIN}
+mkdir -p ${HOME_LIB} ${HOME_INC} ${HOME_BIN}
 OLD_PWD=`pwd`
 # Install gcc-4.9
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
