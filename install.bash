@@ -1,9 +1,24 @@
- #!/bin/bash
+#!/bin/bash
+# Prepare environment for the build
 set -evx
 
-# Create bin/lib/include directories
-mkdir -p ${HOME_LIB} ${HOME_INC} ${HOME_BIN}
 OLD_PWD=`pwd`
+# Create bin/lib/include directories
+mkdir -p ${HOME_LIB}
+if [ ! -d ${HOME_LIB} ]
+then
+    exit -1
+fi
+mkdir -p ${HOME_INC}
+if [ ! -d ${HOME_INC} ]
+then
+    exit -1
+fi
+mkdir -p ${HOME_BIN}
+if [ ! -d ${HOME_BIN} ]
+then
+    exit -1
+fi
 # Install gcc-4.9
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
