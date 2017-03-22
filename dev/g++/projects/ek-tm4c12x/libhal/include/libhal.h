@@ -131,6 +131,11 @@ extern "C" {
    * @brief Read the value of a GPIO pin
    * @param[in] p_gpio      The GPIO identifier to be changed
    * @return The digital GPIO state on success, digital_state_error otherwise
+   * @code
+   *   pin_mode(SW1, gpio_modes_digital_input);
+   *   pull_up_dn_control(SW1, pud_up);         // Configuration of the pull-up is required for USR_SW1
+   *   while (digital_read(SW1) == digital_state_low);
+   * @endcode
    */
   extern digital_state_t digital_read(const pin_name p_gpio);
   /**

@@ -25,9 +25,12 @@ install:
   - bash ${HOME}/install.bash
 before_script: true
 script: ${HOME}/build.bash
-after_script: true
 after_success:
   - bash ${HOME}/test.bash
 after_failure: false
+after_script: true
+before_deploy: true
+deploy: true
+after_deploy: true
 notifications:
   email: true

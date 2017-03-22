@@ -17,17 +17,23 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 
+#define SPI_CHANNEL_MAX 3
 /*!< SPI module parameters */
-static uint32_t spi_modules[3][11] = {
+static uint32_t spi_modules[SPI_CHANNEL_MAX][11] = {
   { SYSCTL_PERIPH_SSI0, SSI0_BASE, GPIO_PA4_SSI0XDAT0, GPIO_PA5_SSI0XDAT1, GPIO_PA2_SSI0CLK, GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_PIN_5, GPIO_PORTA_BASE, GPIO_PIN_2, 0xFFFFFFFF },
   { SYSCTL_PERIPH_SSI1, SSI1_BASE, GPIO_PE4_SSI1XDAT0, GPIO_PE5_SSI1XDAT1, GPIO_PB5_SSI1CLK, GPIO_PORTE_BASE, GPIO_PIN_4, GPIO_PIN_5, GPIO_PORTB_BASE, GPIO_PIN_5, 0xFFFFFFFF },
   { SYSCTL_PERIPH_SSI2, SSI2_BASE, GPIO_PD1_SSI2XDAT0, GPIO_PD0_SSI2XDAT1, GPIO_PD3_SSI2CLK, GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_1, GPIO_PORTD_BASE, GPIO_PIN_3, 0xFFFFFFFF }
   // TODO support of multiple modules
 };
-#define SPI_CHANNEL_MAX 3
 
 int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
-  // TODO sanity checks
+  // Sanity checks
+  if (p_channel >= SPI_CHANNEL_MAX) {
+    return -1;
+  }
+  if (spi_modules[p_channel][10] == p_channel) {
+    return p_channel;
+  }
   // Enable the SSIx peripheral
   SysCtlPeripheralEnable(spi_modules[p_channel][0]/*SYSCTL_PERIPH_SSI0*/); // FIXME Use flags instead of 0..7 integer values
   SysCtlPeripheralReset(spi_modules[p_channel][0]/*SYSCTL_PERIPH_SSI0*/);
@@ -50,7 +56,7 @@ int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
   SSIEnable(spi_modules[p_channel][1]/*SSI0_BASE*/);
   // Set device address
   spi_modules[p_channel][10] = p_channel;
-  return 0;
+  return p_channel;
 }
 
 int32_t libhal_spi_get_fd(const uint8_t p_channel) {

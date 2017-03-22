@@ -1,8 +1,8 @@
 # libhal project
 
 ## Introduction
-The name libhal stands for library for Hardware Abstract Layer. The idea is to prpvide the same interface for all my electronic hardware (Linux base hardware or Baremetal hardware)
-
+The name libhal stands for library for Hardware Abstract Layer. The idea is to provide the same interface for all my electronic hardwares (Linux base hardware or Baremetal hardware)
+NOTE  The test application (test/testlib.c) contains non optimised code (no read/wirte functions...). The purpose is to provide step by step tests
 
 ## How to build the project
 Pleas foLlow the steps below:
@@ -31,18 +31,32 @@ This hardware provides test capabilities for both Digital and analog testing. It
 ### Digital testing
 Digital testing includes:
     * LED switch on/off
-    * Interrupt checking, debouncing...
-    * external interrupt
+    * Switch checking, debouncing...
     * Transistor command
 
 ### Analog testing
     * ADC testing capabilityIt provides the following features
     * DAC testing capability
 
+### ICs communication
+    * SPI
+    * I2C
+    * UART
+
 ### Sensors capabilities
     * Gyroscope, Accelerometer
     * Hall effect
-    * 
+    * Ambiant Light sensor
+    * Temperature sensor
+
+### Timers capabilities
+TODO
+
+### Interupt capabilities
+    * External interrupts
+    * Timers interupts
+    * ADC interupts
+TODO
 
 ### Schematic
 TODO

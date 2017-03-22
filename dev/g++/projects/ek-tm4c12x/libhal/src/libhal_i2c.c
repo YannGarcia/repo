@@ -18,16 +18,22 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 
+#define I2C_MODULE_MAX 1
 /*!< I2C module parameters */
-static uint32_t i2c_modules[1][8] = {
+static uint32_t i2c_modules[I2C_MODULE_MAX][8] = {
   { SYSCTL_PERIPH_I2C0, I2C0_BASE, GPIO_PB3_I2C0SDA, GPIO_PB2_I2C0SCL, GPIO_PORTB_BASE, GPIO_PIN_3, GPIO_PIN_2, 0xFFFFFFFF }
   // TODO support of multiple modules
 };
-#define I2C_MODULE_MAX 1
 
 int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_address) {
-  // TODO sanity checks
+  // Sanity checks
   uint8_t fd = p_i2c_bus_id;
+  if (fd >= I2C_MODULE_MAX) {
+    return -1;
+  }
+  if (i2c_modules[fd][7] != 0xFFFFFFFF) {
+    return fd;
+  }
   // Enable the I2Cx peripheral
   SysCtlPeripheralEnable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/); // FIXME Use flags instead of 0..7 integer values
   SysCtlPeripheralReset(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
