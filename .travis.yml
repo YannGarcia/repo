@@ -28,9 +28,9 @@ script: ${HOME}/build.bash
 after_success:
   - bash ${HOME}/test.bash
 after_failure: false
-after_script: true
 before_deploy: true
 deploy: true
 after_deploy: true
+after_script: true
 notifications:
   email: true
