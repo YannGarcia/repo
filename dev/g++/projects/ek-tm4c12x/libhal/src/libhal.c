@@ -1117,7 +1117,7 @@ void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
       case GPIO_PORTB_BASE:
         if (!adc_configuration.initialised) {
           adc_configuration.initialised = true;
-          adc_configuration.base_address = ADC0_BASE; // TODO Check to use use ADC1_BASE or keep it for PWM?
+          adc_configuration.base_address = ADC0_BASE; // TODO Use ADC1_BASE or keep it for PWM and analog comparators?
           SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); // Enable ADC0 peripheral
           while(!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0));
           // Configure the ADC to use PLL at 480 MHz divided by 24 to get an ADC clock of 20 MHz

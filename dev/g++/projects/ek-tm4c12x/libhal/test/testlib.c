@@ -122,7 +122,7 @@ int32_t main(void) {
   set_debug_state(debug_state);
 
   // Setupt TFT screen
-  digital_write(L_RED, digital_state_high); // TODO Check why it des not work!?
+  /*digital_write(L_RED, digital_state_high); // TODO Check why it des not work!?
   pin_mode(TFT_RS, gpio_modes_digital_output); // TFT /RS pin, command indicator
   digital_write(TFT_RS, digital_state_low); // Send command mode
   pin_mode(TFT_RST, gpio_modes_digital_output); // TFT /RESET pin
@@ -419,7 +419,7 @@ int32_t main(void) {
     digital_write(TFT_RS, digital_state_low);
     // Disable the TFT
     digital_write(TFT_CS, digital_state_high);
-  }
+  }*/
 
   // Setup Joystick
   pin_mode(J_SW, gpio_modes_digital_input);

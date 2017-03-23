@@ -26,6 +26,8 @@ extern "C" {
 
 /** @enum pin_names_t
  * @brief Describes the pin name/pin kernel number
+ *        Analog conversions only done on PORTB and PORTE pins (ADC0 module)
+ *        PWM and analog comparators use ADC1 module
  * @see Tiva™ TM4C129DNCPDT Microcontroller Table 10-2. GPIO Pins and Alternate Functions
  * @see SPMU365C Table 2-1. BoosterPack 1 GPIO and Signal Muxing, MCI Pin column
  */

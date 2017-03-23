@@ -1,6 +1,6 @@
 ############################################################################
 #
-#       Makefile for TI TIVA C Series TM4C123x cross-compiler.
+#       Makefile for TI MSP432P401R cross-compiler.
 #
 #ident  "$Id$"
 #
@@ -9,9 +9,9 @@
 #############################################################################
 # Compiler CPU/FPU options.
 #############################################################################
-PART=TM4C123GH6PMI
-TARGET_IS=TM4C123_RA1
-CPU=-mcpu=cortex-m4
+PART=MSP432P4XX
+DEVICE=MSP432P401R
+CPU=-mcpu=cortex-m4 -march=armv7e-m
 FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 #############################################################################
@@ -26,6 +26,21 @@ AFLAGS= \
 #############################################################################
 # Flags to pass to the compiler.
 #############################################################################
+GLOBAL_DEF_GPP= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c++11 \
+	-Wall \
+	-pedantic \
+	-D__$(DEVICE)__ \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(PART) \
+	-Os
+
 GLOBAL_DEF_GCC= \
 	-mthumb \
 	${CPU} \
@@ -36,11 +51,10 @@ GLOBAL_DEF_GCC= \
 	-std=c99 \
 	-Wall \
 	-pedantic \
-	-DPART_$(PART) \
-	-DTARGET_IS_$(TARGET_IS) \
+	-D__$(DEVICE)__ \
+	-DTARGET_IS_$(PART) \
 	-Dgcc \
-	-Os \
-	-I$(TIVA_C_PATH) 
+	-Os
 
 GLOBAL_DEF_GCC_DEBUG= \
 	-mthumb \
@@ -49,41 +63,21 @@ GLOBAL_DEF_GCC_DEBUG= \
 	-ffunction-sections \
 	-fdata-sections \
 	-MD \
-	-std=c99 \
+	-std=gnu99 \
 	-Wall \
 	-pedantic \
+	-D__$(DEVICE)__ \
 	-DPART_$(PART) \
-	-DTARGET_IS_$(TARGET_IS) \
+	-DTARGET_IS_$(PART) \
 	-Dgcc \
 	-g \
-	-O0 \
-	-I$(TIVA_C_PATH) 
+	-O0
 
-GLOBAL_DEF_GCC_DEBUG= \
-	-mthumb \
-	${CPU} \
-	${FPU} \
-	-ffunction-sections \
-	-fdata-sections \
-	-MD \
-	-std=c99 \
-	-Wall \
-	-pedantic \
-	-DPART_$(PART) \
-	-DTARGET_IS_$(TARGET_IS) \
-	-D$(PART)_BOARD \
-	-DDEBUG \
-	-Dgcc \
-	-c \
-	-g \
-	-O0 \
-	-I$(TIVA_C_PATH) 
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/softfp -lm -lc -lnosys -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp -lgcc
+GLOBAL_DEF_STD_GLD_DEBUG=-g $(GLOBAL_DEF_STD_GLD)
 
-GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/fpu -lm -lc -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu -lgcc
-GLOBAL_DEF_STD_GLD_DEBUG=$(GLOBAL_DEF_STD_GLD)
- 
 #############################################################################
 # Startup code for GCC cross compiler.
 #############################################################################
-STARTUP_GCC=startup_gcc_tm4c123x.c
-STARTUP_GCC_OBJ=startup_gcc_tm4c123x.o
+STARTUP_GCC=startup_msp432p401r_gcc.c
+STARTUP_GCC_OBJ=startup_msp432p401r_gcc.o
