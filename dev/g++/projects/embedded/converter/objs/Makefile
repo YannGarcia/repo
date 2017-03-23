@@ -223,7 +223,7 @@ help:
 	@echo "   recompile    : Rebuild the application in release mode."
 	@echo "   rel          : Clean and rebuild the application in release mode."
 	@echo "   test         : Build the test application."
-	@echo "   test_d       : Build the test application in debug mod."
+	@echo "   test_d       : Build the test application in debug mode."
 	@echo "   run          : Build and execute the test application."
 	@echo "   run_d        : Build and execute the test application in debug mode."
 	@echo "   run_v        : Build and execute the test application in debug mode, using Valgrind."
