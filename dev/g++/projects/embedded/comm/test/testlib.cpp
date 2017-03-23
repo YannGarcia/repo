@@ -21,11 +21,8 @@
 #include "runnable.h"
 
 #define LOCAL_IPv4_ADDRESS "192.168.1.21"
-//#define LOCAL_IPv4_ADDRESS "172.28.2.240"
-//#define LOCAL_IPv4_ADDRESS "172.28.0.55"
-//#define LOCAL_IPv4_ADDRESS "0.0.0.0"
+#define ANY_IPv4_ADDRESS "0.0.0.0"
 #define PEER_IPv4_ADDRESS "192.168.1.45"
-//#define PEER_IPv4_ADDRESS "172.28.2.240"
 
 #define LOCAL_IPv6_ADDRESS "::1"
 #define PEER_IPv6_ADDRESS "::1"
