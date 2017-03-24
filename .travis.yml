@@ -26,12 +26,17 @@ before_deploy: true
 install:
   - ${HOME}/install.bash
 script:
+  - echo "For Future: make test, gendoc"
   - ${HOME}/build.bash
+deploy:
+  - echo "For Future: make dist"
 after_install: true
-after_deploy: true
+after_deploy:
+  - echo "For Future: make clean and check everything was removed"
 after_success:
   - ${HOME}/test.bash
 after_failure: false
 after_script: true
+  - echo "For Future: make run"
 notifications:
   email: true
