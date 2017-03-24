@@ -21,12 +21,12 @@ env:
     - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
     - export PATH_DEV=${HOME}/dev
 before_install: true
+before_script: true
+before_deploy: true
 install:
   - bash ${HOME}/install.bash
-before_script: true
 script: ${HOME}/build.bash
-before_deploy: true
-deploy: true
+after_install: true
 after_deploy: true
 after_success:
   - bash ${HOME}/test.bash
