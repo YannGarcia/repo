@@ -2,33 +2,39 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /Applications/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./libhal.obj" \
-"./libhal_i2c.obj" \
-"./libhal_serial.obj" \
-"./libhal_shift.obj" \
-"./libhal_spi.obj" \
-"./testlib.obj" \
 "./tm4c129encpdt_startup_ccs.obj" \
+"./src/libhal.obj" \
+"./src/libhal_i2c.obj" \
+"./src/libhal_serial.obj" \
+"./src/libhal_shift.obj" \
+"./src/libhal_spi.obj" \
+"./test/testlib.obj" \
 "../tm4c129encpdt.cmd" \
 $(GEN_CMDS__FLAG) \
--l/Users/garciayann/frameworks/tiva/TivaWare_C_Series-2.1.3.156/driverlib/ccs/Debug/driverlib.lib \
--l"libc.a" \
+-ldriverlib.lib \
+-llibc.a \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include src/subdir_vars.mk
+-include test/subdir_vars.mk
 -include subdir_rules.mk
+-include src/subdir_rules.mk
+-include test/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -77,6 +83,9 @@ endif
 ifneq ($(strip $(S55_DEPS)),)
 -include $(S55_DEPS)
 endif
+ifneq ($(strip $(SV7A_DEPS)),)
+-include $(SV7A_DEPS)
+endif
 ifneq ($(strip $(C62_DEPS)),)
 -include $(C62_DEPS)
 endif
@@ -122,40 +131,40 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-ccs.out \
+ccs_tiva.out \
 
 EXE_OUTPUTS__QUOTED += \
-"ccs.out" \
+"ccs_tiva.out" \
 
 BIN_OUTPUTS += \
-ccs.hex \
+ccs_tiva.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"ccs.hex" \
+"ccs_tiva.hex" \
 
 
 # All Target
-all: ccs.out
+all: ccs_tiva.out
 
 # Tool invocations
-ccs.out: $(OBJS) $(CMD_SRCS) $(LDS_SRCS) $(GEN_CMDS)
+ccs_tiva.out: $(OBJS) $(CMD_SRCS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/Applications/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=TARGET_IS_TM4C129_RA0 --define=TM4C129ENCPDT_BOARD --define=PART_TM4C129ENCPDT --display_error_number --diag_warning=225 --diag_wrap=off --printf_support=minimal --std_lib_func_defined --std_lib_func_redefined -z -m"ccs.map" --heap_size=0x400 --stack_size=0x400 -i"/Applications/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/lib" -i"/Applications/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ccs_linkInfo.xml" --rom_model -o "ccs.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=TARGET_IS_TM4C129_RA0 --define=TM4C129ENCPDT_BOARD --define=PART_TM4C129ENCPDT -g --gcc --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --std_lib_func_defined --std_lib_func_redefined -z -m"ccs_tiva.map" --heap_size=0x400 --stack_size=0x400 -i"C:/ti/TivaWare_C_Series-2.1.3.156/driverlib/ccs/Debug/" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ccs_tiva_linkInfo.xml" --rom_model -o "ccs_tiva.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-ccs.hex: $(EXE_OUTPUTS)
+ccs_tiva.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/Applications/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armhex"  -o "ccs.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/bin/armhex"  -o "ccs_tiva.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "libhal.obj" "libhal_i2c.obj" "libhal_serial.obj" "libhal_shift.obj" "libhal_spi.obj" "testlib.obj" "tm4c129encpdt_startup_ccs.obj" 
-	-$(RM) "libhal.pp" "libhal_i2c.pp" "libhal_serial.pp" "libhal_shift.pp" "libhal_spi.pp" "testlib.pp" "tm4c129encpdt_startup_ccs.pp" 
+	-$(RM) "tm4c129encpdt_startup_ccs.obj" "src\libhal.obj" "src\libhal_i2c.obj" "src\libhal_serial.obj" "src\libhal_shift.obj" "src\libhal_spi.obj" "test\testlib.obj" 
+	-$(RM) "tm4c129encpdt_startup_ccs.d" "src\libhal.d" "src\libhal_i2c.d" "src\libhal_serial.d" "src\libhal_shift.d" "src\libhal_spi.d" "test\testlib.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

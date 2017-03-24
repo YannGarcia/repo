@@ -14,15 +14,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "inc/hw_gpio.h"
-#include "inc/hw_memmap.h"
-#include "driverlib/gpio.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #if defined(TM4C1294NCPDT_BOARD) || defined(TM4C129ENCPDT_BOARD)
+
+#include "inc/hw_gpio.h"
+#include "inc/hw_memmap.h"
+#include "driverlib/gpio.h"
 
 /** @enum pin_names_t
  * @brief Describes the pin name/pin kernel number
@@ -91,6 +91,10 @@ typedef enum {
 
 #elif defined(TM4C123_BOARD)
 
+#include "inc/hw_gpio.h"
+#include "inc/hw_memmap.h"
+#include "driverlib/gpio.h"
+
 /** @enum pin_names_t
  * @brief Describes the pin name/pin kernel number
  * @see Tiva™ TM4C1233H6PM Microcontroller Table 10-2. GPIO Pins and Alternate Functions
@@ -99,9 +103,9 @@ typedef enum {
 typedef enum {
   p1 = GPIO_PORTB_BASE | GPIO_PIN_6,
   p4 = GPIO_PORTB_BASE | GPIO_PIN_7,
-  p5 = GPIO_PORTF_BASE | GPIO_PIN_4, /* On board Swith 1 */
+  p5 = GPIO_PORTF_BASE | GPIO_PIN_4, /* On board Switch 1 */
 
-  p28 = GPIO_PORTF_BASE | GPIO_PIN_0, /* On board Swith 2 */
+  p28 = GPIO_PORTF_BASE | GPIO_PIN_0, /* On board Switch 2 */
   p29 = GPIO_PORTF_BASE | GPIO_PIN_1, /* On board RGB led Red */
   p30 = GPIO_PORTF_BASE | GPIO_PIN_2, /* On board RGB led Blue */
   p31 = GPIO_PORTF_BASE | GPIO_PIN_3, /* On board RGB led Green */
@@ -109,11 +113,17 @@ typedef enum {
   NC = 0xffffffff
 } pin_names_t;
 
-#else /* TM4C1294NCPDT_BOARD, TM4C123_BOARD */
+#elif defined(MSP432P4XX_BOARD)
 
-#error "TM4C129x board flag was not defined"
+#include "inc/hw_gpio.h"
+#include "inc/hw_memmap.h"
+#include "driverlib/gpio.h"
 
-#endif /* TM4C1294NCPDT_BOARD, TM4C123_BOARD */
+#else /* TM4C1294NCPDT_BOARD, TM4C123_BOARD, MSP432P4XX_BOARD */
+
+#error "No board flag was not defined (e.g. TM4C1294NCPDT_BOARD, TM4C123_BOARD or MSP432P4XX_BOARD)"
+
+#endif /* TM4C1294NCPDT_BOARD, TM4C123_BOARD, MSP432P4XX_BOARD */
 
 /**
  */

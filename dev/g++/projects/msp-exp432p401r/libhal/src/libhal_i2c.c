@@ -9,15 +9,6 @@
 
 #include "libhal_i2c.h"
 
-#include "inc/hw_i2c.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "inc/hw_gpio.h"
-#include "driverlib/i2c.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/gpio.h"
-#include "driverlib/pin_map.h"
-
 #define I2C_MODULE_MAX 1
 /*!< I2C module parameters */
 static uint32_t i2c_modules[I2C_MODULE_MAX][8] = {

@@ -1,6 +1,6 @@
 /**
- * @file      ostram.t.h
- * @brief     Template header file for output binary stream templatea.
+ * @file      obstream.t.h
+ * @brief     Template header file for output binary stream template.
  * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License

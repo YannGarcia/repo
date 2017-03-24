@@ -1,4 +1,4 @@
-/*!<
+/**
  * @file      main.c
  * @brief     Application to validate libhal libary
  * @author    garciay.yann@gmail.com

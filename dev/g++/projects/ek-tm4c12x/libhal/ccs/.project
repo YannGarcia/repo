@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ccs</name>
+	<name>ccs_tiva</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -26,39 +26,125 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>include</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
+			<name>README.md</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/README.md</locationURI>
 		</link>
 		<link>
-			<name>libhal.c</name>
+			<name>docs</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>saleae logic</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>docs/o2.cfg</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/docs/o2.cfg</locationURI>
+		</link>
+		<link>
+			<name>include/libhal.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal.h</locationURI>
+		</link>
+		<link>
+			<name>include/libhal_i2c.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal_i2c.h</locationURI>
+		</link>
+		<link>
+			<name>include/libhal_pin_names.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal_pin_names.h</locationURI>
+		</link>
+		<link>
+			<name>include/libhal_serial.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal_serial.h</locationURI>
+		</link>
+		<link>
+			<name>include/libhal_shift.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal_shift.h</locationURI>
+		</link>
+		<link>
+			<name>include/libhal_spi.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/include/libhal_spi.h</locationURI>
+		</link>
+		<link>
+			<name>saleae logic/MSP432 BSPTest.logicdata</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/saleae%20logic/MSP432%20BSPTest.logicdata</locationURI>
+		</link>
+		<link>
+			<name>saleae logic/SPI TFT Clear Screen.logicdata</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/saleae%20logic/SPI%20TFT%20Clear%20Screen.logicdata</locationURI>
+		</link>
+		<link>
+			<name>saleae logic/testlibhal.logicsettings</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/saleae%20logic/testlibhal.logicsettings</locationURI>
+		</link>
+		<link>
+			<name>src/libhal.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal.c</locationURI>
 		</link>
 		<link>
-			<name>libhal_i2c.c</name>
+			<name>src/libhal_i2c.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_i2c.c</locationURI>
 		</link>
 		<link>
-			<name>libhal_serial.c</name>
+			<name>src/libhal_serial.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_serial.c</locationURI>
 		</link>
 		<link>
-			<name>libhal_shift.c</name>
+			<name>src/libhal_shift.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_shift.c</locationURI>
 		</link>
 		<link>
-			<name>libhal_spi.c</name>
+			<name>src/libhal_spi.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_spi.c</locationURI>
 		</link>
 		<link>
-			<name>testlib.c</name>
+			<name>src/mainpage.md</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/src/mainpage.md</locationURI>
+		</link>
+		<link>
+			<name>test/testlib.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/test/testlib.c</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-2-PROJECT_LOC%7D/Documents/wireshark/cygwin64/home/yann/repo/dev/g++/projects/ek-tm4c12x/libhal</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -70,7 +70,7 @@ namespace helpers {
 
   public:
     /**
-     * @desc Convert a Binary Coded Decimal value into a binary value
+     * @brief Convert a Binary Coded Decimal value into a binary value
      * @param[in] p_value The BDC value
      * @return The binary value
      */
@@ -79,7 +79,7 @@ namespace helpers {
     };
 
     /**
-     * @desc Convert a binary value into a Binary Coded Decimal value
+     * @brief Convert a binary value into a Binary Coded Decimal value
      * @param[in] p_value The binary value
      * @return The BCD value
      */
@@ -88,7 +88,7 @@ namespace helpers {
     };
     
     /**
-     * @desc Swap two bytes length value (e.g. 0xCAFE becomes 0xFECA)
+     * @brief Swap two bytes length value (e.g. 0xCAFE becomes 0xFECA)
      * @param[in] p_value The value to swap
      * @return The swapped value
      */
@@ -97,7 +97,7 @@ namespace helpers {
       return static_cast<short>(swap(static_cast<uint16_t>(p_value)));
     };
     /**
-     * @desc Swap four bytes length value (used for littel endian / big endian)
+     * @brief Swap four bytes length value (used for littel endian / big endian)
      * @param[in] p_value The value to swap
      * @return The swapped value
      */
@@ -107,26 +107,26 @@ namespace helpers {
     };
     
     /**
-     * @desc Convert a string into an hexadecimal string
+     * @brief Convert a string into an hexadecimal string
      * @param[in] p_value The string value
      * @return The hexadecimal value
      */
     std::string string_to_hexa(const std::string & p_value);
     /**
-     * @desc Convert a bytes array int32_t an hexadecimal string
+     * @brief Convert a bytes array int32_t an hexadecimal string
      * @param[in] p_value The bytes array value
      * @return The hexadecimal value
      */
     std::string bytes_to_hexa(const std::vector<uint8_t> & p_value);
     /**
-     * @desc Convert an hexadecimal string into a bytes array
+     * @brief Convert an hexadecimal string into a bytes array
      * @param[in] p_value The hexadecimal value
      * @return The bytes array value
      */
     std::vector<uint8_t> hexa_to_bytes(const std::string & p_value);
     
     /**
-     * @desc Convert a time in time_t format into a string formated according to RFC 822, 1036, 1123, 2822
+     * @brief Convert a time in time_t format into a string formated according to RFC 822, 1036, 1123, 2822
      * @param[in] p_time The time to convert in time_t format
      * @return The time string formated
      * @see http://www.unixtimestamp.com/
@@ -137,7 +137,7 @@ namespace helpers {
      */
     std::string time_to_string(const time_t p_time);
     /**
-     * @desc Convert a time in struct tm format into a string formated according to RFC 822, 1036, 1123, 2822
+     * @brief Convert a time in struct tm format into a string formated according to RFC 822, 1036, 1123, 2822
      * @param[in] p_time The time to convert in struct tm format
      * @return The time string formated
      * @see http://www.unixtimestamp.com/
@@ -145,7 +145,7 @@ namespace helpers {
     std::string time_to_string(const struct tm & p_time);
     
     /**
-     * @desc Convert a 16-bits integer (int16_t) into a bytes array
+     * @brief Convert a 16-bits integer (int16_t) into a bytes array
      * @param[in] p_value The 16-bits integer value
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The bytes array value
@@ -160,7 +160,7 @@ namespace helpers {
     }; // End of short_to_bytes
 
     /**
-     * @desc Convert a bytes array into a 16-bits integer (int16_t)
+     * @brief Convert a bytes array into a 16-bits integer (int16_t)
      * @param[in] p_value The bytes array
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The 16-bits integer on success, SHRT_MAX on error (wrong bytes array size)
@@ -178,7 +178,7 @@ namespace helpers {
     }; // End of bytes_to_short
     
     /**
-     * @desc Convert a 32-bits integer (int32_t) into a bytes array
+     * @brief Convert a 32-bits integer (int32_t) into a bytes array
      * @param[in] p_value The 32-bits integer value
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The bytes array value
@@ -200,7 +200,7 @@ namespace helpers {
     }; // End of int_to_bytes
 
     /**
-     * @desc Convert a bytes array into a 32-bits integer (int32_t)
+     * @brief Convert a bytes array into a 32-bits integer (int32_t)
      * @param[in] p_value The bytes array
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The 32-bits integer on success, LONG_MAX on error (wrong bytes array size)
@@ -219,7 +219,7 @@ namespace helpers {
     }; // End of bytes_to_int
     
     /**
-     * @desc Convert a 64-bits integer (int64_t) into a bytes array
+     * @brief Convert a 64-bits integer (int64_t) into a bytes array
      * @param[in] p_value The 64-bits integer value
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The bytes array value
@@ -241,7 +241,7 @@ namespace helpers {
     }; // End of long_to_bytes
 
     /**
-     * @desc Convert a bytes array into a 64-bits integer (int64_t)
+     * @brief Convert a bytes array into a 64-bits integer (int64_t)
      * @param[in] p_value The bytes array
      * @param[in] p_endianess Endianess style. Default: big_endian
      * @return The 64-bits integer on success, LLONG_MAX on error (wrong bytes array size)
@@ -260,7 +260,7 @@ namespace helpers {
     }; // End of bytes_to_long
     
     /**
-     * @desc Convert a float value into a bytes array
+     * @brief Convert a float value into a bytes array
      * @param[in] p_value The float value
      * @return The bytes array value
      */
@@ -276,7 +276,7 @@ namespace helpers {
     }; // End of float_to_long
 
     /**
-     * @desc Convert a bytes array into a float
+     * @brief Convert a bytes array into a float
      * @param[in] p_value The bytes array
      * @return The float value
      */
@@ -285,7 +285,7 @@ namespace helpers {
     }; // End of bytes_to_float
     
     /**
-     * @desc Convert a string into a bytes array
+     * @brief Convert a string into a bytes array
      * @param[in] p_value The string value
      * @return The bytes array value
      */
@@ -294,7 +294,7 @@ namespace helpers {
     }; // End of string_to_bytes
     
     /**
-     * @desc Convert a bytes array into a string
+     * @brief Convert a bytes array into a string
      * @param[in] p_value The bytes array value
      * @return The string value
      */
@@ -304,7 +304,7 @@ namespace helpers {
     
   public:
     /**
-     * @desc Convert a string into an integer
+     * @brief Convert a string into an integer
      * @param[in] p_value The string value
      * @return The integer value
      */
@@ -314,7 +314,7 @@ namespace helpers {
     }; // End of string_to_int
 
     /**
-     * @desc Convert an integer into a string
+     * @brief Convert an integer into a string
      * @param[in] p_value The integer value
      * @return The string value
      */
@@ -327,7 +327,7 @@ namespace helpers {
   public:
         
     /**
-     * @desc Returns a copy of the string, with leading and trailing special characters omitted
+     * @brief Returns a copy of the string, with leading and trailing special characters omitted
      * @param[in] p_value The string value
      * @param[in] p_trim_chars The special characters to be omitted. Default: ' ' and TAB
      * @return The new string value
@@ -335,7 +335,7 @@ namespace helpers {
     std::string trim(const std::string& p_value, const std::string& p_trim_chars = " \t");
     
     /**
-     * @desc Convert the provided string into a list of arguments
+     * @brief Convert the provided string into a list of arguments
      * @param[in] p_value The string value
      * @return The arguments list
      * @code{.cc}

@@ -8,15 +8,6 @@
  */
 #include "libhal_spi.h"
 
-#include "inc/hw_ssi.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "inc/hw_gpio.h"
-#include "driverlib/ssi.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/gpio.h"
-#include "driverlib/pin_map.h"
-
 #define SPI_CHANNEL_MAX 3
 /*!< SPI module parameters */
 static uint32_t spi_modules[SPI_CHANNEL_MAX][11] = {

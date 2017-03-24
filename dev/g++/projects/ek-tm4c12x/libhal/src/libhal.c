@@ -28,7 +28,7 @@
 
 #include "libhal.h"
 
-#define PWM_FIXED_FREQUENCY ((float)120.0e6)            /*!< Default PWM ferequecy with no divisor */
+#define PWM_FIXED_FREQUENCY ((float)120.0e6)            /*!< Default PWM frequency with no divisor */
 
 #define PWM_CONTROL 0
 #define PWM_STATUS  1
@@ -130,7 +130,7 @@ static adc_configuration_ adc_configuration;            /*!< adc configuration *
 
 /**
  * @fn void initialise_time(void)
- * @brief Initialise internal time variables
+ * @brief  internal time variables
  */
 static void initialise_time(void);
 /**
@@ -206,9 +206,9 @@ int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
   case gpio_modes_digital_input:
     /* Set gpio_modes_digital_input mode */
     GPIOPinTypeGPIOInput(
-       p_gpio & 0xffffff00, /* Port register */
-       p_gpio & 0xff        /* Port number */
-       );
+                         p_gpio & 0xffffff00, /* Port register */
+                         p_gpio & 0xff        /* Port number */
+                         );
     break;
   case gpio_modes_digital_output:
     /* Set gpio_modes_digital_outut mode */
@@ -735,6 +735,10 @@ int32_t libhal_setup_sys(void) {
   if (is_initialised == TRUE) {
     return -1;
   }
+
+  // Disable processor interrupts
+  ROM_IntMasterDisable();
+
   // Configure table according to board version
   revision = board_revision();
   if (revision == 1) {
@@ -742,13 +746,13 @@ int32_t libhal_setup_sys(void) {
 
   initialise_time();
 
-  // Initalize context_handles table
+  // Initialise context_handles table
   memset((void *)&context_handles, 0xff, sizeof(gpio_context) * MAX_GPIO_ID);
 
-  // Initalize adc_configuration table
+  // Initialise adc_configuration table
   memset((void *)&adc_configuration, 0x00, sizeof(adc_configuration));
 
-  // Initialize interrupt handler
+  //  interrupt handler
   /* memset((void *)&isr_fds, 0x00, sizeof(isr_fds)); */
   /* isr_fds_num = 0; */
 
@@ -763,6 +767,9 @@ int32_t libhal_setup_sys(void) {
   initialise_gpios(false, false);
 
   is_initialised = TRUE;
+
+  // Enable processor interrupts
+  ROM_IntMasterEnable();
 
   return 0;
 }
@@ -980,6 +987,7 @@ void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode) {
   ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOQ);
 
   // PA0-1 are used for UART0.
+  // FIXME To be removed, useless
   ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
   ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
   ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
@@ -995,7 +1003,6 @@ void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode) {
     ROM_GPIOPinTypeGPIOInput(GPIO_PORTQ_BASE, GPIO_PIN_4);
   } else {
     // Keep the default config for most pins used by USB. Add a pull down to PD6 to turn off the TPS2052 switch
-    //
     ROM_GPIOPinTypeGPIOInput(GPIO_PORTD_BASE, GPIO_PIN_6);
     MAP_GPIOPadConfigSet(GPIO_PORTD_BASE, GPIO_PIN_6, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPD);
   }
@@ -1026,10 +1033,8 @@ void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode) {
   ROM_GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1, 0);
 
   // Enable PWM module 0
+  // FIXME To be removed, useless
   SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
-
-  // Enable processor interrupts
-  ROM_IntMasterEnable();
 
 }
 

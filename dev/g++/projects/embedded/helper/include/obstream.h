@@ -15,7 +15,8 @@
 namespace helpers {
 
   /**
-   * @class Output binary stream
+   * @class obstream
+   * @brief Output binary stream
    */
   class obstream {
     /*!< Bit masks */
@@ -24,7 +25,7 @@ namespace helpers {
   public:
     /**
      * @brief Default ctor
-     * @param[in] The default size of the output data in bytes
+     * @param[in] p_capacity The default size of the output data in bytes. Default: 128
      */
     obstream(const uint32_t p_capacity = 128);
 
@@ -35,7 +36,7 @@ namespace helpers {
 
     /**
      * @brief Create a new binary output data stream
-     * @param[in] The default size of the output data in bytes
+     * @param[in] p_capacity The default size of the output data in bytes. Default: 128
      */
     void open(const uint32_t p_capacity = 128);
 
@@ -43,14 +44,6 @@ namespace helpers {
      * @brief Close the binary output data stream
      */
     void close();
-
-    /**
-     * @brief Write one or more bits from the current stream
-     * @param[in] p_buffer The buffer to write
-     * @param[in] p_bits_to_write The number of bits to write
-     * @return The number of bits write
-     */
-    //inline uint32_t write<std::vector<uint8_t>& >(const std::vector<uint8_t> & p_buffer, const uint32_t p_bits_to_write) { return write_bits(p_buffer, p_bits_to_write); };
 
     /**
      * @brief Write one or more bits from the current stream
@@ -70,7 +63,7 @@ namespace helpers {
 
     /**
      * @brief Write one or more bits from the current stream
-     * @param[in] p_buffer The buffer write
+     * @param[in] p_bits The bits to write
      * @param[in] p_bits_to_write The number of bits to write
      * @return The number of bits write
      */

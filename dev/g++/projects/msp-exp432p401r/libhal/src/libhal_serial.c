@@ -13,11 +13,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "driverlib/sysctl.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/uart.h"
-
 #include "libhal_serial.h"
 
 #define UART_MODULE_MAX 3

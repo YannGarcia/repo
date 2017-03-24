@@ -15,7 +15,8 @@
 namespace helpers {
 
   /**
-   * @class Input binary stream
+   * @class ibstream
+   * @brief Input binary stream
    */
   class ibstream {
     /*!< Bit masks */

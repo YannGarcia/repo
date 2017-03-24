@@ -19,7 +19,8 @@
 namespace helpers {
 
   /**
-   * @class Helper class to manipulate vectors/buffers of type T
+   * @class helper
+   * @brief Helper class to manipulate vectors/buffers of type T
    * @remark Pattern singleton
    */
   class helper {
@@ -90,7 +91,6 @@ namespace helpers {
 
     /**
      * @brief Generate an hexadecimal dump of the provided bytes array. The output is sent to the consile
-     * @param[in] p_output The output stream
      * @param[in] p_buffer The vector to extract 
      * @param[in] p_offset The offset to start. Default: 0 
      * @param[in] p_length The number of bytes to dump. Default: -1 for all remaining bytes
