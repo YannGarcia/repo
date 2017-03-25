@@ -26,7 +26,6 @@ before_deploy: true
 install: ${HOME}/install.bash
 script:
   - ${HOME}/build.bash
-deploy: true
 after_deploy: true
 after_success: ${HOME}/test.bash
 after_failure: false
