@@ -11,6 +11,7 @@
  */
 
 #include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TI launchpads */
+#include "libhal_serial.h"
 
 /*!<
  * @defgroup Booststarter #1 pin assignment
@@ -31,6 +32,8 @@
  */
 int32_t main(void) {
   uint32_t ii;
+  int32_t uart0;           /*!< UART handle */
+  uint32_t counter = 0;    /*!< Counter */
 
   /* Initialise the HAL */
   libhal_setup();
@@ -43,7 +46,12 @@ int32_t main(void) {
   pin_mode(SW2, gpio_modes_digital_input);
   pull_up_dn_control(SW2, pud_up);         /* Configuration of the pull-up is required for USR_SW2 */
 
+  // Open serial console
+  uart0 = serial_open("/dev/tty0", 115200);
+
   while (true) {
+    serial_printf(uart0, "Please push User button #1 (%d)\r\n", counter++);
+
     /* Wait event on Switch1 - PullUp ==> pushed = digital_state_low */
     while (digital_read(SW1) == digital_state_high);
     /* wait for 170 ms for button debouncing */

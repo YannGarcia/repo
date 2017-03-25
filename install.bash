@@ -30,7 +30,7 @@ g++ -v
 mkdir -p ${HOME_FRAMEWORKS}
 cd ${HOME_FRAMEWORKS}
 # Install ARM Compile
-wget https://launchpad.net/gcc-arm-embedded/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 tar xvzf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 # Install cpptest-1.1.2
 wget https://downloads.sourceforge.net/project/cpptest/cpptest/cpptest-1.1.2/cpptest-1.1.2.tar.gz

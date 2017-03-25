@@ -46,10 +46,10 @@
 								<option id="com.ti.ccstudio.buildDefinitions.MSP432_16.9.compilerID.INCLUDE_PATH.379121115" name="Add dir to #include search path (--include_path, -I)" superClass="com.ti.ccstudio.buildDefinitions.MSP432_16.9.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${COM_TI_SIMPLELINK_MSP432_SDK_INCLUDE_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CCS_BASE_ROOT}/arm/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${CCE_INSTALL_ROOT}\..\simplelink_msp432_sdk_1_30_00_40\source\ti\devices\msp432p4xx&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${CCE_INSTALL_ROOT}\..\simplelink_msp432_sdk_1_30_00_40\source&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${CCE_INSTALL_ROOT}/../simplelink_msp432_sdk_1_30_00_40/source/ti/devices/msp432p4xx&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${CCE_INSTALL_ROOT}/../simplelink_msp432_sdk_1_30_00_40/source&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CCS_BASE_ROOT}/arm/include/CMSIS&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}\..\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.MSP432_16.9.compilerID.DEBUGGING_MODEL.647402338" name="Debugging model" superClass="com.ti.ccstudio.buildDefinitions.MSP432_16.9.compilerID.DEBUGGING_MODEL" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.MSP432_16.9.compilerID.DEBUGGING_MODEL.SYMDEBUG__DWARF" valueType="enumerated"/>

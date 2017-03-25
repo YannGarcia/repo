@@ -101,6 +101,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal.c</locationURI>
 		</link>
 		<link>
+			<name>src/libhal_serial.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_serial.c</locationURI>
+		</link>
+		<link>
 			<name>src/libhal_shift.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/libhal_shift.c</locationURI>
