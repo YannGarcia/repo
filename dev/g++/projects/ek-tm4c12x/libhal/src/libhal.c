@@ -377,11 +377,10 @@ digital_state_t digital_read(const pin_name p_gpio) {
   }
   /* Read value */
   c = GPIOPinRead(
-                  (uint32_t)p_gpio & 0xffffff00, // Port register
-                  (uint8_t)p_gpio & 0xff         // Port number
+                  (uint32_t)p_gpio & 0xffffff00, /* Port register */
+                  (uint8_t)p_gpio & 0xff         /* Port number */
                  );
-  uint8_t criteria = (context_handles[gpio_idx].types.digital.pud == pud_up) ? p_gpio & 0xff : 0x00;
-  return ((c & p_gpio & 0xff) == criteria) ? digital_state_low : digital_state_high;
+  return (c == 1) ? digital_state_high : digital_state_low; /* Pull-Up/Down interpretation is up to the application */
 }
 
 void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
@@ -403,8 +402,8 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
 
   // Write value
   GPIOPinWrite(
-               (uint32_t)p_gpio & 0xffffff00, // Port register
-               (uint8_t)p_gpio & 0xff,        // Port number
+               (uint32_t)p_gpio & 0xffffff00, /* Port register */
+               (uint8_t)p_gpio & 0xff,        /* Port number */
                (p_value == digital_state_low) ? 0 : p_gpio & 0xff
               );
 
@@ -431,18 +430,18 @@ void digital_toggle(const pin_name p_gpio) {
 
   // Toggle low -> high -> low
   GPIOPinWrite(
-               (uint32_t)p_gpio & 0xffffff00, // Port register
-               (uint8_t)p_gpio & 0xff,        // Port number
+               (uint32_t)p_gpio & 0xffffff00, /* Port register */
+               (uint8_t)p_gpio & 0xff,        /* Port number */
                digital_state_low
               );
   GPIOPinWrite(
-               (uint32_t)p_gpio & 0xffffff00, // Port register
-               (uint8_t)p_gpio & 0xff,        // Port number
+               (uint32_t)p_gpio & 0xffffff00, /* Port register */
+               (uint8_t)p_gpio & 0xff,        /* Port number */
                digital_state_high
               );
   GPIOPinWrite(
-               (uint32_t)p_gpio & 0xffffff00, // Port register
-               (uint8_t)p_gpio & 0xff,        // Port number
+               (uint32_t)p_gpio & 0xffffff00, /* Port register */
+               (uint8_t)p_gpio & 0xff,        /* Port number */
                digital_state_low
               );
   return;
@@ -1058,8 +1057,8 @@ void enable_adc_periph(const pin_name p_gpio) {
       break;
   } // End of 'switch' statement
   GPIOPinTypeADC(
-                 p_gpio & 0xffffff00, // Port register
-                 p_gpio & 0xff        // Port number
+                 p_gpio & 0xffffff00, /* Port register */
+                 p_gpio & 0xff        /* Port number */
                  );
   // Setup the correct channel
   if ((p_gpio & 0xffffff00) == GPIO_PORTE_BASE) {
@@ -1133,8 +1132,8 @@ void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
         break;
     } // End of 'switch' statement
     GPIOPinTypeADC(
-                   *(p_gpios + gpio) & 0xffffff00, // Port register
-                   *(p_gpios + gpio) & 0xff        // Port number
+                   *(p_gpios + gpio) & 0xffffff00, /* Port register */
+                   *(p_gpios + gpio) & 0xff        /* Port number */
                    );
   } // End of 'for' statement
 

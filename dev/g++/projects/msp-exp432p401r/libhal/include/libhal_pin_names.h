@@ -103,9 +103,9 @@ typedef enum {
 typedef enum {
   p1 = GPIO_PORTB_BASE | GPIO_PIN_6,
   p4 = GPIO_PORTB_BASE | GPIO_PIN_7,
-  p5 = GPIO_PORTF_BASE | GPIO_PIN_4, /* On board Swith 1 */
+  p5 = GPIO_PORTF_BASE | GPIO_PIN_4, /* On board Switch 1 */
 
-  p28 = GPIO_PORTF_BASE | GPIO_PIN_0, /* On board Swith 2 */
+  p28 = GPIO_PORTF_BASE | GPIO_PIN_0, /* On board Switch 2 */
   p29 = GPIO_PORTF_BASE | GPIO_PIN_1, /* On board RGB led Red */
   p30 = GPIO_PORTF_BASE | GPIO_PIN_2, /* On board RGB led Blue */
   p31 = GPIO_PORTF_BASE | GPIO_PIN_3, /* On board RGB led Green */

@@ -217,12 +217,12 @@ int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
     /* Set gpio_modes_digital_outut mode */
     MAP_GPIO_setAsPeripheralModuleFunctionInputPin(
                                                    (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16),  /* Port register */
-                                                   (uint_fast8_t)(p_gpio & 0xffff),                         /* Port number */
+                                                   (uint_fast8_t)(p_gpio & 0xffff),                          /* Port number */
                                                    GPIO_PRIMARY_MODULE_FUNCTION
                                                   );
     MAP_GPIO_setAsOutputPin(
                             (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16),  /* Port register */
-                            (uint_fast8_t)(p_gpio & 0xffff)                          /* Port number */
+                            (uint_fast8_t)(p_gpio & 0xffff)                           /* Port number */
                             );
     break;
   case gpio_modes_adc_input:
@@ -297,26 +297,26 @@ int32_t pins_mode(const pin_name * p_gpios, const uint8_t p_len, const gpio_mode
       case gpio_modes_digital_input:
         /* Set gpio_modes_digital_input mode */
         MAP_GPIO_setAsPeripheralModuleFunctionInputPin(
-                                                   (uint_fast8_t)((uint32_t)*(p_gpios + gpio) & 0xffffff00), // Port register
-                                                   (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff),       // Port number
-                                                   GPIO_PRIMARY_MODULE_FUNCTION
-                                                  );
+                                                       (uint_fast8_t)(((uint32_t)*(p_gpios + gpio) & 0xffffff00) >> 16), /* Port register */
+                                                       (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff),               /* Port number */
+                                                       GPIO_PRIMARY_MODULE_FUNCTION
+                                                      );
         MAP_GPIO_setAsInputPin(
-                           (uint_fast8_t)((uint32_t)*(p_gpios + gpio) & 0xffffff00), // Port register
-                           (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff)        // Port number
-                          );
+                               (uint_fast8_t)(((uint32_t)*(p_gpios + gpio) & 0xffffff00) >> 16), /* Port register */
+                               (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff)                /* Port number */
+                              );
         break;
       case gpio_modes_digital_output:
         /* Set gpio_modes_digital_outut mode */
         MAP_GPIO_setAsPeripheralModuleFunctionOutputPin(
-                                                    (uint_fast8_t)((uint32_t)*(p_gpios + gpio) & 0xffffff00), // Port register
-                                                    (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff),       // Port number
-                                                    GPIO_PRIMARY_MODULE_FUNCTION
-                                                   );
+                                                        (uint_fast8_t)(((uint32_t)*(p_gpios + gpio) & 0xffffff00) >> 16), /* Port register */
+                                                        (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff),               /* Port number */
+                                                        GPIO_PRIMARY_MODULE_FUNCTION
+                                                       );
         MAP_GPIO_setAsOutputPin(
-                            (uint_fast8_t)((uint32_t)*(p_gpios + gpio) & 0xffffff00), // Port register
-                            (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff)        // Port number
-                           );
+                                (uint_fast8_t)(((uint32_t)*(p_gpios + gpio) & 0xffffff00) >> 16), /* Port register */
+                                (uint_fast16_t)((uint8_t)*(p_gpios + gpio) & 0xff)                /* Port number */
+                               );
         break;
       case gpio_modes_adc_input:
         // Processed outside
@@ -358,17 +358,17 @@ int32_t pull_up_dn_control(const pin_name p_gpio, const pud_t p_pud) {
   case pud_up:
     context_handles[gpio_idx].types.digital.pud = pud_up;
     MAP_GPIO_setAsInputPinWithPullUpResistor(
-                                         (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                                         (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                                        );
+                                             (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                                             (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                                            );
 
     break;
   case pud_down:
     context_handles[gpio_idx].types.digital.pud = pud_down;
     MAP_GPIO_setAsInputPinWithPullDownResistor(
-                                           (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                                           (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                                          );
+                                               (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                                               (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                                              );
     break;
   }
 
@@ -395,11 +395,10 @@ digital_state_t digital_read(const pin_name p_gpio) {
   }
   /* Read value */
   c = MAP_GPIO_getInputPinValue(
-                            (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                            (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                           );
-  uint8_t criteria = (context_handles[gpio_idx].types.digital.pud == pud_up) ? p_gpio & 0xffff : 0x00;
-  return ((c & p_gpio & 0xffff) == criteria) ? digital_state_low : digital_state_high;
+                                (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                                (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                               );
+  return (c == 1) ? digital_state_high : digital_state_low; /* Pull-Up/Down interpretation is up to the application */
 }
 
 void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
@@ -422,14 +421,14 @@ void digital_write(const pin_name p_gpio, const digital_state_t p_value) {
   // Write value
   if (p_value == digital_state_low) {
     MAP_GPIO_setOutputLowOnPin(
-                           (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                           (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                          );
+                               (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                               (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                              );
   } else {
     MAP_GPIO_setOutputHighOnPin(
-                            (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                            (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                           );
+                                (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                                (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                               );
   }
 
   return;
@@ -455,9 +454,9 @@ void digital_toggle(const pin_name p_gpio) {
 
   // Toggle low -> high -> low
   MAP_GPIO_toggleOutputOnPin(
-                         (uint_fast8_t)((uint32_t)p_gpio & 0xffffffff00), // Port register
-                         (uint_fast16_t)((uint8_t)p_gpio & 0xffff)        // Port number
-                        );
+                             (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16), /* Port register */
+                             (uint_fast16_t)((uint8_t)p_gpio & 0xffff)                /* Port number */
+                            );
   return;
 }
 
@@ -1015,6 +1014,7 @@ void initialise_gpios(const bool p_ethernet_mode, const bool p_usb_mode) {
 
   // P1.1 and P1.4 are on board Switch 1 and 2
   MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN1 | GPIO_PIN4, GPIO_PRIMARY_MODULE_FUNCTION);
+  MAP_GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN1 | GPIO_PIN4);
   MAP_GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1 | GPIO_PIN4); // SLAU597B–March 2015–Revised July 2016 - Figure 44. Schematics (2 of 6)
 
   // P1.0, P2.0, P2.1 and P2.2 are on board led and RGB leds
@@ -1047,8 +1047,8 @@ void enable_adc_periph(const pin_name p_gpio) {
 //      break;
 //  } // End of 'switch' statement
 //  GPIOPinTypeADC(
-//                 p_gpio & 0xffffffff00, // Port register
-//                 p_gpio & 0xffff        // Port number
+//                 p_gpio & 0xffffffff00, /* Port register */
+//                 p_gpio & 0xffff        /* Port number */
 //                 );
 //  // Setup the correct channel
 //  if ((p_gpio & 0xffffffff00) == GPIO_PORTE_BASE) {
@@ -1122,8 +1122,8 @@ void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
 //        break;
 //    } // End of 'switch' statement
 //    GPIOPinTypeADC(
-//                   *(p_gpios + gpio) & 0xffffff00, // Port register
-//                   *(p_gpios + gpio) & 0xff        // Port number
+//                   *(p_gpios + gpio) & 0xffffff00, /* Port register */
+//                   *(p_gpios + gpio) & 0xff        /* Port number */
 //                   );
 //  } // End of 'for' statement
 //

@@ -439,8 +439,8 @@ int32_t main(void) {
   while (true) {
     serial_printf(uart0, "Please push User button #2 (%d)\r\n", counter++);
 
-    /* Wait event on Switch1 */
-    while (digital_read(SW2) == digital_state_low);
+    /* Wait event on Switch2 - PullUp ==> pushed = digital_state_low */
+    while (digital_read(SW2) == digital_state_high); // TODO To be checked due to change in libhal
     /* wait for 170 ms for button debouncing */
     wait_ms(170);
 
