@@ -23,11 +23,11 @@ env:
 before_install: true
 before_script: true
 before_deploy: true
-install: ${HOME}/repo/install.bash
+install: ${HOME}/repo/travis_scripts/install.bash
 script:
-  - ${HOME}/repo/build.bash
+  - ${HOME}/repo/travis_scripts/build.bash
 after_deploy: true
-after_success: ${HOME}/repo/test.bash
+after_success: ${HOME}/travis_scripts/repo/test.bash
 after_failure: false
 after_script:
  - echo 'After Script is here'
