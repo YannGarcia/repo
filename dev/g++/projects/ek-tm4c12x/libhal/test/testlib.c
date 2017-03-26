@@ -81,7 +81,6 @@ int32_t main(void) {
   uint8_t spi_cmd_rsp;     /*!< 8bit SPI command/response buffer */
   int8_t float2str[8];
 
-
   /* Initialise the HAL */
   libhal_setup();
 

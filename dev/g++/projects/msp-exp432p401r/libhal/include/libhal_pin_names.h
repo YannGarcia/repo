@@ -181,7 +181,6 @@ typedef enum {
     A5 = GPIO_PORT_P5 << 16 | GPIO_PIN0,      /* MCU pin #64 */
     A6 = GPIO_PORT_P4 << 16 | GPIO_PIN7,      /* MCU pin #63 */
     A7 = GPIO_PORT_P4 << 16 | GPIO_PIN6,      /* MCU pin #62 */
-    A8 = GPIO_PORT_P4 << 16 | GPIO_PIN6,      /* MCU pin #61 */
 
     NC = 0xffffffff
   } pin_names_t;

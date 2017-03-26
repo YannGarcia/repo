@@ -24,6 +24,36 @@
 #define L_RED      p16
 #define L_GREEN    p17
 #define L_BLUE     p18
+
+#define J_SW       p23 /*!< Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_X        A7  /*!< Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_Y        A0  /*!< Horizontal Y-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+
+#define A_X        A3  /*!< Accelerometer, X-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Y        A2  /*!< Accelerometer, Y-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Z        A1  /*!< Accelerometer, Z-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+
+#define TFT_CS     p109 /*!< TFT /CS - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_MOSI   p2   /*!< TFT SPI MOSI - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_CLK    p4   /*!< TFT SPI clock - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RST    p32  /*!< TFT reset - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RS     p84  /*!< TFT command indicator - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_WIDTH  128  /*!< TFT screen width in pixels - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_HEIGHT 128  /*!< TFT screen heigh in pixels - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+/*!<
+ * @defgroup TFT screen color descriptions
+ * @{
+ */
+#define TFT_BLACK   0x0000
+#define TFT_BLUE    0x001F
+#define TFT_RED     0xF800
+#define TFT_GREEN   0x07E0
+#define TFT_CYAN    0x07FF
+#define TFT_MAGENTA 0xF81F
+#define TFT_YELLOW  0xFFE0
+#define TFT_WHITE   0xFFFF
+/*!< @} */
+
 /*!< @} */
 
 /*!<
@@ -34,6 +64,7 @@ int32_t main(void) {
   uint32_t ii;
   int32_t uart0;           /*!< UART handle */
   uint32_t counter = 0;    /*!< Counter */
+  int8_t float2str[8];
 
   /* Initialise the HAL */
   libhal_setup();
@@ -48,6 +79,13 @@ int32_t main(void) {
 
   // Open serial console
   uart0 = serial_open("/dev/tty0", 115200);
+
+  // Setup Joystick
+  pin_mode(J_SW, gpio_modes_digital_input);
+  pin_mode(J_X, gpio_modes_adc_input);
+  pin_mode(J_Y, gpio_modes_adc_input);
+  float j_x = analog_read(J_X);
+  float j_y = analog_read(J_Y);
 
   while (true) {
     serial_printf(uart0, "Please push User button #1 (%d)\r\n", counter++);
