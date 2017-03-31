@@ -130,13 +130,13 @@ int32_t main(void) {
       serial_printf(uart0, "%s)\r\n", float2str, 5);
     }
     // Accelerator values
-//    analog_multiple_read(acc_pins, 3, values);
-//    ftoa(values[0], float2str, 5);
-//    serial_printf(uart0, "Accelerator (X, Y, Z): (%s, ", float2str, 5);
-//    ftoa(values[1], float2str, 5);
-//    serial_printf(uart0, "%s, ", float2str, 5);
-//    ftoa(values[2], float2str, 5);
-//    serial_printf(uart0, "%s)\r\n", float2str, 5);
+    analog_multiple_read(acc_pins, 3, values);
+    ftoa(values[0], float2str, 5);
+    serial_printf(uart0, "Accelerator (X, Y, Z): (%s, ", float2str, 5);
+    ftoa(values[1], float2str, 5);
+    serial_printf(uart0, "%s, ", float2str, 5);
+    ftoa(values[2], float2str, 5);
+    serial_printf(uart0, "%s)\r\n", float2str, 5);
   } /* End of 'while' statement */
 
   return 0;

@@ -639,6 +639,8 @@ float analog_read(const pin_name p_gpio) {
   }
   MAP_ADC14_configureSingleSampleMode(memory_select, false);
   MAP_ADC14_configureConversionMemory(memory_select, ADC_VREFPOS_AVCC_VREFNEG_VSS, channel, false);
+  /* Configuring Sample Timer */
+  MAP_ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
   /* Enabling/Toggling Conversion */
   MAP_ADC14_enableConversion();
   MAP_ADC14_toggleConversionTrigger();
@@ -654,6 +656,8 @@ float analog_read(const pin_name p_gpio) {
   MAP_ADC14_disableInterrupt(interrupt_flag);
   /* Clear interrupts */
   MAP_ADC14_clearInterruptFlag(MAP_ADC14_getEnabledInterruptStatus());
+  /* Disable Sample Timer */
+  MAP_ADC14_disableSampleTimer();
   /* return value; */
   float value = (float)(adc_configuration.samples[0] & 0xffff) * 3.3f / 16384.0f; // See MSP432P4xx SimpleLink™ Microcontrollers Clause 20.2.1 14-Bit ADC Core
   return (float)value;
@@ -724,6 +728,8 @@ int32_t  analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, flo
   } /* End of 'for' statement */
   /* Configuring multiple ADCs */
   MAP_ADC14_configureMultiSequenceMode(adc_configuration.gpio_idx[0], adc_configuration.gpio_idx[adc_configuration.num_configured_analog_gpios - 1], false);
+  /* Configuring Sample Timer */
+  MAP_ADC14_enableSampleTimer(ADC_AUTOMATIC_ITERATION);
   /* Enable interrupts */
   MAP_ADC14_enableInterrupt(adc_configuration.gpio_idx[adc_configuration.num_configured_analog_gpios - 1]);
   /* Enabling/Toggling Conversion */
@@ -739,6 +745,8 @@ int32_t  analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, flo
   MAP_ADC14_disableInterrupt(adc_configuration.gpio_idx[adc_configuration.num_configured_analog_gpios - 1]);
   /* Clear interrupts */
   MAP_ADC14_clearInterruptFlag(MAP_ADC14_getEnabledInterruptStatus());
+  /* Disable Sample Timer */
+  MAP_ADC14_disableSampleTimer();
   /* convert values */
   uint8_t i;
   for (i = 0; i < adc_configuration.num_configured_analog_gpios; i++) {
@@ -854,8 +862,8 @@ int32_t libhal_setup_sys(void) {
   MAP_FPU_enableLazyStacking();
 
   /* Setting reference voltage to 2.5  and enabling reference */
-//  MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
-//  MAP_REF_A_enableReferenceVoltage();
+  MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
+  MAP_REF_A_enableReferenceVoltage();
 
   // Configure table according to board version
   revision = board_revision();
@@ -1125,10 +1133,8 @@ void enable_adc_periph(const pin_name p_gpio) {
       if (!adc_configuration.initialised) {
         adc_configuration.initialised = true;
         MAP_ADC14_enableModule();                                                       /* Enable ADC peripheral */
-        MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_1, ADC_DIVIDER_4, 0); /* Initializing ADC module with MCLK / 1 / 4 */
+        MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_1, ADC_DIVIDER_1, 0); /* Initializing ADC module with MCLK / 1 / 1 */
         MAP_ADC14_setResolution(ADC_14BIT);
-        /* Configuring Sample Timer */
-        MAP_ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
       }
       break;
   } /* End of 'switch' statement */
@@ -1150,8 +1156,6 @@ void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
     MAP_ADC14_enableModule();                                                       /* Enable ADC peripheral */
     MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_1, ADC_DIVIDER_4, 0); /* Initializing ADC module with MCLK / 1 / 4 */
     MAP_ADC14_setResolution(ADC_14BIT);
-    /* Configuring Sample Timer */
-    MAP_ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
   }
   // Reset array
   uint8_t gpio;
