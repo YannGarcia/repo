@@ -12,7 +12,7 @@ include $(PATH_DEV)/Makefile.inc
 #############################################################################
 # List of projects
 
-projects=helper converter ipc comm logger uart gps
+projects=logger helper converter ipc comm uart gps
 
 clean:
 	@for project in $(projects); do \

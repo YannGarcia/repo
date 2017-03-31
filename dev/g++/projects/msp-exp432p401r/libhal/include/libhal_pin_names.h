@@ -172,6 +172,29 @@ typedef enum {
     p48 = GPIO_PORT_P8 << 16 | GPIO_PIN4,
     p49 = GPIO_PORT_P8 << 16 | GPIO_PIN5,
     p50 = GPIO_PORT_P8 << 16 | GPIO_PIN6,
+    p51 = GPIO_PORT_P8 << 16 | GPIO_PIN7,
+    p52 = GPIO_PORT_P9 << 16 | GPIO_PIN0,
+    p53 = GPIO_PORT_P9 << 16 | GPIO_PIN1,
+    p54 = GPIO_PORT_P6 << 16 | GPIO_PIN0,
+    p55 = GPIO_PORT_P6 << 16 | GPIO_PIN1,
+    p56 = GPIO_PORT_P4 << 16 | GPIO_PIN0,
+    p57 = GPIO_PORT_P4 << 16 | GPIO_PIN1,
+    p58 = GPIO_PORT_P4 << 16 | GPIO_PIN2,
+    p59 = GPIO_PORT_P4 << 16 | GPIO_PIN3,
+    p60 = GPIO_PORT_P4 << 16 | GPIO_PIN4,
+    p61 = GPIO_PORT_P4 << 16 | GPIO_PIN5,
+    p62 = GPIO_PORT_P4 << 16 | GPIO_PIN6,
+    p63 = GPIO_PORT_P4 << 16 | GPIO_PIN7,
+    p64 = GPIO_PORT_P5 << 16 | GPIO_PIN0,
+    p65 = GPIO_PORT_P5 << 16 | GPIO_PIN1,
+    p66 = GPIO_PORT_P5 << 16 | GPIO_PIN2,
+    p67 = GPIO_PORT_P5 << 16 | GPIO_PIN3,
+    p68 = GPIO_PORT_P5 << 16 | GPIO_PIN4,
+    p69 = GPIO_PORT_P5 << 16 | GPIO_PIN5,
+    p70 = GPIO_PORT_P5 << 16 | GPIO_PIN6,
+    p71 = GPIO_PORT_P5 << 16 | GPIO_PIN7,
+    p74 = GPIO_PORT_P9 << 16 | GPIO_PIN2,
+    p75 = GPIO_PORT_P9 << 16 | GPIO_PIN3,
 
     A0 = GPIO_PORT_P5 << 16 | GPIO_PIN5,      /* MCU pin #69 */
     A1 = GPIO_PORT_P5 << 16 | GPIO_PIN4,      /* MCU pin #68 */
@@ -181,6 +204,14 @@ typedef enum {
     A5 = GPIO_PORT_P5 << 16 | GPIO_PIN0,      /* MCU pin #64 */
     A6 = GPIO_PORT_P4 << 16 | GPIO_PIN7,      /* MCU pin #63 */
     A7 = GPIO_PORT_P4 << 16 | GPIO_PIN6,      /* MCU pin #62 */
+
+    A9 = GPIO_PORT_P4 << 16 | GPIO_PIN4,      /* MCU pin #60 */
+    A10 = GPIO_PORT_P4 << 16 | GPIO_PIN3,     /* MCU pin #59 */
+    A11 = GPIO_PORT_P4 << 16 | GPIO_PIN2,     /* MCU pin #58 */
+    A12 = GPIO_PORT_P4 << 16 | GPIO_PIN1,     /* MCU pin #57 */
+    A13 = GPIO_PORT_P4 << 16 | GPIO_PIN0,     /* MCU pin #56 */
+    A14 = GPIO_PORT_P6 << 16 | GPIO_PIN1,     /* MCU pin #55 */
+    A15 = GPIO_PORT_P6 << 16 | GPIO_PIN0,     /* MCU pin #54 */
 
     NC = 0xffffffff
   } pin_names_t;

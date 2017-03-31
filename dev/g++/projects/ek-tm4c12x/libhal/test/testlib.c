@@ -29,7 +29,12 @@
 #define L_RED      p44
 #define L_GREEN    p45
 #define L_BLUE     p49
+
 #define LIGHT_INT  p22 /*!< TI OPT3001 Light Sensor on BOOSTXL-EDUMKII Educational BoosterPack™ Mark II Plug-in Module See SLAU599–August 2015 Clause 2.1.2 TI OPT3001 Light Sensor */
+
+// TODO Checked pin values
+#define BUT1       p1 /*!< On board Switch1 Switch1 */
+#define BUT2       p1 /*!< On board Switch1 Switch2 */
 
 #define J_SW       p23 /*!< Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
 #define J_X        A9  /*!< Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
@@ -94,8 +99,27 @@ int32_t main(void) {
   pin_mode(SW2, gpio_modes_digital_input);
   pull_up_dn_control(SW2, pud_up);         /* Configuration of the pull-up is required for USR_SW2 */
 
+  /* Setup GPIO input ports for MKII buttons, see MKII Circuit Diagram */
+  pin_mode(BUT1, gpio_modes_digital_input);
+  pin_mode(BUT2, gpio_modes_digital_input);
+
   // Open serial console
   uart0 = serial_open("/dev/tty0", 115200);
+  debug_state += 1;
+  set_debug_state(debug_state);
+
+  // Setup Joystick
+  pin_mode(J_SW, gpio_modes_digital_input);
+  pin_mode(J_X, gpio_modes_adc_input);
+  pin_mode(J_Y, gpio_modes_adc_input);
+  float j_x = analog_read(J_X);
+  float j_y = analog_read(J_Y);
+
+  // Setup accelerator
+  const pin_name acc_pins[3] = {A_X, A_Y, A_Z};
+  float values[3] = {0};
+  pins_mode(acc_pins, 3, gpio_modes_adc_input);
+  analog_multiple_read(acc_pins, 3, values);
   debug_state += 1;
   set_debug_state(debug_state);
 
@@ -120,8 +144,8 @@ int32_t main(void) {
   debug_state += 1;
   set_debug_state(debug_state);
 
-  // Setupt TFT screen
-  /*digital_write(L_RED, digital_state_high); // TODO Check why it des not work!?
+  // Setup TFT screen
+  /*digital_write(L_RED, digital_state_high); // TODO Check why it does not work!?
   pin_mode(TFT_RS, gpio_modes_digital_output); // TFT /RS pin, command indicator
   digital_write(TFT_RS, digital_state_low); // Send command mode
   pin_mode(TFT_RST, gpio_modes_digital_output); // TFT /RESET pin
@@ -420,21 +444,6 @@ int32_t main(void) {
     digital_write(TFT_CS, digital_state_high);
   }*/
 
-  // Setup Joystick
-  pin_mode(J_SW, gpio_modes_digital_input);
-  pin_mode(J_X, gpio_modes_adc_input);
-  pin_mode(J_Y, gpio_modes_adc_input);
-  float j_x = analog_read(J_X);
-  float j_y = analog_read(J_Y);
-
-  // Setup accelerator
-  const pin_name acc_pins[3] = {A_X, A_Y, A_Z};
-  float values[3] = {0};
-  pins_mode(acc_pins, 3, gpio_modes_adc_input);
-  analog_multiple_read(acc_pins, 3, values);
-  debug_state += 1;
-  set_debug_state(debug_state);
-
   while (true) {
     serial_printf(uart0, "Please push User button #2 (%d)\r\n", counter++);
 
@@ -455,12 +464,14 @@ int32_t main(void) {
 //    digital_toggle(L_BLUE); // Marker between two I2C transactions
     serial_printf(uart0, "Light sensor value: %d\r\n", data);
 
+    // Joystick position
     j_x = analog_read(J_X);
     j_y = analog_read(J_Y);
     ftoa(j_x, float2str, 5);
     serial_printf(uart0, "Joystick position: (%s, ", float2str);
     ftoa(j_y, float2str, 5);
     serial_printf(uart0, "%s)\r\n", float2str, 5);
+    // Accelerator values
     analog_multiple_read(acc_pins, 3, values);
     ftoa(values[0], float2str, 5);
     serial_printf(uart0, "Accelerator (X, Y, Z): (%s, ", float2str, 5);

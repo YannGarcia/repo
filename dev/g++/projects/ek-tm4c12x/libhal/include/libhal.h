@@ -7,7 +7,7 @@
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
  * @see       EK-TM4C129EXL Firmware Development Package User's Guide
- * @see       EK-TM4C1294XL Firmware Development Package User's Guide
+ * @see       MSP432® Peripheral Driver Library - USER’S GUIDE
  */
 #pragma once
 
@@ -162,22 +162,25 @@ extern "C" {
   /**
    * @fn float analog_read(const pin_name p_gpio)
    * @brief Read the analog value of the specified GPIO
-   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        14-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
    *        It uses the sequencer number SS3, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
    * @param[in] p_gpio The analog input GPIO
    * @return The ADC value on success, LONG_MAX on error
+   * @remark The function pin_mode() shall be called before analog_read()
    */
   extern float analog_read(const pin_name p_gpio);
   /**
    * @fn void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values)
    * @brief Read multiple analog channels at the same time
-   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        14-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
    *        It uses the sequencer number SS0, SS1 or SS2, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
    * @param[in] p_gpios      The analog inputs
    * @param[in] p_len        The number of analog inputs (and values to return)
    * @param[out] p_values    The read values on success, LONG_MAX on error
+   * @return 0 on success, -1 otherwise
+   * @remark The function pins_mode() shall be called before analog_multiple_read()
    */
-  extern void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values);
+  extern int32_t  analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values);
   /*  extern void analog_write(const pin_name p_gpio, int32_t p_value);*/
   /**
    * @fn void board_revision(void)
