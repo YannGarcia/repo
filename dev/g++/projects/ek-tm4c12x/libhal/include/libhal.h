@@ -189,33 +189,26 @@ extern "C" {
    */
   extern int32_t board_revision(void);
 
-  extern void digitalWriteByte(const uint8_t p_value);
+//TODO  extern void digitalWriteByte(const uint8_t p_value);
 
   /**
-   * @fn void pwm_set_mode(const uint8_t p_mode)
-   * @brief
-   * @param[in] p_mode
-   * @todo To be implemented
+   * @fn int32t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle)
+   * @brief Start a PWM signal on the specified GPIO identifier
+   * @param[in] p_gpio          The GPIO pin identifier
+   * @param[in] p_frequency     The frequency in Hertz of the PWM signal
+   * @param[in] p_duty_cycle    The duty cycle in percent of the PWM signal, 0%: no PWM, 100% Full time PWM signal
+   * @return 0 on success, -1 otherwise (such as no PWM gpio available)
+   * @remark A duty cycle of 0% is not equivalent to a call to pwm_stop()
    */
-  extern void pwm_set_mode(const uint8_t p_mode);
+  extern int32_t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle);
   /**
-   * @fn int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency)
-   * @brief Set the duty cycle value of the PWM signal
+   * @fn int32_t pwm_stop(const pin_name p_gpio);
+   * @brief Stop PWM signal generation on the specify GPIO and free the GPIO resource
    * @param[in] p_gpio      The GPIO pwm pin identifier
    * @param[in] p_frequency
    * @return 0 on success, -1 otherwise
-   * @todo To be implemented
    */
-  extern int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency);
-  /**
-   * @fn int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor)
-   * @brief Set the divisor for the PWM clock
-   * @param[in] p_gpio      The GPIO pwm pin identifier
-   * @param[in] p_divisor   The time divisor value to apply
-   * @return 0 on success, -1 otherwise
-   * @todo To be implemented
-   */
-  extern int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor);
+  extern int32_t pwm_stop(const pin_name p_gpio);
   /**
    * @fn int32_t wait_for_interrupt(const pin_name p_gpio, uint32_t p_timeout)
    * @brief create an interrupt handler that will do a callback to the user supplied function

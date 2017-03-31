@@ -30,13 +30,6 @@
 
 #define PWM_FIXED_FREQUENCY ((float)120.0e6)            /*!< Default PWM frequency with no divisor */
 
-#define PWM_CONTROL 0
-#define PWM_STATUS  1
-#define PWM0_RANGE  4
-#define PWM0_DATA   5
-#define PWM1_RANGE  8
-#define PWM1_DATA   9
-
 #ifndef TRUE
 #define TRUE    (1==1)
 #define FALSE   (1==2)
@@ -92,7 +85,7 @@ typedef struct {
  */
 typedef struct {
   float frequency;                                      /*!< The PWM signal frequency */
-  uint32_t divisor;                                     /*!< Divisor to apply for the PWM base frequency */
+//  uint32_t divisor;                                     /*!< Divisor to apply for the PWM base frequency */
   float duty_cycle;                                     /*!< Duty cycle of the PWM signal (in ns) */
 } pwm_context_t;
 
@@ -104,9 +97,9 @@ typedef struct {
   int32_t shared;                                       /*!< Gpio shared counter. Default: 0 (not shared) */
   gpio_types_t type;                                    /*!< Gpio type (digital, analog...) */
   union {
-    digital_context_t digital;
-    pwm_context_t pwm;                                  /*!< The PWM chip set number */
-    adc_context_t adc;                                  /*!< The ADC chip set number */
+    digital_context_t digital;                          /*!< The digital context */
+    pwm_context_t pwm;                                  /*!< The PWM context */
+    adc_context_t adc;                                  /*!< The ADC context */
   } types;
 } gpio_context;
 
@@ -141,14 +134,14 @@ static int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_g
  * @brief Free a new GPIO context
  */
 static int32_t free_context(const pin_name p_gpio);
-static void pwm_update(gpio_context *p_gpio);
+//static void pwm_update(gpio_context *p_gpio);
 static uint8_t gpio_to_index(const pin_name p_gpio);
 static void enable_adc_periph(const pin_name p_gpio);
 static void enable_adcs_periph(const pin_name * p_gpio, const uint32_t p_len);
-static uint32_t gpio_to_pwm_output(const pin_name p_gpio); // TODO Check if this function is really useful
-static uint32_t gpio_to_pwm_pinmap(const pin_name p_gpio); // TODO Check if this function is really useful
-static uint32_t gpio_to_pwm_module(const pin_name p_gpio); // TODO Check if this function is really useful
-static uint32_t gpio_to_pwm_enable(const pin_name p_gpio); // TODO Check if this function is really useful
+//static uint32_t gpio_to_pwm_output(const pin_name p_gpio); // TODO Check if this function is really useful
+//static uint32_t gpio_to_pwm_pinmap(const pin_name p_gpio); // TODO Check if this function is really useful
+//static uint32_t gpio_to_pwm_module(const pin_name p_gpio); // TODO Check if this function is really useful
+//static uint32_t gpio_to_pwm_enable(const pin_name p_gpio); // TODO Check if this function is really useful
 static void insert_sort(uint32_t *p_gpio, const uint8_t p_len, const uint32_t p_value);
 
 
@@ -225,17 +218,17 @@ int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
     break;
   case gpio_modes_pwm_output:
     // Configure the GPIO for PWM
-    GPIOPinConfigure(gpio_to_pwm_pinmap(p_gpio));
-    GPIOPinTypePWM(
-                   p_gpio & 0xffffff00, /* Port register */
-                   p_gpio & 0xff        /* Port number */
-                  );
-    // Configure the PWM generator for count down mode with immediate updates to the parameters
-    PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(p_gpio), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
-    // Disable the PWM dead band output
-    PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(p_gpio));
-    // Setup PWM module
-    pwm_update(&context_handles[gpio_idx]);
+//    GPIOPinConfigure(gpio_to_pwm_pinmap(p_gpio));
+//    GPIOPinTypePWM(
+//                   p_gpio & 0xffffff00, /* Port register */
+//                   p_gpio & 0xff        /* Port number */
+//                  );
+//    // Configure the PWM generator for count down mode with immediate updates to the parameters
+//    PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(p_gpio), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+//    // Disable the PWM dead band output
+//    PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(p_gpio));
+//    // Setup PWM module
+//    pwm_update(&context_handles[gpio_idx]);
     break;
   case gpio_modes_clock:
     /* TODO To be implemented */
@@ -308,17 +301,17 @@ int32_t pins_mode(const pin_name * p_gpios, const uint8_t p_len, const gpio_mode
         break;
       case gpio_modes_pwm_output:
         // Configure the GPIO for PWM
-        GPIOPinConfigure(gpio_to_pwm_pinmap(*(p_gpios + gpio)));
-        GPIOPinTypePWM(
-                       *(p_gpios + gpio) & 0xffffff00, /* Port register */
-                       *(p_gpios + gpio) & 0xff      /* Port number */
-                       );
-        // Configure the PWM generator for count down mode with immediate updates to the parameters
-        PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
-        // Disable the PWM dead band output
-        PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)));
-        // Setup PWM module
-        pwm_update(&context_handles[gpio_idx]);
+//        GPIOPinConfigure(gpio_to_pwm_pinmap(*(p_gpios + gpio)));
+//        GPIOPinTypePWM(
+//                       *(p_gpios + gpio) & 0xffffff00, /* Port register */
+//                       *(p_gpios + gpio) & 0xff      /* Port number */
+//                       );
+//        // Configure the PWM generator for count down mode with immediate updates to the parameters
+//        PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+//        // Disable the PWM dead band output
+//        PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(*(p_gpios + gpio)));
+//        // Setup PWM module
+//        pwm_update(&context_handles[gpio_idx]);
         break;
       case gpio_modes_clock:
         /* TODO To be implemented */
@@ -454,71 +447,46 @@ void digital_toggle(const pin_name p_gpio) {
   return;
 }
 
-int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value) {
-  /* Sanity check */
-  uint8_t gpio_idx = gpio_to_index(p_gpio);
-  if (gpio_idx > MAX_GPIO_ID) {
-    // FIXME Add default behavior
-    return -1;
-  }
-
-  //  if (context_handles[gpio_idx] == NULL) {
-  if (context_handles[gpio_idx].gpio == NC) {
-    // Allocation GPIO
-    if (create_new_context(p_gpio, gpio_access_weak, gpio_types_pwm) < 0) {
-      return -1;
-    }
-    // Setup PWM module
-    pin_mode(p_gpio, gpio_modes_pwm_output);
-  }
-
-  // Update duty cycle
-  if (p_value == 0) { // Stop PWM
-    context_handles[gpio_idx].types.pwm.duty_cycle = 0.0;
-    PWMOutputState(PWM0_BASE, gpio_to_pwm_enable(p_gpio), false);
-  } else {
-    context_handles[gpio_idx].types.pwm.duty_cycle = (float)p_value / 100.0;
-    pwm_update(&context_handles[gpio_idx]);
-    // Start the timers
-    PWMGenEnable(PWM0_BASE, gpio_to_pwm_module(p_gpio));
-    // Enable the outputs
-    PWMOutputState(PWM0_BASE, gpio_to_pwm_enable(p_gpio), true);
-  }
-
-  return 0;
-} // End of function pwm_write
-
-void pwm_set_mode(const uint8_t p_mode) {
-  /* Nothing to do */
-} // End of function pwm_set_mode
-
-int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency) {
-  /* Sanity check */
-  uint8_t gpio_idx = gpio_to_index(p_gpio);
-  if ((gpio_idx > MAX_GPIO_ID) || (context_handles[gpio_idx].gpio == NC)) {
-  // FIXME Add default behavior
+int32_t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle) {
   return -1;
-  }
+}
 
-  context_handles[gpio_idx].types.pwm.frequency = p_frequency;
-  pwm_update(&context_handles[gpio_idx]);
-
-  return 0;
-} // End of function pwm_set_range
-
-int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor) {
-  /* Sanity check */
-  uint8_t gpio_idx = gpio_to_index(p_gpio);
-  if ((gpio_idx > MAX_GPIO_ID) || (context_handles[gpio_idx].gpio == NC)) {
-  // FIXME Add default behavior
+int32_t pwm_stop(const pin_name p_gpio) {
   return -1;
-  }
-
-  context_handles[gpio_idx].types.pwm.divisor = p_divisor;
-  pwm_update(&context_handles[gpio_idx]);
-
-  return 0;
-} // End of function pwm_set_clock
+}
+//int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value) {
+//  /* Sanity check */
+//  uint8_t gpio_idx = gpio_to_index(p_gpio);
+//  if (gpio_idx > MAX_GPIO_ID) {
+//    // FIXME Add default behavior
+//    return -1;
+//  }
+//
+//  //  if (context_handles[gpio_idx] == NULL) {
+//  if (context_handles[gpio_idx].gpio == NC) {
+//    // Allocation GPIO
+//    if (create_new_context(p_gpio, gpio_access_weak, gpio_types_pwm) < 0) {
+//      return -1;
+//    }
+//    // Setup PWM module
+//    pin_mode(p_gpio, gpio_modes_pwm_output);
+//  }
+//
+//  // Update duty cycle
+//  if (p_value == 0) { // Stop PWM
+//    context_handles[gpio_idx].types.pwm.duty_cycle = 0.0;
+//    PWMOutputState(PWM0_BASE, gpio_to_pwm_enable(p_gpio), false);
+//  } else {
+//    context_handles[gpio_idx].types.pwm.duty_cycle = (float)p_value / 100.0;
+//    pwm_update(&context_handles[gpio_idx]);
+//    // Start the timers
+//    PWMGenEnable(PWM0_BASE, gpio_to_pwm_module(p_gpio));
+//    // Enable the outputs
+//    PWMOutputState(PWM0_BASE, gpio_to_pwm_enable(p_gpio), true);
+//  }
+//
+//  return 0;
+//} // End of function pwm_write
 
 float analog_read(const pin_name p_gpio) {
   /* Sanity checks */
@@ -788,7 +756,7 @@ int32_t create_new_context(const pin_name p_gpio, const gpio_access_t p_gpio_acc
       break;
     case gpio_types_pwm:
       gpio->type = gpio_types_pwm;
-      gpio->types.pwm.divisor = 64;        /* PWM frequency base = System frequency / 64 */
+//      gpio->types.pwm.divisor = 64;        /* PWM frequency base = System frequency / 64 */
       gpio->types.pwm.duty_cycle = 0.5;    /* 50% */
       gpio->types.pwm.frequency = 25000.0; /* 25KHz */
       break;
@@ -848,38 +816,37 @@ int32_t free_context(const pin_name p_gpio) {
   return 0;
 }
 
-void pwm_update(gpio_context *p_gpio) {
-  uint32_t pwm_clock = (uint32_t)(sys_clock / p_gpio->types.pwm.divisor);
-  uint32_t pwm_period = (uint32_t)(pwm_clock / p_gpio->types.pwm.frequency) - 1;
-  uint32_t pwm_duty = (uint32_t)(pwm_period * p_gpio->types.pwm.duty_cycle);
-  uint32_t divisor = PWM_SYSCLK_DIV_1;
-  switch (p_gpio->types.pwm.divisor) {
-  case 2:
-    divisor = PWM_SYSCLK_DIV_2;
-    break;
-  case 4:
-    divisor = PWM_SYSCLK_DIV_4;
-    break;
-  case 8:
-    divisor = PWM_SYSCLK_DIV_8;
-    break;
-  case 16:
-    divisor = PWM_SYSCLK_DIV_16;
-    break;
-  case 32:
-    divisor = PWM_SYSCLK_DIV_32;
-    break;
-  case 64:
-    divisor = PWM_SYSCLK_DIV_64;
-    break;
-  } /* End of 'switch' statement */
-  PWMClockSet(PWM0_BASE, divisor);
-  // Set the period
-  PWMGenPeriodSet(PWM0_BASE, gpio_to_pwm_module(p_gpio->gpio), pwm_period);
-  // Set the pulse width of PWM0 for a 25% duty cycle.
-  PWMPulseWidthSet(PWM0_BASE, gpio_to_pwm_output(p_gpio->gpio), pwm_duty);
-
-} // End of function pwm_update
+//void pwm_update(gpio_context *p_gpio) {
+//  uint32_t pwm_clock = (uint32_t)(sys_clock / p_gpio->types.pwm.divisor);
+//  uint32_t pwm_period = (uint32_t)(pwm_clock / p_gpio->types.pwm.frequency) - 1;
+//  uint32_t pwm_duty = (uint32_t)(pwm_period * p_gpio->types.pwm.duty_cycle);
+//  uint32_t divisor = PWM_SYSCLK_DIV_1;
+//  switch (p_gpio->types.pwm.divisor) {
+//  case 2:
+//    divisor = PWM_SYSCLK_DIV_2;
+//    break;
+//  case 4:
+//    divisor = PWM_SYSCLK_DIV_4;
+//    break;
+//  case 8:
+//    divisor = PWM_SYSCLK_DIV_8;
+//    break;
+//  case 16:
+//    divisor = PWM_SYSCLK_DIV_16;
+//    break;
+//  case 32:
+//    divisor = PWM_SYSCLK_DIV_32;
+//    break;
+//  case 64:
+//    divisor = PWM_SYSCLK_DIV_64;
+//    break;
+//  } /* End of 'switch' statement */
+//  PWMClockSet(PWM0_BASE, divisor);
+//  // Set the period
+//  PWMGenPeriodSet(PWM0_BASE, gpio_to_pwm_module(p_gpio->gpio), pwm_period);
+//  // Set the pulse width of PWM0 for a 25% duty cycle.
+//  PWMPulseWidthSet(PWM0_BASE, gpio_to_pwm_output(p_gpio->gpio), pwm_duty);
+//} // End of function pwm_update
 
 static void initialise_time(void)
 {
@@ -1145,34 +1112,34 @@ void enable_adcs_periph(const pin_name * p_gpios, const uint32_t p_len) {
   ADCIntClear(adc_configuration.base_address, adc_configuration.sequencer);
 }
 
-uint32_t gpio_to_pwm_output(const pin_name p_gpio) {
-  uint32_t pwm = PWM_OUT_0; // p42
-  switch (p_gpio) {
-  case p43:
-    pwm = PWM_OUT_1;
-    break;
-  case p44:
-    pwm = PWM_OUT_2;
-    break;
-  case p45:
-    pwm = PWM_OUT_3;
-    break;
-  case p49:
-    pwm = PWM_OUT_4;
-    break;
-  case p50:
-    pwm = PWM_OUT_5;
-    break;
-  case p62:
-    pwm = PWM_OUT_7;
-    break;
-  case p63:
-    pwm = PWM_OUT_6;
-    break;
-  } /* End of 'switch' statement */
-
-  return pwm;
-}
+//uint32_t gpio_to_pwm_output(const pin_name p_gpio) {
+//  uint32_t pwm = PWM_OUT_0; // p42
+//  switch (p_gpio) {
+//  case p43:
+//    pwm = PWM_OUT_1;
+//    break;
+//  case p44:
+//    pwm = PWM_OUT_2;
+//    break;
+//  case p45:
+//    pwm = PWM_OUT_3;
+//    break;
+//  case p49:
+//    pwm = PWM_OUT_4;
+//    break;
+//  case p50:
+//    pwm = PWM_OUT_5;
+//    break;
+//  case p62:
+//    pwm = PWM_OUT_7;
+//    break;
+//  case p63:
+//    pwm = PWM_OUT_6;
+//    break;
+//  } /* End of 'switch' statement */
+//
+//  return pwm;
+//}
 
 uint32_t gpio_to_pwm_pinmap(const pin_name p_gpio) {
   uint32_t pwm = GPIO_PF0_M0PWM0; // p42
