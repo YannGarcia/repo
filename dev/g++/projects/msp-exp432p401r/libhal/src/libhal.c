@@ -26,8 +26,6 @@
 
 #include "libhal.h"
 
-#define PWM_FIXED_FREQUENCY ((float)CS_48MHZ)            /*!< Default PWM frequency with no divisor */
-
 #ifndef TRUE
 #define TRUE    (1==1)
 #define FALSE   (1==2)
@@ -111,6 +109,7 @@ typedef struct { // FIXME analog_gpios & num_configured_analog_gpios seems to be
 
 static uint8_t is_initialised = FALSE;                  /*!< Indicate if the library was initialized by the process */
 static uint32_t sys_clock = 0;                          /*!< Indicate the configured system clock frequency in Hz */
+static uint32_t pwm_frequency = 0;                      /*!< Indicate the configured PWM clock frequency in Hz */
 static gpio_context context_handles[MAX_GPIO_ID];       /*!< context_handles: Map a file descriptor from the /sys/class/xxx */
 static adc_configuration_ adc_configuration;            /*!< adc configuration */
 //static uint64_t time_ms, time_us;                     /*!< Time for easy calculations */
@@ -219,18 +218,16 @@ int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
     enable_adc_periph(p_gpio);
     break;
   case gpio_modes_pwm_output:
-    // Configure the GPIO for PWM
-//    GPIOPinConfigure(gpio_to_pwm_pinmap(p_gpio));
-//    GPIOPinTypePWM(
-//                   p_gpio & 0xffffffff00, /* Port register */
-//                   p_gpio & 0xffff        /* Port number */
-//                  );
-//    // Configure the PWM generator for count down mode with immediate updates to the parameters
-//    PWMGenConfigure(PWM0_BASE, gpio_to_pwm_module(p_gpio), PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
-//    // Disable the PWM dead band output
-//    PWMDeadBandDisable(PWM0_BASE, gpio_to_pwm_module(p_gpio));
-//    // Setup PWM module
-//    pwm_update(&context_handles[gpio_idx]);
+    /* Configure the GPIO for PWM */
+      MAP_GPIO_setAsPeripheralModuleFunctionOutputPin(
+                                                     (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16),  /* Port register */
+                                                     (uint_fast8_t)(p_gpio & 0xffff),                          /* Port number */
+                                                     GPIO_PRIMARY_MODULE_FUNCTION
+                                                    );
+      MAP_GPIO_setAsOutputPin(
+                              (uint_fast8_t)(((uint32_t)p_gpio & 0xffffffff00) >> 16),  /* Port register */
+                              (uint_fast8_t)(p_gpio & 0xffff)                           /* Port number */
+                              );
     break;
   case gpio_modes_clock:
     /* TODO To be implemented */
@@ -457,7 +454,46 @@ void digital_toggle(const pin_name p_gpio) {
 }
 
 int32_t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle) {
-  return -1;
+  /* Sanity check */
+  uint8_t gpio_idx = gpio_to_index(p_gpio);
+  if (gpio_idx > MAX_GPIO_ID) {
+    fprintf(stderr, "digital_toggle: Wrong parameter\n");
+    return -1;
+  }
+
+  //  if (context_handles[gpio_idx] == NULL) {
+  if (context_handles[gpio_idx].gpio == NC) {
+    // Allocation GPIO
+    if (create_new_context(p_gpio, gpio_access_weak, gpio_types_pwm) < 0) {
+    return -1;
+    }
+    // Set direction out
+    pin_mode(p_gpio, gpio_modes_pwm_output);
+  }
+  /* Configure Timer_A PWM Configuration Parameter */
+  volatile uint_fast16_t divider = 1;
+  volatile uint32_t ticks = (uint32_t)((float)pwm_frequency / p_frequency);
+  while (ticks > 65536) {
+      divider *= 2;
+      ticks = (uint32_t)((float)pwm_frequency / p_frequency / divider);
+  } // End of 'while' statement
+  if (divider > 16) { // TODO To be refined
+    context_handles[gpio_idx].gpio = NC;
+    return -1;
+  }
+  context_handles[gpio_idx].types.pwm.frequency = p_frequency;
+  context_handles[gpio_idx].types.pwm.duty_cycle = p_duty_cycle;
+  volatile uint_fast16_t duty_cycle = (uint_fast16_t)((float)ticks * p_duty_cycle / 100.0);
+  volatile const Timer_A_PWMConfig pwm_config = {
+                                                TIMER_A_CLOCKSOURCE_ACLK,
+                                                divider,
+                                                (uint_fast16_t)ticks,
+                                                TIMER_A_CAPTURECOMPARE_REGISTER_1,
+                                                TIMER_A_OUTPUTMODE_RESET_SET,
+                                                duty_cycle
+  };
+  MAP_Timer_A_generatePWM(TIMER_A0_BASE, &pwm_config);
+  return 0;
 }
 
 int32_t pwm_stop(const pin_name p_gpio) {
@@ -852,10 +888,11 @@ int32_t libhal_setup_sys(void) {
   MAP_CS_initClockSignal(CS_MCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1);   /* Master clock set to internal 48MHz */
   MAP_CS_initClockSignal(CS_HSMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1); /* Subsystem master clock set to internal 48MHz */
   MAP_CS_initClockSignal(CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1);  /* Low-speed subsystem master clock set to internal 48MHz */
-  MAP_CS_initClockSignal(CS_ACLK, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);  /* Auxiliary clock A set to internal 128kHz */
+  MAP_CS_initClockSignal(CS_ACLK, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);  /* Auxiliary clock A set to internal 128kHz, used by PWM */
   MAP_CS_initClockSignal(CS_BCLK, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);  /* Auxiliary clock B set to internal 32.768kHz */
 
   sys_clock = CS_48MHZ;
+  pwm_frequency = 128e3;
 
   /* Enabling the FPU for floating point operation */
   MAP_FPU_enableModule();

@@ -152,14 +152,6 @@ extern "C" {
    */
   extern void digital_toggle(const pin_name p_gpio);
   /**
-   * @fn int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value)
-   * @brief Set up a GPIO pin as output PWM
-   * @param[in] p_gpio      The GPIO identifier to be changed
-   * @param[in] p_value     The duty cycle value in %: 100 for fully on) and 0 for fully off
-   * @return 0 on success, -1 otherwise
-   */
-  extern int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value);
-  /**
    * @fn float analog_read(const pin_name p_gpio)
    * @brief Read the analog value of the specified GPIO
    *        14-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)

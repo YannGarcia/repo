@@ -39,6 +39,8 @@
 #define A_Y        A13 /*!< Accelerometer, Y-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
 #define A_Z        A11 /*!< Accelerometer, Z-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
 
+#define PWM        pwm0 /*!< TODO */
+
 #define TFT_CS     p109 /*!< TFT /CS - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
 #define TFT_MOSI   p2   /*!< TFT SPI MOSI - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
 #define TFT_CLK    p4   /*!< TFT SPI clock - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
@@ -90,6 +92,11 @@ int32_t main(void) {
   /* Setup GPIO input ports for MKII buttons, see MKII Circuit Diagram */
   pin_mode(BUT1, gpio_modes_digital_input);
   pin_mode(BUT2, gpio_modes_digital_input);
+
+  pin_mode(PWM, gpio_modes_pwm_output);
+  volatile float period = (float)20e-3;       // PWM period is 20ms
+  volatile float duty_cycle = 100.0 * 1.2 / 20.0; // DC is 1.2ms which is 100.0 * 1.2 / 20.0 percent
+  int32_t pwm_hd = pwm_start(PWM, 1.0f / period, duty_cycle);
 
   // Open serial console
   uart0 = serial_open("/dev/tty0", 115200);

@@ -149,7 +149,7 @@ typedef enum {
   p18 = GPIO_PORT_P2 << 16 | GPIO_PIN2,  /* On board RGB led Blue */
   p19 = GPIO_PORT_P2 << 16 | GPIO_PIN3,
   p20 = GPIO_PORT_P2 << 16 | GPIO_PIN4,
-  p21 = GPIO_PORT_P2 << 16 | GPIO_PIN5,  /* PWM */
+  p21 = GPIO_PORT_P2 << 16 | GPIO_PIN5,
   p22 = GPIO_PORT_P2 << 16 | GPIO_PIN6,
   p23 = GPIO_PORT_P2 << 16 | GPIO_PIN7,
   p24 = GPIO_PORT_P10 << 16 | GPIO_PIN4,
@@ -216,7 +216,7 @@ typedef enum {
   A14 = GPIO_PORT_P6 << 16 | GPIO_PIN1,     /* MCU pin #55 */
   A15 = GPIO_PORT_P6 << 16 | GPIO_PIN0,     /* MCU pin #54 */
 
-  pwm0 = GPIO_PORT_P2 << 16 | GPIO_PIN5,    /*p21 */
+  pwm0 = GPIO_PORT_P2 << 16 | GPIO_PIN5,    /* p21 */
 
   NC = 0xffffffff
 } pin_names_t;
