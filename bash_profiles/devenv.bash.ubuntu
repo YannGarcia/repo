@@ -129,6 +129,11 @@ then
     export PATH_DEV_ITS=~/tmp/TriesAndDelete/etsi_its
 fi
 
+if [ -f /opt/ros/kinetic/setup.bash ]
+then
+    . /opt/ros/kinetic/setup.bash
+fi
+
 # Start ssh-agent at login
 if [ -f "/usr/bin/ssh-agent" ]
 then
