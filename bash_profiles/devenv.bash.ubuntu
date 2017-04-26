@@ -23,7 +23,12 @@ export HOME_INC=${HOME}/include
 export PATH=${HOME_BIN}:${PATH}
 
 # Update LD_LIBRARY_PATH environment variable
-export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
+if [ ${LD_LIBRARY_PATH} == ""]
+then
+    export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib
+else 
+    export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
+fi
 
 if [ -d ~/repo ]
 then 
@@ -111,15 +116,22 @@ fi
 
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
-if [ -d "${HOME_FRAMEWORKS}/titan/titan.core/Install" ]
+export TTCN3_DIR=${TOP}/Install
+if [ -d ${TTCN3_DIR} ]
 then
-    export TTCN3_DIR=${TOP}/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
     export MANPATH=${TTCN3_DIR}/man:${MANPATH}
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
+    # ITS support
+    export PATH_DEV_ITS=~/tmp/TriesAndDelete/etsi_its
+fi
+
+if [ -f /opt/ros/kinetic/setup.bash ]
+then
+    . /opt/ros/kinetic/setup.bash
 fi
 
 # Start ssh-agent at login

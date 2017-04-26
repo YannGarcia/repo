@@ -1,3 +1,11 @@
+/**
+ * @file      get_opt.cpp
+ * @brief     Implementation file for command line options support.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
+ */
 #include <fstream>
 
 #include <unistd.h>

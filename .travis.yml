@@ -1,0 +1,35 @@
+language: cpp
+sudo: true
+dist: trusty
+compiler:
+  - gcc
+  - g++
+os:
+  - linux
+branches:
+  only:
+    - master
+env: 
+  global
+    - export HOME=`pwd`/..
+    - export PATH_DEV=${HOME}/repo/dev
+    - export HOME_FRAMEWORKS=${HOME}/frameworks
+    - export HOME_LIB=${HOME}/lib
+    - export HOME_BIN=${HOME}/bin
+    - export HOME_ETC=${HOME}/etc
+    - export HOME_INC=${HOME}/include
+    - export PATH=${HOME_BIN}:${PATH}
+    - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
+before_install: true
+before_script: true
+before_deploy: true
+install: ${HOME}/repo/travis_scripts/install.bash
+script:
+  - ${HOME}/repo/travis_scripts/build.bash
+after_deploy: true
+after_success: ${HOME}/travis_scripts/repo/test.bash
+after_failure: false
+after_script:
+ - echo 'After Script is here'
+notifications:
+  email: true

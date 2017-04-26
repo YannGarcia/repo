@@ -9,15 +9,17 @@
 #############################################################################
 # C/C++ compiler
 #############################################################################
-#CC=gcc-4.9
-#CCP=g++-4.9
-#LD=gcc-4.9
-#AR=gcc-ar-4.9 ruv
+GCC_VERSION=6.3.0_1
+GCC_LIB_VERSION=6
+CCP=gcc-6
+CC=gcc-6
+LD=g++-6
+AR=gcc-ar-6
 
 GLOBAL_DEF_GCC+=-fPIC -mmacosx-version-min=10.6
 GLOBAL_DEF_GCC_DEBUG+=-fPIC -mmacosx-version-min=10.6
 
-GLOBAL_DEF_STD_GLD=-L/usr/local/Cellar/gcc/4.9.2_1/lib/gcc/4.9 $(DEF_STD_GLD)
+GLOBAL_DEF_STD_GLD=-L/usr/local/Cellar/gcc/$(GCC_VERSION)/lib/gcc/$(GCC_LIB_VERSION) $(DEF_STD_GLD)
 
 #############################################################################
 # WiringBbb library settings

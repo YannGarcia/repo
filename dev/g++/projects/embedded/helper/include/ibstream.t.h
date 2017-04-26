@@ -1,10 +1,10 @@
 /**
- * @file    istram.t.h
- * @brief   Main header file for input binary stream templatea.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      ibstream.t.h
+ * @brief     Header file for input binary stream template.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include "ibstream.h"
 #include "converter.h"

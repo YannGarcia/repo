@@ -2,7 +2,7 @@
  * @file      libhal_i2c.c
  * @brief     Implementation file for the I2C Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  */
@@ -18,19 +18,26 @@
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
 
-// I2C module parameters
-static uint32_t i2c_modules[1][8] = {
+#define I2C_MODULE_MAX 1
+/*!< I2C module parameters */
+static uint32_t i2c_modules[I2C_MODULE_MAX][8] = {
   { SYSCTL_PERIPH_I2C0, I2C0_BASE, GPIO_PB3_I2C0SDA, GPIO_PB2_I2C0SCL, GPIO_PORTB_BASE, GPIO_PIN_3, GPIO_PIN_2, 0xFFFFFFFF }
   // TODO support of multiple modules
 };
 
 int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_address) {
-  // TODO sanity checks
+  // Sanity checks
   uint8_t fd = p_i2c_bus_id;
-  // Enable the I2C0 peripheral
+  if (fd >= I2C_MODULE_MAX) {
+    return -1;
+  }
+  if (i2c_modules[fd][7] != 0xFFFFFFFF) {
+    return fd;
+  }
+  // Enable the I2Cx peripheral
   SysCtlPeripheralEnable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/); // FIXME Use flags instead of 0..7 integer values
   SysCtlPeripheralReset(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
-  // Configure the pin muxing for I2C0 functions on port B2 and B3.
+  // Configure the pin muxing for I2Cx functions on port B2 and B3.
   GPIOPinConfigure(i2c_modules[fd][3]/*GPIO_PB2_I2C0SCL*/);
   GPIOPinConfigure(i2c_modules[fd][2]/*GPIO_PB3_I2C0SDA*/);
   // Select the I2C function for these pins.
@@ -40,7 +47,7 @@ int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_addr
   SysCtlPeripheralDisable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
   SysCtlPeripheralReset(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
   SysCtlPeripheralEnable(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/);
-  // Wait for the I2C0 module to be ready
+  // Wait for the I2Cx module to be ready
   while(!SysCtlPeripheralReady(i2c_modules[fd][0]/*SYSCTL_PERIPH_I2C0*/));
   // Initialize Master and Slave
   I2CMasterInitExpClk(i2c_modules[fd][1]/*I2C0_BASE*/, get_sys_clock_freq(), true/*Fast mode: 0.4KHz*/);
@@ -135,6 +142,7 @@ int32_t libhal_i2c_ext_read_register8(const int32_t p_fd, const uint8_t p_device
 }
 
 int32_t libhal_i2c_ext_read_register16(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register) {
+    // TODO sanity checks
   uint32_t data;
   uint32_t address = i2c_modules[p_fd][7];
   i2c_modules[p_fd][7] = p_device_address;

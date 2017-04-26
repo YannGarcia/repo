@@ -1,8 +1,8 @@
 /**
  * @file      libhal_shift.h
- * @brief     Main header file for the Hardware Abstract Layer library.
+ * @brief     Header file for the Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156

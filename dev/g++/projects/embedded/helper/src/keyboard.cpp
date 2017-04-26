@@ -1,15 +1,14 @@
 /**
- * @file    keyboard.cpp
- * @brief   Main implementation file for the keyboard key stricked helper class.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      keyboard.cpp
+ * @brief     Implementation file for the keyboard key stricked helper class.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <stdio.h>
 #include <termios.h>
 #include <fcntl.h>
-//#include <unistd.h>
 #define STDIN_FILENO 0 // Standard input
 
 #include "keyboard.h"

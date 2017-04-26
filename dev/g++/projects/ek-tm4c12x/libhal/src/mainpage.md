@@ -1,9 +1,36 @@
-# EK-TM4C12x libhal (Hardware Abstract Layer) documentation #
+/**
+@mainpage EK-TM4C12x libhal (Hardware Abstract Layer) documentation
 
 Welcome to EK-TM4C12x libhal documentaton. The libhal is a hardware abstraction layer used for Texas Instrument Launchpad TM4C.
 
-EK-TM4C12x libhal is an open source project released under MIT license.
+Here you can find the full documentation of the @b EK-TM4C12x libhal.
 
-Project page https://github.com/YannGarcia/repo/edit/master/dev/g++/projects/ek-tm4c12x
+Please have a look at the example codes in libhal/test/ that show how to
+use the EK-TM4C12x libhal.
 
-Copyright © 2015 - 2016 Yann Garcia
+-----------------------------------------------------------------------------------------------------
+
+
+@author Yann Garcia (garcia.yann@gmail.com)
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+To @b install the EK-TM4C12x libhal, please follow the instructions below:
+
+first, make sure that the following software are present in your system:
+- ARM gcc & ARM g++ (GNU compiler)
+- cpptest 1.1.2 or > (https://sourceforge.net/projects/cpptest/)
+
+then:
+
+- download the logger:
+- clone the public GitHub repository of the logger with:
+git clone https://github.com/YannGarcia/repo/dev/g++/projects/ek-tm4c12x/libhal
+
+- refer to
+- the main README.md to setup the development environment
+- the EK-TM4C12x libhal README.md for to compile and install the logger
+
+*/

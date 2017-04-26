@@ -32,21 +32,20 @@ else
     export PATH_DEV=~/dev
 fi
 
-# Cross compiler                                                                                                                                                                     
+# Cross compiler
 UNAME=`uname -n`
 if [ ${UNAME} != "raspberrypi" ] && [ ${UNAME} != "beaglebone" ] && [ ${UNAME} != "yann-FSCOM" ] # No cross compiler for cygwin
 then
-# Cross compiler paths for LPC1768, MSP432                                                                                                                         
-
+    # Cross compiler paths for LPC1768, TI TM4C & MSP432
     echo "Set up LPC environment"
-    CROSS_COMPILER_VERSION=4.9.3
-    export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-4_9-2014q4
+    CROSS_COMPILER_VERSION=5.4.1
+    export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-5_4-2016q2
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
     export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${CROSS_COMPILER_VERSION}
     export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
-
-# Cross compiler paths for BeagleBone Black and Raspberry PI                                                                                                
+    
+    # Cross compiler paths for BeagleBone Black and Raspberry PI
     echo "Set up CROSS environment"
     CROSS_COMPILER_VERSION=4.8.2
     export CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc_arm-willtm-linux-gnueabi
@@ -99,11 +98,22 @@ then
     export OBJDIR=./objs
 fi
 
+# Add JAVA support
+export JAVA_VERSION=1.8.0_92
+export JAVA_JDK=jdk${JAVA_VERSION}
+if [ -d "${HOME_FRAMEWORKS}/${JAVA_JDK}" ]
+then
+    export JAVA_HOME=${HOME_FRAMEWORKS}/${JAVA_JDK}/bin
+else
+    unset JAVA_VERSION
+    unset JAVA_JDK
+fi
+
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
+export TTCN3_DIR=${TOP}/Install
 if [ -d "${HOME}/frameworks/titan.core/Install" ]
 then
-    export TTCN3_DIR=${TOP}/titan/titan.core/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
@@ -113,9 +123,9 @@ then
 fi
 
 # Start ssh-agent at login
-if [ -f "/usr/bin/ssh-agent" ]
-then
-    eval `/usr/bin/ssh-agent -s`
-    ssh-add -l
-    ssh-add ~/.ssh/git_server_ssh_key_name
-fi
+#if [ -f "/usr/bin/ssh-agent" ]
+#then
+#    eval `/usr/bin/ssh-agent -s`
+#    ssh-add -l
+#    ssh-add ~/.ssh/git_server_ssh_key_name
+#fi

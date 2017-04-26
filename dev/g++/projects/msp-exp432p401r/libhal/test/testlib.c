@@ -1,294 +1,151 @@
 /**
- * @file    main.c
- * @brief   Bouncing robot software application for BerkeleyX: EE40LX Electronic Interfaces
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 1.0
- * @see http://www.ti.com/tool/ek-tm4c1294xl
- * @see https://courses.edx.org/asset-v1:BerkeleyX+EE40LX+2T2015+type@asset+block/code_flowchart.pdf
+ * @file      main.c
+ * @brief     Application to validate libhal libary
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   1.0
+ * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
+ * @see       EK-TM4C129EXL Firmware Development Package User's Guide
+ * @see       EK-TM4C1294XL Firmware Development Package User's Guide
  */
+#include <limits.h>
 
-#include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TM4C1294 */
+#include "libhal.h" /* Hardware Abstraction Level library (Beagle Bone, Raspbery MBED & TI launchpads */
 #include "libhal_serial.h"
 
-/**
+/*!<
  * @defgroup Booststarter #1 pin assignment
- *
  * @{
  */
-#define LED3 p108      /** On board LED1, used for debug - MSB 4 bytes state machine status */
-#define LED2 p107      /** On board LED2, used for debug */
-#define LED1 p46       /** On board LED3, used for debug */
-#define LED0 p42       /** On board LED4, used for debug - LSB 4 bytes state machine status */
-#define PBLOCK p81     /** Power command for the photoresistors measurements - BoosterPack#1: C1.7 - Green wire */
-#define BUZZER p45     /** BUZZER command - BoosterPack#1: C1.3 - White wire */
-#define LMOTOR p43     /** Left MOTOR command - BoosterPack#1: C1.1 - Salmon wire */
-#define RMOTOR p44     /** Right MOTOR command - BoosterPack#1: C1.2 - Salmon wire */
-#define LPHOTO p82     /** Left photoresistor measurement - BoosterPack#1: C1.8 - Brown wire */
-#define RPHOTO p83     /** Right photoresistor measurement - BoosterPack#1: C1.9 - Blue wire */
-#define MICINP A3      /** Microphon measurement - BoosterPack#1: B1.3 - Yellow wire */
-/** @} */
+#define LED1       p4  /*!< On board LED */
+#define SW1        p5  /*!< On board Switch1 */
+#define SW2        p8  /*!< On board Switch2 */
 
-/**
- * @fn void set_debug_state(const uint8_t p_state)
- * @brief Display the current debug state using the four on-board LEDs
- * @param[in] p_state The state value to display (between 0b0000 to 0b1111)
- */
-void set_debug_state(const uint8_t p_state);
-/**
- * @fn void snooze(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t duration, const uint8_t p_repeat, const uint32_t p_wait)
- * @brief Generate a tone based on a PWM signal
- * @param[in] p_frequency  The frequency of the PWM signal
- * @param[in] p_duty_cycle The duty cycle of the PWM signal
- * @param[in] p_duration   The delay between two tone repeatition
- * @param[in] p_repeat     Indicates how many time to repeat the tone
- * @param[in] p_wait       The delay between two repeatition
- */
-void snooze(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat, const uint32_t p_wait);
-/**
- * @fn void siren(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat)
- * @brief Make the "siren" noise by alternating high frequency (e.g. 1200Hz) and low frequency (e.g. 800Hz) tones
- * @param[in] p_frequency_low  The frequency of the PWM signal
- * @param[in] p_frequency_high The frequency of the PWM signal
- * @param[in] p_duty_cycle     The duty cycle of the PWM signal
- * @param[in] p_duration       The delay between two tone repeatition
- * @param[in] p_repeat         Indicates how many time to repeat the tone
- */
-void siren(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat);
-/**
- * @fn void pyramid(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat)
- * @brief Make the "pyramid" noise by alternating high frequency (e.g. 1200Hz) and low frequency (e.g. 800Hz) tones
- * @param[in] p_frequency_low  The frequency of the PWM signal
- * @param[in] p_frequency_high The frequency of the PWM signal
- * @param[in] p_duty_cycle     The duty cycle of the PWM signal
- * @param[in] p_duration       The delay between two tone repeatition
- * @param[in] p_repeat         Indicates how many time to repeat the tone
- */
-void pyramid(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat);
-/**
- * @fn void left_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t duration, const uint8_t p_repeat)
- * @brief Generate a PWM signal on left motor
- * @param[in] p_frequency  The frequency of the PWM signal
- * @param[in] p_duty_cycle The duty cycle of the PWM signal
- * @param[in] p_duration   The delay between two tone repeatition
- * @param[in] p_repeat     Indicates how many time to repeat the motor activation
- */
-void left_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat);
-/**
- * @fn void right_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t duration, const uint8_t p_repeat)
- * @brief Generate a PWM signal on left motor
- * @param[in] p_frequency  The frequency of the PWM signal
- * @param[in] p_duty_cycle The duty cycle of the PWM signal
- * @param[in] p_duration   The delay between two tone repeatition
- * @param[in] p_repeat     Indicates how many time to repeat the motor activation
- */
-void right_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat);
+#define L_RED      p22
+#define L_GREEN    p20
+#define L_BLUE     p70
 
-/**
+#define LIGHT_INT  p22 /*!< TI OPT3001 Light Sensor on BOOSTXL-EDUMKII Educational BoosterPack™ Mark II Plug-in Module See SLAU599–August 2015 Clause 2.1.2 TI OPT3001 Light Sensor */
+
+#define BUT1       p65 /*!< MK-II button 1 */
+#define BUT2       p37 /*!< MK-II button 1 */
+
+#define J_SW       p57 /*!< Select button - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_X        A9  /*!< Horizontal X-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+#define J_Y        A15 /*!< Horizontal Y-axis - See Joystick reference: https://www.itead.cc/playstation2-analog-joystick.html */
+
+#define A_X        A14 /*!< Accelerometer, X-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Y        A13 /*!< Accelerometer, Y-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+#define A_Z        A11 /*!< Accelerometer, Z-axis - See KXTC9-2050 reference: http://www.kionix.com/product/KXTC9-2050 */
+
+#define PWM        pwm0 /*!< TODO */
+
+#define TFT_CS     p109 /*!< TFT /CS - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_MOSI   p2   /*!< TFT SPI MOSI - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_CLK    p4   /*!< TFT SPI clock - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RST    p32  /*!< TFT reset - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_RS     p84  /*!< TFT command indicator - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_WIDTH  128  /*!< TFT screen width in pixels - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+#define TFT_HEIGHT 128  /*!< TFT screen heigh in pixels - See CFAF128128B-0145T color 128x128-pixel TFT LCD reference: https://www.crystalfontz.com/product/cfaf128128b0145t-graphical-tft-128x128-lcd-display-module */
+/*!<
+ * @defgroup TFT screen color descriptions
+ * @{
+ */
+#define TFT_BLACK   0x0000
+#define TFT_BLUE    0x001F
+#define TFT_RED     0xF800
+#define TFT_GREEN   0x07E0
+#define TFT_CYAN    0x07FF
+#define TFT_MAGENTA 0xF81F
+#define TFT_YELLOW  0xFFE0
+#define TFT_WHITE   0xFFFF
+/*!< @} */
+
+/*!< @} */
+
+/*!<
  * @brief Main function of the bouncing robot software application
  * @return Shall never returned
  */
 int32_t main(void) {
-  float adc_micro = 0.0;
+  int32_t uart0;           /*!< UART handle */
+  int32_t i2c0;            /*!< I2C bus 0 handle */
+  uint32_t counter = 0;    /*!< Counter */
+  uint8_t spi_cmd_rsp;     /*!< 8bit SPI command/response buffer */
+  float j_x, j_y;          /*!< Joystick positions */
+  float values[3] = {0};   /*!< X,Y,Z accelerator positions */
+
+  int8_t float2str[8];
 
   /* Initialise the HAL */
   libhal_setup();
 
-  /* State 0: display 0b1111 then 0x0000 */
-  set_debug_state(0);
-
-  /* Setup PWM ports */
-  pin_mode(BUZZER, gpio_modes_pwm_output);
-  pin_mode(LMOTOR, gpio_modes_pwm_output);
-  pin_mode(RMOTOR, gpio_modes_pwm_output);
-
-  /* Setup analog ports */
-  pin_mode(MICINP, gpio_modes_adc_input);
-
-  /* Setup GPIO output ports */
-  pin_mode(PBLOCK, gpio_modes_digital_output);
+  digital_write(LED1, digital_state_high);
 
   /* Setup GPIO input ports */
-  pin_mode(LPHOTO, gpio_modes_digital_input);
-  pull_up_dn_control(LPHOTO, pud_down);         /* Configuration of the pull-up is required for USR_SW1/2 */
-  pin_mode(RPHOTO, gpio_modes_digital_input);
-  pull_up_dn_control(RPHOTO, pud_down);         /* Configuration of the pull-up is required for USR_SW1/2 */
+  pin_mode(SW1, gpio_modes_digital_input);
+  pull_up_dn_control(SW1, pud_up);         /* Configuration of the pull-up is required for USR_SW1 */
+  pin_mode(SW2, gpio_modes_digital_input);
+  pull_up_dn_control(SW2, pud_up);         /* Configuration of the pull-up is required for USR_SW2 */
 
-  /* State 1: initialisation done */
-  set_debug_state(1);
+  /* Setup GPIO input ports for MKII buttons, see MKII Circuit Diagram */
+  pin_mode(BUT1, gpio_modes_digital_input);
+  pin_mode(BUT2, gpio_modes_digital_input);
+
+  pin_mode(PWM, gpio_modes_pwm_output);
+  volatile float period = (float)20e-3;       // PWM period is 20ms
+  volatile float duty_cycle = 100.0 * 1.2 / 20.0; // DC is 1.2ms which is 100.0 * 1.2 / 20.0 percent
+  int32_t pwm_hd = pwm_start(PWM, 1.0f / period, duty_cycle);
+
+  // Open serial console
+  uart0 = serial_open("/dev/tty0", 115200);
+
+  // Setup Joystick
+  pin_mode(J_SW, gpio_modes_digital_input);
+  pin_mode(J_X, gpio_modes_adc_input);
+  pin_mode(J_Y, gpio_modes_adc_input);
+
+  // Setup accelerator
+  const pin_name acc_pins[3] = {A_X, A_Y, A_Z};
+  pins_mode(acc_pins, 3, gpio_modes_adc_input);
+  analog_multiple_read(acc_pins, 3, values);
+
+  // Setup I2C bus 0 to access TI OPT3001 Light Sensor
+
+  // Setup TFT screen
 
   while (true) {
-    /* 1. Beep four times: PWM 900Hz, 50% during 50ms, 4 times */
-    set_debug_state(2);
-    snooze(1000, 60, 100, 4, 500);
+    serial_printf(uart0, "Please push User button #1 (%d)\r\n", counter++);
 
-    /* 2. Check micro */
-    set_debug_state(3);
-    adc_micro = analog_read(MICINP);
-    if (adc_micro < 1.65) {
-        // Turn on PWM to L.R. Motor
-        set_debug_state(4);
-        siren(800, 12000, 50, 10, 5);
-        left_motor_on(20000, 25, 200, 1);
-        right_motor_on(20000, 25, 200, 1);
-        pyramid(100, 300, 50, 10, 1);
-    }
+    /* Wait event on MK-II/BUT1
+     * MK-II-Circuit diagram (SLAU599–August 2015) indicates a PullUp ==> pushed = digital_state_low
+     */
+    while (digital_read(BUT1) == digital_state_high);
+    /* wait for 170 ms for button debouncing */
+    wait_ms(170);
 
-    /* 2. Check photoresistor */
-    set_debug_state(5);
-    digital_write(PBLOCK, digital_state_high); // Power up
-    wait_ms(25); // Wait a little beat
-    set_debug_state(6);
-    // Read left photoresistor
-    if (digital_read(LPHOTO) == digital_state_high) {
-      // Turn on PWM to L. Motor
-      set_debug_state(7);
-      left_motor_on(20000, 60, 1000, 1);
+    // Joystick position
+    if ((j_x = analog_read(J_X)) == (float)LONG_MAX) {
+      serial_printf(uart0, "Joystick X: analog_read failure\r\n");
+    } else if ((j_y = analog_read(J_Y)) == (float)LONG_MAX) {
+      serial_printf(uart0, "Joystick Y: analog_read failure\r\n");
+    } else {
+      ftoa(j_x, float2str, 5);
+      serial_printf(uart0, "Joystick position: (%s, ", float2str);
+      ftoa(j_y, float2str, 5);
+      serial_printf(uart0, "%s)\r\n", float2str, 5);
     }
-    // Read Right photoresistor
-    if (digital_read(RPHOTO) == digital_state_high) {
-      // Turn on PWM to R. Motor
-      set_debug_state(8);
-      right_motor_on(20000, 60, 1000, 1);
-    }
-    digital_write(PBLOCK, digital_state_low); // Power down
-
+    // Accelerator values
+    analog_multiple_read(acc_pins, 3, values);
+    ftoa(values[0], float2str, 5);
+    serial_printf(uart0, "Accelerator (X, Y, Z): (%s, ", float2str, 5);
+    ftoa(values[1], float2str, 5);
+    serial_printf(uart0, "%s, ", float2str, 5);
+    ftoa(values[2], float2str, 5);
+    serial_printf(uart0, "%s)\r\n", float2str, 5);
   } /* End of 'while' statement */
 
   return 0;
 } /* End of main function*/
 
-void snooze(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat, const uint32_t p_wait) {
-  /* Sanity check */
-  if ((p_frequency == 0) || (p_repeat == 0)) {
-    /* Nothing to do */
-    return;
-  }
-  uint8_t repeat = 0x00;
-  pwm_set_clock(BUZZER, 32);
-  pwm_set_range(BUZZER, p_frequency);
-  for ( ; repeat < p_repeat - 1; repeat++) {
-    pwm_write(BUZZER, p_duty_cycle);
-    wait_ms(p_duration);
-    pwm_write(BUZZER, 0);
-    wait_ms(p_wait);
-  } /* End of 'for' statement */
-  pwm_write(BUZZER, p_duty_cycle);
-  wait_ms(p_duration);
-  pwm_write(BUZZER, 0);
-
-} /* End of function snooze */
-
-void siren(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat) {
-  uint8_t repeat = 0;
-  for ( ; repeat < p_repeat; repeat++) {
-    snooze(p_frequency_high, p_duty_cycle, 100, 1, 0);
-    snooze(p_frequency_low, p_duty_cycle, 100, 1, 0);
-  } /* End of 'for' statement */
-} /* End of function siren */
-
-void pyramid(const float p_frequency_low, const float p_frequency_high, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat) {
-  uint8_t repeat = 0;
-  for ( ; repeat < p_repeat; repeat++) {
-    float frequency = p_frequency_low;
-    for ( ; frequency < p_frequency_high; frequency++) {
-      snooze(frequency, p_duty_cycle, p_duration, 1, 0);
-    } /* End of 'for' statement */
-    for (frequency = p_frequency_high; frequency < p_frequency_low; frequency--) {
-      snooze(frequency, p_duty_cycle, p_duration, 1, 0);
-    } /* End of 'for' statement */
-  } /* End of 'for' statement */
-} /* End of function siren */
-
-void left_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat) {
-  uint8_t repeat = 0x00;
-  pwm_set_clock(LMOTOR, 32);
-  pwm_set_range(LMOTOR, p_frequency);
-  for ( ; repeat < p_repeat; repeat++) {
-    pwm_write(LMOTOR, p_duty_cycle);
-    wait_ms(p_duration);
-    pwm_write(LMOTOR, 0);
-  } /* End of 'for' statement */
-} /* End of function left_motor_on */
-
-void right_motor_on(const float p_frequency, const uint32_t p_duty_cycle, const uint32_t p_duration, const uint8_t p_repeat) {
-  uint8_t repeat = 0x00;
-  pwm_set_clock(RMOTOR, 32);
-  pwm_set_range(RMOTOR, p_frequency);
-  for ( ; repeat < p_repeat; repeat++) {
-    pwm_write(RMOTOR, p_duty_cycle);
-    wait_ms(p_duration);
-    pwm_write(RMOTOR, 0);
-  } /* End of 'for' statement */
-} /* End of function right_motor_on */
-
-void set_debug_state(const uint8_t p_state) {
-  switch (p_state) {
-  case 0x00:
-    digital_write(LED3, digital_state_high);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_high);
-    wait_ms(50);
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_low);
-    digital_write(LED1, digital_state_low);
-    digital_write(LED0, digital_state_low);
-    break;
-  case 0x01:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_low);
-    digital_write(LED1, digital_state_low);
-    digital_write(LED0, digital_state_high);
-    break;
-  case 0x02:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_low);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_low);
-    break;
-  case 0x03:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_low);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_high);
-    break;
-  case 0x04:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_low);
-    digital_write(LED0, digital_state_low);
-    break;
-  case 0x05:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_low);
-    digital_write(LED0, digital_state_high);
-    break;
-  case 0x06:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_low);
-    break;
-  case 0x07:
-    digital_write(LED3, digital_state_low);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_high);
-    break;
-  case 0x08:
-    digital_write(LED3, digital_state_high);
-    digital_write(LED2, digital_state_low);
-    digital_write(LED1, digital_state_low);
-    digital_write(LED0, digital_state_low);
-    break;
-  default:
-    digital_write(LED3, digital_state_high);
-    digital_write(LED2, digital_state_high);
-    digital_write(LED1, digital_state_high);
-    digital_write(LED0, digital_state_high);
-  } /* End of 'switch' statement */
-  
-} /* End of function set_debug_state */

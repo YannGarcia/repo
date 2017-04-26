@@ -1,10 +1,10 @@
 /**
- * @file    date_time.cpp
- * @brief   Main implementation file for the Date and Time helper class.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      date_time.cpp
+ * @brief     Implementation file for the Date and Time helper class.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <chrono>
 #include <ctime>

@@ -1,50 +1,36 @@
 /**
- Main page documentation for helper library. Contains doxygen things only.
- 
- @mainpage helper library C++ API and Developers Usage Guide
+@mainpage The Light logger framework documentation
 
- @section main_contents Page Contents
-  - @ref main_intro
-  - @ref main_startpoints
-  - @ref main_support
+Here you can find the full documentation of the @b Light logger framework, 
+it can be used for embedded development on hardware such as Raspberry PI,
+C.H.I.P or Beagle Bone Black.
 
-  @section main_intro Introduction
-  Welcome to the helper library SDK. This SDK allows you to integrate your
-  applications with bytes processing helper methods such as hexa_dump, 
-  bytes arrays concatenation...
-  
-  @section main_startpoints Starting Points
-  - Consult the @ref changelog for a complete list of improvements in this
-    release.
-  - The @ref readme contains instructions on recompiling the sample applications.
-  - Read the @ref usage "usage" for a narrative on codec usage.
-  - Read the @ref samples "sample code" for examples of how to interact with the
-    codec.
-  - @ref codec reference
-  @if encoder
-  - @ref encoder reference
-  @endif
-  @if decoder
-  - @ref decoder reference
-  @endif
+Please have a look at the example codes in logger/test/ that show how to
+use the logger framework.
 
-  @section main_support Support Options & FAQ
-  The WebM project is an open source project supported by its community. For
-  questions about this SDK, please mail the apps-devel@webmproject.org list.
-  To contribute, see http://www.webmproject.org/code/contribute and mail
-  codec-devel@webmproject.org.
- */
+-----------------------------------------------------------------------------------------------------
 
-/**
- @page changelog CHANGELOG
- @verbinclude CHANGELOG
- */
 
-/**
- @page readme README
- @verbinclude README
- */
+@author Yann Garcia (garcia.yann@gmail.com)
 
-/**
- @defgroup codecs Supported Codecs 
- */
+
+-----------------------------------------------------------------------------------------------------
+
+
+To @b install the logger framework, please follow the instructions below:
+
+first, make sure that the following software are present in your system:
+  - gcc & g++ (GNU compiler)
+  - cpptest 1.1.2 or > (https://sourceforge.net/projects/cpptest/)
+  - valgrind (http://valgrind.org/)
+
+then:
+
+- download the logger:
+   - clone the public GitHub repository of the logger with:
+       git clone https://github.com:YannGarcia/repo/dev/g++/project/embedded/logger
+
+- refer to
+    - the main README.md to setup the development environment
+    - the logger README.md for to compile and install the logger
+*/

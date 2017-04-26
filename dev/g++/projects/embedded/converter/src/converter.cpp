@@ -1,10 +1,10 @@
 /**
- * @File    converter.cpp
- * @brief   Main implementation file for the types converter library.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @File      converter.cpp
+ * @brief     Implementation file for the types converter library.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <cctype> // Used for toupper
 

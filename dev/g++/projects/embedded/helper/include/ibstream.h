@@ -1,10 +1,10 @@
 /**
- * @file    ibstream.h
- * @brief   Main header file for input binary stream.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @file      ibstream.h
+ * @brief     Header file for input binary stream.
+ * @author    garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 
@@ -15,9 +15,11 @@
 namespace helpers {
 
   /**
-   * @class Input binary stream
+   * @class ibstream
+   * @brief Input binary stream
    */
   class ibstream {
+    /*!< Bit masks */
     static uint8_t g_masks[];
 
   public:

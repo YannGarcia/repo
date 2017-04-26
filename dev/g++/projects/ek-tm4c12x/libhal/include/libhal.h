@@ -2,12 +2,12 @@
  * @file      libhal.h
  * @brief     Main header file for the Hardware Abstract Layer library.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
  * @see       EK-TM4C129EXL Firmware Development Package User's Guide
- * @see       EK-TM4C1294XL Firmware Development Package User's Guide
+ * @see       MSP432® Peripheral Driver Library - USER’S GUIDE
  */
 #pragma once
 
@@ -131,6 +131,11 @@ extern "C" {
    * @brief Read the value of a GPIO pin
    * @param[in] p_gpio      The GPIO identifier to be changed
    * @return The digital GPIO state on success, digital_state_error otherwise
+   * @code
+   *   pin_mode(SW1, gpio_modes_digital_input);
+   *   pull_up_dn_control(SW1, pud_up);         // Configuration of the pull-up is required for USR_SW1
+   *   while (digital_read(SW1) == digital_state_low);
+   * @endcode
    */
   extern digital_state_t digital_read(const pin_name p_gpio);
   /**
@@ -147,32 +152,27 @@ extern "C" {
    */
   extern void digital_toggle(const pin_name p_gpio);
   /**
-   * @fn int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value)
-   * @brief Set up a GPIO pin as output PWM
-   * @param[in] p_gpio      The GPIO identifier to be changed
-   * @param[in] p_value     The duty cycle value in %: 100 for fully on) and 0 for fully off
-   * @return 0 on success, -1 otherwise
-   */
-  extern int32_t pwm_write(const pin_name p_gpio, const uint32_t p_value);
-  /**
    * @fn float analog_read(const pin_name p_gpio)
    * @brief Read the analog value of the specified GPIO
-   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        14-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
    *        It uses the sequencer number SS3, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
    * @param[in] p_gpio The analog input GPIO
    * @return The ADC value on success, LONG_MAX on error
+   * @remark The function pin_mode() shall be called before analog_read()
    */
   extern float analog_read(const pin_name p_gpio);
   /**
    * @fn void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values)
    * @brief Read multiple analog channels at the same time
-   *        12-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
+   *        14-bit analog to digital converter, 0.73mV (between 0 and 3.3 volts)
    *        It uses the sequencer number SS0, SS1 or SS2, see Tiva™ TM4C1294NCPDT Microcontroller Clause 15.3.1 Sample Sequencer
    * @param[in] p_gpios      The analog inputs
    * @param[in] p_len        The number of analog inputs (and values to return)
    * @param[out] p_values    The read values on success, LONG_MAX on error
+   * @return 0 on success, -1 otherwise
+   * @remark The function pins_mode() shall be called before analog_multiple_read()
    */
-  extern void analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values);
+  extern int32_t  analog_multiple_read(const pin_name * p_gpios, const uint8_t p_len, float * p_values);
   /*  extern void analog_write(const pin_name p_gpio, int32_t p_value);*/
   /**
    * @fn void board_revision(void)
@@ -181,33 +181,26 @@ extern "C" {
    */
   extern int32_t board_revision(void);
 
-  extern void digitalWriteByte(const uint8_t p_value);
+//TODO  extern void digitalWriteByte(const uint8_t p_value);
 
   /**
-   * @fn void pwm_set_mode(const uint8_t p_mode)
-   * @brief
-   * @param[in] p_mode
-   * @todo To be implemented
+   * @fn int32t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle)
+   * @brief Start a PWM signal on the specified GPIO identifier
+   * @param[in] p_gpio          The GPIO pin identifier
+   * @param[in] p_frequency     The frequency in Hertz of the PWM signal
+   * @param[in] p_duty_cycle    The duty cycle in percent of the PWM signal, 0%: no PWM, 100% Full time PWM signal
+   * @return 0 on success, -1 otherwise (such as no PWM gpio available)
+   * @remark A duty cycle of 0% is not equivalent to a call to pwm_stop()
    */
-  extern void pwm_set_mode(const uint8_t p_mode);
+  extern int32_t pwm_start(const pin_name p_gpio, const float p_frequency, const float p_duty_cycle);
   /**
-   * @fn int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency)
-   * @brief Set the duty cycle value of the PWM signal
+   * @fn int32_t pwm_stop(const pin_name p_gpio);
+   * @brief Stop PWM signal generation on the specify GPIO and free the GPIO resource
    * @param[in] p_gpio      The GPIO pwm pin identifier
    * @param[in] p_frequency
    * @return 0 on success, -1 otherwise
-   * @todo To be implemented
    */
-  extern int32_t pwm_set_range(const pin_name p_gpio, const float p_frequency);
-  /**
-   * @fn int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor)
-   * @brief Set the divisor for the PWM clock
-   * @param[in] p_gpio      The GPIO pwm pin identifier
-   * @param[in] p_divisor   The time divisor value to apply
-   * @return 0 on success, -1 otherwise
-   * @todo To be implemented
-   */
-  extern int32_t pwm_set_clock(const pin_name p_gpio, const uint32_t p_divisor);
+  extern int32_t pwm_stop(const pin_name p_gpio);
   /**
    * @fn int32_t wait_for_interrupt(const pin_name p_gpio, uint32_t p_timeout)
    * @brief create an interrupt handler that will do a callback to the user supplied function
@@ -260,6 +253,13 @@ extern "C" {
    * @return The current system clock frequency in Hz
    */
   extern uint32_t get_sys_clock_freq(void);
+
+  /**
+   * @fn int64_t map(int64_t p_value, int64_t p_in_min, int64_t p_in_max, int64_t p_out_min, int64_t p_out_max)
+   * @brief Re-maps a number from one range to another
+   * @return The re-mapped value
+   */
+  extern int64_t map(int64_t p_value, int64_t p_in_min, int64_t p_in_max, int64_t p_out_min, int64_t p_out_max);
 
 #ifdef __cplusplus
 }

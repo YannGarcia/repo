@@ -96,15 +96,17 @@ fi
 
 # Add TITAN support
 export TOP=${HOME_FRAMEWORKS}/titan/titan.core
+export TTCN3_DIR=${TOP}/Install
 if [ -d "${HOME}/frameworks/titan/titan.core/Install" ]
 then
-    export TTCN3_DIR=${TOP}/Install
     export TTCN3_BROWSER=mozilla
     export PATH=${TTCN3_DIR}/bin:${PATH}
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
     export MANPATH=${TTCN3_DIR}/man:${MANPATH}
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
+    # ITS support
+    export PATH_DEV_ITS=~/tmp/TriesAndDelete/etsi_its
 fi
 
 # Start ssh-agent at login

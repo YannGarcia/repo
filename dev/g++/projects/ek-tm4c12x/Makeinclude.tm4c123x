@@ -9,11 +9,10 @@
 #############################################################################
 # Compiler CPU/FPU options.
 #############################################################################
-#PART=TM4C123GH6PMI
-#BOARD_PATH=$(TIVA_C_PATH)/boards/ek-tm4c1294xl
+PART=TM4C123GH6PMI
 TARGET_IS=TM4C123_RA1
 CPU=-mcpu=cortex-m4
-FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 #############################################################################
 # Flags to pass to the assembler.
@@ -40,7 +39,8 @@ GLOBAL_DEF_GCC= \
 	-DPART_$(PART) \
 	-DTARGET_IS_$(TARGET_IS) \
 	-Dgcc \
-	-Os
+	-Os \
+	-I$(TIVA_C_PATH) 
 
 GLOBAL_DEF_GCC_DEBUG= \
 	-mthumb \
@@ -53,10 +53,35 @@ GLOBAL_DEF_GCC_DEBUG= \
 	-Wall \
 	-pedantic \
 	-DPART_$(PART) \
+	-DTARGET_IS_$(TARGET_IS) \
 	-Dgcc \
 	-g \
-	-O0
+	-O0 \
+	-I$(TIVA_C_PATH) 
 
+GLOBAL_DEF_GCC_DEBUG= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(TARGET_IS) \
+	-D$(PART)_BOARD \
+	-DDEBUG \
+	-Dgcc \
+	-c \
+	-g \
+	-O0 \
+	-I$(TIVA_C_PATH) 
+
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/fpu -lm -lc -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu -lgcc
+GLOBAL_DEF_STD_GLD_DEBUG=$(GLOBAL_DEF_STD_GLD)
+ 
 #############################################################################
 # Startup code for GCC cross compiler.
 #############################################################################
