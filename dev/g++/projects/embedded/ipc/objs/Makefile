@@ -100,7 +100,7 @@ SM_OBJ=shared_memory.o
 MQ_OBJ=message_queue.o
 
 # Headears
-ABSTRACT_IPC_INC=abstract_channel.h
+ABSTRACT_IPC_INC=abstract_ipc.h
 IPC_MANAGER_INC=ipc_manager.h
 SM_INC=shared_memory.h
 MQ_INC=message_queue.h

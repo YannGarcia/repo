@@ -207,7 +207,7 @@ namespace comm {
     } // End of receive
 
     const int32_t ipv4_socket::send_to(const std::vector<uint8_t> & p_buffer) const {
-      //      std::clog << "ipv4_socket::send_to: " << std::dec << p_buffer.size() << std::endl;
+      std::clog << "ipv4_socket::send_to: " << std::dec << p_buffer.size() << std::endl;
 
       int32_t result;
       do {
@@ -222,7 +222,7 @@ namespace comm {
     }
 
     const int32_t ipv4_socket::receive_from(std::vector<uint8_t> & p_buffer, struct sockaddr_in * p_from) const {
-      //      std::clog << ">>> ipv4_socket::receive_from (1): " << std::dec << p_buffer.size() << std::endl;
+      std::clog << ">>> ipv4_socket::receive_from (1): " << std::dec << p_buffer.size() << std::endl;
 
       int32_t result;
       uint8_t *buffer = p_buffer.data();

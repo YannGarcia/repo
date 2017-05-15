@@ -300,9 +300,9 @@ static unique_ptr<Test::Output> cmdline(int p_argc, char* p_argv[]) {
 int main(int p_argc, char* p_argv[]) {
   try {
     Test::Suite ts;
-    //    ts.add(unique_ptr<Test::Suite>(new shared_memory_test_suite));
+    ts.add(unique_ptr<Test::Suite>(new shared_memory_test_suite));
     ts.add(unique_ptr<Test::Suite>(new message_queue_test_suite));
-    //    ts.add(unique_ptr<Test::Suite>(new ipc_manager_test_suite));
+    ts.add(unique_ptr<Test::Suite>(new ipc_manager_test_suite));
 
     // Run the tests
     unique_ptr<Test::Output> output(cmdline(p_argc, p_argv));
