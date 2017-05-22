@@ -83,6 +83,13 @@ namespace comm {
        */
       virtual const int32_t get_fd() const = 0;
 
+      /**
+       * @brief Set the NIC name to be used, in case of RAW socket only
+       * @param p_nic_name[in] The NIC name. 
+       * @return 0 on success, -1 otherwise
+       */
+      virtual const int32_t set_nic_name(const std::string & p_nic_name) const { return -1; };
+
       virtual void set_no_delay(const bool p_flag) = 0;      
       virtual void set_blocking(const bool p_flag) = 0;
       virtual void set_option(const uint32_t p_protocol, const uint32_t p_option, const uint32_t p_value) = 0;

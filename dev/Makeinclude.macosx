@@ -9,12 +9,12 @@
 #############################################################################
 # C/C++ compiler
 #############################################################################
-GCC_VERSION=6.3.0_1
-GCC_LIB_VERSION=6
-CCP=gcc-6
-CC=gcc-6
-LD=g++-6
-AR=gcc-ar-6
+GCC_VERSION=7.1.0
+GCC_LIB_VERSION=7
+CCP=gcc-7
+CC=gcc-7
+LD=g++-7
+AR=gcc-ar-7
 
 GLOBAL_DEF_GCC+=-fPIC -mmacosx-version-min=10.6
 GLOBAL_DEF_GCC_DEBUG+=-fPIC -mmacosx-version-min=10.6

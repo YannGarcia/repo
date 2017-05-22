@@ -152,6 +152,75 @@ private:
 };
 
 /**
+ * @class Channel manager/RAW test suite implementation
+ */
+class channel_manager_raw_test_suite : public Test::Suite {
+public:
+  /**
+   * @brief Default ctor
+   */
+  channel_manager_raw_test_suite() {
+    TEST_ADD(channel_manager_raw_test_suite::test_create_channel_raw_1);
+    TEST_ADD(channel_manager_raw_test_suite::test_create_channel_raw_2);
+  }
+  
+  /**
+   * @brief Test case for @see channel_manager::create_channel
+   * @see channel_manager::get_channel
+   * @see channel_manager::remove_channel
+   */
+  void test_create_channel_raw_1() {
+    // Create RAW channel
+    socket_address addr(std::string("0.0.0.0"), 0);
+    int32_t channel = channel_manager::get_instance().create_channel(channel_type::raw, addr);
+    TEST_ASSERT(channel != -1);
+    // Set interface
+    channel_manager::get_instance().get_channel(channel).set_nic_name(std::string("enp0s3"));
+    // Get channel
+    TEST_THROWS_NOTHING(channel_manager::get_instance().get_channel(channel));
+    
+    // Remove channel
+    TEST_ASSERT(channel_manager::get_instance().remove_channel(channel) != -1);
+    TEST_THROWS(channel_manager::get_instance().get_channel(channel), std::out_of_range);
+  } // End of method test_create_channel_raw_1
+  
+  /**
+   * @brief Test case for @see channel_manager::create_channel
+   * Use command netcat -vv -u -l -p12345 LOCAL_IPv4_ADDRESS to start an UDP listener on port 12345
+   * @see channel_manager::connect
+   * @see channel_manager::write
+   * @see channel_manager::disconnect
+   */
+  void test_create_channel_raw_2() {
+    // Create RAW channel
+    socket_address addr(std::string("0.0.0.0"), 0);
+    int32_t channel = channel_manager::get_instance().create_channel(channel_type::raw, addr);
+    TEST_ASSERT(channel != -1);
+    // Get channel
+    TEST_THROWS_NOTHING(channel_manager::get_instance().get_channel(channel));
+    
+    // Set interface
+    int32_t result = channel_manager::get_instance().get_channel(channel).set_nic_name(std::string("enp0s3"));
+    TEST_ASSERT(result != -1);
+    
+    // Send data
+    std::vector<uint8_t> buffer = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x5c, 0x26, 0x0a, 0x83, 0x5C, 0xb4, 0x89, 0x47, 0x01, 0x00 };
+    result = channel_manager::get_instance().get_channel(channel).write(buffer);
+    TEST_ASSERT(result != -1);
+    
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+    
+    // Close connection
+    result = channel_manager::get_instance().get_channel(channel).disconnect();
+    TEST_ASSERT(result != -1);
+    
+    // Remove channel
+    TEST_ASSERT(channel_manager::get_instance().remove_channel(channel) != -1);
+  } // End of method test_create_channel_raw_2
+  
+};
+
+/**
  * @class Channel manager/UDP test suite implementation
  */
 class channel_manager_udp_test_suite : public Test::Suite {
@@ -205,7 +274,7 @@ public:
     // Send data
     std::vector<uint8_t> buffer = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', 0x0d, 0x0a };
     result = channel_manager::get_instance().get_channel(channel).write(buffer);
-     TEST_ASSERT(result != -1);
+    TEST_ASSERT(result != -1);
     
     std::this_thread::sleep_for(std::chrono::seconds(5));
     
@@ -621,9 +690,10 @@ int main(int p_argc, char* p_argv[]) {
   cout << "Warning, some test required to launch in another terminal some netcast UDP and TCP listener" << endl;
   try {
     Test::Suite ts;
-    ts.add(unique_ptr<Test::Suite>(new socket_address_test_suite));
+    //ts.add(unique_ptr<Test::Suite>(new socket_address_test_suite));
+    ts.add(unique_ptr<Test::Suite>(new channel_manager_raw_test_suite));
     //ts.add(unique_ptr<Test::Suite>(new channel_manager_udp_test_suite));
-    ts.add(unique_ptr<Test::Suite>(new channel_manager_t_udp_test_suite));
+    //ts.add(unique_ptr<Test::Suite>(new channel_manager_t_udp_test_suite));
     //ts.add(unique_ptr<Test::Suite>(new channel_manager_tcp_test_suite));
 
     // Run the tests

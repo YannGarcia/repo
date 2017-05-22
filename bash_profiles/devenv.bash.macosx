@@ -130,11 +130,11 @@ fi
 #    ssh-add ~/.ssh/git_server_ssh_key_name
 #fi
 
-alias gcc='gcc-6'
-alias cc='gcc-6'
-alias g++='g++-6'
-alias c++='c++-6'
-alias ar='gcc-ar-6'
+alias gcc='gcc-7'
+alias cc='gcc-7'
+alias g++='g++-7'
+alias c++='c++-7'
+alias ar='gcc-ar-7'
 alias pi='ssh pi@192.168.1.36'
 alias chip='ssh chip@192.168.1.27'
 alias bbb='ssh debian@192.168.1.21'

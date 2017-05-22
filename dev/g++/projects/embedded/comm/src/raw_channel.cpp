@@ -18,11 +18,12 @@ namespace comm {
   namespace network {
 
     raw_channel::raw_channel(const socket_address & p_host_address) {
-      throw std::runtime_error("raw_channel::raw_channel");
-      // if ((_socket = new socket(p_host, channel_type::raw)) == NULL) {
-      // 	std::cerr << "raw_channel::connect: " << std::strerror(errno) << std::endl;
-      // 	throw std::runtime_error("raw_channel::raw_channel");
-      // }
+      //throw std::runtime_error("raw_channel::raw_channel");
+      _socket.reset(new socket(p_host_address, channel_type::raw));
+      if (_socket.get() == NULL) {
+       	std::cerr << "raw_channel::connect: " << std::strerror(errno) << std::endl;
+       	throw std::runtime_error("raw_channel::raw_channel");
+       }
       // _socket->bind();
     }
 
