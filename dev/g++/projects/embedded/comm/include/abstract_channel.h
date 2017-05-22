@@ -81,6 +81,12 @@ namespace comm {
      * @return 0 on success, -1 otherwise
      */
     virtual const int32_t data_available() const = 0;
+
+    /**
+     * @brief Set the NIC name to be used, in case of RAW socket only
+     * @param p_nic_name[in] The NIC name. 
+     */
+    virtual const int32_t set_nic_name(const std::string & p_nic_name) const { return (_socket.get() != NULL) ? _socket->set_nic_name(p_nic_name) : -1; };
     
     /**
      * @brief Retrieve the socket file descriptor

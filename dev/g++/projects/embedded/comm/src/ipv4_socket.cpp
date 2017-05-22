@@ -13,6 +13,8 @@
 
 #include <unistd.h> // Used for ::close
 
+#include <sys/ioctl.h>
+
 #include "ipv4_socket.h"
 #include "channel_manager.h"
 
@@ -23,6 +25,7 @@ namespace comm {
     ipv4_socket::ipv4_socket(const socket_address & p_remote_address, const channel_type p_type) {
       std::clog << ">>> ipv4_socket::ipv4_socket: " << p_remote_address.to_string() << " - " <<  static_cast<unsigned int>(p_type) << std::endl;
 
+      uint32_t family = PF_INET;
       uint32_t proto;
       uint32_t type;
       _type = p_type;
@@ -40,22 +43,26 @@ namespace comm {
 	type = SOCK_SEQPACKET;
 	break;
       case channel_type::raw:
-	proto = 0;
+	proto = IPPROTO_RAW;
 	type = SOCK_RAW;
+	family = AF_PACKET;
+	memset(&_if_interface, 0x00, sizeof(struct ifreq));
+	memset(&_if_mac_addr, 0x00, sizeof(struct ifreq));
+	// Need to setup up the NIC index using set_nic_name()
 	break;
       default:
 	proto = 0;
 	type = SOCK_STREAM;
       } // End of 'switch' statement
       // Create the socket
-      if ((_socket = ::socket(PF_INET, type, proto)) < 0) {
+      if ((_socket = ::socket(family, type, proto)) < 0) {
 	std::cerr << "ipv4_socket: " << std::strerror(errno) << std::endl;
 	_socket = -1;
 	throw std::runtime_error("ipv4_socket");
       }
       // Construct the remote sockaddr_in structure
       ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
-      _remote.sin_family = PF_INET;
+      _remote.sin_family = family;
       _remote.sin_port = htons(p_remote_address.port());
       ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
       // Reset _host, note used
@@ -157,7 +164,7 @@ namespace comm {
 	// TODO 
 	break;
       case channel_type::raw:
-	// TODO 
+	result = this->send_raw(p_buffer);
 	break;
       } // End of 'switch' statement
 
@@ -167,9 +174,10 @@ namespace comm {
     const int32_t ipv4_socket::receive(std::vector<uint8_t> & p_buffer) const {
       int32_t result = -1;
       switch (_type) {
-      case channel_type::udp:
-	struct sockaddr_in from;
-	result = this->receive_from(p_buffer, &from);
+      case channel_type::udp: {
+	  struct sockaddr_in from;
+	  result = this->receive_from(p_buffer, &from);
+        }
 	break;
       case channel_type::tcp:
 	result = this->recv(p_buffer);
@@ -177,8 +185,10 @@ namespace comm {
       case channel_type::sctp:
 	// TODO 
 	break;
-      case channel_type::raw:
-	// TODO 
+      case channel_type::raw: {
+	  struct sockaddr_ll from;
+	  result = this->receive_raw(p_buffer, &from);
+        }
 	break;
       } // End of 'switch' statement
 
@@ -188,18 +198,21 @@ namespace comm {
     const int32_t ipv4_socket::receive(uint8_t *p_buffer, uint32_t *p_length) const {
       int32_t result = -1;
       switch (_type) {
-      case channel_type::udp:
-	struct sockaddr_in from;
-	result = this->receive_from(p_buffer, p_length, &from);
-	break;
+      case channel_type::udp: {
+	  struct sockaddr_in from;
+	  result = this->receive_from(p_buffer, p_length, &from);
+	  break;
+      }
       case channel_type::tcp:
 	result = this->recv(p_buffer, p_length);
 	break;
       case channel_type::sctp:
 	// TODO 
 	break;
-      case channel_type::raw:
-	// TODO 
+      case channel_type::raw: {
+	  struct sockaddr_ll from;
+	  result = this->receive_raw(p_buffer, p_length, &from);
+        }
 	break;
       } // End of 'switch' statement
 
@@ -214,7 +227,44 @@ namespace comm {
 	result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&_remote, sizeof(_remote));
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::send: " << std::strerror(errno) << std::endl;
+	std::cerr <<  "ipv4_socket::send_to: " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+
+      return 0;
+    }
+
+    const int32_t ipv4_socket::send_raw(const std::vector<uint8_t> & p_buffer) const {
+      std::clog << "ipv4_socket::send_raw: " << std::dec << p_buffer.size() << std::endl;
+
+      int32_t result;
+      // Setup 'from' parameter
+      struct sockaddr_ll sa = { 0 };
+      sa.sll_family = AF_INET;
+      sa.sll_ifindex = _if_interface.ifr_ifindex;
+      sa.sll_halen = ETH_ALEN;
+      struct ether_header *eh = (struct ether_header *)((unsigned char *)p_buffer.data());
+      // Setup the destination MAC address
+      sa.sll_addr[0] = eh->ether_dhost[0];
+      sa.sll_addr[1] = eh->ether_dhost[1];
+      sa.sll_addr[2] = eh->ether_dhost[2];
+      sa.sll_addr[3] = eh->ether_dhost[3];
+      sa.sll_addr[4] = eh->ether_dhost[4];
+      sa.sll_addr[5] = eh->ether_dhost[5];
+      // Overwrite the source MAC address
+      // FIXME: It should not be a good idea, perhaps it should be removed later
+      eh->ether_shost[0] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[0];
+      eh->ether_shost[1] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[1];
+      eh->ether_shost[2] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[2];
+      eh->ether_shost[3] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[3];
+      eh->ether_shost[4] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[4];
+      eh->ether_shost[5] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[5];
+      // Send the data
+      do {
+	result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&sa, sizeof(struct sockaddr_ll));
+      } while ((result < 0) && (errno == EINTR));
+      if (result < 0) {
+	std::cerr <<  "ipv4_socket::send_raw: " << std::strerror(errno) << std::endl;
 	return -1;
       }
 
@@ -265,6 +315,16 @@ namespace comm {
       return 0;
     }
 
+    const int32_t ipv4_socket::receive_raw(std::vector<uint8_t> & p_buffer, struct sockaddr_ll * p_from) const {
+      std::clog << ">>> ipv4_socket::receive_raw (1): " << std::dec << p_buffer.size() << std::endl;
+      return -1;
+    }
+
+    const int32_t ipv4_socket::receive_raw(uint8_t *p_buffer, uint32_t *p_length, struct sockaddr_ll * p_from) const {
+      std::clog << ">>> ipv4_socket::receive_raw (2): " << std::dec << *p_length << std::endl;
+      return -1;
+    }
+    
     const int32_t ipv4_socket::send_tcp(const std::vector<uint8_t> & p_buffer) const {
       std::clog << "ipv4_socket::send_tcp: fd=" << _socket << " - " << p_buffer.size() << std::endl;
 
@@ -305,7 +365,29 @@ namespace comm {
 
       return 0;
     }
-    
+
+    const int32_t ipv4_socket::set_nic_name(const std::string & p_nic_name) const {
+      // Sanity check
+      if (p_nic_name.empty()) {
+	std::cerr <<  "ipv4_socket::set_nic_name: Invalid argument" << std::endl;
+	return -1;
+      }
+      // Get NIC idx from its name
+      ::strcpy((char *)&_if_interface.ifr_name, p_nic_name.c_str()); // FIXME check size IFNAMESIS
+      if (::ioctl(_socket, SIOCGIFINDEX, &_if_interface) < 0) {
+	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      // Get NIC MAC address from its index
+      ::strcpy((char *)&_if_mac_addr.ifr_name, p_nic_name.c_str()); // FIXME check size IFNAMESIS
+      if (::ioctl(_socket, SIOCGIFHWADDR, &_if_mac_addr) < 0) {
+	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      
+      return 0;
+    }
+
     const int32_t ipv4_socket::process_result() const {
       int32_t result = 0;
       if (errno == EINPROGRESS) {
