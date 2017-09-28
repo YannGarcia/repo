@@ -11,8 +11,7 @@ branches:
     - master
 env: 
   global
-    - export HOME=${HOME}/..
-    - export PATH_DEV=${HOME}/repo/dev
+    - export PATH_DEV=${HOME}/dev
     - export HOME_FRAMEWORKS=${HOME}/frameworks
     - export HOME_LIB=${HOME}/lib
     - export HOME_BIN=${HOME}/bin
@@ -24,11 +23,11 @@ before_install:
   - ls -l ${HOME} && pwd
 before_script: true
 before_deploy: true
-install: ${HOME}/repo/travis_scripts/install.bash
+install: ${HOME}/travis_scripts/install.bash
 script:
-  - ${HOME}/repo/travis_scripts/build.bash
+  - ${HOME}/travis_scripts/build.bash
 after_deploy: true
-after_success: ${HOME}/travis_scripts/repo/test.bash
+after_success: ${HOME}/travis_scripts/test.bash
 after_failure: false
 after_script:
  - echo 'After Script is here'
