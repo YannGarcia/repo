@@ -11,6 +11,7 @@ branches:
     - master
 env: 
   global
+    - export HOME=${HOME}/..
     - export PATH_DEV=${HOME}/repo/dev
     - export HOME_FRAMEWORKS=${HOME}/frameworks
     - export HOME_LIB=${HOME}/lib

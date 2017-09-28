@@ -62,6 +62,8 @@ GDB=gdb
 GDB_CMD_FILE=.gdbcmd
 GDB_OPTIONS=--tui
 
+GCOV=gcov
+
 # Library versioning and extension
 SHARED_LIBRARY_EXT_NAME=.so
 SHARED_LIBRARY_VERSIONING=1
@@ -74,6 +76,8 @@ GLOBAL_DEF_GCC=-Wall -O3 -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=
 GLOBAL_DEF_GCC_DEBUG=-g -Wall -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_DEBUG
 DYNAMIC_LIBRARY_DEF=-shared
 
+GCOV_DEF_GCC=--coverage
+_
 #GLOBAL_INC_CPP_PATH=${PATH_DEV_CPP}/include
 #GLOBAL_LIB_CPP_PATH=${PATH_DEV_CPP}/lib
 GLOBAL_INC_CPP_PATH=${HOME_INC}
