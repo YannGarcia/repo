@@ -20,7 +20,8 @@ env:
     - export HOME_INC=${HOME}/include
     - export PATH=${HOME_BIN}:${PATH}
     - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
-before_install: true
+before_install:
+  - tree ${HOME}
 before_script: true
 before_deploy: true
 install: ${HOME}/repo/travis_scripts/install.bash

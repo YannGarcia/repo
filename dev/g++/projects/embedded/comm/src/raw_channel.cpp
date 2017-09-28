@@ -1,10 +1,10 @@
 /**
- * @file    raw_manager.cpp
- * @brief   Implementation file for communication with raw socket.
- * @author garciay.yann@gmail.com
+ * @file      raw_manager.cpp
+ * @brief     Implementation file for communication with raw socket.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <cstring>
 #include <stdexcept> // std::out_of_range

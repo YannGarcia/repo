@@ -162,6 +162,7 @@ public:
   channel_manager_raw_test_suite() {
     TEST_ADD(channel_manager_raw_test_suite::test_create_channel_raw_1);
     TEST_ADD(channel_manager_raw_test_suite::test_create_channel_raw_2);
+    TEST_ADD(channel_manager_raw_test_suite::test_create_channel_raw_3);
   }
   
   /**
@@ -186,7 +187,7 @@ public:
   
   /**
    * @brief Test case for @see channel_manager::create_channel
-   * Use command netcat -vv -u -l -p12345 LOCAL_IPv4_ADDRESS to start an UDP listener on port 12345
+   * Use command sudo tcpdump -vvv -ienp0s3 ether proto 0x8947
    * @see channel_manager::connect
    * @see channel_manager::write
    * @see channel_manager::disconnect
@@ -217,6 +218,51 @@ public:
     // Remove channel
     TEST_ASSERT(channel_manager::get_instance().remove_channel(channel) != -1);
   } // End of method test_create_channel_raw_2
+  
+  /**
+   * @brief Test case for @see channel_manager::create_channel
+   * Use command sudo tcpdump -vvv -ienp0s3 ether proto 0x8947
+   * @see channel_manager::connect
+   * @see channel_manager::write
+   * @see channel_manager::read
+   * @see channel_manager::disconnect
+   */
+  void test_create_channel_raw_3() {
+    // Create RAW channel
+    socket_address addr(std::string("0.0.0.0"), 0);
+    int32_t channel = channel_manager::get_instance().create_channel(channel_type::raw, addr);
+    TEST_ASSERT(channel != -1);
+    // Get channel
+    TEST_THROWS_NOTHING(channel_manager::get_instance().get_channel(channel));
+    
+    // Set interface
+    int32_t result = channel_manager::get_instance().get_channel(channel).set_nic_name(std::string("enp0s3"));
+    TEST_ASSERT(result != -1);
+    
+    // Send data
+    std::vector<uint8_t> buffer = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x5c, 0x26, 0x0a, 0x83, 0x5C, 0xb4, 0x89, 0x47, 0x01, 0x00 };
+    result = channel_manager::get_instance().get_channel(channel).write(buffer);
+    TEST_ASSERT(result != -1);
+    
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+    
+    // Read data
+    buffer.clear();
+    buffer.assign(64, 0x00);
+    result = channel_manager::get_instance().get_channel(channel).read(buffer);
+    TEST_ASSERT(result != -1);
+    cout << "Buffer size: " << (int)buffer.size() << endl;
+    //TEST_ASSERT(buffer.size() == 6);
+    //std::vector<uint8_t> expected_result = { 'H', 'i', ' ', 'm', 'a', 'n', 0x0a };
+    //TEST_ASSERT(std::equal(buffer.begin(), buffer.end(), expected_result.begin()));
+    
+    // Close connection
+    result = channel_manager::get_instance().get_channel(channel).disconnect();
+    TEST_ASSERT(result != -1);
+    
+    // Remove channel
+    TEST_ASSERT(channel_manager::get_instance().remove_channel(channel) != -1);
+  } // End of method test_create_channel_raw_3
   
 };
 
