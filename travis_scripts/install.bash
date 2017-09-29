@@ -19,11 +19,11 @@ if [ ! -d ${HOME_BIN} ]
 then
     exit -1
 fi
-# Install gcc-4.9
+# Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-4.9 g++-4.9 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree lcov epstopdf -y
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+sudo apt-get install gcc-6 g++-6 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree lcov texlive-font-utils_2016.20161130-1_all -y
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 gcc -v
 g++ -v
 # Install frameworks
