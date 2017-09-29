@@ -97,6 +97,6 @@ Here is a list of the tools I use to develop my projects:
 	       
     9. Continuous build integration with TRAVIS CI
         - See .travis.yml and travis_scripts/trigger_build.bash
-        - See .coveralls.yml
+        - See .coveralls.yml for code coverage information
 	       
 That's all Folks

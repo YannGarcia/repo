@@ -10,6 +10,8 @@ branches:
   only:
     - master
 env: 
+  - TRAVIS_CONTEXT="WithCoveralls"
+  - TRAVIS_CONTEXT="NoCoveralls"
   global
     - export HOME=`pwd`
     - export PATH_DEV=${HOME}/dev
@@ -22,7 +24,9 @@ env:
     - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
 before_install:
   - ls -l ${HOME} && pwd
+  - echo ${TRAVIS_CONTEXT}
   - echo ${COVERALLS_TOKEN}
+  - gem install coveralls-lcov
 before_script: true
 before_deploy: true
 install: ${HOME}/travis_scripts/install.bash

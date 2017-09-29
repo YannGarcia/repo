@@ -1,1 +1,4 @@
-
+# When built with Travis CI, Caoveralls can detect the associated repository automatically.
+# Nothing to do
+# For private reposytory, uncomment the line below
+#repo_token:<secret repo toke from Coveralls repository's page>

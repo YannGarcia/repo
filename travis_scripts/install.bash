@@ -48,8 +48,6 @@ cd ${OLD_PWD}
 g++ --version
 gcov --version
 lcov --version
-
-# Initialize coverage to 0
-#lcov --directory --zerocounters
+coveralls-lcov --version
 
 exit 0
