@@ -48,6 +48,5 @@ cd ${OLD_PWD}
 g++ --version
 gcov --version
 lcov --version
-coveralls-lcov --version
 
 exit 0

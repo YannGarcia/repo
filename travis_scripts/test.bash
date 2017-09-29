@@ -11,7 +11,7 @@ then
 fi
 if [ -f ./logger.coverage.info ]
 then
-    coveralls-lcov ./logger.coverage.info
+    echo "coveralls --verbose --no-gcov --gcov ./logger.coverage.info"
 fi
 cd ${PATH_DEV}/g++/projects/embedded/converter/objs
 make test
