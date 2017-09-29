@@ -15,6 +15,7 @@ else
     make compile
 fi
 make gendoc
+tree ../docs
 cd ${PATH_DEV}/g++/projects/embedded/converter/objs
 make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
@@ -27,6 +28,7 @@ else
     make compile
 fi
 make gendoc
+tree ../docs
 cd ${PATH_DEV}/g++/projects/embedded/helper/objs
 make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
@@ -39,6 +41,7 @@ else
     make compile
 fi
 make gendoc
+tree ../docs
 cd ${OLD_PWD}
 
 exit 0

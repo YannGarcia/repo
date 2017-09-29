@@ -8,10 +8,7 @@ then
    make test_d
    make run_d
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
-<<<<<<< HEAD
 then
-=======
->>>>>>> d32de5c53cd329b45a4d1fe10667370b903ede40
    make test_c
    make run_c
    if [ -f ./logger.coverage.info ]
