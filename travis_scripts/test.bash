@@ -1,8 +1,8 @@
- #!/bin/bash
+xo #!/bin/bash
 set -evx
 
 OLD_PWD=`pwd`
-cd ${PATH_DEV}/g++/projects/embedded/logger/objs
+cdxoxf ${PATH_DEV}/g++/projects/embedded/logger/objs
 make test_c
 make run_c
 if [ ! -d ../docs/htm ]
