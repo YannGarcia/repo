@@ -7,27 +7,36 @@ cd ${PATH_DEV}/g++/projects/embedded/logger/objs
 make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
 then
-    make compile
+    make debug
+elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
+then
+     make coverage
 else
-    make coverage
+    make compile
 fi
 make gendoc
 cd ${PATH_DEV}/g++/projects/embedded/converter/objs
 make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
 then
-    make compile
-else
+    make debug
+elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
+then
     make coverage
+else
+    make compile
 fi
 make gendoc
 cd ${PATH_DEV}/g++/projects/embedded/helper/objs
 make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
 then
-    make compile
-else
+    make debug
+elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
+then
     make coverage
+else
+    make compile
 fi
 make gendoc
 cd ${OLD_PWD}

@@ -11,6 +11,7 @@ branches:
 env:
   - TRAVIS_CONTEXT="WithCoveralls"
   - TRAVIS_CONTEXT="NoCoveralls"
+  - TRAVIS_CONTEXT="WithValgrind"
 before_install: 
   - export HOME=`pwd`
   - export PATH_DEV=${HOME}/dev
