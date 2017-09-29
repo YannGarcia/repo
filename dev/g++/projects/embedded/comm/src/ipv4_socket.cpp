@@ -1,10 +1,10 @@
 /**
- * @file    ipv4_socket.cpp
- * @brief   Implememtation file for IPv4 socket communication.
- * @author garciay.yann@gmail.com
+ * @file      ipv4_socket.cpp
+ * @brief     Implememtation file for IPv4 socket communication.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #include <iostream>
 #include <cstring> // Used for memcpy, strerror
@@ -16,7 +16,7 @@
 #include <sys/ioctl.h>
 #if (OSTYPE == DARWIN16)
 #endif
-
+ 
 #include "ipv4_socket.h"
 #include "channel_manager.h"
 
@@ -319,12 +319,39 @@ namespace comm {
 
     const int32_t ipv4_socket::receive_raw(std::vector<uint8_t> & p_buffer, struct sockaddr_ll * p_from) const {
       std::clog << ">>> ipv4_socket::receive_raw (1): " << std::dec << p_buffer.size() << std::endl;
-      return -1;
+
+      int32_t result;
+      uint8_t *buffer = p_buffer.data();
+      do {
+	result = ::recvfrom(_socket, static_cast<void *>(buffer), p_buffer.size(), 0, NULL, NULL);
+      } while ((result < 0) && (errno == EINTR));
+      if (result < 0) {
+	std::cerr <<  "ipv4_socket::recv_from (1): " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      p_buffer.resize(result);
+
+      std::clog << "ipv4_socket::receive_from (1): " << result << " bytes received - Fd=" << _socket << std::endl;
+
+      return 0;
     }
 
     const int32_t ipv4_socket::receive_raw(uint8_t *p_buffer, uint32_t *p_length, struct sockaddr_ll * p_from) const {
       std::clog << ">>> ipv4_socket::receive_raw (2): " << std::dec << *p_length << std::endl;
-      return -1;
+
+      int32_t result;
+      do {
+	result = ::recvfrom(_socket, static_cast<void *>(p_buffer), *p_length, 0, NULL, NULL);
+      } while ((result < 0) && (errno == EINTR));
+      if (result < 0) {
+	std::cerr <<  "ipv4_socket::recv_from (2): " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      *p_length = result;
+      
+      std::clog << "ipv4_socket::receive_from (12): " << result << " bytes received - Fd=" << _socket << std::endl;
+
+      return 0;
     }
     
     const int32_t ipv4_socket::send_tcp(const std::vector<uint8_t> & p_buffer) const {
@@ -383,6 +410,17 @@ namespace comm {
       // Get NIC MAC address from its index
       ::strcpy((char *)&_if_mac_addr.ifr_name, p_nic_name.c_str()); // FIXME check size IFNAMESIS
       if (::ioctl(_socket, SIOCGIFHWADDR, &_if_mac_addr) < 0) {
+	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      // Allow the socket to be reused
+      int32_t sockopt;
+      if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) < 0) {
+	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+	return -1;
+      }
+      // Bind to the device to receive packet
+      if (::setsockopt(_socket, SOL_SOCKET, SO_BINDTODEVICE, p_nic_name.c_str(), p_nic_name.length()) < 0) {
 	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
 	return -1;
       }

@@ -139,3 +139,8 @@ fi
 #then
 #    eval `ssh-agent -s`
 #fi
+
+if [ ${UNAME} == "ubuntu-xenial" ]
+then
+    export BROWSER=netsurf
+fi

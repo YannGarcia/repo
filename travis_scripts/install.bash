@@ -22,7 +22,7 @@ fi
 # Install gcc-4.9
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-4.9 g++-4.9 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev -y
+sudo apt-get install gcc-4.9 g++-4.9 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree lcov -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
 gcc -v
 g++ -v
@@ -44,5 +44,9 @@ cd ${HOME_FRAMEWORKS}/cpptest-1.1.2
 make
 sudo make install 
 cd ${OLD_PWD}
+
+g++ --version
+gcov --version
+lcov --version
 
 exit 0
