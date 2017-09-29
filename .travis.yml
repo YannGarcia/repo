@@ -2,7 +2,6 @@ language: cpp
 sudo: true
 dist: trusty
 compiler:
-  - gcc
   - g++
 os:
   - linux
@@ -26,9 +25,9 @@ env:
 before_install:
   - ls -l ${HOME} && pwd
   - echo ${TRAVIS_CONTEXT}
+  - echo ${TRAVIS_JOB_ID}
   - echo ${COVERALLS_TOKEN}
   - gem install coveralls-lcov
-  - coveralls-lcov -h
   - coveralls-lcov --help
 before_script: true
 before_deploy: true

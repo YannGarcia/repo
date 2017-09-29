@@ -9,9 +9,10 @@ if [ ! -d ../docs/htm ]
 then
     exit -1
 fi
+ls -ltr
 if [ -f ./logger.coverage.info ]
 then
-    echo "coveralls --verbose --no-gcov --gcov ./logger.coverage.info"
+    coveralls-lcov --verbose ./logger.coverage.info
 fi
 cd ${PATH_DEV}/g++/projects/embedded/converter/objs
 make test
