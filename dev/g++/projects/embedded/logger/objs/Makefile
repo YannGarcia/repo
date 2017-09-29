@@ -161,7 +161,7 @@ test : compile
 
 test_c : coverage
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
@@ -177,7 +177,7 @@ run : test
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
 	@$(TESTDIRS)$(TEST_TARGET)
-	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --base-directory $(OBJSDIR) --capture --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
+	@$(LCOV) $(LCOV_OPTIONS) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
 run_d : test_d
@@ -187,7 +187,7 @@ run_v : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
-	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(OBJSDIR)/$(TARGET) *.lst *.o *.d *.gcno *.gcda *.info *~  $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
+	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(OBJSDIR)/$(TARGET) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -269,7 +269,7 @@ help:
 	@echo "   run_d        : Build and execute the test application in debug mode."
 	@echo "   run_v        : Build and execute the test application in debug mode, using Valgrind."
 	@echo "   dist         : Build a compressed archive of the application."
-	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
+	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."
