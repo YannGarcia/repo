@@ -22,11 +22,11 @@ env:
     - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
 before_install:
   - ls -l ${HOME} && pwd
+  - echo ${COVERALLS_TOKEN}
 before_script: true
 before_deploy: true
 install: ${HOME}/travis_scripts/install.bash
-script:
-  - ${HOME}/travis_scripts/build.bash
+script: ${HOME}/travis_scripts/build.bash
 after_deploy: true
 after_success: ${HOME}/travis_scripts/test.bash
 after_failure: false

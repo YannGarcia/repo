@@ -50,6 +50,6 @@ gcov --version
 lcov --version
 
 # Initialize coverage to 0
-lcov --directory --zerocounters
+#lcov --directory --zerocounters
 
 exit 0
