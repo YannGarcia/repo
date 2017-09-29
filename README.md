@@ -4,6 +4,7 @@
 Welcome to my working repository for all my electronics projects & developments
 ### Build status - Mac Os X, Linux, Cygwin gcc-6
 [![Build Status](https://travis-ci.org/YannGarcia/repo.svg?branch=master)](https://travis-ci.org/YannGarcia/repo)
+[![Coverage Status](https://coveralls.io/repos/YannGarcia/repo/badge.png?branch=master)](https://coveralls.io/r/YannGarcia/repo?branch=master)
 
 
 ## Introduction
@@ -96,5 +97,6 @@ Here is a list of the tools I use to develop my projects:
 	       
     9. Continuous build integration with TRAVIS CI
         - See .travis.yml and travis_scripts/trigger_build.bash
+        - See .coveralls.yml
 	       
 That's all Folks
