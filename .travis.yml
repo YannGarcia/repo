@@ -11,7 +11,7 @@ branches:
 env:
   - TRAVIS_CONTEXT="WithCoveralls"
   - TRAVIS_CONTEXT="NoCoveralls"
-before_install: ${HOME}/travis_scripts/before_install.bash
+before_install: ./travis_scripts/before_install.bash
 before_script:
   - echo ${LD_LIBRARY_PATH}
 before_deploy: true
