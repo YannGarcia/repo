@@ -1,0 +1,223 @@
+############################################################################
+#
+#       Makefile for C#, C/C++, PIC, Raspberry cross-compiler.
+#
+#ident  "$Id$"
+#
+#############################################################################
+
+#############################################################################
+# Unix basic commands
+#############################################################################
+RM=rm -f
+LN=ln -s
+MKDIR=mkdir -p
+CP=cp -Rp
+MV=mv
+GZIP=gzip
+TAR=tar cvf
+CHMOD=chmod
+STAT=stat
+SU=su
+SUDO=sudo
+CD=cd
+ECHO=echo
+STRIP=strip
+
+#for Catalogues
+GENCAT=gencat
+
+# For documentation :
+O2=doxygen
+
+MAKEFILE=Makefile
+
+SCP=scp -C
+
+#############################################################################
+# SVN
+#############################################################################
+SVN=svn
+
+#############################################################################
+# GIT
+#############################################################################
+GIT=git
+
+#############################################################################
+# Memory check
+#############################################################################
+MEMCHECK=valgrind
+MEMCHECK_OPTIONS=-v --leak-check=yes --leak-check=full --show-leak-kinds=all --track-origins=yes
+
+#############################################################################
+# C/C++ compiler
+#############################################################################
+CC=gcc
+CCP=g++
+LD=gcc
+AR=ar ruv
+
+#############################################################################
+# Debugger
+#############################################################################
+GDB=gdb
+GDB_CMD_FILE=.gdbcmd
+GDB_OPTIONS=--tui
+
+#############################################################################
+# Code coverage
+#############################################################################
+GCOV=gcov
+GCOV_OPTIONS=
+LCOV=lcov
+LCOV_OPTIONS=
+
+# Library versioning and extension
+SHARED_LIBRARY_EXT_NAME=.so
+SHARED_LIBRARY_VERSIONING=1
+
+# pthread
+PTHREAD_INC=-I/usr/include
+PTHREAD_LD=-L/usr/local/lib -lpthread
+
+GLOBAL_DEF_GCC=-Wall -O3 -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_NDEBUG
+GLOBAL_DEF_GCC_DEBUG=-g -ggdb -O0 -Wall -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_DEBUG
+DYNAMIC_LIBRARY_DEF=-shared
+
+GCOV_DEF_GCC=--coverage
+
+#GLOBAL_INC_CPP_PATH=${PATH_DEV_CPP}/include
+#GLOBAL_LIB_CPP_PATH=${PATH_DEV_CPP}/lib
+GLOBAL_INC_CPP_PATH=${HOME_INC}
+GLOBAL_LIB_CPP_PATH=${HOME_LIB}
+GLOBAL_INC_CPP=-I$(GLOBAL_INC_CPP_PATH)
+GLOBAL_LIB_CPP=-L$(GLOBAL_LIB_CPP_PATH)
+
+# BOOST libraries flags
+#GLOBAL_INC_BOOST_PATH=${PATH_BOOST}
+#GLOBAL_LIB_BOOST_PATH=${PATH_BOOST}/stage/lib
+#DEF_BOOST_THREAD_GLD=-lboost_thread
+#DEF_BOOST_IO_GLD=-lboost_filesystem -lboost_serialization
+#DEF_BOOST_REGEXP_GLD=-lboost_regex
+#DEF_BOOST_THREAD_GLD=-lboost_thread
+#DEF_BOOST_IO_GLD=-lboost_filesystem -lboost_serialization
+#DEF_BOOST_REGEXP_GLD=-lboost_regex
+#DEF_BOOST_THREAD_GLD=-lboost_thread
+#DEF_BOOST_SYSTEM_GLD=-lboost_system
+#DEF_BOOST_FILESYSTEM_GLD=-lboost_filesystem
+#DEF_BOOST_SIGNALS_GLD=-lboost_signals
+#DEF_BOOST_IP_GLD=-L$(GLOBAL_LIB_BOOST_PATH) $(DEF_BOOST_THREAD_GLD) $(DEF_BOOST_IO_GLD) $(DEF_BOOST_SYSTEM_GLD)
+#GLOBAL_DEF_BOOST_GLD=-L$(GLOBAL_LIB_BOOST_PATH) -lboost_program_options -lboost_date_time
+DEF_STD_GLD=-lstdc++
+DEF_STD_DL=-ldl
+GLOBAL_DEF_STD_GLD=-L/usr/lib $(DEF_STD_GLD)
+
+#############################################################################
+# CppTest framework
+#############################################################################
+USR_LOCAL_INC=/usr/local/include
+USR_LOCAL_LIB=/usr/local/lib
+CPP_TEST_INC=-I$(USR_LOCAL_INC)
+CPP_TEST_LIB=-L$(USR_LOCAL_LIB) -lcpptest
+
+#############################################################################
+# MBED cross compiler
+#############################################################################
+
+MBED_AS=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-as
+MBED_CC=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-gcc
+MBED_CPP=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-g++
+MBED_LD=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-gcc
+MBED_OBJCOPY=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-objcopy
+MBED_OBJDUMP=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-objdump
+MBED_SIZE=$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi-size
+
+MBED_CPU=-mcpu=cortex-m3 -mthumb
+MBED_INCS=-I. -I./mbed -I./mbed/TARGET_LPC1768 -I./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM -I./mbed/TARGET_LPC1768/TARGET_NXP -I./mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X -I./mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X/TARGET_MBED_LPC1768
+
+MBED_LINKER_SCRIPT=./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/LPC1768.ld
+
+MBED_CC_OPTIONS=-c -Os -std=c++11 -fno_rtti -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP $(MBED_CPU) -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_CORTEX_M -DTARGET_NXP -DTARGET_LPC176X -DTARGET_MBED_LPC1768 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1433753009.53 -D__MBED__=1 -D_NDEBUG
+
+MBED_CC_DEBUG_OPTIONS=-g -c -O0 -std=c++11 -fno_rtti -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP $(MDED_CPU) -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_CORTEX_M -DTARGET_NXP -DTARGET_LPC176X -DTARGET_MBED_LPC1768 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1433753009.53 -D__MBED__=1 -D_DEBUG
+
+MBED_GLOBAL_DEF_GCC=$(MBED_CC_OPTIONS)
+MBED_GLOBAL_DEF_GCC_DEBUG=$(MBED_CC_DEBUG_OPTIONS)
+
+MBED_SYS_OBJECTS = ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/board.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/startup_LPC17xx.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/cmsis_nvic.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/retarget.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/system_LPC17xx.o
+
+MBED_LD_OPTIONS=-mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main
+
+MBED_LIBS=-L./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM -lmbed
+
+MBED_GLOBAL_DEF_STD_GLD=-lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+#############################################################################
+# Raspberry/BeagleBoneBlack cross compiler
+#############################################################################
+
+CROSS_CC=arm-linux-gnueabihf-gcc
+CROSS_CCP=arm-linux-gnueabihf-g++
+CROSS_LD=arm-linux-gnueabihf-g++
+
+CROSS_PTHREAD_INC=-I$(CROSS_COMPILER_SYS_INC_PATH)
+CROSS_PTHREAD_LD=-L$(CROSS_COMPILER_SYS_LIB_PATH) -lpthread
+
+CROSS_INC=$(CROSS_COMPILER_PATH)/arm-linux-gnueabihf/include
+CROSS_INC_ARM_C=$(CROSS_COMPILER_PATH)/arm-linux-gnueabihf/libc/usr/include
+CROSS_INC_ARM_GCC=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)/include-fixed
+CROSS_INC_ARM_INC=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)/include
+CROSS_INC_ARM=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)/finclude
+
+CROSS_INCS=-I$(CROSS_INC) -I$(CROSS_INC_ARM_C) -I$(CROSS_INC_ARM_GCC) -I$(CROSS_INC_ARM_INC) -I$(CROSS_INC_ARM)
+CROSS_CC_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -c -O3 -MMD -MP -D_NDEBUG
+CROSS_CC_DEBUG_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -g -MMD -MP -D_DEBUG
+
+CROSS_GLOBAL_DEF_GCC=$(CROSS_CC_OPTIONS)
+CROSS_GLOBAL_DEF_GCC_DEBUG=$(CROSS_CC_DEBUG_OPTIONS)
+
+CROSS_LIBRARIES_PATH_LIB=$(CROSS_COMPILER_PATH)/arm-linux-gnueabihf/lib
+CROSS_LIBRARIES_PATH_LIBC=$(CROSS_COMPILER_PATH)/arm-linux-gnueabihf/libc/lib
+CROSS_LIBRARIES_PATH_LIBC_ARM=$(CROSS_COMPILER_PATH)/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf
+CROSS_LIBRARIES_PATH_LIBGCC=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)
+CROSS_LIBRARIES_PATH_LIBGCC=$(CROSS_COMPILER_PATH)/libexec/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)
+
+CROSS_LD_OPTIONS=-L$(CROSS_LIBRARIES_PATH_LIB) -L$(CROSS_LIBRARIES_PATH_LIBC) -L$(CROSS_LIBRARIES_PATH_LIBC_ARM) -L$(CROSS_LIBRARIES_PATH_LIBGCC) -L$(CROSS_LIBRARIES_PATH_LIBGCC)
+CROSS_LD_DEBUG_OPTIONS=$(CROSS_LD_OPTIONS)
+
+CROSS_GLOBAL_DEF_STD_GLD=-L$(CROSS_COMPILER_SYS_LIB_PATH) $(DEF_STD_GLD)
+
+UNAME := $(shell uname -n)
+ifeq ($(UNAME), Debian32)
+CROSS_FTP_REMOTE_HOST=192.168.1.100
+CROSS_FTP_REMOTE_USERID=debian
+CROSS_FTP_REMOTE_PASSWD=temppwd
+CROSS_FTP_REMOTE_BACKUP_DIR=~/tmp
+else ifeq ($(UNAME), raspberrypi)
+CROSS_FTP_REMOTE_HOST=192.168.1.9
+CROSS_FTP_REMOTE_USERID=pi
+CROSS_FTP_REMOTE_PASSWD=raspberry
+CROSS_FTP_REMOTE_BACKUP_DIR=~/tmp
+endif
+
+#############################################################################
+# PIC C compiler
+#############################################################################
+PIC_CC=gpasm
+PIC_LD=gplink
+PIC_CC_OPTIONS=-w2 -c -n -M -L $(GLOBAL_OPTIONS) -I$(INCDIR)
+PIC_CC_DEBUG_OPTIONS=-w2 -d -g -c -n -M -L -I$(GLOBAL_OPTIONS) -I$(INCDIR)
+PIC_LD_OPTIONS=-m -r -f0xffff
+PIC_LD_DEBUG_OPTIONS=-d -g -m -r -f0xffff
+
+#############################################################################
+# PIC asm compiler
+#############################################################################
+PIC_CC=gpasm
+PIC_LD=gplink
+PIC_CC_OPTIONS=-w2 -c -n -M -L $(GLOBAL_OPTIONS) -I$(INCDIR)
+PIC_CC_DEBUG_OPTIONS=-w2 -d -g -c -n -M -L -I$(GLOBAL_OPTIONS) -I$(INCDIR)
+PIC_LD_OPTIONS=-m -r -f0xffff
+PIC_LD_DEBUG_OPTIONS=-d -g -m -r -f0xffff
+
