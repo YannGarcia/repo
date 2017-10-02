@@ -12,7 +12,7 @@ env:
   - TRAVIS_CONTEXT="WithCoveralls"
   - TRAVIS_CONTEXT="NoCoveralls"
   - TRAVIS_CONTEXT="WithValgrind"
-before_install: 
+before_install:
   - export HOME=`pwd`
   - export PATH_DEV=${HOME}/dev
   - export HOME_FRAMEWORKS=${HOME}/frameworks
@@ -30,9 +30,10 @@ before_deploy: true
 install: ${HOME}/travis_scripts/install.bash
 script: ${HOME}/travis_scripts/build.bash
 after_deploy: true
-after_success: ${HOME}/travis_scripts/test.bash
+after_success: ${HOME}/travis_scripts/run.bash
 after_failure: false
 after_script:
- - echo 'After Script is here'
+  - ${HOME}/travis_scripts/test.bash
+  - echo 'End of processing here'
 notifications:
   email: true
