@@ -43,6 +43,21 @@ cd ${HOME_FRAMEWORKS}/cpptest-1.1.2
 ./configure CXXFLAGS="-g -O2 -std=c++11"
 make
 sudo make install 
+# Install GoogleTest
+cd ${HOME_FRAMEWORKS}
+git clone https://github.com/google/googletest.git googletest
+cd ${HOME_FRAMEWORKS}/googletest
+ADD_GCC='/make/make CC=gcc'
+sed --in-place "${ADD_GCC}" ./travis.sh
+SAMPLES_OFF='/ON/OFF/g'
+sed --in-place "${SAMPLES_OFF}" ./travis.sh
+cat ./travis.sh
+./travis.sh
+if [ -d ./build ]
+then
+    cd ./build
+    sudo make install
+fi
 cd ${OLD_PWD}
 
 g++ --version
