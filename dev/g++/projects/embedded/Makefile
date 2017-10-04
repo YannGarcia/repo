@@ -26,6 +26,12 @@ debug:
 		cd -; \
 	done
 
+coverage:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile coverage; \
+		cd -; \
+	done
+
 compile:
 	@for project in $(projects); do \
 		cd "$$project"/objs && $(MAKE) -f Makefile compile; \
@@ -59,6 +65,30 @@ install-devel:
 test:
 	@for project in $(projects); do \
 		cd "$$project"/objs && $(MAKE) -f Makefile test; \
+		cd -; \
+	done
+
+test_c:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_c; \
+		cd -; \
+	done
+
+test_v:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_v; \
+		cd -; \
+	done
+
+run:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run; \
+		cd -; \
+	done
+
+run_c:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run_c; \
 		cd -; \
 	done
 

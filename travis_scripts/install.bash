@@ -1,6 +1,6 @@
 #!/bin/bash
 # Prepare environment for the build
-set -evx
+#set -evx
 
 OLD_PWD=`pwd`
 # Create bin/lib/include directories

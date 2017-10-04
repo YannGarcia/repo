@@ -159,10 +159,10 @@ test : compile
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -luart -lhal -lconverter $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
-test_d : debug
+test_c : coverage
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lipc $(CPP_TEST_LIB)" \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -luart -lhal -lconverter $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
