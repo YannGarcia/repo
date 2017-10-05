@@ -63,7 +63,7 @@ AR=ar ruv
 #############################################################################
 GDB=gdb
 GDB_CMD_FILE=.gdbcmd
-GDB_OPTIONS=--tui
+GDB_OPTIONS=
 
 #############################################################################
 # Code coverage
@@ -114,12 +114,14 @@ DEF_STD_DL=-ldl
 GLOBAL_DEF_STD_GLD=-L/usr/lib $(DEF_STD_GLD)
 
 #############################################################################
-# CppTest framework
+# GoogleTest framework
 #############################################################################
 USR_LOCAL_INC=/usr/local/include
 USR_LOCAL_LIB=/usr/local/lib
-CPP_TEST_INC=-I$(USR_LOCAL_INC)
-CPP_TEST_LIB=-L$(USR_LOCAL_LIB) -lcpptest
+CPP_TEST_INC=-I$(USR_LOCAL_INC)/gtest
+CPP_TEST_LIB=$(PTHREAD_LD) $(USR_LOCAL_LIB)/libgtest.a $(USR_LOCAL_LIB)/libgtest_main.a
+CPP_TEST_RESULT_FILE=gtestresults.xml
+CPP_TEST_ARGS=--gtest_output=xml:$(CPP_TEST_RESULT_FILE)
 
 #############################################################################
 # MBED cross compiler

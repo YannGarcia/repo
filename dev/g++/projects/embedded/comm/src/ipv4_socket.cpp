@@ -2,7 +2,7 @@
  * @file      ipv4_socket.cpp
  * @brief     Implememtation file for IPv4 socket communication.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  */
@@ -14,8 +14,6 @@
 #include <unistd.h> // Used for ::close
 
 #include <sys/ioctl.h>
-#if (OSTYPE == DARWIN16)
-#endif
  
 #include "ipv4_socket.h"
 #include "channel_manager.h"
@@ -33,34 +31,34 @@ namespace comm {
       _type = p_type;
       switch (_type) {
       case channel_type::udp:
-	proto = IPPROTO_UDP;
-	type = SOCK_DGRAM;
-	break;
+        proto = IPPROTO_UDP;
+        type = SOCK_DGRAM;
+        break;
       case channel_type::tcp:
-	proto = IPPROTO_TCP;
-	type = SOCK_STREAM;
-	break;
+        proto = IPPROTO_TCP;
+        type = SOCK_STREAM;
+        break;
       case channel_type::sctp:
-	proto = IPPROTO_SCTP;
-	type = SOCK_SEQPACKET;
-	break;
+        proto = IPPROTO_SCTP;
+        type = SOCK_SEQPACKET;
+        break;
       case channel_type::raw:
-	proto = IPPROTO_RAW;
-	type = SOCK_RAW;
-	family = AF_PACKET;
-	memset(&_if_interface, 0x00, sizeof(struct ifreq));
-	memset(&_if_mac_addr, 0x00, sizeof(struct ifreq));
-	// Need to setup up the NIC index using set_nic_name()
-	break;
+        proto = IPPROTO_RAW;
+        type = SOCK_RAW;
+        family = AF_PACKET;
+        memset(&_if_interface, 0x00, sizeof(struct ifreq));
+        memset(&_if_mac_addr, 0x00, sizeof(struct ifreq));
+        // Need to setup up the NIC index using set_nic_name()
+        break;
       default:
-	proto = 0;
-	type = SOCK_STREAM;
+        proto = 0;
+        type = SOCK_STREAM;
       } // End of 'switch' statement
       // Create the socket
       if ((_socket = ::socket(family, type, proto)) < 0) {
-	std::cerr << "ipv4_socket: " << std::strerror(errno) << std::endl;
-	_socket = -1;
-	throw std::runtime_error("ipv4_socket");
+        std::cerr << "ipv4_socket: " << std::strerror(errno) << std::endl;
+        _socket = -1;
+        throw std::runtime_error("ipv4_socket");
       }
       // Construct the remote sockaddr_in structure
       ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
@@ -89,7 +87,7 @@ namespace comm {
 
     const int32_t ipv4_socket::connect() const {
       if (::connect(_socket, (const sockaddr *)&_remote, sizeof(struct sockaddr)) == -1) {
-	return process_result();
+        return process_result();
       }
 
       return 0; // Succeed
@@ -98,13 +96,13 @@ namespace comm {
     const int32_t ipv4_socket::close() {
       // Sanity check
       if (_socket == -1) {
-	return -1;
+        return -1;
       }
       if (::shutdown(_socket, SHUT_RDWR) == -1) {
-	process_result();
+        process_result();
       }
       if (::close(_socket) == -1) {
-	process_result();
+        process_result();
       }
       _socket = -1;
 
@@ -115,7 +113,7 @@ namespace comm {
       std::clog << ">>> ipv4_socket::bind: " << _socket << std::endl;
 
       if (::bind(_socket, reinterpret_cast<const struct sockaddr *>(&_host), sizeof(struct sockaddr)) == -1) {
-	return process_result();
+        return process_result();
       }
       
       return 0;
@@ -125,7 +123,7 @@ namespace comm {
       std::clog << ">>> ipv4_socket::listen: " << _socket << ", " << p_backlog << std::endl;
 
       if (::listen(_socket, p_backlog) == -1) {
-	return process_result();
+        return process_result();
       }
       
       return 0;
@@ -138,9 +136,9 @@ namespace comm {
       socklen_t len  = sizeof(addr);
       int32_t fd = ::accept(_socket, (struct sockaddr *)&addr, &len);
       if (fd < 0) {
-	if (process_result() == -1) {
-	  return -1;
-	}
+        if (process_result() == -1) {
+          return -1;
+        }
       }
 
       char ipstr[INET_ADDRSTRLEN];
@@ -157,17 +155,17 @@ namespace comm {
       int32_t result = -1;
       switch (_type) {
       case channel_type::udp:
-	result = this->send_to(p_buffer);
-	break;
+        result = this->send_to(p_buffer);
+        break;
       case channel_type::tcp:
-	result = this->send_tcp(p_buffer);
-	break;
+        result = this->send_tcp(p_buffer);
+        break;
       case channel_type::sctp:
-	// TODO 
-	break;
+        // TODO 
+        break;
       case channel_type::raw:
-	result = this->send_raw(p_buffer);
-	break;
+        result = this->send_raw(p_buffer);
+        break;
       } // End of 'switch' statement
 
       return result;
@@ -177,21 +175,21 @@ namespace comm {
       int32_t result = -1;
       switch (_type) {
       case channel_type::udp: {
-	  struct sockaddr_in from;
-	  result = this->receive_from(p_buffer, &from);
-        }
-	break;
+        struct sockaddr_in from;
+        result = this->receive_from(p_buffer, &from);
+      }
+        break;
       case channel_type::tcp:
-	result = this->recv(p_buffer);
-	break;
+        result = this->recv(p_buffer);
+        break;
       case channel_type::sctp:
-	// TODO 
-	break;
+        // TODO 
+        break;
       case channel_type::raw: {
-	  struct sockaddr_ll from;
-	  result = this->receive_raw(p_buffer, &from);
-        }
-	break;
+        struct sockaddr_ll from;
+        result = this->receive_raw(p_buffer, &from);
+      }
+        break;
       } // End of 'switch' statement
 
       return result;
@@ -201,21 +199,21 @@ namespace comm {
       int32_t result = -1;
       switch (_type) {
       case channel_type::udp: {
-	  struct sockaddr_in from;
-	  result = this->receive_from(p_buffer, p_length, &from);
-	  break;
+        struct sockaddr_in from;
+        result = this->receive_from(p_buffer, p_length, &from);
+        break;
       }
       case channel_type::tcp:
-	result = this->recv(p_buffer, p_length);
-	break;
+        result = this->recv(p_buffer, p_length);
+        break;
       case channel_type::sctp:
-	// TODO 
-	break;
+        // TODO 
+        break;
       case channel_type::raw: {
-	  struct sockaddr_ll from;
-	  result = this->receive_raw(p_buffer, p_length, &from);
-        }
-	break;
+        struct sockaddr_ll from;
+        result = this->receive_raw(p_buffer, p_length, &from);
+      }
+        break;
       } // End of 'switch' statement
 
       return result;
@@ -226,11 +224,11 @@ namespace comm {
 
       int32_t result;
       do {
-	result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&_remote, sizeof(_remote));
+        result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&_remote, sizeof(_remote));
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::send_to: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::send_to: " << std::strerror(errno) << std::endl;
+        return -1;
       }
 
       return 0;
@@ -263,11 +261,11 @@ namespace comm {
       eh->ether_shost[5] = ((uint8_t *)&_if_mac_addr.ifr_hwaddr.sa_data)[5];
       // Send the data
       do {
-	result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&sa, sizeof(struct sockaddr_ll));
+        result = ::sendto(_socket, (const void *)p_buffer.data(), p_buffer.size(), 0, (const struct sockaddr *)&sa, sizeof(struct sockaddr_ll));
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::send_raw: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::send_raw: " << std::strerror(errno) << std::endl;
+        return -1;
       }
 
       return 0;
@@ -280,13 +278,13 @@ namespace comm {
       uint8_t *buffer = p_buffer.data();
       socklen_t fromlen; // Length of sender's address
       do {
-	fromlen = sizeof(struct sockaddr_in);
-	::memset((void *)p_from, 0x00, fromlen);
-	result = ::recvfrom(_socket, static_cast<void *>(buffer), p_buffer.size(), 0, (struct sockaddr *)p_from, &fromlen);
+        fromlen = sizeof(struct sockaddr_in);
+        ::memset((void *)p_from, 0x00, fromlen);
+        result = ::recvfrom(_socket, static_cast<void *>(buffer), p_buffer.size(), 0, (struct sockaddr *)p_from, &fromlen);
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv_from (1): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv_from (1): " << std::strerror(errno) << std::endl;
+        return -1;
       }
       p_buffer.resize(result);
 
@@ -303,13 +301,13 @@ namespace comm {
       int32_t result;
       socklen_t fromlen; // Length of sender's address
       do {
-	fromlen = sizeof(struct sockaddr_in);
-	::memset((void *)p_from, 0x00, fromlen);
-	result = ::recvfrom(_socket, static_cast<void *>(p_buffer), *p_length, 0, (struct sockaddr *)p_from, &fromlen);
+        fromlen = sizeof(struct sockaddr_in);
+        ::memset((void *)p_from, 0x00, fromlen);
+        result = ::recvfrom(_socket, static_cast<void *>(p_buffer), *p_length, 0, (struct sockaddr *)p_from, &fromlen);
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv_from (2): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv_from (2): " << std::strerror(errno) << std::endl;
+        return -1;
       }
       *p_length = result;
       std::clog << "ipv4_socket::receive_from (2): " << inet_ntoa(p_from->sin_addr) << ":" << (int)ntohs(p_from->sin_port) << ", " << result << " bytes received" << std::endl;
@@ -323,11 +321,11 @@ namespace comm {
       int32_t result;
       uint8_t *buffer = p_buffer.data();
       do {
-	result = ::recvfrom(_socket, static_cast<void *>(buffer), p_buffer.size(), 0, NULL, NULL);
+        result = ::recvfrom(_socket, static_cast<void *>(buffer), p_buffer.size(), 0, NULL, NULL);
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv_from (1): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv_from (1): " << std::strerror(errno) << std::endl;
+        return -1;
       }
       p_buffer.resize(result);
 
@@ -341,11 +339,11 @@ namespace comm {
 
       int32_t result;
       do {
-	result = ::recvfrom(_socket, static_cast<void *>(p_buffer), *p_length, 0, NULL, NULL);
+        result = ::recvfrom(_socket, static_cast<void *>(p_buffer), *p_length, 0, NULL, NULL);
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv_from (2): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv_from (2): " << std::strerror(errno) << std::endl;
+        return -1;
       }
       *p_length = result;
       
@@ -359,11 +357,11 @@ namespace comm {
 
       int32_t result;
       do {
-	result = ::send(_socket, static_cast<const void *>(p_buffer.data()), p_buffer.size(), 0);
+        result = ::send(_socket, static_cast<const void *>(p_buffer.data()), p_buffer.size(), 0);
       } while ((result < 0) && (errno == EINTR));
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::send_tcp: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::send_tcp: " << std::strerror(errno) << std::endl;
+        return -1;
       }
 
       return 0;
@@ -374,8 +372,8 @@ namespace comm {
 
       int32_t result = ::recv(_socket, static_cast<void *>(p_buffer.data()), p_buffer.size(), 0);
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv(1): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv(1): " << std::strerror(errno) << std::endl;
+        return -1;
       }
       // Set the correct size
       p_buffer.resize(result);
@@ -388,8 +386,8 @@ namespace comm {
 
       int32_t result = ::recv(_socket, static_cast<void *>(p_buffer), *p_length, 0);
       if (result < 0) {
-	std::cerr <<  "ipv4_socket::recv(2): " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::recv(2): " << std::strerror(errno) << std::endl;
+        return -1;
       }
 
       return 0;
@@ -398,31 +396,31 @@ namespace comm {
     const int32_t ipv4_socket::set_nic_name(const std::string & p_nic_name) const {
       // Sanity check
       if (p_nic_name.empty()) {
-	std::cerr <<  "ipv4_socket::set_nic_name: Invalid argument" << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::set_nic_name: Invalid argument" << std::endl;
+        return -1;
       }
       // Get NIC idx from its name
       ::strcpy((char *)&_if_interface.ifr_name, p_nic_name.c_str()); // FIXME check size IFNAMESIS
       if (::ioctl(_socket, SIOCGIFINDEX, &_if_interface) < 0) {
-	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+        return -1;
       }
       // Get NIC MAC address from its index
       ::strcpy((char *)&_if_mac_addr.ifr_name, p_nic_name.c_str()); // FIXME check size IFNAMESIS
       if (::ioctl(_socket, SIOCGIFHWADDR, &_if_mac_addr) < 0) {
-	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+        return -1;
       }
       // Allow the socket to be reused
       int32_t sockopt;
       if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) < 0) {
-	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+        return -1;
       }
       // Bind to the device to receive packet
       if (::setsockopt(_socket, SOL_SOCKET, SO_BINDTODEVICE, p_nic_name.c_str(), p_nic_name.length()) < 0) {
-	std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
-	return -1;
+        std::cerr <<  "ipv4_socket::set_nic_name: " << std::strerror(errno) << std::endl;
+        return -1;
       }
       
       return 0;
@@ -431,35 +429,35 @@ namespace comm {
     const int32_t ipv4_socket::process_result() const {
       int32_t result = 0;
       if (errno == EINPROGRESS) {
-	struct timeval tv;
-	fd_set s;
-	do {
-	  tv.tv_sec = 2;
-	  tv.tv_usec = 0;
-	  FD_ZERO(&s); 
-	  FD_SET(_socket, &s);
-	  if (::select(_socket + 1, NULL, &s, NULL, &tv) > 0) {
-	    socklen_t length = sizeof(result);
-	    if (::getsockopt(_socket, SOL_SOCKET, SO_ERROR, static_cast<void *>(&result), &length) == -1) {
-	      std::cerr <<  "ipv4_socket::process_result (SO_ERROR): " << std::strerror(errno) << std::endl;
-	      return -1; // Terminate here
-	    } else if (result != 0) {
-	      std::cerr <<  "ipv4_socket::process_result (Delayed): " << std::strerror(errno) << std::endl;
-	      return -1; // Terminate here
-	    } else { // Connected
-	      std::clog << "ipv4_socket::process_result: done" << std::endl;
-	      break; // exit loop
-	    }
-	  } else if (result != EINTR) {
-	    std::cerr <<  "ipv4_socket::process_result (select): " << std::strerror(errno) << std::endl;
-	    return -1; // Terminate here
-	  } else {
-	    std::clog <<  "ipv4_socket::process_result: " << std::strerror(errno) << std::endl;
-	  }
-	} while (true);
+        struct timeval tv;
+        fd_set s;
+        do {
+          tv.tv_sec = 2;
+          tv.tv_usec = 0;
+          FD_ZERO(&s); 
+          FD_SET(_socket, &s);
+          if (::select(_socket + 1, NULL, &s, NULL, &tv) > 0) {
+            socklen_t length = sizeof(result);
+            if (::getsockopt(_socket, SOL_SOCKET, SO_ERROR, static_cast<void *>(&result), &length) == -1) {
+              std::cerr <<  "ipv4_socket::process_result (SO_ERROR): " << std::strerror(errno) << std::endl;
+              return -1; // Terminate here
+            } else if (result != 0) {
+              std::cerr <<  "ipv4_socket::process_result (Delayed): " << std::strerror(errno) << std::endl;
+              return -1; // Terminate here
+            } else { // Connected
+              std::clog << "ipv4_socket::process_result: done" << std::endl;
+              break; // exit loop
+            }
+          } else if (result != EINTR) {
+            std::cerr <<  "ipv4_socket::process_result (select): " << std::strerror(errno) << std::endl;
+            return -1; // Terminate here
+          } else {
+            std::clog <<  "ipv4_socket::process_result: " << std::strerror(errno) << std::endl;
+          }
+        } while (true);
       } else {
-	std::cerr <<  "ipv4_socket::process_result: " << std::strerror(errno) << std::endl;
-	return -1; // Terminate here
+        std::cerr <<  "ipv4_socket::process_result: " << std::strerror(errno) << std::endl;
+        return -1; // Terminate here
       }
 
       return result;
