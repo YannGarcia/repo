@@ -37,4 +37,8 @@ after_script:
   - ${HOME}/travis_scripts/test.bash
   - echo 'End of processing here'
 notifications:
-  email: true
+  email:
+    recipients:
+      - garcia.yann@gmail.com
+    on_success: always
+    on_failure: always

@@ -62,6 +62,5 @@ cd ${OLD_PWD}
 g++ --version
 gcov --version
 lcov --version
-tree ${HOME_FRAMEWORKS}
 
 exit 0
