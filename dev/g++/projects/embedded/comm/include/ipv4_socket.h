@@ -2,7 +2,7 @@
  * @file      ipv4_socket.h
  * @brief     Header file for IPv4 socket communication.
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  */
@@ -12,18 +12,14 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <netinet/ether.h> // Used for raw sockets
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <net/if.h> // Used for raw sockets
-#define DARWIN16 darwin16
-#if (OSTYPE != DARWIN16)
-#include <netinet/ether.h> // Used for raw sockets
+#include <net/ethernet.h> // Used for raw sockets
+
 #include <linux/if_packet.h> // Used for raw sockets
-#else
-//#include <netinet/ip.h>
-#include <netinet/in.h>
-#endif
 
 #include "socket_address.h"
 #include "ipvx_socket.h"

@@ -20,6 +20,7 @@ before_install:
   - export HOME_BIN=${HOME}/bin
   - export HOME_ETC=${HOME}/etc
   - export HOME_INC=${HOME}/include
+  - export HOME_TMP=${HOME}/tmp
   - export PATH=${HOME_BIN}:${PATH}
   - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
   - echo ${TRAVIS_CONTEXT}

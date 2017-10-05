@@ -41,9 +41,9 @@ CC_INS=$(PTHREAD_INC)
 LD_INS=$(PTHREAD_LD)
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../..
-CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../..
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../..
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
 
 # Linker flags
 LD_DEBUG_OPTIONS=-g -shared -Wall $(GLOBAL_DEF_STD_GLD)
@@ -189,11 +189,11 @@ test_d : debug
 		directories $(TEST_TARGET)
 
 run : test
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 	@$(LCOV) $(LCOV_OPTIONS) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
@@ -204,7 +204,7 @@ run_v : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
-	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(TARGET) $(OBJSDIR)/$(TARGET) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
+	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(TARGET) $(OBJSDIR)/$(TARGET) $(OBJSDIR)/$(CPP_TEST_RESULT_FILE) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -270,6 +270,10 @@ install-devel: install
 	@$(CP) $(INCDIRS)$(GPS_DEVICE_INC) $(PATH_INSTALL_INC)/$(GPS_DEVICE_INC)
 	@echo "*** $@ done ***"
 
+push2coveralls:
+	@if [ ! -f $(OBJSDIR)/logger.coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
+	@echo "*** $@ done ***"
+
 depend :
 	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
 	@echo "*** $@ done ***"
@@ -300,6 +304,8 @@ help:
 	@echo "   dist         : Build a compressed archive of the application."
 	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
+	@echo "*** $@ done ***"
+
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."
 	@echo

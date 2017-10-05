@@ -6,15 +6,12 @@ function make_runs {
     if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
     then
         make test_d
-        make run
+        make run # Compiled in debug mode but running without gdb
     elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
     then
         make test_c
         make run_c
-        if [ -f ./logger.coverage.info ]
-        then
-            coveralls-lcov --verbose ./logger.coverage.info
-        fi
+        make push2coveralls
     else
         make test
         make run_v

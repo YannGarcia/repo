@@ -53,31 +53,47 @@ function check_includes {
     return "0"
 }
 
+function check_gtest_verdicts {
+    if [ ! -f ../objs/gtestresults.xml ]
+    then
+        return "-1"
+    fi
+    nb_failures=cat ../objs/gtestresults.xml | grep "<testsuites tests=" | cut -d' ' -f3 | cut -d'=' -f2
+
+    return $nb_failures
+}
+
 OLD_PWD=`pwd`
 cd ${PATH_DEV}/g++/projects/embedded/logger/objs
 check_lib "logger"
 if [ "$?" != "0" ]
 then
-    echo "Checkimg lib failed"
+    echo "Checking lib failed"
     exit -2
 fi
 check_test "testlib"
 if [ "$?" != "0" ]
 then
-    echo "Checkimg test failed"
+    echo "Checking test failed"
     exit -3
 fi
 declare -a include_files=("logger_factory.h" "logger.h" "logger_levels.h" "logger_time_formats.h")
 check_includes "${include_files[@]}"
 if [ "$?" != "0" ]
 then
-    echo "Checkimg includes failed"
+    echo "Checking includes failed"
     exit -4
 fi
 check_docs
 if [ "$?" != "0" ]
 then
-    echo "Checkimg docs failed"
+    echo "Checking docs failed"
+    exit -1
+fi
+check_gtest_verdicts
+if [ "$?" != "0" ]
+then
+    echo "GoogleTest found FAIL verdicts"
     exit -1
 fi
 

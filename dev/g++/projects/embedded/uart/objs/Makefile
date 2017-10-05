@@ -172,14 +172,14 @@ test_d : debug
 		directories $(TEST_TARGET)
 
 run : test
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 
 run_d : test_d
 	@gdb $(TESTDIRS)$(TEST_TARGET)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 	@$(LCOV) $(LCOV_OPTIONS) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
@@ -187,7 +187,7 @@ run_v : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
-	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(OBJSDIR)/$(TARGET) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
+	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(OBJSDIR)/$(TARGET) $(OBJSDIR)/$(CPP_TEST_RESULT_FILE) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -230,6 +230,10 @@ install: compile cleanlinks
 
 install-devel: install
 	@$(CP) $(INCDIRS)$(RS232_INC) $(PATH_INSTALL_INC)/$(RS232_INC)
+	@echo "*** $@ done ***"
+
+push2coveralls:
+	@if [ ! -f $(OBJSDIR)/logger.coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 depend :

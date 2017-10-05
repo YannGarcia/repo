@@ -38,9 +38,9 @@ endif
 # Libraries and options.
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH)
-CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH)
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH)
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../helper/include
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I../../helper/include
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../helper/include
 
 # Linker flags
 LD_DEBUG_OPTIONS=-shared -Wall $(GLOBAL_DEF_STD_GLD)
@@ -152,28 +152,28 @@ debug :
 
 test : compile
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC) -I../../helper/include" \
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -lhelper $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_c : coverage
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC) -I../../helper/include" \
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I../../helper/include -I$(HOME_INC)" \
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 run : test
-	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(TESTDIRS)$(TEST_TARGET)
+	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
 	@$(LCOV) $(LCOV_OPTIONS) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
@@ -184,7 +184,7 @@ run_v : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
-	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(OBJSDIR)/$(TARGET) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
+	@$(RM) $(BIN) $(LIBDIRS)$(TARGET) $(LIB) $(LIB_D) ../../$(LIBRARY).tar.gz $(TARGET) $(OBJSDIR)/$(TARGET) $(OBJSDIR)/$(CPP_TEST_RESULT_FILE) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -221,6 +221,10 @@ install: compile cleanlinks
 
 install-devel: install
 	@$(CP) $(INCDIRS)$(CONVERTER_INC) $(PATH_INSTALL_INC)/$(CONVERTER_INC)
+	@echo "*** $@ done ***"
+
+push2coveralls:
+	@if [ ! -f $(OBJSDIR)/logger.coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 depend :
