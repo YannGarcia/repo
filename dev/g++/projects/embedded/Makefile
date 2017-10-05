@@ -92,6 +92,12 @@ run_c:
 		cd -; \
 	done
 
+push2coveralls:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile push2coveralls; \
+		cd -; \
+	done
+
 help:
 	@clear
 	@echo
