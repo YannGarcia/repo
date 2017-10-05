@@ -177,8 +177,8 @@ run : test
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
 	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
-	@$(LCOV) $(LCOV_OPTIONS) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
-	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
+	$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info --capture
+	$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
 run_d : test_d
 	@$(GDB) $(GDB_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
