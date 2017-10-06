@@ -31,8 +31,9 @@ then
 fi
 # Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-sudo apt-get update
-sudo apt-get install gcc-6 g++-6 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree lcov texlive-font-utils -y
+sudo apt-ge
+     t update
+sudo apt-get install gcc-6 g++-6 gdb doxygen libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree texlive-font-utils -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 gcc -v
 g++ -v
@@ -43,6 +44,12 @@ wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-a
 bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+# install latest LCOV
+wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+tar xf lcov_1.13.orig.tar.gz
+sudo make -C lcov-1.11/ install
+# install lcov to coveralls conversion
+gem install coveralls-lcov
 # Install GoogleTest
 git clone https://github.com/google/googletest.git googletest
 cd ${HOME_FRAMEWORKS}/googletest
