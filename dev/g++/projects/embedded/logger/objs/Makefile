@@ -172,7 +172,7 @@ test_d : debug
 		directories $(TEST_TARGET)
 
 run : test
-	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
+	@$(TESTDIRS)$(TEST_TARGET)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters

@@ -169,11 +169,11 @@ test_d : debug
 		directories $(TEST_TARGET)
 
 run : test
-	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
+	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(TESTDIRS)$(TEST_TARGET)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
-	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
+	@$(TESTDIRS)$(TEST_TARGET)
 	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 

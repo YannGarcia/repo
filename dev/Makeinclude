@@ -23,6 +23,7 @@ SUDO=sudo
 CD=cd
 ECHO=echo
 STRIP=strip
+PRINTF=printf
 
 #for Catalogues
 GENCAT=gencat

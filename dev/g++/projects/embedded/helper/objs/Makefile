@@ -207,11 +207,11 @@ test_d : debug
 		directories $(TEST_TARGET)
 
 run : test
-	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
+	@$(PRINTF) 'qwe' | $(TESTDIRS)$(TEST_TARGET)
 
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
-	@$(TESTDIRS)$(TEST_TARGET)
+	@$(PRINTF) 'qwe' | $(TESTDIRS)$(TEST_TARGET)
 	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
@@ -219,7 +219,7 @@ run_d : test_d
 	@gdb $(TESTDIRS)$(TEST_TARGET) #$(GDB_OPTIONS)
 
 run_v : test_d
-	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
+	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(PRINTF) 'qwe' | $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
 	@$(RM) -f $(BIN) $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) ./../$(LIBRARY).tar.gz $(TARGET) $(OBJSDIR)/$(TARGET) $(OBJSDIR)/$(CPP_TEST_RESULT_FILE) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
