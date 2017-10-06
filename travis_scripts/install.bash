@@ -1,7 +1,7 @@
 #!/bin/bash
 # Prepare environment for the build
 set -e # Exit with non 0 if any command fails
-#set -vx
+set -vx
 
 OLD_PWD=`pwd`
 # Create bin/lib/include directories
