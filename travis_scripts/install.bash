@@ -32,12 +32,9 @@ then
 fi
 # Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-sudo apt-ge
-     t update
+sudo apt-get update
 sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree texlive-font-utils -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
-gcc -v
-g++ -v
 # Install frameworks
 cd ${HOME_FRAMEWORKS}
 # Install ARM Compile
@@ -70,5 +67,6 @@ cd ${OLD_PWD}
 g++ --version
 gcov --version
 lcov --version
+coveralls-lcov -h
 
 exit 0
