@@ -74,6 +74,12 @@ test_c:
 		cd -; \
 	done
 
+test_d:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_d; \
+		cd -; \
+	done
+
 test_v:
 	@for project in $(projects); do \
 		cd "$$project"/objs && $(MAKE) -f Makefile test_v; \

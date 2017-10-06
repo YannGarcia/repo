@@ -35,7 +35,12 @@ after_script:
   - ${HOME}/travis_scripts/test.bash
 before_deploy: true
 deploy:
+  provoder: pages
   skip_cleanup: true
+  github_token: $GITHUB_TOKEN 
+  on:
+    branch: master
+  local_dir: docs
 after_deploy: true
 notifications:
   email:
