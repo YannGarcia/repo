@@ -45,9 +45,9 @@ tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 # Install GoogleTest
 git clone https://github.com/google/googletest.git googletest
 cd ${HOME_FRAMEWORKS}/googletest
-ADD_GCC='/make/make CC=gcc'
+ADD_GCC='s/^make.*/& CC=gcc/'
 sed --in-place "${ADD_GCC}" ./travis.sh
-SAMPLES_OFF='/ON/OFF/g'
+SAMPLES_OFF='s/ON/OFF/g'
 sed --in-place "${SAMPLES_OFF}" ./travis.sh
 cat ./travis.sh
 ./travis.sh
