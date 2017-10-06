@@ -83,8 +83,9 @@ function check_gtest_verdicts {
 
 OLD_PWD=`pwd`
 
-check_lib "logger"
-cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+project="logger"
+check_lib ${project}
+cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
 if [ "$?" != "0" ]
 then
     echo "Checking lib failed"
@@ -116,7 +117,9 @@ then
     exit -1
 fi
 
-check_lib "helpers"
+project="helper"
+check_lib ${project}
+cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
 cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
 if [ "$?" != "0" ]
 then
@@ -130,6 +133,76 @@ then
     exit -3
 fi
 declare -a include_files=("date_time.h" "helper.h" "ibstream.h" "keyboard.h" "obstream.t.h" "get_opt.h" "helper.t.h" "ibstream.t.h" "obstream.h" "runnable.h")
+check_includes "${include_files[@]}"
+if [ "$?" != "0" ]
+then
+    echo "Checking includes failed"
+    exit -4
+fi
+check_docs
+if [ "$?" != "0" ]
+then
+    echo "Checking docs failed"
+    exit -1
+fi
+check_gtest_verdicts
+if [ "$?" != "0" ]
+then
+    echo "GoogleTest found FAIL verdicts"
+    exit -1
+fi
+
+project="converter"
+check_lib ${project}
+cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+if [ "$?" != "0" ]
+then
+    echo "Checking lib failed"
+    exit -2
+fi
+check_test "testlib"
+if [ "$?" != "0" ]
+then
+    echo "Checking test failed"
+    exit -3
+fi
+declare -a include_files=("converter.h")
+check_includes "${include_files[@]}"
+if [ "$?" != "0" ]
+then
+    echo "Checking includes failed"
+    exit -4
+fi
+check_docs
+if [ "$?" != "0" ]
+then
+    echo "Checking docs failed"
+    exit -1
+fi
+check_gtest_verdicts
+if [ "$?" != "0" ]
+then
+    echo "GoogleTest found FAIL verdicts"
+    exit -1
+fi
+
+project="ipc"
+check_lib ${project}
+cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+if [ "$?" != "0" ]
+then
+    echo "Checking lib failed"
+    exit -2
+fi
+check_test "testlib"
+if [ "$?" != "0" ]
+then
+    echo "Checking test failed"
+    exit -3
+fi
+declare -a include_files=("abstract_ipc.h" "ipc_rights.h" "message_queue.h" "ipc_manager.h" "ipc_type.h" "shared_memory.h")
 check_includes "${include_files[@]}"
 if [ "$?" != "0" ]
 then
