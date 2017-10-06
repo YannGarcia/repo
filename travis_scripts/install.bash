@@ -42,12 +42,6 @@ wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-a
 bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 #rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
-# install latest LCOV
-wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.13.orig.tar.gz
-tar xf lcov_1.13.orig.tar.gz
-sudo make -C lcov-1.13/ install
-# install lcov to coveralls conversion
-gem install coveralls-lcov
 # Install GoogleTest
 git clone https://github.com/google/googletest.git googletest
 cd ${HOME_FRAMEWORKS}/googletest
@@ -62,6 +56,15 @@ then
     cd ./build
     sudo make install
 fi
+# install latest LCOV
+mkdir -p ${HOME_FRAMEWORKS}/lcov
+cd ${HOME_FRAMEWORKS}/lcov
+wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.13.orig.tar.gz
+tar xf lcov_1.13.orig.tar.gz
+sudo make -C lcov-1.13/ install
+# install lcov to coveralls conversion
+gem install coveralls-lcov
+
 cd ${OLD_PWD}
 
 g++ --version
