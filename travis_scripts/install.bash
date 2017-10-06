@@ -41,7 +41,7 @@ cd ${HOME_FRAMEWORKS}
 wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
-rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+#rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 # install latest LCOV
 wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
 tar xf lcov_1.13.orig.tar.gz
