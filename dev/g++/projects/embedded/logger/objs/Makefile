@@ -241,6 +241,11 @@ install-devel: install
 	@$(CP) $(INCDIRS)$(LOGGER_INC) $(PATH_INSTALL_INC)/$(LOGGER_INC)
 	@echo "*** $@ done ***"
 
+deploy: 
+	@if [ ! -d $(PATH_DEPLOY)/$(TARGET) ] ; then mkdir -p $(PATH_DEPLOY)/$(TARGET) ; fi ;
+	@$(MV) $(DOCDIR)/html $(PATH_DEPLOY)/$(TARGET)
+	@echo "*** $@ done ***"
+
 depend :
 	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
 	@echo "*** $@ done ***"

@@ -34,8 +34,10 @@ fi
 if [ -d ~/repo ]
 then 
     export PATH_DEV=~/repo/dev
+    export PATH_DEPLOY=~/repo/docs
 else
     export PATH_DEV=~/dev
+    export PATH_DEPLOY=~/repo/docs
 fi
 
 # Cross compiler
@@ -141,7 +143,4 @@ fi
 #    eval `ssh-agent -s`
 #fi
 
-if [ ${UNAME} == "ubuntu-xenial" ]
-then
-    export BROWSER=netsurf
-fi
+export BROWSER=netsurf

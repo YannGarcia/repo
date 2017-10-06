@@ -29,8 +29,10 @@ export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 if [ -d ~/repo ]
 then 
     export PATH_DEV=~/repo/dev
+    export PATH_DEPLOY=~/repo/docs
 else
     export PATH_DEV=~/dev
+    export PATH_DEPLOY=~/repo/docs
 fi
 
 # Cross compiler
@@ -131,11 +133,11 @@ fi
 #    ssh-add ~/.ssh/git_server_ssh_key_name
 #fi
 
-alias gcc='gcc-7'
-alias cc='gcc-7'
-alias g++='g++-7'
-alias c++='c++-7'
-alias ar='gcc-ar-7'
+alias gcc='gcc-9'
+alias cc='gcc-9'
+alias g++='g++-9'
+alias c++='c++-9'
+alias ar='gcc-ar-9'
 alias pi='ssh pi@192.168.1.36'
 alias chip='ssh chip@192.168.1.27'
 alias bbb='ssh debian@192.168.1.21'

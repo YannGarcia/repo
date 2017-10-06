@@ -34,7 +34,8 @@ after_failure: false
 after_script:
   - ${HOME}/travis_scripts/test.bash
 before_deploy: true
-deploy: true
+deploy:
+  skip_cleanup: true
 after_deploy: true
 notifications:
   email:

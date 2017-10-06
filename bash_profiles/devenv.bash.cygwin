@@ -15,6 +15,7 @@ export HOME_FRAMEWORKS=${HOME}/frameworks
 export HOME_LIB=${HOME}/lib
 export HOME_BIN=${HOME}/bin
 export HOME_ETC=${HOME}/etc
+export HOME_TMP=${HOME}/tmp
 
 # Home common include directory
 export HOME_INC=${HOME}/include
@@ -26,6 +27,7 @@ export PATH=${HOME_BIN}:${PATH}
 export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 
 export PATH_DEV=~/repo/dev
+export PATH_DEPLOY=~/repo/docs
 
 # Cross compiler
 UNAME=`uname -n`

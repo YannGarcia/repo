@@ -29,8 +29,10 @@ export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 if [ -d ~/repo ]
 then 
     export PATH_DEV=~/repo/dev
+    export PATH_DEPLOY=~/repo/docs
 else
     export PATH_DEV=~/dev
+    export PATH_DEPLOY=~/repo/docs
 fi
 
 # Cross compiler
