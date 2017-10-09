@@ -19,3 +19,12 @@ The libhal framework is quite simple to use and very intuitive.
 
 ### Select your hardware
 All the Makefiles files use te common variable SELECTED_HWD which indicates the hardware to be used. Based on this variable, the proper libhal framework is built. It can be used for all your rojects based on the selected hardware.
+
+#### Texas Instrunment hardware
+Te following hardwares are supported:
+* MSP432 family: add the follwing code in your devenv.bash file
+  ```bash
+  export SELECTED_HW="ti_msp_exp432p401r"
+  ```
+
+That's all Folks

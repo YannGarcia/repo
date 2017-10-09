@@ -233,7 +233,7 @@ install-devel: install
 	@echo "*** $@ done ***"
 
 push2coveralls:
-	@if [ ! -f $(OBJSDIR)/logger.coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
+	@if [ ! -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 depend :

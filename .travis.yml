@@ -13,6 +13,7 @@ env:
   - TRAVIS_CONTEXT="NoCoveralls"
   - TRAVIS_CONTEXT="WithValgrind"
 before_install:
+  - export SELECTED_HW="ti_msp_exp432p401r"
   - export HOME=`pwd`
   - export PATH_DEV=${HOME}/dev
   - export HOME_FRAMEWORKS=${HOME}/frameworks
@@ -35,9 +36,9 @@ after_script:
   - ${HOME}/travis_scripts/test.bash
 before_deploy: true
 deploy:
-  provoder: pages
+  provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN 
+  github_token: $GITHUB_TOKEN
   on:
     branch: master
   local_dir: docs
