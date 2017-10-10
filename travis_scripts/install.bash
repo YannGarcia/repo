@@ -82,7 +82,7 @@ make CC=arm-linux-gnueabihf-gcc
 ln -sf ${HOME_FRAMEWORKS}/wiringpi/wiringPi/libwiringPi.so.`cat ../VERSION` ${HOME_LIB}/libwiringPi.so
 for i in `ls *.h`
 do
-    ln -sf %i ${HOME_INC}/`basename $i`
+    ln -sf $i ${HOME_INC}/`basename $i`
 done
 
 cd ${OLD_PWD}
