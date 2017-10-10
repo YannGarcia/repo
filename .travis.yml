@@ -20,7 +20,8 @@ install:
 before_script: true
 script:
   - ${HOME}/travis_scripts/build.bash
-after_success: ${HOME}/travis_scripts/run.bash
+after_success:
+  - ${HOME}/travis_scripts/run.bash
 after_failure: false
 after_script:
   - ${HOME}/travis_scripts/test.bash

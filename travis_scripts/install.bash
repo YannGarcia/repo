@@ -56,7 +56,14 @@ cd ${HOME_FRAMEWORKS}
 if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
     # Install ARM cross compiler for Linux hardware
+    sudo apt-add-repository "deb http://fr.archive.ubuntu.com/ubuntu/ wily main"
+    sudo apt-get update
     sudo apt-get install gcc-5-arm-linux-gnueabihf g++-5-arm-linux-gnueabihf -y
+    sudo apt-add-repository  --remove "deb http://fr.archive.ubuntu.com/ubuntu/ wily main"
+    ls -l /usr/bin | grep gnueab
+    #sudo rm -f /usr/bin/arm-linux-gnueabihf-gcc /usr/bin/arm-linux-gnueabihf-g++
+    #sudo ln -s /usr/bin/arm-linux-gnueabihf-gcc-5 /usr/bin/arm-linux-gnueabihf-gcc
+    #sudo ln -s /usr/bin/arm-linux-gnueabihf-g++-5 /usr/bin/arm-linux-gnueabihf-g++
     
     # Install Raspberry PI WringPI library
     cd ${HOME_FRAMEWORKS}
