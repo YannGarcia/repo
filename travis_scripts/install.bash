@@ -41,7 +41,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /u
 cd ${HOME_FRAMEWORKS}
 
 # Install ARM cross compiler for Linux hardware
-apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
 
 # Install ARM cross compile for bare metal hardware
 wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
