@@ -13,7 +13,8 @@ env:
   - TRAVIS_CONTEXT="NoCoveralls"
   - TRAVIS_CONTEXT="WithValgrind"
   - TRAVIS_CONTEXT="LinuxHW"
-before_install: true
+before_install:
+  - export HOME=`pwd`
 install:
   - . ${HOME}/travis_scripts/install.bash
 before_script: true

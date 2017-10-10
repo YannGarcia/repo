@@ -3,7 +3,6 @@
 set -e # Exit with non 0 if any command fails
 set -vx
 
-export HOME=`pwd`
 export PATH_DEV=${HOME}/dev
 export HOME_FRAMEWORKS=${HOME}/frameworks
 export HOME_LIB=${HOME}/lib
