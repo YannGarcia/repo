@@ -30,18 +30,25 @@ if [ ! -d ${HOME_FRAMEWORKS} ]
 then
     exit -1
 fi
+
 # Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
 sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev tree texlive-font-utils -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+
 # Install frameworks
 cd ${HOME_FRAMEWORKS}
-# Install ARM Compile
+
+# Install ARM cross compiler for Linux hardware
+apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+
+# Install ARM cross compile for bare metal hardware
 wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 #rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+
 # Install GoogleTest
 git clone https://github.com/google/googletest.git googletest
 cd ${HOME_FRAMEWORKS}/googletest
@@ -56,14 +63,27 @@ then
     cd ./build
     sudo make install
 fi
+
 # install latest LCOV
 mkdir -p ${HOME_FRAMEWORKS}/lcov
 cd ${HOME_FRAMEWORKS}/lcov
 wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.13.orig.tar.gz
 tar xf lcov_1.13.orig.tar.gz
 sudo make -C lcov-1.13/ install
+
 # install lcov to coveralls conversion
 gem install coveralls-lcov
+
+# Install Raspberry PI WringPI library
+cd ${HOME_FRAMEWORKS}
+git clone git://git.drogon.net/wiringPi wiringpi
+cd ${HOME_FRAMEWORKS}/wiringpi/wiringPi
+make CC=arm-linux-gnueabihf-gcc
+ln -sf ${HOME_FRAMEWORKS}/wiringpi/wiringPi/libwiringPi.so.`cat ../VERSION` ${HOME_LIB}/libwiringPi.so
+for i in `ls *.h`
+do
+    ln -sf %i ${HOME_INC}/`basename $i`
+done
 
 cd ${OLD_PWD}
 
@@ -71,5 +91,7 @@ g++ --version
 gcov --version
 lcov --version
 coveralls-lcov -h
+arm-linux-gnueabihf-gcc --version
+arm-linux-gnueabihf-g++ --version
 
 exit 0
