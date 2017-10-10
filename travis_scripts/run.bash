@@ -1,7 +1,7 @@
 #!/bin/bash
 # Execute all test library applications. This script does not check results.
 set -e # Exit with non 0 if any command fails
-set -vx
+#set -vx
 
 function make_runs {
     if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
@@ -13,7 +13,8 @@ function make_runs {
         make test_c
         make run_c
         make push2coveralls
-    else
+    elif [ ${TRAVIS_CONTEXT} != "LinuxHW" ] && [ ${TRAVIS_CONTEXT} != "BaremetalHW" ]
+    then
         make test
         make run_v
     fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Prepare environment for the build
 set -e # Exit with non 0 if any command fails
-set -vx
+#set -vx
 
 export PATH_DEV=${HOME}/dev
 export HOME_FRAMEWORKS=${HOME}/frameworks
@@ -53,7 +53,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /u
 # Install frameworks
 cd ${HOME_FRAMEWORKS}
 
-if [ "${TRAVIS_CONTEXT}" == "LinuxHW"]
+if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
     # Install ARM cross compiler for Linux hardware
     sudo apt-get install gcc-5-arm-linux-gnueabihf g++-5-arm-linux-gnueabihf -y
@@ -88,7 +88,7 @@ then
 
     export PATH=${CROSS_COMPILER_BIN}:${PATH}
 
-elif [ "${TRAVIS_CONTEXT}" == "BaremetalHW"]
+elif [ "${TRAVIS_CONTEXT}" == "BaremetalHW" ]
 then
     # Install ARM cross compile for bare metal hardware
     wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
@@ -134,6 +134,7 @@ else # Linux amd64
     gcov --version
     lcov --version
     coveralls-lcov -h
+    valgrind --version
 fi
 
 cd ${OLD_PWD}
