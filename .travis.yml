@@ -13,21 +13,7 @@ env:
   - TRAVIS_CONTEXT="NoCoveralls"
   - TRAVIS_CONTEXT="WithValgrind"
   - TRAVIS_CONTEXT="LinuxHW"
-before_install:
-  - export SELECTED_HW="ti_msp_exp432p401r"
-  - export HOME=`pwd`
-  - export PATH_DEV=${HOME}/dev
-  - export HOME_FRAMEWORKS=${HOME}/frameworks
-  - export HOME_LIB=${HOME}/lib
-  - export HOME_BIN=${HOME}/bin
-  - export HOME_ETC=${HOME}/etc
-  - export HOME_INC=${HOME}/include
-  - export HOME_TMP=${HOME}/tmp
-  - export PATH=${HOME_BIN}:${PATH}
-  - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
-  - echo ${TRAVIS_CONTEXT}
-  - echo ${TRAVIS_JOB_ID}
-  - echo ${COVERALLS_TOKEN}
+before_install: true
 install:
   - . ${HOME}/travis_scripts/install.bash
 before_script: true
@@ -45,7 +31,8 @@ deploy:
   on:
     branch: master
   local_dir: docs
-after_deploy: true
+after_deploy:
+  tree ${HOME}/docs
 notifications:
   email:
     recipients:

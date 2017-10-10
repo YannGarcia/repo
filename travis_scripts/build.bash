@@ -11,7 +11,7 @@ then
     make debug
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
 then
-     make coverage
+    make coverage
 else
     make compile
 fi
