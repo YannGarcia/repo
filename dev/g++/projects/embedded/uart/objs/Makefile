@@ -174,14 +174,14 @@ test_d : debug
 run : test
 	@$(TESTDIRS)$(TEST_TARGET)
 
-run_d : test_d
-	@gdb $(TESTDIRS)$(TEST_TARGET)
-
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
 	@$(TESTDIRS)$(TEST_TARGET) $(CPP_TEST_ARGS)
-	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
+	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info --capture
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
+
+run_d : test_d
+	@gdb $(TESTDIRS)$(TEST_TARGET)
 
 run_v : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(MEMCHECK) $(MEMCHECK_OPTIONS) $(TESTDIRS)$(TEST_TARGET)
@@ -233,7 +233,7 @@ install-devel: install
 	@echo "*** $@ done ***"
 
 push2coveralls:
-	@if [ ! -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
+	@if [ -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 pushO2:

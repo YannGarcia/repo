@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e # Exit with non 0 if any command fails
-#set -vx
+set -vx
 
 OLD_PWD=`pwd`
 cd ${PATH_DEV}/g++/projects/embedded

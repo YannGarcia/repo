@@ -205,10 +205,10 @@ TEST(converter_test_suite, bytes_to_float_2) {
 TEST(converter_test_suite, time_to_string_1) {
   time_t current_time = 1489755780;
   std::string str = converter::get_instance().time_to_string(current_time);
-  //cout << "test_time_to_string_1: " << str << "\r" << endl;
+  cout << "test_time_to_string_1: " << str << "\r" << endl;
   std::string result("Fri, 17 Mar 2017 14:03:00 +0100");
-  //cout << "test_time_to_string_1: " << result << "\r" << endl;
-  //cout << "test_time_to_string_1: " << str.compare(result) << "\r" << endl;
+  cout << "expected test_time_to_string_1: " << result << "\r" << endl;
+  cout << "test_time_to_string_1: " << str.compare(result) << "\r" << endl;
   ASSERT_TRUE(str.compare(result) == 0); // http://www.unixtimestamp.com/
 }
 

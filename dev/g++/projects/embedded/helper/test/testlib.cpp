@@ -326,7 +326,21 @@ protected:
 /**
  * @brief Test case for @see helper::date_time
  */
-TEST(date_time_test_suite, date_time) {
+TEST(date_time_test_suite, parse_date_time) {
+  date_time d(std::string("Wed Oct 11 14:09:44 2017"));
+  ASSERT_TRUE_MSG(d.get_sday().compare("Wed") == 0, "Failed, check day variable");
+  ASSERT_TRUE_MSG(d.get_day() == 11, "Failed, check day variable");
+  ASSERT_TRUE_MSG(d.get_month() == 10, "Failed, check month variable");
+  ASSERT_TRUE_MSG(d.get_year() == 2017, "Failed, check year variable");
+  ASSERT_TRUE_MSG(d.get_hour() == 14, "Failed, check hour variable");
+  ASSERT_TRUE_MSG(d.get_minutes() == 9, "Failed, check minutes variable");
+  ASSERT_TRUE_MSG(d.get_seconds() == 44, "Failed, check seconds variable");
+}
+
+/**
+ * @brief Test case for @see helper::date_time
+ */
+/*TEST(date_time_test_suite, date_time) {
   date_time now;
   uint32_t day = 7;
   uint32_t month = 5;
@@ -342,7 +356,7 @@ TEST(date_time_test_suite, date_time) {
   ASSERT_TRUE_MSG(now.get_month() == month, "test_date_time_1 failed, check month variable");
   ASSERT_TRUE_MSG(now.get_year() == year, "test_date_time_1 failed, check year variable");
   //clog << ">>> test_date_time_1 done" << endl;
-}
+  }*/
 
 /**
  * @class helpers::ibstream test suite implementation

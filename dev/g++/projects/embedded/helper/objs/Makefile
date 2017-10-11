@@ -212,7 +212,7 @@ run : test
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
 	@$(PRINTF) 'qwe' | $(TESTDIRS)$(TEST_TARGET)
-	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info
+	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info --capture
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
 run_d : test_d
@@ -294,7 +294,7 @@ install-devel: install
 	@echo "*** $@ done ***"
 
 push2coveralls:
-	@if [ ! -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
+	@if [ -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 pushO2:

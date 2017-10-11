@@ -134,6 +134,7 @@ namespace helpers {
      * std::string result = time_to_string(1489755780);
      * result.compare("Fri, 17 Mar 2017 14:03:00 +0100") == 0 //when date/time location is Paris (UTC + 1)
      * @endcode
+     * @remark Use commands 1) timedatectl to change your machine timezone (e.g. sudo timedatectl set-timezone Europe/Paris to change machine timezone to GMT+1 (paris), 2) timedatectl list-timezones to get the list of the timezones)
      */
     std::string time_to_string(const time_t p_time);
     /**
