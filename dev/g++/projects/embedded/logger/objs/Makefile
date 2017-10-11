@@ -254,6 +254,10 @@ push2coveralls:
 	@if [ ! -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./logger.coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
+pushO2:
+	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv ./$(TEST_TARGET)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
+	@echo "*** $@ done ***"
+
 gendoc: $(DOCCONF)
 	@$(O2) $(DOCCONF)
 	@echo "$(SUDO) mandb $(DOCDIRS)man"

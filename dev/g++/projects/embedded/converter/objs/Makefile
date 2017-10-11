@@ -159,13 +159,13 @@ test : compile
 test_c : coverage
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC) -I../../helper/include" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -lhelper -L$(HOME_LIB) $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I../../helper/include -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -lhelper $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 run : test
@@ -225,6 +225,10 @@ install-devel: install
 
 push2coveralls:
 	@if [ ! -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
+	@echo "*** $@ done ***"
+
+pushO2:
+	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv ./$(TEST_TARGET)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
 	@echo "*** $@ done ***"
 
 depend :

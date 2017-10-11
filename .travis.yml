@@ -34,7 +34,7 @@ deploy:
     branch: master
   local_dir: docs
 after_deploy:
-  tree ${HOME}/docs
+  - ${HOME}/travis_scripts/deploy.bash
 notifications:
   email:
     recipients:

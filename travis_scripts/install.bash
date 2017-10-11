@@ -10,6 +10,7 @@ export HOME_BIN=${HOME}/bin
 export HOME_ETC=${HOME}/etc
 export HOME_INC=${HOME}/include
 export HOME_TMP=${HOME}/tmp
+export HOME_DOCS=${HOME}/docs
 export PATH=${HOME_BIN}:${PATH}
 export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
 echo ${TRAVIS_CONTEXT}
@@ -38,6 +39,11 @@ if [ ! -d ${HOME_TMP} ]
 then
     exit -1
 fi
+mkdir -p ${HOME_DOCS}
+if [ ! -d ${HOME_DOCS} ]
+then
+    exit -1
+fi
 mkdir -p ${HOME_FRAMEWORKS}
 if [ ! -d ${HOME_FRAMEWORKS} ]
 then
@@ -55,14 +61,13 @@ cd ${HOME_FRAMEWORKS}
 
 if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
-    set -xv
     # Install ARM cross compiler for Linux hardware
     #sudo apt-add-repository "deb http://fr.archive.ubuntu.com/ubuntu/ wily main"
     #sudo apt-get update
     #sudo apt-get install gcc-5-arm-linux-gnueabihf g++-5-arm-linux-gnueabihf -y
     sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
     #sudo apt-add-repository  --remove "deb http://fr.archive.ubuntu.com/ubuntu/ wily main"
-    ls -l /usr/bin | grep gnueab
+#    ls -l /usr/bin | grep gnueab
     #sudo rm -f /usr/bin/arm-linux-gnueabihf-gcc /usr/bin/arm-linux-gnueabihf-g++
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-gcc-5 /usr/bin/arm-linux-gnueabihf-gcc
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-g++-5 /usr/bin/arm-linux-gnueabihf-g++
@@ -82,11 +87,11 @@ then
     arm-linux-gnueabihf-g++ --version
 
     export SELECTED_HW="raspberry_pi"
-    CROSS_COMPILER_VERSION=4.8.0
+    CROSS_COMPILER_VERSION=4.8.4
     export CROSS_COMPILER_PATH=/usr
     export CROSS_COMPILER_BIN=${CROSS_COMPILER_PATH}/bin
     export CROSS_COMPILER_INC_PATH=${CROSS_COMPILER_PATH}/arm-linux-gnueabihf/include
-    ls -l ${CROSS_COMPILER_INC_PATH}
+    ls -l ${CROSS_COMPILER_INC_PATH}/c++
     export CROSS_COMPILER_SYS_INC_PATH=${CROSS_COMPILER_INC_PATH}/c++/${CROSS_COMPILER_VERSION}
     export CROSS_COMPILER_SYS_LIB_PATH=${CROSS_COMPILER_PATH}/arm-linux-gnueabi/libhf
     export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_SYS_LIB_PATH}

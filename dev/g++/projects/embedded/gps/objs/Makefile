@@ -274,6 +274,10 @@ push2coveralls:
 	@if [ ! -f $(OBJSDIR)/$(TEST_TARTGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
+pushO2:
+	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv ./$(TEST_TARGET)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
+	@echo "*** $@ done ***"
+
 depend :
 	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
 	@echo "*** $@ done ***"

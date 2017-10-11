@@ -13,7 +13,7 @@ function make_runs {
         make test_c
         make run_c
         make push2coveralls
-    elif [ ${TRAVIS_CONTEXT} != "LinuxHW" ] && [ ${TRAVIS_CONTEXT} != "BaremetalHW" ]
+    elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
     then
         make test
         make run_v

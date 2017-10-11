@@ -110,6 +110,12 @@ push2coveralls:
 		cd -; \
 	done
 
+pushO2:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile pushO2; \
+		cd -; \
+	done
+
 help:
 	@clear
 	@echo

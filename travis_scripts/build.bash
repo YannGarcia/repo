@@ -12,6 +12,9 @@ then
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
 then
     make coverage
+elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
+then
+    make compile
 else
     make compile
 fi
