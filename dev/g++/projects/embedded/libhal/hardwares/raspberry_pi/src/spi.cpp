@@ -66,7 +66,7 @@ int32_t spi::data_read_write(uint16_t * p_value) {
   
   enable_device();
   *p_value = ((*p_value << 8) & 0xff00) | ((*p_value >> 8) & 0x00ff);
-  int32_t result = ::libhal_spi_data_read_write(_spi_channel_id, reinterpret_cast<const uint8_t *>(p_value), sizeof(uint16_t));
+  int32_t result = ::libhal_spi_data_read_write(_spi_channel_id, reinterpret_cast<uint8_t *>(p_value), sizeof(uint16_t));
   disable_device();
 
   return result;

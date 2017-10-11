@@ -16,7 +16,7 @@ int32_t libhal_spi_setup(const uint8_t p_channel, const uint32_t p_speed) {
   return wiringPiSPISetup((int)p_channel, (int)p_speed);
 }
 
-int32_t libhal_spi_data_read_write(const uint8_t p_channel, const uint8_t *p_buffer, const uint32_t p_length) {
+int32_t libhal_spi_data_read_write(const uint8_t p_channel, uint8_t *p_buffer, const uint32_t p_length) {
   return wiringPiSPIDataRW((int)p_channel, (unsigned char *)p_buffer, (int)p_length);
 }
 
@@ -24,7 +24,7 @@ int32_t libhal_spi_format(const uint8_t p_channel, const uint8_t p_transfer_word
   return wiringPiSPISetupMode((int)p_channel, (int)p_transfer_word_speed, (int)p_mode);
 }
 
-int32_t libhal_spi_close(const int32_t p_fd) {
+int32_t libhal_spi_close(const uint8_t p_fd) {
   // Sanity check
   if (p_fd == -1) {
     return -1;

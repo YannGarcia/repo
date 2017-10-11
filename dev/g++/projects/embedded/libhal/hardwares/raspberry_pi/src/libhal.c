@@ -24,7 +24,7 @@
 /* #include <errno.h> */
 #include <time.h>
 
-#include "libhal.raspberry_pi.h"
+#include "libhal.h"
 #include "wiringPi.h"
 
 #define PWM_FIXED_FREQUENCY ((float)100.0e6)            /*!< Default PWM ferequecy */

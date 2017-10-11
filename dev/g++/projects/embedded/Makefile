@@ -98,6 +98,12 @@ run_c:
 		cd -; \
 	done
 
+run_v:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run_v; \
+		cd -; \
+	done
+
 push2coveralls:
 	@for project in $(projects); do \
 		cd "$$project"/objs && $(MAKE) -f Makefile push2coveralls; \

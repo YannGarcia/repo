@@ -12,7 +12,7 @@
  */
 #pragma once
 
-#include "libhal_pin_names.ti_msp_exp432p401r.h"
+#include "libhal_pin_names.h"
 
 /** @def Handy defines
  */

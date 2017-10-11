@@ -9,11 +9,10 @@
  */
 #pragma once
 
-
-#if (SELECTED_HW == ti_msp_exp432p401r)
-#include "hardware/ti_msp_exp432p401r/include/libhal_pin_names.raspberry_pi.h"
-#elif (SELECTED_HW == raspberry_pi)
-#include "hardware/raspberry_pi/include/libhal_pin_names.raspberry_pi.h"
+#if defined(ti_msp_exp432p401r)
+#include "libhal_pin_names.raspberry_pi.h"
+#elif defined(raspberry_pi)
+#include "libhal_pin_names.raspberry_pi.h"
 #else
-#error "Then env variable SELECTED_HW is not properly defined"
-#endif // SELECTED_HW
+#error "Then env variables for hardwares are not properly defined"
+#endif

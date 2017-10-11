@@ -19,10 +19,10 @@
 
 #include "libhal_serial.h"
 
-int serial_open(const char *p_device, const int p_baud_rate) {
+int32_t serial_open(const char *p_device, const uint32_t p_baud_rate) {
   struct termios options;
   speed_t baud_rate;
-  int status, fd;
+  int32_t status, fd;
 
   switch (p_baud_rate) {
   case     50:	baud_rate =     B50; break;
@@ -85,19 +85,25 @@ int serial_open(const char *p_device, const int p_baud_rate) {
   return fd;
 }
 
-void serial_close(const int p_fd) {
+int32_t serial_open_id(const uint8_t p_device, const uint32_t p_baud_rate) {
+  char buffer[16] = {0};
+  sprintf(buffer, "/dev/tty%d", p_device);
+  return serial_open(buffer, p_baud_rate);
+}
+
+void serial_close(const uint32_t p_fd) {
   close(p_fd);
 }
 
-void serial_flush(const int p_fd) {
+void serial_flush(const uint32_t p_fd) {
   tcflush(p_fd, TCIOFLUSH);
 }
 
-void serial_put_char (const int p_fd, const uint8_t p_char) {
+void serial_put_char (const uint32_t p_fd, const char p_char) {
   write(p_fd, &p_char, 1);
 }
 
-void serial_put_string(const int p_fd, const char *p_string) {
+void serial_put_string(const uint32_t p_fd, const char *p_string) {
   // Sanity check
   if ((p_string == NULL) || (strlen(p_string) == 0)) {
     return;
@@ -106,7 +112,7 @@ void serial_put_string(const int p_fd, const char *p_string) {
   write(p_fd, p_string, strlen(p_string));
 }
 
-void serial_printf(const int p_fd, const char *p_message, ...) {
+void serial_printf(const uint32_t p_fd, const char *p_message, ...) {
   va_list argp;
   char *buffer = (char *)malloc(1024);
 
@@ -118,8 +124,8 @@ void serial_printf(const int p_fd, const char *p_message, ...) {
   free(buffer);
 }
 
-int serial_data_available(const int p_fd) {
-  int result;
+int32_t serial_data_available(const uint32_t p_fd) {
+  int32_t result;
 
   if (ioctl(p_fd, FIONREAD, &result) == -1)
     return -1;
@@ -127,7 +133,7 @@ int serial_data_available(const int p_fd) {
   return result;
 }
 
-int serial_get_char(const int p_fd) {
+int32_t serial_get_char(const uint32_t p_fd) {
   uint8_t c;
 
   if (read(p_fd, &c, 1) != 1) {

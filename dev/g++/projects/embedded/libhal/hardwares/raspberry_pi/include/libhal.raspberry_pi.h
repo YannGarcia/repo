@@ -8,9 +8,7 @@
  */
 #pragma once
 
-#include <stdint.h>
-
-#include "libhal_pin_names.raspberry_pi.h"
+#include "libhal_pin_names.h"
 
 /** @def Handy defines
  */
