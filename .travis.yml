@@ -9,10 +9,10 @@ branches:
   only:
     - master
 env:
-  - TRAVIS_CONTEXT="WithCoveralls"
   - TRAVIS_CONTEXT="NoCoveralls"
-  - TRAVIS_CONTEXT="WithValgrind"
-  - TRAVIS_CONTEXT="LinuxHW"
+#  - TRAVIS_CONTEXT="WithCoveralls"
+#  - TRAVIS_CONTEXT="WithValgrind"
+#  - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`
 install:
