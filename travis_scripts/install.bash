@@ -18,9 +18,7 @@ echo ${TRAVIS_JOB_ID}
 echo ${COVERALLS_TOKEN}
 
 # Setup the date format for the test units
-sudo timedatectl status
-sudo timedatectl set-timezone Europe/Paris
-sudo timedatectl status
+sudo timedatectl set-timezone UTC
 date --rfc-2822
 
 OLD_PWD=`pwd`

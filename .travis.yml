@@ -23,9 +23,9 @@ script:
 after_success:
   - ${HOME}/travis_scripts/run.bash
 after_failure: false
-after_script:
+after_script: true
+before_deploy:
   - ${HOME}/travis_scripts/test.bash
-before_deploy: true
 #deploy: true
 #  provider: pages
 #  skip_cleanup: true
