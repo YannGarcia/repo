@@ -15,8 +15,6 @@ env:
   - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`
-  - sudo timedatectl set-timezone Europe/Paris
-  - date --rfc-2822
 install:
   - . ${HOME}/travis_scripts/install.bash
 before_script: true

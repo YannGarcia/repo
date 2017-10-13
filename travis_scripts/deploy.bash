@@ -12,7 +12,6 @@ make clean
 #cd ${HOME}/docs
 #git config user.name "YannGarcia"
 #git config user.email "garcia.yann@gmail.com"
-#git config user.name YannGarcia
 #git add .
 #git commit -a -m""
 #git push

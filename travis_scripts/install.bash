@@ -17,6 +17,10 @@ echo ${TRAVIS_CONTEXT}
 echo ${TRAVIS_JOB_ID}
 echo ${COVERALLS_TOKEN}
 
+# Setup the date format for the test units
+sudo timedatectl set-timezone Europe/Paris
+date --rfc-2822
+
 OLD_PWD=`pwd`
 # Create bin/lib/include directories
 mkdir -p ${HOME_LIB}
