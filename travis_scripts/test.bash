@@ -85,8 +85,8 @@ function check_gtest_verdicts {
 OLD_PWD=`pwd`
 project="logger"
 echo "Processing ${project} project"
-check_lib ${project}
 cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+check_lib ${project}
 if [ "$?" != "0" ]
 then
     echo "Checking lib failed"
@@ -120,9 +120,8 @@ fi
 
 project="helper"
 echo "Processing ${project} project"
-check_lib ${project}
 cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+check_lib ${project}
 if [ "$?" != "0" ]
 then
     echo "Checking lib failed"
@@ -156,9 +155,8 @@ fi
 
 project="converter"
 echo "Processing ${project} project"
-check_lib ${project}
 cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+check_lib ${project}
 if [ "$?" != "0" ]
 then
     echo "Checking lib failed"
@@ -192,9 +190,8 @@ fi
 
 project="ipc"
 echo "Processing ${project} project"
-check_lib ${project}
 cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-cd ${PATH_DEV}/g++/projects/embedded/${check_lib}/objs
+check_lib ${project}
 if [ "$?" != "0" ]
 then
     echo "Checking lib failed"
