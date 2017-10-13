@@ -16,6 +16,7 @@ env:
 before_install:
   - export HOME=`pwd`
   - sudo timedatectl set-timezone Europe/Paris
+  - date --rfc-2822
 install:
   - . ${HOME}/travis_scripts/install.bash
 before_script: true
@@ -27,13 +28,13 @@ after_failure: false
 after_script:
   - ${HOME}/travis_scripts/test.bash
 before_deploy: true
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
-  local_dir: docs
+deploy: true
+#  provider: pages
+#  skip_cleanup: true
+#  github_token: $GITHUB_TOKEN
+#  on:
+#    branch: master
+#  local_dir: docs
 after_deploy:
   - ${HOME}/travis_scripts/deploy.bash
 notifications:
