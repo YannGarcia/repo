@@ -26,7 +26,7 @@ after_failure: false
 after_script:
   - ${HOME}/travis_scripts/test.bash
 before_deploy: true
-deploy: true
+#deploy: true
 #  provider: pages
 #  skip_cleanup: true
 #  github_token: $GITHUB_TOKEN
