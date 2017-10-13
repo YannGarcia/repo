@@ -69,7 +69,7 @@ function check_includes {
 function check_gtest_verdicts {
     if [ ! -f ../objs/gtestresults.xml ]
     then
-        return "-1"
+        return "0" # It's not an error!
     fi
     nb_failure="-1"
     nb_failures=cat ../objs/gtestresults.xml | grep "<testsuites tests=" | cut -d' ' -f3 | cut -d'=' -f2
