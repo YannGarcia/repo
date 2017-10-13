@@ -21,5 +21,4 @@ fi
 make gendoc
 cd ${OLD_PWD}
 
-#exit 0
-return 0
+exit 0
