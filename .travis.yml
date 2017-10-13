@@ -26,13 +26,13 @@ after_failure: false
 after_script: true
 before_deploy:
   - ${HOME}/travis_scripts/test.bash
-#deploy: true
-#  provider: pages
-#  skip_cleanup: true
-#  github_token: $GITHUB_TOKEN
-#  on:
-#    branch: master
-#  local_dir: docs
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
+  local_dir: docs
 after_deploy:
   - ${HOME}/travis_scripts/deploy.bash
 notifications:
