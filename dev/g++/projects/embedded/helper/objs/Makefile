@@ -212,7 +212,7 @@ run : test
 run_c : test_c
 	@$(LCOV) --directory $(OBJSDIR) --zerocounters
 	@$(PRINTF) 'qwe' | $(TESTDIRS)$(TEST_TARGET)
-	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(OBJSDIR)/$(TEST_TARGET).coverage.info --capture
+	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(TEST_TARGET).coverage.info --capture
 	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
 
 run_d : test_d

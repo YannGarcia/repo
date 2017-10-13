@@ -18,6 +18,7 @@ echo ${TRAVIS_JOB_ID}
 echo ${COVERALLS_TOKEN}
 
 # Setup the date format for the test units
+sudo timedatectl list-timezones
 sudo timedatectl set-timezone Europe/Paris
 date --rfc-2822
 

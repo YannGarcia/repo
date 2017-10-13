@@ -280,7 +280,7 @@ dist: clean
 	@echo "*** $@ done ***"
 
 pushO2:
-	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv ./$(TEST_TARGET)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
+	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv ./$(OBJDIR)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
 	@echo "*** $@ done ***"
 
 depend :

@@ -25,4 +25,5 @@ cd ${PATH_DEV}/g++/projects/embedded/
 make_runs
 cd ${OLD_PWD}
 
-exit 0
+#exit 0
+return 0

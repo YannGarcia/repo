@@ -1,4 +1,4 @@
-############################################################################
+u############################################################################
 #
 #       Makefile for C#, C/C++, PIC, Raspberry cross-compiler.
 #
@@ -174,8 +174,8 @@ CROSS_INC_ARM_INC=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COM
 CROSS_INC_ARM=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)/finclude
 
 CROSS_INCS=-I$(CROSS_INC) -I$(CROSS_INC_ARM_C) -I$(CROSS_INC_ARM_GCC) -I$(CROSS_INC_ARM_INC) -I$(CROSS_INC_ARM)
-CROSS_CC_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -c -O3 -MMD -MP -D_NDEBUG
-CROSS_CC_DEBUG_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -g -MMD -MP -D_DEBUG
+CROSS_CC_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -c -O3 -MMD -MP -D_NDEBUG -fPIC
+CROSS_CC_DEBUG_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -g -O0 -MMD -MP -D_DEBUG -fPIC
 
 CROSS_GLOBAL_DEF_GCC=$(CROSS_CC_OPTIONS)
 CROSS_GLOBAL_DEF_GCC_DEBUG=$(CROSS_CC_DEBUG_OPTIONS)
