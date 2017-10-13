@@ -26,7 +26,7 @@ after_failure: false
 after_script: true
 before_deploy:
   - ${HOME}/travis_scripts/test.bash
-- - ${HOME}/travis_scripts/deploy.bash
+  - ${HOME}/travis_scripts/deploy.bash
 deploy:
   provider: pages
   skip_cleanup: true
