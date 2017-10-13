@@ -22,13 +22,8 @@ function check_docs {
     else
         return "-1"
     fi
-    if [ -d ../docs/man ]
+    if [ ! -d ../docs/man ]
     then
-        if [ ! -f ../docs/man/mainpage.md.3 ]
-        then
-            return "-1"
-        fi
-    else
         return "-1"
     fi
 
