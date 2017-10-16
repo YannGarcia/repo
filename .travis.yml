@@ -15,6 +15,9 @@ env:
 #  - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`
+  - git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials 2>/dev/null
+  - git config user.name "YannGarcia"
+  - git config user.email "garcia.yann@gmail.com"
 install:
   - . ${HOME}/travis_scripts/install.bash
 before_script: true
@@ -27,8 +30,6 @@ after_script: true
 before_deploy:
   - ${HOME}/travis_scripts/test.bash
   - ${HOME}/travis_scripts/deploy.bash
-  - git config user.name "YannGarcia"
-  - git config user.email "garcia.yann@gmail.com"
 deploy:
   provider: pages
   skip_cleanup: true
@@ -37,7 +38,7 @@ deploy:
     branch: master
   local_dir: docs
 after_deploy:
-  - git push https://$GITHUB_TOKEN@github.com/YannGarcia/repo.git:gh-pages
+  - git push https://${GITHUB_TOKEN}:@github.com/YannGarcia/repo.git:gh-pages HEAD
 notifications:
   email:
     recipients:
