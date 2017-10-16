@@ -246,7 +246,7 @@ depend :
 	@echo "*** $@ done ***"
 
 push2coveralls:
-	@if [ -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose --service-name=travis.org ./$(TEST_TARGET).coverage.info ; fi ;
+	@if [ -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
 	@echo "*** $@ done ***"
 
 pushO2:

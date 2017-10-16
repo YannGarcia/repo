@@ -27,6 +27,8 @@ after_script: true
 before_deploy:
   - ${HOME}/travis_scripts/test.bash
   - ${HOME}/travis_scripts/deploy.bash
+  - git config user.name "YannGarcia"
+  - git config user.email "garcia.yann@gmail.com"
 deploy:
   provider: pages
   skip_cleanup: true
@@ -34,7 +36,7 @@ deploy:
   on:
     branch: master
   local_dir: docs
-#after_deploy: true
+after_deploy: true
 notifications:
   email:
     recipients:
