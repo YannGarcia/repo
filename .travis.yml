@@ -37,9 +37,7 @@ deploy:
   on:
     branch: master
   local_dir: docs
-after_deploy:
-  - cd -
-  - git push --force
+after_deploy: true
 notifications:
   email:
     recipients:
