@@ -38,7 +38,7 @@ deploy:
     branch: master
   local_dir: docs
 after_deploy:
-  - git push https://${GITHUB_TOKEN}:@github.com/YannGarcia/repo.git:gh-pages HEAD
+  - git push https://github.com/YannGarcia/repo.git:gh-pages HEAD
 notifications:
   email:
     recipients:
