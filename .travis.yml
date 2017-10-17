@@ -36,6 +36,7 @@ deploy:
   github_token: $GITHUB_TOKEN
   on:
     branch: master
+    condition: $TRAVIS_CONTEXT = "NoCoveralls"
   local_dir: docs
 after_deploy: true
 notifications:
