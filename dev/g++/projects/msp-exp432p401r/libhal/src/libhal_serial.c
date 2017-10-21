@@ -54,7 +54,7 @@ static const int8_t * const uint8_to_hex = "0123456789abcdef";
  */
 void serial_vprintf(const int32_t p_fd, const int8_t *p_string, va_list p_va_list);
 
-int32_t serial_open(const int8_t *p_device, const int32_t p_baud_rate) {
+int32_t serial_open(const char *p_device, const uint32_t p_baud_rate) {
 
   // TODO Case /dev/tty0: module 0...
   uint8_t fd = 0;
@@ -83,19 +83,23 @@ int32_t serial_open(const int8_t *p_device, const int32_t p_baud_rate) {
   return fd;
 }
 
-void serial_close(const int32_t p_fd) {
+int32_t serial_open_id(const uint8_t p_device, const uint32_t p_baud_rate) {
+  return serial_open("/dev/tty0", p_baud_rate);
+}
+
+void serial_close(const uint32_t p_fd) {
   MAP_UART_disableModule(uart_modules[p_fd][0]);
 }
 
-void serial_flush(const int32_t p_fd) {
+void serial_flush(const uint32_t p_fd) {
   // Nothing to do
 }
 
-void serial_put_char (const int32_t p_fd, const uint8_t p_char) {
+void serial_put_char (const uint32_t p_fd, const char p_char) {
     UART_transmitData(uart_modules[p_fd][0], (uint_fast8_t)p_char);
 }
 
-void serial_put_string(const int32_t p_fd, const int8_t *p_string) {
+void serial_put_string(const uint32_t p_fd, const char *p_string) {
   // Sanity check
   if ((p_string == NULL) || (strlen((const char *)p_string) == 0)) {
     return;
@@ -110,7 +114,7 @@ void serial_put_string(const int32_t p_fd, const int8_t *p_string) {
   } // End of 'while' statement
 }
 
-void serial_printf(const int32_t p_fd, const int8_t *p_message, ...) {
+void serial_printf(const uint32_t p_fd, const char *p_message, ...) {
   va_list argp;
 
   va_start(argp, p_message);
@@ -118,7 +122,7 @@ void serial_printf(const int32_t p_fd, const int8_t *p_message, ...) {
   va_end(argp);
 }
 
-int32_t serial_data_available(const int32_t p_fd) {
+int32_t serial_data_available(const uint32_t p_fd) {
 
   if (!(MAP_UART_getEnabledInterruptStatus(uart_modules[p_fd][0]) & EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)) { // TODO To be checked
     return -1;
@@ -127,7 +131,7 @@ int32_t serial_data_available(const int32_t p_fd) {
   return 1;
 }
 
-int32_t serial_get_char(const int32_t p_fd) {
+int32_t serial_get_char(const uint32_t p_fd) {
   return UART_receiveData(uart_modules[p_fd][0]) & 0xFF;
 }
 
