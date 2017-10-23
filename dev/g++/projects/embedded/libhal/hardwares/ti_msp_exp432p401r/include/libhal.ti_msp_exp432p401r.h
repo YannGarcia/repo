@@ -3,7 +3,7 @@
  * @brief     Header file for the Hardware Abstract Layer library.
  *            It provides the basic features for TI MSP432 hardware
  * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2017 ygarcia. All rights reserved
+ * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
  * @license   This project is released under the MIT License
  * @version   0.1
  * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156

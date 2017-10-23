@@ -57,7 +57,7 @@ fi
 # Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind tree texlive-font-utils -y
+sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind tree unzip texlive-font-utils -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
 # Install frameworks
@@ -76,8 +76,10 @@ then
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-gcc-5 /usr/bin/arm-linux-gnueabihf-gcc
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-g++-5 /usr/bin/arm-linux-gnueabihf-g++
     
+    arm-linux-gnueabihf-gcc --version
+    arm-linux-gnueabihf-g++ --version
+
     # Install Raspberry PI WringPI library
-    cd ${HOME_FRAMEWORKS}
     git clone git://git.drogon.net/wiringPi wiringpi
     cd ${HOME_FRAMEWORKS}/wiringpi/wiringPi
     make CC=arm-linux-gnueabihf-gcc
@@ -86,10 +88,8 @@ then
     do
         ln -sf $i ${HOME_INC}/`basename $i`
     done
+    cd -
     
-    arm-linux-gnueabihf-gcc --version
-    arm-linux-gnueabihf-g++ --version
-
     export SELECTED_HW="raspberry_pi"
     CROSS_COMPILER_VERSION=4.8.4
     export CROSS_COMPILER_PATH=/usr
@@ -115,6 +115,9 @@ then
     tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
     #rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
 
+    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
+    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version
+
     export SELECTED_HW="ti_msp_exp432p401r"
     MBED_CROSS_COMPILER_VERSION=5.4.1
     export MBED_CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc-arm-none-eabi-5_4-2016q2
@@ -123,6 +126,17 @@ then
     export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
 
+    # Download the correct driver library
+    if [ "${SELECTED_HW}" == "ti_msp_exp432p401r"]
+    then
+        # See http://www.ti.com/tool/MSPDRIVERLIB
+        cd ${HOME_FRAMEWORKS}
+        wget http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSP432_Driver_Library/latest/exports/msp432_driverlib_3_21_00_05.zip
+        unzip msp432_driverlib_3_21_00_05.zip
+        cd -
+    else
+        # TODO download for TIVA
+    fi
 else # Linux amd64
     # Install GoogleTest
     git clone https://github.com/google/googletest.git googletest

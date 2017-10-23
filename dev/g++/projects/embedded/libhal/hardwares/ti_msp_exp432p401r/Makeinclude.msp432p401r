@@ -1,0 +1,83 @@
+############################################################################
+#
+#       Makefile for TI MSP432P401R cross-compiler.
+#
+#ident  "$Id$"
+#
+###################################################################cd##########
+
+#############################################################################
+# Compiler CPU/FPU options.
+#############################################################################
+PART=MSP432P4XX
+DEVICE=MSP432P401R
+CPU=-mcpu=cortex-m4 -march=armv7e-m
+FPU=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+
+#############################################################################
+# Flags to pass to the assembler.
+#############################################################################
+AFLAGS= \
+	-mthumb \
+	${CPU}  \
+	${FPU}  \
+	-MD
+
+#############################################################################
+# Flags to pass to the compiler.
+#############################################################################
+GLOBAL_DEF_GPP= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c++11 \
+	-Wall \
+	-pedantic \
+	-D__$(DEVICE)__ \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(PART) \
+	-Os
+
+GLOBAL_DEF_GCC= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=c99 \
+	-Wall \
+	-pedantic \
+	-D__$(DEVICE)__ \
+	-DTARGET_IS_$(PART) \
+	-Dgcc \
+	-Os
+
+GLOBAL_DEF_GCC_DEBUG= \
+	-mthumb \
+	${CPU} \
+	${FPU} \
+	-ffunction-sections \
+	-fdata-sections \
+	-MD \
+	-std=gnu99 \
+	-Wall \
+	-pedantic \
+	-D__$(DEVICE)__ \
+	-DPART_$(PART) \
+	-DTARGET_IS_$(PART) \
+	-Dgcc \
+	-g \
+	-O0
+
+GLOBAL_DEF_STD_GLD=--entry ResetISR --gc-sections -specs=nosys.specs $(DRIVER_DEF_STD) -L$(MBED_CROSS_COMPILER_PATH)/arm-none-eabi/lib/armv7e-m/softfp -lm -lc -lnosys -L$(MBED_CROSS_COMPILER_PATH)/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp -lgcc
+GLOBAL_DEF_STD_GLD_DEBUG=-g $(GLOBAL_DEF_STD_GLD)
+
+#############################################################################
+# Startup code for GCC cross compiler.
+#############################################################################
+STARTUP_GCC=startup_msp432p401r_gcc.c
+STARTUP_GCC_OBJ=startup_msp432p401r_gcc.o
