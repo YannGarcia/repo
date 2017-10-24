@@ -127,14 +127,14 @@ then
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
 
     # Download the correct driver library
-    if [ "${SELECTED_HW}" == "ti_msp_exp432p401r"]
+    if [ "${SELECTED_HW}" == "ti_msp_exp432p401r" ]
     then
         # See http://www.ti.com/tool/MSPDRIVERLIB
         cd ${HOME_FRAMEWORKS}
         wget http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSP432_Driver_Library/latest/exports/msp432_driverlib_3_21_00_05.zip
         unzip msp432_driverlib_3_21_00_05.zip
         cd -
-    else
+    #else
         # TODO download for TIVA
     fi
 else # Linux amd64

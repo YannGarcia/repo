@@ -13,7 +13,7 @@ SHARED_LIBRARY_EXT_NAME=.a
 # MSP Tools / MSPFlasher shall be installed in ~/frameworks
 # In addition: sudo apt-get install libusb-1.0
 #############################################################################
-MSP_C_PATH=$(HOME)/frameworks/msp/msp432ware_3.50.00.02
+MSP_C_PATH=$(HOME)/frameworks/msp432_driverlib_3_21_00_05
 MSPFLASHER_PATH=$(HOME)/frameworks/MSPFlasher_1.3.10
 
 #############################################################################
