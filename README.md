@@ -59,35 +59,45 @@ According to your OS (Linux based or MAC OX X) for cross-compiling or the board 
     6. What to do now:
     	- Native build on standard Linux:
         1. Unset the env. variable CROSS_COMPILER_PATH
+				
 		      ```bash
-		          unset CROSS_COMPILER_PATH
+		      unset CROSS_COMPILER_PATH
 		      ```
+					
         2. Change floder to ~/repo/dev/g++/projects/embedded
         3. Execute make test
+				
 		      ```bash
-		          cd ~/repo/dev/g++/projects/embedded
-              make test
+		      cd ~/repo/dev/g++/projects/embedded
+          make test
 		      ```
+					
         4. Now you can build your own project
     	- Cross build on Linux:
         1. Unset the env. variable CROSS_COMPILER_PATH
+				
 		      ```bash
-		          unset CROSS_COMPILER_PATH
+		      unset CROSS_COMPILER_PATH
 		      ```
+					
         2. Change floder to ~/repo/dev/g++/projects/embedded
         3. Execute make test
-		      ```bash
-		          cd ~/repo/dev/g++/projects/embedded
-              make test
+		      
+					```bash
+		      cd ~/repo/dev/g++/projects/embedded
+          make test
 		      ```
+					
         4. Now you can build your own project
     	- Native build on Linux Hardware (RaspeberryPI, C.H.I.P. BBB...):
         1. Change floder to ~/repo/dev/g++/projects/embedded
         2. Execute make test
+				
 		      ```bash
-		          cd ~/repo/dev/g++/projects/embedded
-              make test
+		      cd ~/repo/dev/g++/projects/embedded
+          make test
 		      ```
+					
         3. Now you can build your own project
     	- Cross build on standard Linux:
         1. TODO
@@ -109,7 +119,7 @@ Here is a list of the tools I use to develop my projects:
     3. Compilers
         - GCC for C/C++ develpment for Hardware Linux based
         - GNU ARM Embedded Toolchain for Baremetal hardware (https://launchpad.net/gcc-arm-embedded)
-	      - XCode (MAC OS X)
+	- XCode (MAC OS X)
 
     4. Simulation
         - LTspice XII
@@ -119,8 +129,8 @@ Here is a list of the tools I use to develop my projects:
         - Code Composer Studio (CCS)
 
     7. Serial communication
-    	- GNU screen (Linux, MAC OS X)
-	    - PuTTY (Windows)
+				- GNU screen (Linux, MAC OS X)
+				- PuTTY (Windows)
 
     6. Code documentation
     	- Doxygen
