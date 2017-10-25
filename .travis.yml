@@ -11,9 +11,9 @@ branches:
 env:
 #  - TRAVIS_CONTEXT="NoCoveralls"
 #  - TRAVIS_CONTEXT="WithValgrind"
-  - TRAVIS_CONTEXT="WithCoveralls"
+#  - TRAVIS_CONTEXT="WithCoveralls"
   - TRAVIS_CONTEXT="BaremetalHW"
-#  - TRAVIS_CONTEXT="LinuxHW"
+  - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`
   - export SCP_REMOTE_ADDRESS=192.168.0.107 # Linux Hardware remote address for scp command
