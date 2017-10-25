@@ -24,22 +24,23 @@ This repository contains all my staff regarding embedded development for differe
         - Microchip MCUs
 	
 ## Setup development environment
-According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
+According to your OS (Linux based or MAC OS X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
     1. Update your own ~/.bash_profile to execute the development environment file  
     
     ```bash
-        if [ -f ~/devenv.bash ]
-        then
-            . ~/devenv.bash
-        fi
+    if [ -f ~/devenv.bash ]
+    then
+			. ~/devenv.bash
+    fi
     ```
+    
     2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
     NOTE if you want to use my .emacs setting file, back up yur own .emacs file first, then create asoft link on my .emacs file:
     
       ```bash
-          mv .emacs ~/tmp/
-	        ln -sf ~/repo/emacs/.emacs ~/.emacs
+      mv .emacs ~/tmp/
+	    ln -sf ~/repo/emacs/.emacs ~/.emacs
       ```
     
     3. In your home directory, create the folders bin, lib, include, tmp
