@@ -1,19 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
-@PT0140PT0141
-Watch 1
-Star 1
-Fork 1 dholm/ttcn-el
-Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathttcn-el/ttcn3.el
-4d108e3  on Dec 10, 2012
-@dholm dholm Updates ttcn3.el to work with cc-mode 5.32
-1 contributor
-RawBlameHistory     484 lines (448 sloc)  18.6 KB
 ;;; ttcn3.el --- a major mode for editing TTCN-3 core language files
 
 ;; Copyright (C) 2000-2005 W. Martin Borgert <debacle@debian.org>

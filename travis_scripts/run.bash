@@ -28,8 +28,8 @@ then
         PROJECTS='logger helper converter ipc'
         for i in ${PROJECTS}
         do
-            scp ./$i/lib/*.so pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/lib
-            scp ./$i/test/testcpp pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/bin
+            sshpass -p raspberry scp ./$i/lib/*.so pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/lib
+            sshpass -p raspberry scp ./$i/test/testcpp pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/bin
         done
         cd -
     else

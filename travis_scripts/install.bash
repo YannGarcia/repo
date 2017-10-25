@@ -57,7 +57,7 @@ fi
 # Install gcc-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind tree unzip texlive-font-utils -y
+sudo apt-get install gcc-6 g++-6 gdb doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind tree unzip sshpass texlive-font-utils -y
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
 # Install frameworks
@@ -110,14 +110,10 @@ then
 elif [ "${TRAVIS_CONTEXT}" == "BaremetalHW" ]
 then
     # Install ARM cross compile for bare metal hardware
-    df -k
-    wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 > /dev/null 3>&1
+    wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
     bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
-    tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar > /dev/null 3>&1
-    #rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
-    echo "Current dir: `pwd`"
-    ls -ltr
-    df -k
+    tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
+    rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version
