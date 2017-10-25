@@ -40,7 +40,7 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     
       ```bash
       mv .emacs ~/tmp/
-	    ln -sf ~/repo/emacs/.emacs ~/.emacs
+			ln -sf ~/repo/emacs/.emacs ~/.emacs
       ```
     
     3. In your home directory, create the folders bin, lib, include, tmp
@@ -58,7 +58,8 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     NOTE Take a look to the ~/repo/travis_scripts/install.bash srcript for more details
     
     6. What to do now:
-    	- Native build on standard Linux:
+		
+			1. Native build on standard Linux:
         1. Unset the env. variable CROSS_COMPILER_PATH
 				
 		      ```bash
@@ -74,7 +75,8 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
 		      ```
 					
         4. Now you can build your own project
-    	- Cross build on Linux:
+				
+			2. Cross build on Linux:
         1. Unset the env. variable CROSS_COMPILER_PATH
 				
 		      ```bash
@@ -83,14 +85,15 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
 					
         2. Change floder to ~/repo/dev/g++/projects/embedded
         3. Execute make test
-		      
+		    
 					```bash
 		      cd ~/repo/dev/g++/projects/embedded
           make test
 		      ```
 					
         4. Now you can build your own project
-    	- Native build on Linux Hardware (RaspeberryPI, C.H.I.P. BBB...):
+				
+			3. Native build on Linux Hardware (RaspeberryPI, C.H.I.P. BBB...):
         1. Change floder to ~/repo/dev/g++/projects/embedded
         2. Execute make test
 				
@@ -100,7 +103,8 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
 		      ```
 					
         3. Now you can build your own project
-    	- Cross build on standard Linux:
+				
+			4. Cross build on standard Linux:
         1. TODO
         x. Now you can build your own project
         
