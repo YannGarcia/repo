@@ -2,7 +2,8 @@
 # repo #
 
 Welcome to my working repository for all my electronics projects & developments
-### Build status - Mac Os X, Linux, Cygwin gcc-6
+
+### Build status - Mac Os X, Linux, Cygwin
 [![Build Status](https://travis-ci.org/YannGarcia/repo.svg?branch=master)](https://travis-ci.org/YannGarcia/repo)
 [![Coverage Status](https://coveralls.io/repos/YannGarcia/repo/badge.png?branch=master)](https://coveralls.io/r/YannGarcia/repo?branch=master)
 
@@ -19,8 +20,8 @@ This repository contains all my staff regarding embedded development for differe
 	
     3. BareMetal Hardware:
         - MBED, based on LPC1768FBD100
-        - TI LanchPad TM4C1xxx
-        - TI LaunchPad MSP432P01
+        - TI LanchPad TM4C1xxx (TIVA family)
+        - TI LaunchPad MSP432P0r (MSP432 family)
         - Microchip MCUs
 	
 ## Setup development environment
@@ -29,7 +30,7 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     1. Update your own ~/.bash_profile to execute the development environment file  
     
     ```bash
-    if [ -f ~/devenv.bash ]
+    if [ -f ~/devenv.bash ]
     then
 			. ~/devenv.bash
     fi
@@ -39,8 +40,8 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     NOTE if you want to use my .emacs setting file, back up yur own .emacs file first, then create asoft link on my .emacs file:
     
       ```bash
-      mv .emacs ~/tmp/
-			ln -sf ~/repo/emacs/.emacs ~/.emacs
+      mv .emacs ~/tmp/
+      ln -sf ~/repo/emacs/.emacs ~/.emacs
       ```
     
     3. In your home directory, create the folders bin, lib, include, tmp
@@ -51,8 +52,9 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     
     4. Restart your current session
     
-    5. Install the following frameworks into your frameworks directory ${HOME_FRAMEWORKS}
+    5. Install and build the following frameworks into your frameworks directory ${HOME_FRAMEWORKS}
       - google test (git clone https://github.com/google/googletest.git googletest)
+        NOTE For native Linux Hardware, in travis.sh script, you shoud change this: -Dgmock_build_tests=ON to -Dgmock_build_tests=NO
       - Linaro cross compiler (e.g. https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2)
       - Texas Instrument TIVA and MSP driver libraries
     NOTE Take a look to the ~/repo/travis_scripts/install.bash srcript for more details
@@ -63,16 +65,16 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
         1. Unset the env. variable CROSS_COMPILER_PATH
 				
 		      ```bash
-		      unset CROSS_COMPILER_PATH
-		      ```
+          unset CROSS_COMPILER_PATH
+          ```
 					
         2. Change floder to ~/repo/dev/g++/projects/embedded
         3. Execute make test
 				
 		      ```bash
-		      cd ~/repo/dev/g++/projects/embedded
+          cd ~/repo/dev/g++/projects/embedded
           make test
-		      ```
+          ```
 					
         4. Now you can build your own project
 				
@@ -80,16 +82,16 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
         1. Unset the env. variable CROSS_COMPILER_PATH
 				
 		      ```bash
-		      unset CROSS_COMPILER_PATH
-		      ```
+          unset CROSS_COMPILER_PATH
+          ```
 					
         2. Change floder to ~/repo/dev/g++/projects/embedded
         3. Execute make test
 		    
 					```bash
-		      cd ~/repo/dev/g++/projects/embedded
+          cd ~/repo/dev/g++/projects/embedded
           make test
-		      ```
+          ```
 					
         4. Now you can build your own project
 				
@@ -98,9 +100,9 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
         2. Execute make test
 				
 		      ```bash
-		      cd ~/repo/dev/g++/projects/embedded
+          cd ~/repo/dev/g++/projects/embedded
           make test
-		      ```
+          ```
 					
         3. Now you can build your own project
 				
@@ -167,6 +169,7 @@ Here is a list of the tools I use to develop my projects:
 
 ## Folders organisation ##
 
+Please switch to RAW view first ;-)
 You will find below is my current organisation of my repo folder:
 
 .
