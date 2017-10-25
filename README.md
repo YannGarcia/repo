@@ -10,7 +10,7 @@ Welcome to my working repository for all my electronics projects & developments
 ## Introduction
 This repository contains all my staff regarding embedded development for different kind of hardware
 
-    1. OS development environment to co compile or cross-compile projects (see bash_profiles README)
+    1. OS development environment to co compile or cross-compile projects (see bash_profiles README), based on standard Linux disto
 	
     2. Hardware Linux based:
         - Raspberry PI
@@ -26,23 +26,73 @@ This repository contains all my staff regarding embedded development for differe
 ## Setup development environment
 According to your OS (Linux based or MAC OX X) for cross-compiling or the board you are working on (Raspberry PI, BeagleBone, CHIP...), follow the stps below:
 
-    1. In your home directory, create the folders bin, lib, include, tmp
-    
-    ```bash
-    mkdir -p bin lib include tmp
-    ```
-    
-    2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
-    
-    3. Update your own ~/.bash_profile to execute the development environment file  
+    1. Update your own ~/.bash_profile to execute the development environment file  
     
     ```bash
         if [ -f ~/devenv.bash ]
         then
             . ~/devenv.bash
         fi
-    ```	
-
+    ```
+    2. Create a link from the correct bash profile located into repo/bash_profiles/devenv.bash.<os|board> to ~/devenv.bash (e.g. ln -s ~/repo/bash_profiles/devenv.bash.macosx ~/devenv.bash)
+    NOTE if you want to use my .emacs setting file, back up yur own .emacs file first, then create asoft link on my .emacs file:
+    
+      ```bash
+          mv .emacs ~/tmp/
+	        ln -sf ~/repo/emacs/.emacs ~/.emacs
+      ```
+    
+    3. In your home directory, create the folders bin, lib, include, tmp
+    
+    ```bash
+    mkdir -p bin lib include tmp
+    ```
+    
+    4. Restart your current session
+    
+    5. Install the following frameworks into your frameworks directory ${HOME_FRAMEWORKS}
+      - google test
+      - Linaro cross compiler
+      - Texas Instrument TIVA and MSP driver libraries
+    NOTE Take a look to the ~/repo/travis_scripts/install.bash srcript for more details
+    
+    6. What to do now:
+    	- Native build on standard Linux:
+        1. Unset the env. variable CROSS_COMPILER_PATH
+		      ```bash
+		          unset CROSS_COMPILER_PATH
+		      ```
+        2. Change floder to ~/repo/dev/g++/projects/embedded
+        3. Execute make test
+		      ```bash
+		          cd ~/repo/dev/g++/projects/embedded
+              make test
+		      ```
+        4. Now you can build your own project
+    	- Cross build on Linux:
+        1. Unset the env. variable CROSS_COMPILER_PATH
+		      ```bash
+		          unset CROSS_COMPILER_PATH
+		      ```
+        2. Change floder to ~/repo/dev/g++/projects/embedded
+        3. Execute make test
+		      ```bash
+		          cd ~/repo/dev/g++/projects/embedded
+              make test
+		      ```
+        4. Now you can build your own project
+    	- Native build on Linux Hardware (RaspeberryPI, C.H.I.P. BBB...):
+        1. Change floder to ~/repo/dev/g++/projects/embedded
+        2. Execute make test
+		      ```bash
+		          cd ~/repo/dev/g++/projects/embedded
+              make test
+		      ```
+        3. Now you can build your own project
+    	- Cross build on standard Linux:
+        1. TODO
+        x. Now you can build your own project
+        
 If you do not want to follow these steps, update the devenv.bash accordingly by modifying variables HOME_BIN, HOME_INC, HOME_LIB...
 
 ## Tools ##
