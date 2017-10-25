@@ -17,60 +17,80 @@ debug:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile debug; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 compile:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile compile; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 recompile:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile recompile; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 gendoc:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile gendoc; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 install:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile install; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 install-devel:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile install-devel; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 test:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile test; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 test_d:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile test_d; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 test_v:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile test_v; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 run:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile run; \
 	cd -
+else
+	@echo "The env. variable SELECTED_HW is net set"
 endif
 
 help:
@@ -85,7 +105,9 @@ help:
 	@echo "   gendoc       : Build Doxygen documentation."
 	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
-	@echo "   test         : ."
+	@echo "   test         : Build and execute the test application."
+	@echo "--------------------------------------------------------------------------------------------------------------"
+	@echo "   NOTE         : The env. variable SELECTED_HW shall be set"
 	@echo "*** $@ done ***"
 
 #############################################################################

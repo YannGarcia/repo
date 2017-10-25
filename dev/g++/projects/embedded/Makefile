@@ -12,7 +12,7 @@ include $(PATH_DEV)/Makefile.inc
 #############################################################################
 # List of projects
 
-projects=logger converter helper ipc #comm libhal uart gps
+projects=libhal logger converter helper ipc #comm uart gps
 
 clean:
 	@for project in $(projects); do \
@@ -128,7 +128,7 @@ help:
 	@echo "   gendoc       : Build Doxygen documentation."
 	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
-	@echo "   test         : ."
+	@echo "   test         : Build and execute the test application."
 	@echo "*** $@ done ***"
 
 #############################################################################

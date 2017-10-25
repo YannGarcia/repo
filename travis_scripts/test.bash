@@ -33,7 +33,7 @@ function check_docs {
 function check_lib {
     if [ ! -d ../lib ]
     then
-       return "-1"
+        return "-1"
     elif [ ! -f ../lib/lib$1.so ]
     then
         return "-1"
@@ -45,7 +45,7 @@ function check_lib {
 function check_test {
     if [ ! -d ../test ]
     then
-       return "-1"
+        return "-1"
     elif [ ! -f ../test/$1 ]
     then
         return "-1"
@@ -77,147 +77,150 @@ function check_gtest_verdicts {
     return $nb_failures
 }
 
-OLD_PWD=`pwd`
-project="logger"
-echo "Processing ${project} project"
-cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-check_lib ${project}
-if [ "$?" != "0" ]
+if [ "${TRAVIS_CONTEXT}" != "BaremetalHW" && "${TRAVIS_CONTEXT}" != "LinuxHW" ]
 then
-    echo "Checking lib failed"
-    exit -2
-fi
-check_test "testlib"
-if [ "$?" != "0" ]
-then
-    echo "Checking test failed"
-    exit -3
-fi
-declare -a include_files=("logger_factory.h" "logger.h" "logger_levels.h" "logger_time_formats.h")
-check_includes "${include_files[@]}"
-if [ "$?" != "0" ]
-then
-    echo "Checking includes failed"
-    exit -4
-fi
-check_docs
-if [ "$?" != "0" ]
-then
-    echo "Checking docs failed"
-    exit -1
-fi
-check_gtest_verdicts
-if [ "$?" != "0" ]
-then
-    echo "GoogleTest found FAIL verdicts"
-    exit -1
-fi
+    OLD_PWD=`pwd`
+    project="logger"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("logger_factory.h" "logger.h" "logger_levels.h" "logger_time_formats.h")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
 
-project="helper"
-echo "Processing ${project} project"
-cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-check_lib ${project}
-if [ "$?" != "0" ]
-then
-    echo "Checking lib failed"
-    exit -2
-fi
-check_test "testlib"
-if [ "$?" != "0" ]
-then
-    echo "Checking test failed"
-    exit -3
-fi
-declare -a include_files=("date_time.h" "helper.h" "ibstream.h" "keyboard.h" "obstream.t.h" "get_opt.h" "helper.t.h" "ibstream.t.h" "obstream.h" "runnable.h")
-check_includes "${include_files[@]}"
-if [ "$?" != "0" ]
-then
-    echo "Checking includes failed"
-    exit -4
-fi
-check_docs
-if [ "$?" != "0" ]
-then
-    echo "Checking docs failed"
-    exit -1
-fi
-check_gtest_verdicts
-if [ "$?" != "0" ]
-then
-    echo "GoogleTest found FAIL verdicts"
-    exit -1
-fi
+    project="helper"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("date_time.h" "helper.h" "ibstream.h" "keyboard.h" "obstream.t.h" "get_opt.h" "helper.t.h" "ibstream.t.h" "obstream.h" "runnable.h")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
 
-project="converter"
-echo "Processing ${project} project"
-cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-check_lib ${project}
-if [ "$?" != "0" ]
-then
-    echo "Checking lib failed"
-    exit -2
-fi
-check_test "testlib"
-if [ "$?" != "0" ]
-then
-    echo "Checking test failed"
-    exit -3
-fi
-declare -a include_files=("converter.h")
-check_includes "${include_files[@]}"
-if [ "$?" != "0" ]
-then
-    echo "Checking includes failed"
-    exit -4
-fi
-check_docs
-if [ "$?" != "0" ]
-then
-    echo "Checking docs failed"
-    exit -1
-fi
-check_gtest_verdicts
-if [ "$?" != "0" ]
-then
-    echo "GoogleTest found FAIL verdicts"
-    exit -1
-fi
+    project="converter"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("converter.h")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
 
-project="ipc"
-echo "Processing ${project} project"
-cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
-check_lib ${project}
-if [ "$?" != "0" ]
-then
-    echo "Checking lib failed"
-    exit -2
-fi
-check_test "testlib"
-if [ "$?" != "0" ]
-then
-    echo "Checking test failed"
-    exit -3
-fi
-declare -a include_files=("abstract_ipc.h" "ipc_rights.h" "message_queue.h" "ipc_manager.h" "ipc_type.h" "shared_memory.h")
-check_includes "${include_files[@]}"
-if [ "$?" != "0" ]
-then
-    echo "Checking includes failed"
-    exit -4
-fi
-check_docs
-if [ "$?" != "0" ]
-then
-    echo "Checking docs failed"
-    exit -1
-fi
-check_gtest_verdicts
-if [ "$?" != "0" ]
-then
-    echo "GoogleTest found FAIL verdicts"
-    exit -1
-fi
+    project="ipc"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("abstract_ipc.h" "ipc_rights.h" "message_queue.h" "ipc_manager.h" "ipc_type.h" "shared_memory.h")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
 
-cd ${OLD_PWD}
+    cd ${OLD_PWD}
+fi
 
 exit 0
