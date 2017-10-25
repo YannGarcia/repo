@@ -52,8 +52,8 @@ According to your OS (Linux based or MAC OS X) for cross-compiling or the board 
     4. Restart your current session
     
     5. Install the following frameworks into your frameworks directory ${HOME_FRAMEWORKS}
-      - google test
-      - Linaro cross compiler
+      - google test (git clone https://github.com/google/googletest.git googletest)
+      - Linaro cross compiler (e.g. https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2)
       - Texas Instrument TIVA and MSP driver libraries
     NOTE Take a look to the ~/repo/travis_scripts/install.bash srcript for more details
     
