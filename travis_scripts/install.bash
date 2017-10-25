@@ -115,6 +115,9 @@ then
     bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
     tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar > /dev/null 3>&1
     #rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+    echo "Current dir: `pwd`"
+    ls -ltr
+    df -k
 
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version

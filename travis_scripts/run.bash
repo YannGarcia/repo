@@ -19,6 +19,22 @@ elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
 then
     make test
     make run_v
+elif [ ${TRAVIS_CONTEXT} == "LinuxHW" ]
+then
+    if [ "${SCP_REMOTE_ADDRESS}" != "" && "${SCP_REMOTE_USER}" != "" ]
+    then
+        OLD_PWD=`pwd`
+        cd ${PATH_DEV}/g++/projects/embedded/
+        PROJECTS='logger helper converter ipc'
+        for i in ${PROJECTS}
+        do
+            scp ./$i/lib/*.so pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/lib
+            scp ./$i/test/testcpp pi@${SCP_REMOTE_ADDRESS}:/home/${SCP_REMOTE_USER}/bin
+        done
+        cd -
+    else
+        echo "deploy.bash: Wrong parameters for Linux hardware SCP command"
+    fi
 fi
 
 cd ${OLD_PWD}
