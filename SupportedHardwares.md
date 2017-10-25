@@ -45,7 +45,7 @@ WiringPI library          : http://wiringpi.com/download-and-install/
 
 TODO
 
-### BC.H.I.P family
+### C.H.I.P family
 
 TODO
 
