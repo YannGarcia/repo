@@ -164,4 +164,349 @@ Here is a list of the tools I use to develop my projects:
         - See .travis.yml and travis_scripts/trigger_build.bash
         - See .coveralls.yml for code coverage information
 	       
+
+## Folders organisation ##
+
+You will find below is my current organisation of my repo folder:
+
+.
+├── bash_profiles
+├── dev
+│   ├── eea
+│   │   └── arduino
+│   │       ├── blink
+│   │       │   └── objs
+│   │       └── WIKSketch
+│   │           └── objs
+│   └── g++
+│       ├── ifsttar
+│       │   └── wifiMapping
+│       │       ├── accmon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── aggreg
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── common
+│       │       │   ├── include
+│       │       │   └── src
+│       │       ├── gpsmon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── guimon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── gyromon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── iperfmon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── overlay
+│       │       ├── rtcmon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── tempmon
+│       │       │   ├── bin
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       ├── tsharkmon
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   └── src
+│       │       └── wifimapping
+│       │           ├── bash
+│       │           ├── bin
+│       │           ├── etc
+│       │           ├── include
+│       │           ├── objs
+│       │           └── src
+│       ├── projects
+│       │   ├── beaglebone
+│       │   │   ├── beagleboneComm
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneGeo
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneGps
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneHw
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneKml
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneLcd
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneThingSpeak
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── beagleboneUtils
+│       │   │   │   ├── include
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── libhal
+│       │   │   │   ├── designspark
+│       │   │   │   ├── docs
+│       │   │   │   ├── dtc
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── saleae logic
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   └── wiringBbb
+│       │   │       ├── include
+│       │   │       ├── objs
+│       │   │       ├── src
+│       │   │       └── test
+│       │   ├── ek-tm4c12x
+│       │   │   ├── dds
+│       │   │   │   ├── include
+│       │   │   │   ├── ld
+│       │   │   │   ├── objs
+│       │   │   │   └── src
+│       │   │   └── libhal
+│       │   │       ├── ccs
+│       │   │       │   ├── Debug
+│       │   │       │   └── targetConfigs
+│       │   │       ├── docs
+│       │   │       ├── include
+│       │   │       ├── ld
+│       │   │       ├── lib
+│       │   │       ├── objs
+│       │   │       ├── saleae logic
+│       │   │       ├── src
+│       │   │       └── test
+│       │   ├── embedded
+│       │   │   ├── comm
+│       │   │   │   ├── docs
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── converter
+│       │   │   │   ├── docs
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── gps
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── helper
+│       │   │   │   ├── docs
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── ipc
+│       │   │   │   ├── docs
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   ├── libhal
+│       │   │   │   ├── docs
+│       │   │   │   ├── hardwares
+│       │   │   │   │   ├── raspberry_pi
+│       │   │   │   │   │   ├── bin
+│       │   │   │   │   │   ├── include
+│       │   │   │   │   │   ├── lib
+│       │   │   │   │   │   ├── objs
+│       │   │   │   │   │   ├── src
+│       │   │   │   │   │   └── test
+│       │   │   │   │   └── ti_msp_exp432p401r
+│       │   │   │   │       ├── bin
+│       │   │   │   │       ├── include
+│       │   │   │   │       ├── lib
+│       │   │   │   │       ├── objs
+│       │   │   │   │       ├── src
+│       │   │   │   │       └── test
+│       │   │   │   ├── include
+│       │   │   │   └── objs
+│       │   │   ├── logger
+│       │   │   │   ├── docs
+│       │   │   │   ├── include
+│       │   │   │   ├── lib
+│       │   │   │   ├── objs
+│       │   │   │   ├── src
+│       │   │   │   └── test
+│       │   │   └── uart
+│       │   │       ├── include
+│       │   │       ├── lib
+│       │   │       ├── objs
+│       │   │       ├── src
+│       │   │       └── test
+│       │   ├── mbed
+│       │   │   └── ProtoWaterElectroValve
+│       │   │       ├── DebugLibrary
+│       │   │       ├── EthernetInterface
+│       │   │       │   ├── lwip
+│       │   │       │   │   ├── api
+│       │   │       │   │   ├── core
+│       │   │       │   │   │   ├── ipv4
+│       │   │       │   │   │   └── snmp
+│       │   │       │   │   ├── include
+│       │   │       │   │   │   ├── ipv4
+│       │   │       │   │   │   │   └── lwip
+│       │   │       │   │   │   ├── lwip
+│       │   │       │   │   │   └── netif
+│       │   │       │   │   └── netif
+│       │   │       │   │       └── ppp
+│       │   │       │   ├── lwip-eth
+│       │   │       │   │   └── arch
+│       │   │       │   │       └── TARGET_NXP
+│       │   │       │   ├── lwip-sys
+│       │   │       │   │   └── arch
+│       │   │       │   └── Socket
+│       │   │       ├── GPS
+│       │   │       ├── Hardware
+│       │   │       ├── Helpers
+│       │   │       ├── HTTPClient
+│       │   │       │   └── data
+│       │   │       ├── mbed
+│       │   │       │   └── TARGET_LPC1768
+│       │   │       │       ├── TARGET_NXP
+│       │   │       │       │   └── TARGET_LPC176X
+│       │   │       │       │       └── TARGET_MBED_LPC1768
+│       │   │       │       └── TOOLCHAIN_GCC_ARM
+│       │   │       ├── mbed-rtos
+│       │   │       │   ├── rtos
+│       │   │       │   └── rtx
+│       │   │       │       └── TARGET_M3
+│       │   │       │           └── TOOLCHAIN_GCC
+│       │   │       └── Network
+│       │   ├── msp-exp432p401r
+│       │   │   └── libhal
+│       │   │       ├── ccs
+│       │   │       │   └── targetConfigs
+│       │   │       ├── docs
+│       │   │       ├── include
+│       │   │       ├── ld
+│       │   │       ├── lib
+│       │   │       ├── objs
+│       │   │       ├── saleae logic
+│       │   │       ├── src
+│       │   │       └── test
+│       │   ├── raspberry
+│       │   │   └── libhal
+│       │   │       ├── include
+│       │   │       ├── lib
+│       │   │       ├── objs
+│       │   │       ├── src
+│       │   │       └── test
+│       │   └── ttcn3
+│       │       ├── internal_tci
+│       │       │   ├── include
+│       │       │   ├── objs
+│       │       │   ├── src
+│       │       │   └── test
+│       │       ├── internal_tri
+│       │       │   ├── include
+│       │       │   ├── lib
+│       │       │   ├── objs
+│       │       │   ├── src
+│       │       │   └── test
+│       │       └── internal_tritci
+│       │           ├── include
+│       │           └── src
+│       └── test
+│           └── raspstill
+│               ├── EGL
+│               ├── GLES
+│               ├── interface
+│               │   ├── khronos
+│               │   │   ├── common
+│               │   │   │   ├── abstract
+│               │   │   │   ├── direct
+│               │   │   │   ├── linux
+│               │   │   │   ├── openwfc
+│               │   │   │   ├── vcos
+│               │   │   │   └── vcos_vchiq
+│               │   │   ├── egl
+│               │   │   ├── ext
+│               │   │   ├── glxx
+│               │   │   ├── include
+│               │   │   │   ├── EGL
+│               │   │   │   ├── GLES
+│               │   │   │   ├── GLES2
+│               │   │   │   ├── KHR
+│               │   │   │   ├── VG
+│               │   │   │   └── WF
+│               │   │   ├── vg
+│               │   │   └── wf
+│               │   ├── mmal
+│               │   │   ├── core
+│               │   │   ├── util
+│               │   │   └── vc
+│               │   ├── peer
+│               │   ├── usbdk
+│               │   │   ├── test
+│               │   │   └── vmcs_rpc_client
+│               │   ├── vchi
+│               │   │   ├── common
+│               │   │   ├── connections
+│               │   │   └── message_drivers
+│               │   ├── vchiq_arm
+│               │   ├── vcos
+│               │   │   ├── generic
+│               │   │   ├── glibc
+│               │   │   └── pthreads
+│               │   ├── vctypes
+│               │   └── vmcs_host
+│               │       ├── khronos
+│               │       │   └── IL
+│               │       └── linux
+│               │           └── vcfiled
+│               │               └── etc
+│               │                   └── init.d
+│               ├── KHR
+│               └── vcinclude
+├── docs
+├── emacs
+│   └── emacs_ttcn
+└── travis_scripts
+
+
 That's all Folks
