@@ -109,19 +109,15 @@ I2C_OBJ=i2c.o
 SPI_OBJ=spi.o
 
 # Header files
-LIBHALINC=libhal.h
-LIBHALI2C_INC=libhal_i2c.h
-LIBHALSPI_INC=libhal_spi.h
-LIBHALSERIAL_INC=libhal_serial.h
-LIBHALSHIFT_INC=libhal_shift.h
-LIBHALPINAMES_INC=libhal_pin_names.h
+LIBHALINC=libhal.$(SELECTED_HW).h
+LIBHALPINNAMESINC=libhal_pin_names.$(SELECTED_HW).h
 LIBHALI2C_INCP=libhal_i2c.hpp
 LIBHALSPI_INCP=libhal_spi.hpp
 LIBHAL_DIGITALOUT_INC=digital_out.hpp
 LIBHAL_ANALOGIN_INC=analog_in.hpp
 LIBHAL_FACTORY_INC=libhal_factory.hpp
 
-INC_MODULES=LIBHALINC LIBHALI2C_INC LIBHALSPI_INC LIBHALSERIAL_INC LIBHALSHIFT_INC LIBHALPINAMES_INC LIBHALI2C_INCP LIBHALSPI_INCP LIBHAL_DIGITALOUT_INC LIBHAL_ANALOGIN_INC LIBHAL_FACTORY_INC
+INC_MODULES=$(LIBHALINC) $(LIBHALPINNAMESINC) $(LIBHALI2C_INCP) $(LIBHALSPI_INCP) $(LIBHAL_DIGITALOUT_INC) $(LIBHAL_ANALOGIN_INC) $(LIBHAL_FACTORY_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -144,8 +140,8 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.c)
+	$(CCP) $(CC_OPTION) -D$(SELECTED_HW) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
 $(LIBHAL_OBJ): $(SRCDIRS)$(LIBHAL_OBJ:.o=.c)
 	$(CC) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LIBHAL_OBJ)
@@ -221,6 +217,8 @@ clean: cleanlinks
 	@echo "*** $@ done ***"
 
 cleanlinks:
+	@$(RM) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)
+	@$(RM) $(HOME_LIB)/$(LIBRARY)++$(SHARED_LIBRARY_EXT_NAME)
 	@for header in $(INC_MODULES); do \
 		$(RM) $(HOME_INC)/$$header; \
 	done
@@ -236,35 +234,23 @@ endif
 ifeq (,$(wildcard $(HOME_INC)/$(LIBHALINC)))
 		ln -s $(PWD)/$(INCDIRS)$(LIBHALINC) $(HOME_INC)/$(LIBHALINC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALI2C_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALI2C_INC) $(HOME_INC)/$(LIBHALI2C_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(LIBHALPINNAMES_INC)))
+		ln -s $(PWD)/$(INCDIRS)$(LIBHALPINNAMES_INC) $(HOME_INC)/$(LIBHALPINNAMES_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALSPI_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALSPI_INC) $(HOME_INC)/$(LIBHALSPI_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(LIBHALI2C_INCP)))
+		ln -s $(PWD)/$(INCDIRS)$(LIBHALI2C_INCP) $(HOME_INC)/$(LIBHALI2C_INCP)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALSERIAL_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALSERIAL_INC) $(HOME_INC)/$(LIBHALSERIAL_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALSHIFT_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALSHIFT_INC) $(HOME_INC)/$(LIBHALSHIFT_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALPINAMES_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALPINAMES_INC) $(HOME_INC)/$(LIBHALPINAMES_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(I2C_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(I2C_INC) $(HOME_INC)/$(I2C_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(SPI_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(SPI_INC) $(HOME_INC)/$(SPI_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(LIBHALSPI_INCP)))
+		ln -s $(PWD)/$(INCDIRS)$(LIBHALSPI_INCP) $(HOME_INC)/$(LIBHALSPI_INCP)
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(LIBHAL_DIGITALOUT_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(SPI_INC) $(HOME_INC)/$(LIBHAL_DIGITALOUT_INC)
+		ln -s $(PWD)/$(INCDIRS)$(LIBHAL_DIGITALOUT_INC) $(HOME_INC)/$(LIBHAL_DIGITALOUT_INC)
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(LIBHAL_ANALOGIN_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(SPI_INC) $(HOME_INC)/$(LIBHAL_ANALOGIN_INC)
+		ln -s $(PWD)/$(INCDIRS)$(LIBHAL_ANALOGIN_INC) $(HOME_INC)/$(LIBHAL_ANALOGIN_INC)
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(LIBHAL_FACTORY_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(SPI_INC) $(HOME_INC)/$(LIBHAL_FACTORY_INC)
+		ln -s $(PWD)/$(INCDIRS)$(LIBHAL_FACTORY_INC) $(HOME_INC)/$(LIBHAL_FACTORY_INC)
 endif
 	@echo "*** $@ done ***"
 

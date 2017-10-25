@@ -35,6 +35,8 @@ else
     export PATH_DEPLOY=~/repo/docs
 fi
 
+export SELECTED_HW=raspberry_pi
+
 # Cross compiler
 UNAME=`uname -n`
 if [ ${UNAME} != "raspberrypi" ] && [ ${UNAME} != "beaglebone" ] && [ ${UNAME} != "yann-FSCOM" ] # No cross compiler for cygwin

@@ -1,13 +1,13 @@
 /**
  * @file    pin_names.h
- * @brief   Main header file for the Hardware Abstract Layer pins mapping.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * @brief   Header file for the Hardware Abstract Layer pins mapping, raspberryPI.
+ * @author  garciay.yann@gmail.com
+ * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
  * @license This project is released under the MIT License
  * @version 0.1
  */
-#if !defined(__BEAGLEBONEBLACK_PIN_NAMES_H__)
-#define __BEAGLEBONEBLACK_PIN_NAMES_H__
+#if !defined(__RASPBERRYPI_PIN_NAMES_H__)
+#define __RASPBERRYPI_PIN_NAMES_H__
 
 /** @def Flagto define BeagleBoneBlack board
  */
@@ -74,4 +74,4 @@ typedef pin_names_t pin_name;
 #error "BeagleBoneBlack board flag was not defined"
 #endif // BEAGLEBONE_BLACK_BOARD
 
-#endif // __BEAGLEBONEBLACK_PIN_NAMES_H__
+#endif // __RASPBERRYPI_PIN_NAMES_H__
