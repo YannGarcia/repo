@@ -21,7 +21,7 @@ then
     make run_v
 elif [ ${TRAVIS_CONTEXT} == "LinuxHW" ]
 then
-    if [ "${SCP_REMOTE_ADDRESS}" != "" && "${SCP_REMOTE_USER}" != "" ]
+    if [ "${SCP_REMOTE_ADDRESS}" != "" ] && [ "${SCP_REMOTE_USER}" != "" ]
     then
         OLD_PWD=`pwd`
         cd ${PATH_DEV}/g++/projects/embedded/

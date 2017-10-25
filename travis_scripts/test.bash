@@ -77,7 +77,7 @@ function check_gtest_verdicts {
     return $nb_failures
 }
 
-if [ "${TRAVIS_CONTEXT}" != "BaremetalHW" && "${TRAVIS_CONTEXT}" != "LinuxHW" ]
+if [ "${TRAVIS_CONTEXT}" != "BaremetalHW" ] && [ "${TRAVIS_CONTEXT}" != "LinuxHW" ]
 then
     OLD_PWD=`pwd`
     project="logger"
