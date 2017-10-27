@@ -157,6 +157,12 @@ Here is a list of the tools I use to develop my projects:
         - See .travis.yml and travis_scripts/trigger_build.bash
         - See .coveralls.yml for code coverage information
 
+## Online help/user's guide ##
+
+This online help is continously updating after each commit using Travis-CI and Git Pages.
+
+[![Online help](https://github.com/YannGarcia/repo/docs/254-pill-button-blue-design.png)](https://yanngarcia.github.io/repo/)
+
 ## Folders organisation ##
 
 Please switch to RAW view first ;-)
