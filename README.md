@@ -161,7 +161,7 @@ Here is a list of the tools I use to develop my projects:
 
 This online help is continously updating after each commit using Travis-CI and Git Pages.
 
-[![Online help](https://github.com/YannGarcia/repo/docs/254-pill-button-blue-design.png)](https://yanngarcia.github.io/repo/)
+[![Online help](https://github.com/YannGarcia/repo/blob/master/docs/254-pill-button-blue-design.png)](https://yanngarcia.github.io/repo/)
 
 ## Folders organisation ##
 
