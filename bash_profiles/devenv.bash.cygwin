@@ -16,6 +16,7 @@ export HOME_LIB=${HOME}/lib
 export HOME_BIN=${HOME}/bin
 export HOME_ETC=${HOME}/etc
 export HOME_TMP=${HOME}/tmp
+export HOME_DOCS=${HOME}/docs
 
 # Home common include directory
 export HOME_INC=${HOME}/include
