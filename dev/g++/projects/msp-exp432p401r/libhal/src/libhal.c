@@ -928,6 +928,8 @@ int32_t libhal_setup_sys(void) {
   MAP_FPU_enableLazyStacking();
 
   MAP_Interrupt_enableMaster();
+  MAP_Interrupt_enableSleepOnIsrExit();
+
   return 0;
 }
 

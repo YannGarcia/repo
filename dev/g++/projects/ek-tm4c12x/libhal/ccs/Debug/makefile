@@ -2,7 +2,9 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -22,8 +24,8 @@ $(GEN_CMDS__FLAG) \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -148,21 +150,21 @@ all: ccs_tiva.out
 ccs_tiva.out: $(OBJS) $(CMD_SRCS) $(LDS_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=TARGET_IS_TM4C129_RA0 --define=TM4C129ENCPDT_BOARD --define=PART_TM4C129ENCPDT -g --gcc --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --std_lib_func_defined --std_lib_func_redefined -z -m"ccs_tiva.map" --heap_size=0x400 --stack_size=0x400 -i"/Applications/ti/TivaWare_C_Series-2.1.3.156/driverlib/ccs/Debug/" -i"/Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/lib" -i"/Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ccs_tiva_linkInfo.xml" --rom_model -o "ccs_tiva.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=TARGET_IS_TM4C129_RA0 --define=TM4C129ENCPDT_BOARD --define=PART_TM4C129ENCPDT -g --gcc --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --std_lib_func_defined --std_lib_func_redefined -z -m"ccs_tiva.map" --heap_size=0x400 --stack_size=0x400 -i"C:/ti/TivaWare_C_Series-2.1.3.156/driverlib/ccs/Debug/" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ccs_tiva_linkInfo.xml" --rom_model -o "ccs_tiva.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 ccs_tiva.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armhex"  -o "ccs_tiva.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.2.LTS/bin/armhex"  -o "ccs_tiva.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "tm4c129encpdt_startup_ccs.obj" "src/libhal.obj" "src/libhal_i2c.obj" "src/libhal_serial.obj" "src/libhal_shift.obj" "src/libhal_spi.obj" "test/testlib.obj" 
-	-$(RM) "tm4c129encpdt_startup_ccs.d" "src/libhal.d" "src/libhal_i2c.d" "src/libhal_serial.d" "src/libhal_shift.d" "src/libhal_spi.d" "test/testlib.d" 
+	-$(RM) "tm4c129encpdt_startup_ccs.obj" "src\libhal.obj" "src\libhal_i2c.obj" "src\libhal_serial.obj" "src\libhal_shift.obj" "src\libhal_spi.obj" "test\testlib.obj" 
+	-$(RM) "tm4c129encpdt_startup_ccs.d" "src\libhal.d" "src\libhal_i2c.d" "src\libhal_serial.d" "src\libhal_shift.d" "src\libhal_spi.d" "test\testlib.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

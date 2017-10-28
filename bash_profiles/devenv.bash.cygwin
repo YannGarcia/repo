@@ -106,7 +106,7 @@ then
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
     # ITS support
-    export PATH_DEV_ITS=~/tmp/TriesAndDelete/etsi_its
+    export PATH_DEV_ITS=~/TriesAndDelete/etsi_its
 fi
 
 # Start ssh-agent at login
