@@ -8,12 +8,15 @@ ENV TERM=linux
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      bison \
       curl \
       doxygen \
       emacs \
       expect \
+      flex \
       graphviz \
       git \
+      default-jre \
       libncurses5-dev libpcap-dev libwireshark-dev libssl-dev libxml2-dev \
       lsof \
       ntp \
