@@ -2,4 +2,4 @@
 #logger framework for embedded application
 
 This directory shall be empty.
-The build process will generate the librqry here.
+The build process will generate the librqary here.
