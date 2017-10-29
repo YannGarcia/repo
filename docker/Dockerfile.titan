@@ -19,7 +19,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
       sshpass \
       texlive-font-utils \
       tcpdump \ 
-      tshark \
       tree \
       unzip \
       valgrind \
