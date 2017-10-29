@@ -1,0 +1,57 @@
+FROM library/gcc:latest
+
+MAINTAINER Yann Garcia
+
+LABEL description="TITAN Docker Image"
+
+RUN apt-get update \
+    && apt-get install -y \
+      curl \
+      doxygen \
+      emacs \
+      expect \
+      graphviz \
+      git \
+      libncurses5-dev libpcap-dev libwireshark-dev libssl-dev libxml2-dev \
+      lsof \
+      ntp \
+      sshpass \
+      texlive-font-utils \
+      tcpdump \ 
+      tshark \
+      tree \
+      unzip \
+      valgrind \
+      vsftpd \
+      xutils-dev \
+    && mkdir -p /home/yann \
+    && cd /home/yann \
+    && mkdir -p bin lib include tmp frameworks docs \
+    && git clone https://github.com/YannGarcia/repo.git repo \
+    && git clone https://github.com/YannGarcia/TriesAndDelete.git TriesAndDelete \
+    && ln -sf /home/yann/repo/bash_profiles/devenv.bash.ubuntu /home/yann/devenv.bash \
+    && . /home/yann/devenv.bash \
+    && cd /home/yann/frameworks \
+    && git clone https://github.com/vlm/asn1c.git asn1c \
+    && cd ./asn1c \
+        && test -f configure || autoreconf -iv \
+        && ./configure \
+        && make && make install \
+    && cd /home/yann/TriesAndDelete/scripts \
+    && ./build_titan.bash \
+    && cd /home/yann
+
+#ENV HOME=/home/yann
+#ENV HOME_BIN=/home/yann/bin
+#ENV HOME_INC=/home/yann/include
+#ENV HOME_LIB=/home/yann/lib
+#ENV HOME_TMP=/home/yann/tmp
+#ENV HOME_DOCS=${HOME}/docs
+#ENV HOME_FRAMEWORKS=/home/yann/frameworks
+#ENV CPLUS_INCLUDE_PATH=/home/lib/include
+#ENV LD_LIBRARY_PATH=/home/yann/lib
+
+WORKDIR /home/yann/TriesAndDelete
+
+CMD ["/bin/bash"]
+

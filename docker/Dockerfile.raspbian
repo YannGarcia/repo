@@ -1,0 +1,42 @@
+FROM resin/rpi-raspbian:latest
+
+MAINTAINER Yann Garcia
+
+LABEL description="Raspibian Docker Image"
+
+RUN apt-get update \
+    && apt-get install -y \
+      curl \
+      doxygen \
+      emacs \
+      expect \
+      firmware-realtek \
+      graphviz \
+      git-core \
+      i2c_tools \
+      libncurses5-dev libpcap-dev libwireshark-dev libssl-dev libxml2-dev \
+      lsof \
+      ntp \
+      sshpass \
+      texlive-font-utils \
+      tcpdump \ 
+      tree \
+      tshark \
+      unzip \
+      valgrind \
+      vsftpd \
+      xutils-dev \
+    && mkdir -p /home/yann \
+    && cd /home/yann \
+    && mkdir -p bin lib include tmp frameworks docs \
+    && git clone https://github.com/YannGarcia/repo.git repo \
+    && ln -sf /home/yann/repo/bash_profiles/devenv.bash.ubuntu /home/yann/devenv.bash \
+    && . /home/yann/devenv.bash \
+    && cd /home/yann/frameworks \
+    && git clone git://git.drogon.net/wiringPi wiringpi \
+    && cd .//wiringpi/wiringPi \
+    && make \
+    && cd /home/yann
+
+CMD ["/bin/bash"]
+
