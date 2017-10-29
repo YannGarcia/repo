@@ -4,9 +4,10 @@ MAINTAINER Yann Garcia
 
 LABEL description="Raspibian Docker Image"
 
-RUN RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get install -yq \
+ENV TERM=linux
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       curl \
       doxygen \
       emacs \

@@ -4,9 +4,10 @@ MAINTAINER Yann Garcia
 
 LABEL description="TITAN Docker Image"
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get install -yq \
+ENV TERM=linux
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       curl \
       doxygen \
       emacs \
@@ -20,6 +21,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
       texlive-font-utils \
       tcpdump \ 
       tree \
+      tshark \
       unzip \
       valgrind \
       vsftpd \
@@ -40,18 +42,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
     && cd /home/yann
-
-#ENV HOME=/home/yann
-#ENV HOME_BIN=/home/yann/bin
-#ENV HOME_INC=/home/yann/include
-#ENV HOME_LIB=/home/yann/lib
-#ENV HOME_TMP=/home/yann/tmp
-#ENV HOME_DOCS=${HOME}/docs
-#ENV HOME_FRAMEWORKS=/home/yann/frameworks
-#ENV CPLUS_INCLUDE_PATH=/home/lib/include
-#ENV LD_LIBRARY_PATH=/home/yann/lib
-
-WORKDIR /home/yann/TriesAndDelete
 
 CMD ["/bin/bash"]
 
