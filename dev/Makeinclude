@@ -1,16 +1,16 @@
-############################################################################
+#############################################################################
 #
 #       Makefile for C#, C/C++, PIC, Raspberry cross-compiler.
 #
 #ident  "$Id$"
-# 
+#
 #############################################################################
 
 #############################################################################
 # Unix basic commands
 #############################################################################
 RM=rm -f
-LN=ln -s 
+LN=ln -s
 MKDIR=mkdir -p
 CP=cp -Rp
 MV=mv
@@ -23,6 +23,7 @@ SUDO=sudo
 CD=cd
 ECHO=echo
 STRIP=strip
+PRINTF=printf
 
 #for Catalogues
 GENCAT=gencat
@@ -58,9 +59,20 @@ CCP=g++
 LD=gcc
 AR=ar ruv
 
+#############################################################################
+# Debugger
+#############################################################################
 GDB=gdb
 GDB_CMD_FILE=.gdbcmd
-GDB_OPTIONS=--tui
+GDB_OPTIONS=
+
+#############################################################################
+# Code coverage
+#############################################################################
+GCOV=gcov
+GCOV_OPTIONS=
+LCOV=lcov
+LCOV_OPTIONS=
 
 # Library versioning and extension
 SHARED_LIBRARY_EXT_NAME=.so
@@ -71,8 +83,10 @@ PTHREAD_INC=-I/usr/include
 PTHREAD_LD=-L/usr/local/lib -lpthread
 
 GLOBAL_DEF_GCC=-Wall -O3 -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_NDEBUG
-GLOBAL_DEF_GCC_DEBUG=-g -Wall -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_DEBUG
+GLOBAL_DEF_GCC_DEBUG=-g -ggdb -O0 -Wall -MMD -MP -Wno-uninitialized -Wno-unused-parameter -std=c++11 -fmessage-length=0 -D_DEBUG
 DYNAMIC_LIBRARY_DEF=-shared
+
+GCOV_DEF_GCC=--coverage
 
 #GLOBAL_INC_CPP_PATH=${PATH_DEV_CPP}/include
 #GLOBAL_LIB_CPP_PATH=${PATH_DEV_CPP}/lib
@@ -101,12 +115,14 @@ DEF_STD_DL=-ldl
 GLOBAL_DEF_STD_GLD=-L/usr/lib $(DEF_STD_GLD)
 
 #############################################################################
-# CppTest framework
+# GoogleTest framework
 #############################################################################
 USR_LOCAL_INC=/usr/local/include
 USR_LOCAL_LIB=/usr/local/lib
-CPP_TEST_INC=-I$(USR_LOCAL_INC)
-CPP_TEST_LIB=-L$(USR_LOCAL_LIB) -lcpptest
+CPP_TEST_INC=-I$(USR_LOCAL_INC)/gtest
+CPP_TEST_LIB=$(PTHREAD_LD) $(USR_LOCAL_LIB)/libgtest.a $(USR_LOCAL_LIB)/libgtest_main.a
+CPP_TEST_RESULT_FILE=gtestresults.xml
+CPP_TEST_ARGS=--gtest_output=xml:$(CPP_TEST_RESULT_FILE)
 
 #############################################################################
 # MBED cross compiler
@@ -132,11 +148,11 @@ MBED_CC_DEBUG_OPTIONS=-g -c -O0 -std=c++11 -fno_rtti -fno-common -fmessage-lengt
 MBED_GLOBAL_DEF_GCC=$(MBED_CC_OPTIONS)
 MBED_GLOBAL_DEF_GCC_DEBUG=$(MBED_CC_DEBUG_OPTIONS)
 
-MBED_SYS_OBJECTS = ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/board.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/startup_LPC17xx.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/cmsis_nvic.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/retarget.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/system_LPC17xx.o 
+MBED_SYS_OBJECTS = ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/board.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/startup_LPC17xx.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/cmsis_nvic.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/retarget.o ./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM/system_LPC17xx.o
 
 MBED_LD_OPTIONS=-mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main
 
-MBED_LIBS=-L./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM -lmbed 
+MBED_LIBS=-L./mbed/TARGET_LPC1768/TOOLCHAIN_GCC_ARM -lmbed
 
 MBED_GLOBAL_DEF_STD_GLD=-lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
@@ -158,8 +174,8 @@ CROSS_INC_ARM_INC=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COM
 CROSS_INC_ARM=$(CROSS_COMPILER_PATH)/lib/gcc/arm-linux-gnueabihf/$(CROSS_COMPILER_VERSION)/finclude
 
 CROSS_INCS=-I$(CROSS_INC) -I$(CROSS_INC_ARM_C) -I$(CROSS_INC_ARM_GCC) -I$(CROSS_INC_ARM_INC) -I$(CROSS_INC_ARM)
-CROSS_CC_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -c -O3 -MMD -MP -D_NDEBUG
-CROSS_CC_DEBUG_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -g -MMD -MP -D_DEBUG
+CROSS_CC_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -c -O3 -MMD -MP -D_NDEBUG -fPIC
+CROSS_CC_DEBUG_OPTIONS=-std=c++11 -fmessage-length=0 -Wall -W -Wno-uninitialized -Wno-unused-parameter -g -O0 -MMD -MP -D_DEBUG -fPIC
 
 CROSS_GLOBAL_DEF_GCC=$(CROSS_CC_OPTIONS)
 CROSS_GLOBAL_DEF_GCC_DEBUG=$(CROSS_CC_DEBUG_OPTIONS)
@@ -207,3 +223,4 @@ PIC_CC_OPTIONS=-w2 -c -n -M -L $(GLOBAL_OPTIONS) -I$(INCDIR)
 PIC_CC_DEBUG_OPTIONS=-w2 -d -g -c -n -M -L -I$(GLOBAL_OPTIONS) -I$(INCDIR)
 PIC_LD_OPTIONS=-m -r -f0xffff
 PIC_LD_DEBUG_OPTIONS=-d -g -m -r -f0xffff
+

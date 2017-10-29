@@ -1,10 +1,10 @@
 /**
- * @file    socket.h
- * @brief   Header file for IPv4/IPv6 socket communication.
- * @author garciay.yann@gmail.com
+ * @file      socket.h
+ * @brief     Header file for IPv4/IPv6 socket communication.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 
@@ -104,6 +104,13 @@ namespace comm {
        * @return The socket file descriptor on success, -1 otherwise
        */
       virtual inline const int32_t get_fd() const { if (_socket.get() != NULL) { return _socket->get_fd(); } return -1; };
+
+      /**
+       * @brief Set the NIC name to be used, in case of RAW socket only
+       * @param p_nic_name[in] The NIC name. 
+       * @return 0 on success, -1 otherwise
+       */
+      virtual inline const int32_t set_nic_name(const std::string & p_nic_name) const {  if (_socket.get() != NULL) { return _socket->set_nic_name(p_nic_name); } return -1; };
 
       virtual inline void set_no_delay(const bool p_flag) { if (_socket.get() != NULL) _socket->set_no_delay(p_flag); };
       virtual inline void set_blocking(const bool p_flag) { if (_socket.get() != NULL) _socket->set_blocking(p_flag); };

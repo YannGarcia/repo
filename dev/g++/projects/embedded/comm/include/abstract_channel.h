@@ -1,10 +1,10 @@
 /**
- * @file    abstract_channel.h
- * @brief   Header file for communication channel interface.
- * @author garciay.yann@gmail.com
+ * @file      abstract_channel.h
+ * @brief     Header file for communication channel interface.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 
@@ -13,6 +13,11 @@
 #include <vector>
 
 #include "socket.h"
+
+/** Define POLLRDHUP for MAC OS X and CYGWYN */
+#if !defined(POLLRDHUP)
+#define POLLRDHUP 0x2000
+#endif
 
 namespace comm {
   
@@ -81,6 +86,12 @@ namespace comm {
      * @return 0 on success, -1 otherwise
      */
     virtual const int32_t data_available() const = 0;
+
+    /**
+     * @brief Set the NIC name to be used, in case of RAW socket only
+     * @param p_nic_name[in] The NIC name. 
+     */
+    virtual const int32_t set_nic_name(const std::string & p_nic_name) const { return (_socket.get() != NULL) ? _socket->set_nic_name(p_nic_name) : -1; };
     
     /**
      * @brief Retrieve the socket file descriptor

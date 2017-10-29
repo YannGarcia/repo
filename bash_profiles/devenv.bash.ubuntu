@@ -15,6 +15,8 @@ export HOME_FRAMEWORKS=${HOME}/frameworks
 export HOME_LIB=${HOME}/lib
 export HOME_BIN=${HOME}/bin
 export HOME_ETC=${HOME}/etc
+export HOME_TMP=${HOME}/tmp
+export HOME_DOCS=${HOME}/docs
 
 # Home common include directory
 export HOME_INC=${HOME}/include
@@ -33,8 +35,10 @@ fi
 if [ -d ~/repo ]
 then 
     export PATH_DEV=~/repo/dev
+    export PATH_DEPLOY=~/repo/docs
 else
     export PATH_DEV=~/dev
+    export PATH_DEPLOY=~/repo/docs
 fi
 
 # Cross compiler
@@ -48,18 +52,18 @@ then
     export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
     export MBED_CROSS_COMPILER_SYS_INC_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/include/c++/${MBED_CROSS_COMPILER_VERSION}
     export MBED_CROSS_COMPILER_SYS_LIB_PATH=${MBED_CROSS_COMPILER_PATH}/arm-none-eabi/lib
-    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin	
+    export MBED_CROSS_COMPILER_BIN=${MBED_CROSS_COMPILER_PATH}/bin
 
     # Cross compiler paths for BeagleBone Black and Raspberry PI
     echo "Set up CROSS environment"
-    CROSS_COMPILER_VERSION=4.8.2
-    export CROSS_COMPILER_PATH=${HOME_FRAMEWORKS}/gcc_arm-willtm-linux-gnueabi
+    CROSS_COMPILER_VERSION=5.4.0
+    export CROSS_COMPILER_PATH=/usr
     export CROSS_COMPILER_BIN=${CROSS_COMPILER_PATH}/bin
-    export CROSS_COMPILER_INC_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/include
+    export CROSS_COMPILER_INC_PATH=${CROSS_COMPILER_PATH}/arm-linux-gnueabihf/include
     export CROSS_COMPILER_SYS_INC_PATH=${CROSS_COMPILER_INC_PATH}/c++/${CROSS_COMPILER_VERSION}
-    export CROSS_COMPILER_SYS_LIB_PATH=${CROSS_COMPILER_PATH}/arm-willtm-linux-gnueabi/lib
-    export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_PATH}/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
-    export CROSS_COMPILER_ARM_GCC_LIB_PATH=${CROSS_COMPILER_PATH}/lib/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
+    export CROSS_COMPILER_SYS_LIB_PATH=${CROSS_COMPILER_PATH}/arm-linux-gnueabi/libhf
+    export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_SYS_LIB_PATH}
+    export CROSS_COMPILER_ARM_GCC_LIB_PATH=${CROSS_COMPILER_SYS_LIB_PATH}
 
     export KERNEL_SRC=~/Kernel/linux/
     export CCPREFIX=arm-linux-gnueabihf-
@@ -139,3 +143,5 @@ fi
 #then
 #    eval `ssh-agent -s`
 #fi
+
+export BROWSER=netsurf

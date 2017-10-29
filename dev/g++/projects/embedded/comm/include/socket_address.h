@@ -1,10 +1,10 @@
 /**
- * @file    socket_address.h
- * @brief   Header file for IPv4/IPv6 address facade.
- * @author garciay.yann@gmail.com
+ * @file      socket_address.h
+ * @brief     Header file for IPv4/IPv6 address facade.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 

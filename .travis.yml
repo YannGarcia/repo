@@ -2,34 +2,49 @@ language: cpp
 sudo: true
 dist: trusty
 compiler:
-  - gcc
   - g++
 os:
   - linux
 branches:
   only:
     - master
-env: 
-  global
-    - export HOME=`pwd`/..
-    - export PATH_DEV=${HOME}/repo/dev
-    - export HOME_FRAMEWORKS=${HOME}/frameworks
-    - export HOME_LIB=${HOME}/lib
-    - export HOME_BIN=${HOME}/bin
-    - export HOME_ETC=${HOME}/etc
-    - export HOME_INC=${HOME}/include
-    - export PATH=${HOME_BIN}:${PATH}
-    - export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib:${LD_LIBRARY_PATH}
-before_install: true
+env:
+#  - TRAVIS_CONTEXT="NoCoveralls"
+#  - TRAVIS_CONTEXT="WithValgrind"
+#  - TRAVIS_CONTEXT="WithCoveralls"
+  - TRAVIS_CONTEXT="BaremetalHW"
+  - TRAVIS_CONTEXT="LinuxHW"
+before_install:
+  - export HOME=`pwd`
+  - export SCP_REMOTE_ADDRESS=#192.168.0.107 # Linux Hardware remote address for scp command
+  - export SCP_REMOTE_USER=pi  # Linux Hardware remote user name for scp command
+  - git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials 2>/dev/null
+  - git config user.name "YannGarcia"
+  - git config user.email "garcia.yann@gmail.com"
+install:
+  - . ${HOME}/travis_scripts/install.bash
 before_script: true
-before_deploy: true
-install: ${HOME}/repo/travis_scripts/install.bash
 script:
-  - ${HOME}/repo/travis_scripts/build.bash
-after_deploy: true
-after_success: ${HOME}/travis_scripts/repo/test.bash
+  - ${HOME}/travis_scripts/build.bash
+after_success:
+  - ${HOME}/travis_scripts/run.bash
 after_failure: false
-after_script:
- - echo 'After Script is here'
+after_script: true
+before_deploy:
+  - ${HOME}/travis_scripts/test.bash
+  - ${HOME}/travis_scripts/deploy.bash
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
+    condition: $TRAVIS_CONTEXT = "NoCoveralls"
+  local_dir: docs
+after_deploy: true
 notifications:
-  email: true
+  email:
+    recipients:
+      - garcia.yann@gmail.com
+    on_success: always
+    on_failure: always

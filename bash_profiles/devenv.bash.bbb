@@ -15,6 +15,8 @@ export HOME_FRAMEWORKS=${HOME}/frameworks
 export HOME_LIB=${HOME}/lib
 export HOME_BIN=${HOME}/bin
 export HOME_ETC=${HOME}/etc
+export HOME_TMP=${HOME}/tmp
+export HOME_DOCS=${HOME}/docs
 
 # Home common include directory
 export HOME_INC=${HOME}/include
@@ -28,8 +30,10 @@ export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 if [ -d ~/repo ]
 then 
     export PATH_DEV=~/repo/dev
+    export PATH_DEPLOY=~/repo/docs
 else
     export PATH_DEV=~/dev
+    export PATH_DEPLOY=~/repo/docs
 fi
 
 # Cross compiler
@@ -112,9 +116,9 @@ then
 fi
 
 # Start ssh-agent at login
-if [ -f "/usr/bin/ssh-agent" ]
-then
-    eval `/usr/bin/ssh-agent -s`
-    ssh-add -l
-    ssh-add ~/.ssh/git_server_ssh_key_name
-fi
+#if [ -f "/usr/bin/ssh-agent" ]
+#then
+#    eval `/usr/bin/ssh-agent -s`
+#    ssh-add -l
+#    ssh-add ~/.ssh/git_server_ssh_key_name
+#fi

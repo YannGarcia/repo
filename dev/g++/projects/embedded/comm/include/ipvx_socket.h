@@ -1,10 +1,10 @@
 /**
- * @file    ipvx_socket.h
- * @brief   Header file for abstraction of IPv4/IPv6 socket communication.
- * @author garciay.yann@gmail.com
+ * @file      ipvx_socket.h
+ * @brief     Header file for abstraction of IPv4/IPv6 socket communication.
+ * @author    garciay.yann@gmail.com
  * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * @license   This project is released under the MIT License
+ * @version   0.1
  */
 #pragma once
 
@@ -82,6 +82,13 @@ namespace comm {
        * @return The socket file descriptor on success, -1 otherwise
        */
       virtual const int32_t get_fd() const = 0;
+
+      /**
+       * @brief Set the NIC name to be used, in case of RAW socket only
+       * @param p_nic_name[in] The NIC name. 
+       * @return 0 on success, -1 otherwise
+       */
+      virtual const int32_t set_nic_name(const std::string & p_nic_name) const { return -1; };
 
       virtual void set_no_delay(const bool p_flag) = 0;      
       virtual void set_blocking(const bool p_flag) = 0;

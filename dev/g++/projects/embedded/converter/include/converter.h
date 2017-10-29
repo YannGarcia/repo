@@ -132,8 +132,9 @@ namespace helpers {
      * @see http://www.unixtimestamp.com/
      * @code
      * std::string result = time_to_string(1489755780);
-     * result.compare("Fri, 17 Mar 2017 14:03:00 +0100") == 0 //when date/time location is Paris (UTC + 1)
+     * result.compare("Fri, 17 Mar 2017 13:03:00 +0000") == 0 // When time zone is set to UTC
      * @endcode
+     * @remark Use commands 1) timedatectl to change your machine timezone (e.g. sudo timedatectl set-timezone UTC to change machine timezone to UTC, 2) timedatectl list-timezones to get the list of the timezones)
      */
     std::string time_to_string(const time_t p_time);
     /**

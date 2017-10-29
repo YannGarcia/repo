@@ -19,7 +19,13 @@ GLOBAL_DEF_GCC_DEBUG+=-fPIC
 #LIBHAL_INC=-I$(LIBHAL_PATH)/hal
 #LIBHAL_LD=-L/usr/local/lib -lhal
 LIBHAL_INC=-I$(HOME_INC)
-LIBHAL_LD=-L$(HOME_LIB) -lhal
+LIBHAL_LD=-L$(HOME_LIB) -lhal -L$(HOME_FRAMEWORKS)/wiringpi/wiringPI -lwiring
+
+#############################################################################
+# GoogleTest framework
+#############################################################################
+CPP_TEST_INC=-I$(HOME_FRAMEWORKS)/googletest/googletest/include -I$(HOME_FRAMEWORKS)/googletest/googletest/include/gtest
+CPP_TEST_LIB=$(PTHREAD_LD) $(HOME_FRAMEWORKS)/googletest/build/googlemock/gtest/libgtest.a $(HOME_FRAMEWORKS)/googletest/build/googlemock/gtest/libgtest_main.a
 
 #############################################################################
 # PICKit2 programmer

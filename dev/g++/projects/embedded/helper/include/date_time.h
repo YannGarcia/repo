@@ -32,9 +32,14 @@ namespace helpers {
   class date_time {
   public:
     /**
-     * @brief Default constructor
+     * @brief Default constructor, date and time are set to the current time
      */
     date_time();
+    /**
+     * @brief Specialized constructor, date and time are parsed from the provided parameter
+     * @param[in] p_date_time Date/Time string value to parse (e.g. Thu May 15 04:36:00 2014)
+     */
+    date_time(const std::string & p_date_time) { parse_date_time(p_date_time); };
     /**
      * @brief Default destructor
      */
@@ -50,9 +55,9 @@ namespace helpers {
       std::string to_string;
 
       void clear() {
-	::memset((void *)&date_time_tm, 0x00, sizeof(struct tm));
-	sday.clear();
-	to_string.clear();
+        ::memset((void *)&date_time_tm, 0x00, sizeof(struct tm));
+        sday.clear();
+        to_string.clear();
       };
     } date_time_t;
 

@@ -12,7 +12,7 @@ include $(PATH_DEV)/Makefile.inc
 #############################################################################
 # List of projects
 
-projects=logger converter helper comm ipc #uart gps
+projects=libhal logger converter helper ipc #comm uart gps
 
 clean:
 	@for project in $(projects); do \
@@ -23,6 +23,12 @@ clean:
 debug:
 	@for project in $(projects); do \
 		cd "$$project"/objs && $(MAKE) -f Makefile debug; \
+		cd -; \
+	done
+
+coverage:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile coverage; \
 		cd -; \
 	done
 
@@ -62,6 +68,54 @@ test:
 		cd -; \
 	done
 
+test_c:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_c; \
+		cd -; \
+	done
+
+test_d:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_d; \
+		cd -; \
+	done
+
+test_v:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile test_v; \
+		cd -; \
+	done
+
+run:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run; \
+		cd -; \
+	done
+
+run_c:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run_c; \
+		cd -; \
+	done
+
+run_v:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile run_v; \
+		cd -; \
+	done
+
+push2coveralls:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile push2coveralls; \
+		cd -; \
+	done
+
+pushO2:
+	@for project in $(projects); do \
+		cd "$$project"/objs && $(MAKE) -f Makefile pushO2; \
+		cd -; \
+	done
+
 help:
 	@clear
 	@echo
@@ -74,7 +128,7 @@ help:
 	@echo "   gendoc       : Build Doxygen documentation."
 	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
-	@echo "   test         : ."
+	@echo "   test         : Build and execute the test application."
 	@echo "*** $@ done ***"
 
 #############################################################################

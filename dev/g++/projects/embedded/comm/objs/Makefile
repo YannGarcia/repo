@@ -42,11 +42,13 @@ CC_INS=$(PTHREAD_INC)
 LD_INS=$(PTHREAD_LD)
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH)
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH)
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../converter/include
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I../../converter/include
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../converter/include
 
 # Linker flags
 LD_DEBUG_OPTIONS=-shared -Wall $(GLOBAL_DEF_STD_GLD)
+LD_COVERAGE_OPTIONS=-shared -Wall $(GCOV_DEF_GCC) $(GLOBAL_DEF_STD_GLD)
 LD_RELEASE_OPTIONS=-shared -Wall $(GLOBAL_DEF_STD_GLD)
 
 # Define Include paths + definition flags
@@ -191,6 +193,12 @@ compile :
 		LD_OPTION="$(LD_RELEASE_OPTIONS) -L$(HOME_LIB) -lconverter" \
 		all
 
+coverage :
+	${MAKE} -f Makefile \
+		CC_OPTION="$(CC_COVERAGE_OPTIONS)" \
+		LD_OPTION="$(LD_COVERAGE_OPTIONS)" \
+		all
+
 recompile :
 	${MAKE} -f Makefile clean
 	${MAKE} -f Makefile \
@@ -210,6 +218,12 @@ test : compile
 		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lcomm -lhelper -lconverter $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
+test_c : coverage
+	${MAKE} -f Makefile \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -lcomm -lhelper -lconverter $(CPP_TEST_LIB)" \
+		directories $(TEST_TARGET)
+
 test_d : debug
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
@@ -219,11 +233,17 @@ test_d : debug
 run : test
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) $(TESTDIRS)$(TEST_TARGET)
 
+run_c : test_c
+	@$(LCOV) --directory $(OBJSDIR) --zerocounters
+	@$(TESTDIRS)$(TEST_TARGET)
+	@$(LCOV) $(LCOV_OPTIONS) --directory $(OBJSDIR) --output-file $(TEST_TARGET).coverage.info --capture
+	@$(LCOV) --list $(OBJSDIR)/$(TEST_TARGET).coverage.info
+
 run_d : test_d
 	@$(SUDO) LD_LIBRARY_PATH=$(HOME_LIB):$(USR_LOCAL_LIB) gdb $(TESTDIRS)$(TEST_TARGET)
 
 clean: cleanlinks
-	@$(RM) -f $(BIN) $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) ./../$(LIBRARY).tar.gz $(TARGET) *.lst *.o *.d *~  $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
+	@$(RM) -f $(BIN) $(LIBDIRS)$(TARGET) $(LIBDIRS)$(TARGET_D) ./../$(LIBRARY).tar.gz $(TARGET) $(TARGET) $(OBJSDIR)/$(TARGET) $(OBJSDIR)/$(CPP_TEST_RESULT_FILE) *.lst *.o *.d *.gcno *.gcda *.info *~ $(SRCDIRS)*.o $(SRCDIRS)*~ $(SRCDIRS)*.err $(INCDIR)/*~ $(TESTDIRS)*.o $(TESTDIRS)*~ $(DOCDIRS)*~
 	@$(RM) -fr $(DOCDIRS)html $(DOCDIRS)latex $(DOCDIRS)man
 	@echo "*** $@ done ***"
 
@@ -301,6 +321,14 @@ install-devel: install
 	@$(CP) $(INCDIRS)$(ABSTRACT_CHANNEL_INC) $(PATH_INSTALL_INC)/$(ABSTRACT_CHANNEL_INC)
 	@echo "*** $@ done ***"
 
+push2coveralls:
+	@if [ -f $(OBJSDIR)/$(TEST_TARGET).coverage.info ] ; then coveralls-lcov --verbose ./$(TEST_TARGET).coverage.info ; fi ;
+	@echo "*** $@ done ***"
+
+pushO2:
+	@if [ -d $(HOME_DOCS) ] ; then mkdir -p $(HOME_DOCS)/$(LIBRARY) && mv $(DOCDIR)/html $(HOME_DOCS)/$(LIBRARY) ; fi ;
+	@echo "*** $@ done ***"
+
 depend :
 	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
 	@echo "*** $@ done ***"
@@ -317,16 +345,19 @@ help:
 	@echo "   help         : This menu."
 	@echo "   clean        : Erase objects, binaries and temporary files."
 	@echo "   debug        : Build a debug version."
+	@echo "   coverage     : Build a debug+coverage version."
 	@echo "   compile      : Build the application in release mode."
 	@echo "   recompile    : Rebuild the application in release mode."
 	@echo "   rel          : Clean and rebuild the application in release mode."
 	@echo "   test         : Build the test application."
+	@echo "   test_c       : Build the test application in debug+coverage mode."
 	@echo "   test_d       : Build the test application in debug mode."
 	@echo "   run          : Build and execute the test application."
+	@echo "   run_c        : Build and execute the test application in debug+coverage mode, using gcov."
 	@echo "   run_d        : Build and execute the test application in debug mode."
 	@echo "   run_v        : Build and execute the test application in debug mode, using Valgrind."
 	@echo "   dist         : Build a compressed archive of the application."
-	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx."
+	@echo "   install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)/xxx."
 	@echo "   install-devel: Same as 'install' plus include files."
 	@echo "   depend       : Build the file dependencies for $(MAKE)."
 	@echo "   gendoc       : Build the Doxygen documantation."

@@ -22,7 +22,7 @@ Digital testing includes: * LED switch on/off * Interrupt checking, debouncing..
 
 * Gyroscope, Accelerometer
 * Hall effect
-* 
+* ...
 
 ## Developement of common embedded peaces of code for Linux based hardware
 The main objective is to basic lightweight software libraries such as logging, communication, NMEA support and so on for my different Linux based hardwares 
@@ -44,7 +44,7 @@ The main objective is to basic lightweight software libraries such as logging, c
   - Enhance test units
 
 ## Planning for the furture
-* Development chain tool for each hardawer
+* Development chain tool for each hardware
 * TI
   - Terminate TM4C129 libhal
   - Validate TM4C123 libahl
