@@ -2,9 +2,9 @@
 set -e
 set -vx
 
-if [ -f ./Dockerfile.$i ]
+if [ -f ./Dockerfile.$1 ]
 then
-    docker run -i -t -v /f:/media/sf_F_DRIVE docker run -it $i /bin/bash
+    docker run -it --name my$1 --rm --volume /f:/media/sf_F_DRIVE $1 /bin/bash
 fi
 
 exit 0

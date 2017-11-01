@@ -22,7 +22,7 @@ then
     mkdir ${BUILD_FOLDER}
     cp ${DOCKER_FILE} ${BUILD_FOLDER}/Dockerfile
     cd ${BUILD_FOLDER}
-    docker build --tag $1 --force-rm .
+    docker build --tag $1 --force-rm --build-arg USERNAME=${USERNAME} --build-arg PASSWORD=${PASSWORD} .
     cd ..
     docker image ls -a
     rm -fr ${BUILD_FOLDER}
