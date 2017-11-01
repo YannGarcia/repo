@@ -26,6 +26,7 @@ then
     cd ..
     docker image ls -a
     rm -fr ${BUILD_FOLDER}
+    docker inspect $1:latest
 else
     exit -2
 fi

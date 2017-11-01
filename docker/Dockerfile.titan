@@ -43,6 +43,7 @@ RUN apt-get update \
     && git clone https://github.com/YannGarcia/TriesAndDelete.git TriesAndDelete \
     && cp /home/yann/repo/bash_profiles/devenv.bash.ubuntu /home/yann/devenv.bash \
     && rm -fr ./repo \
+    && export HOME=/home/yann \
     && . /home/yann/devenv.bash \
     && cd /home/yann/frameworks \
     && git clone https://github.com/vlm/asn1c.git asn1c \
@@ -51,7 +52,7 @@ RUN apt-get update \
         && ./configure \
         && make && make install \
     && cd /home/yann/tmp \
-    && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525
+    && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
     && cd /home/yann/TriesAndDelete/scripts
