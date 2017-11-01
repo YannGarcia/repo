@@ -7,6 +7,7 @@ LABEL description="TITAN Docker Image"
 ENV TERM=linux
 
 RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bison \
       curl \
@@ -29,6 +30,8 @@ RUN apt-get update \
       valgrind \
       vsftpd \
       xutils-dev \
+    && apt-get autoremove \
+    && apt-get autoclean \
     && mkdir -p /home/yann \
     && cd /home/yann \
     && mkdir -p bin lib include tmp frameworks docs \
@@ -43,12 +46,6 @@ RUN apt-get update \
         && ./configure \
         && make && make install \
     && cd /home/yann/TriesAndDelete/scripts \
-    && /bin/cat <<EOF > Makefile.personal \
-      JNI:=no \
-      GUI:=no \
-      DEBUG:=no \
-      GEN_PDF:=no \
-      EOF \
     && ./build_titan.bash \
     && cd /home/yann
 
