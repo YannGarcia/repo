@@ -33,7 +33,7 @@ protected:
  */
 TEST(logger_test_suite, add_logger) {
   std::string s("logger1");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance());
 
@@ -52,7 +52,7 @@ TEST(logger_test_suite, add_logger) {
  */
 TEST(logger_test_suite, get_logger) {
   std::string s("logger2");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance());
 
@@ -68,7 +68,7 @@ TEST(logger_test_suite, get_logger) {
  */
 TEST(logger_test_suite, logger_basic) {
   std::string s("logger3");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance());
 
@@ -87,7 +87,7 @@ TEST(logger_test_suite, logger_basic) {
  */
 TEST(logger_test_suite, logger_simple) {
   std::string s("logger4");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance());
 
@@ -112,7 +112,7 @@ TEST(logger_test_suite, logger_simple) {
  */
 TEST(logger_test_suite, remove_logger) {
   std::string s("logger5");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance());
 
@@ -127,7 +127,7 @@ TEST(logger_test_suite, remove_logger) {
  */
 TEST(logger_test_suite, logger_multiple) {
   std::string s("logger6");
-  std::string path(std::getenv("HOME_TMP") + "/" + s + ".log");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
   
   ASSERT_NO_THROW(logger_factory::get_instance().add_logger(s, path, logger_levels_t::trace | logger_levels_t::error));
   logger_factory::get_instance().get_logger(s).error("Test logger6: This a multiple variable error: %d - %s", 666, "The devil is in the details");

@@ -34,9 +34,9 @@ CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL
 CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH)  -I $(HOME_INC)-I../include
 
 # Linker flags
-LD_DEBUG_OPTIONS=-g -Wall $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper
-LD_COVERAGE_OPTIONS=-g -Wall $(GCOV_DEF_GCC) $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper
-LD_RELEASE_OPTIONS=-Wall $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper
+LD_DEBUG_OPTIONS=-g -Wall $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper -lcomm
+LD_COVERAGE_OPTIONS=-g -Wall $(GCOV_DEF_GCC) $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper -lcomm
+LD_RELEASE_OPTIONS=-Wall $(GLOBAL_DEF_STD_GLD) -L$(HOME_LIB) -llogger -lhelper -lcomm
 
 # Define Include paths + definition flags
 #DEFS_CC=-I$(GLOBAL_INC_CPP_PATH) -I$(INCDIRS) -I$(GLOBAL_INC_BOOST_PATH) $(DEFS_CC_RELEASE)
@@ -69,7 +69,7 @@ MODULE_TEST=$(BIN)
 OBJS=$(BIN_OBJS)
 
 # Objects
-BIN_OBJ=udp_echo.o
+BIN_OBJ=main.o udp_echo.o
 
 # Headears
 BIN_INC=udp_echo.h

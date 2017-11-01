@@ -43,6 +43,12 @@ RUN apt-get update \
         && ./configure \
         && make && make install \
     && cd /home/yann/TriesAndDelete/scripts \
+    && /bin/cat <<EOF > Makefile.personal \
+      JNI:=no \
+      GUI:=no \
+      DEBUG:=no \
+      GEN_PDF:=no \
+      EOF \
     && ./build_titan.bash \
     && cd /home/yann
 
