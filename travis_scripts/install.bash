@@ -110,13 +110,13 @@ then
 elif [ "${TRAVIS_CONTEXT}" == "BaremetalHW" ]
 then
     # Install ARM cross compile for bare metal hardware
-    wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
-    bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
-    tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
-    rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
+#    wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+#    bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+#    tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
+#    rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 
-    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
-    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version
+#    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
+#    ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version
 
     export SELECTED_HW="ti_msp_exp432p401r"
     MBED_CROSS_COMPILER_VERSION=5.4.1
@@ -134,8 +134,10 @@ then
         wget http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSP432_Driver_Library/latest/exports/msp432_driverlib_3_21_00_05.zip
         unzip msp432_driverlib_3_21_00_05.zip
         cd -
-    #else
+    else
         # TODO download for TIVA
+        echo "Error: worng hardware selector: ${SELECTED_HW}"
+        exit -1
     fi
 else # Linux amd64
     # Install GoogleTest
