@@ -10,7 +10,8 @@ ENV HOSTNAME docker-titan
 ARG USERNAME
 ARG PASSWORD
 
-RUN apt-get update \
+RUN echo "docker-titan" > /etc/hostname \
+    && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bison \
@@ -55,10 +56,10 @@ RUN apt-get update \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
-    && cd /home/yann/TriesAndDelete/scripts
-#    && ./update_its_project.bash \
-#    && cd ../etsi_its/src/Test/objs \
-#    && cd /home/yann
+    && cd /home/yann/TriesAndDelete/scripts \
+    && ./update_its_project.bash \
+    && cd ../etsi_its/src/Test/objs \
+    && cd /home/yann > /home/yann/tmp/docker_build.log
 
 CMD ["/bin/bash"]
 
