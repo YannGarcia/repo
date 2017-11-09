@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file:    system_LPC17xx.h
+ * \file:    system_LPC17xx.h
  * @purpose: CMSIS Cortex-M3 Device Peripheral Access Layer Header File
  *           for the NXP LPC17xx Device Series 
- * @version: V1.02
+ * \version: V1.02
  * @date:    27. July 2009
  *----------------------------------------------------------------------------
  *
@@ -34,10 +34,10 @@ extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  *
 /**
  * Initialize the system
  *
- * @param  none
- * @return none
+ * \param  none
+ * \return none
  *
- * @brief  Setup the microcontroller system.
+ * \brief  Setup the microcontroller system.
  *         Initialize the System and update the SystemCoreClock variable.
  */
 extern void SystemInit (void);
@@ -45,10 +45,10 @@ extern void SystemInit (void);
 /**
  * Update SystemCoreClock variable
  *
- * @param  none
- * @return none
+ * \param  none
+ * \return none
  *
- * @brief  Updates the SystemCoreClock with current core Clock 
+ * \brief  Updates the SystemCoreClock with current core Clock 
  *         retrieved from cpu registers.
  */
 extern void SystemCoreClockUpdate (void);

@@ -31,10 +31,10 @@ namespace beagleboneGeo {
 
   /** 
    * @desc This class provides a set of convertion methods. V0.0.0.1
-   * @see http://home.online.no/~sigurdhu/Deg_formats.htm
-   * @see http://software.geocaching-sk.info/thailon/converter
+   * \see http://home.online.no/~sigurdhu/Deg_formats.htm
+   * \see http://software.geocaching-sk.info/thailon/converter
    *
-   * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+   * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
    */
   class geometry {
     static geometry * Instance;

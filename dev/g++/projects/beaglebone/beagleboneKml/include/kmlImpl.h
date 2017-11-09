@@ -30,7 +30,7 @@ namespace beagleboneKml {
 
   /** This class provides a wrapper to the Google libkml. V0.0.0.1
    *
-   * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+   * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
    */
   class kmlImpl {
 
@@ -59,7 +59,7 @@ namespace beagleboneKml {
 
     /**
      * @desc
-     * @param p_color Color value in AABBGGRR format
+     * \param p_color Color value in AABBGGRR format
      */
     void createLineStyle(const unsigned int p_id, const unsigned char p_width, const unsigned int p_color);
     

@@ -55,16 +55,16 @@ public:
      *
      *  mosi or miso can be specfied as NC if not used
      *
-     *  @param mosi SPI Master Out, Slave In pin
-     *  @param miso SPI Master In, Slave Out pin
-     *  @param sclk SPI Clock pin
+     *  \param mosi SPI Master Out, Slave In pin
+     *  \param miso SPI Master In, Slave Out pin
+     *  \param sclk SPI Clock pin
      */
     SPI(PinName mosi, PinName miso, PinName sclk, PinName _unused=NC);
 
     /** Configure the data transmission format
      *
-     *  @param bits Number of bits per SPI frame (4 - 16)
-     *  @param mode Clock polarity and phase mode (0 - 3)
+     *  \param bits Number of bits per SPI frame (4 - 16)
+     *  \param mode Clock polarity and phase mode (0 - 3)
      *
      * @code
      * mode | POL PHA
@@ -79,15 +79,15 @@ public:
 
     /** Set the spi bus clock frequency
      *
-     *  @param hz SCLK frequency in hz (default = 1MHz)
+     *  \param hz SCLK frequency in hz (default = 1MHz)
      */
     void frequency(int hz = 1000000);
 
     /** Write to the SPI Slave and return the response
      *
-     *  @param value Data to be sent to the SPI slave
+     *  \param value Data to be sent to the SPI slave
      *
-     *  @returns
+     *  \returns
      *    Response from the SPI slave
     */
     virtual int write(int value);

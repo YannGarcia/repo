@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     core_cm3.h
- * @brief    CMSIS Cortex-M3 Core Peripheral Access Layer Header File
- * @version  V3.20
+ * \file     core_cm3.h
+ * \brief    CMSIS Cortex-M3 Core Peripheral Access Layer Header File
+ * \version  V3.20
  * @date     25. February 2013
  *
  * @note

@@ -1,23 +1,23 @@
 /**
- * @file    pin_names.h
- * @brief   Header file for the Hardware Abstract Layer pins mapping, raspberryPI.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    pin_names.h
+ * \brief   Header file for the Hardware Abstract Layer pins mapping, raspberryPI.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #if !defined(__RASPBERRYPI_PIN_NAMES_H__)
 #define __RASPBERRYPI_PIN_NAMES_H__
 
-/** @def Flagto define BeagleBoneBlack board
+/** \def Flagto define BeagleBoneBlack board
  */
 #define BEAGLEBONE_BLACK_BOARD 1
 
 #if defined(BEAGLEBONE_BLACK_BOARD)
 
-/** @enum pin_names_t
- * @brief Describes the pin name/pin kernel number 
- * @see https://projects.drogon.net/raspberry-pi/wiringpi/pins/
+/** \enum pin_names_t
+ * \brief Describes the pin name/pin kernel number 
+ * \see https://projects.drogon.net/raspberry-pi/wiringpi/pins/
  */
 typedef enum {
   P1_3 = 8,

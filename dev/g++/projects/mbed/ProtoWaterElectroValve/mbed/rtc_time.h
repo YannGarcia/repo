@@ -56,7 +56,7 @@ extern "C" {
  * to the time represented by the number of seconds since January 1, 1970
  * (the UNIX timestamp).
  *
- * @param t Number of seconds since January 1, 1970 (the UNIX timestamp)
+ * \param t Number of seconds since January 1, 1970 (the UNIX timestamp)
  *
  * Example:
  * @code

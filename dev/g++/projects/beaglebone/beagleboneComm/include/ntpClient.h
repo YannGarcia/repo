@@ -22,7 +22,7 @@ namespace beagleboneComm {
 
       /**
        * @desc Request time to the NTP server and update the system time if required
-       * @return 0 if the system time was updated, -2 if time difference is less tha 9 seconds, -1 on error
+       * \return 0 if the system time was updated, -2 if time difference is less tha 9 seconds, -1 on error
        */
       int setTime();
     }; // End of class ntpClient

@@ -34,7 +34,7 @@ class SerialBase {
 public:
     /** Set the baud rate of the serial port
      *
-     *  @param baudrate The baudrate of the serial port (default = 9600).
+     *  \param baudrate The baudrate of the serial port (default = 9600).
      */
     void baud(int baudrate);
 
@@ -60,15 +60,15 @@ public:
 
     /** Set the transmission format used by the serial port
      *
-     *  @param bits The number of bits in a word (5-8; default = 8)
-     *  @param parity The parity used (SerialBase::None, SerialBase::Odd, SerialBase::Even, SerialBase::Forced1, SerialBase::Forced0; default = SerialBase::None)
-     *  @param stop The number of stop bits (1 or 2; default = 1)
+     *  \param bits The number of bits in a word (5-8; default = 8)
+     *  \param parity The parity used (SerialBase::None, SerialBase::Odd, SerialBase::Even, SerialBase::Forced1, SerialBase::Forced0; default = SerialBase::None)
+     *  \param stop The number of stop bits (1 or 2; default = 1)
      */
     void format(int bits=8, Parity parity=SerialBase::None, int stop_bits=1);
 
     /** Determine if there is a character available to read
      *
-     *  @returns
+     *  \returns
      *    1 if there is a character available to read,
      *    0 otherwise
      */
@@ -76,7 +76,7 @@ public:
 
     /** Determine if there is space available to write a character
      *
-     *  @returns
+     *  \returns
      *    1 if there is space to write a character,
      *    0 otherwise
      */
@@ -84,16 +84,16 @@ public:
 
     /** Attach a function to call whenever a serial interrupt is generated
      *
-     *  @param fptr A pointer to a void function, or 0 to set as none
-     *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
+     *  \param fptr A pointer to a void function, or 0 to set as none
+     *  \param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     void attach(void (*fptr)(void), IrqType type=RxIrq);
 
     /** Attach a member function to call whenever a serial interrupt is generated
      *
-     *  @param tptr pointer to the object to call the member function on
-     *  @param mptr pointer to the member function to be called
-     *  @param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
+     *  \param tptr pointer to the object to call the member function on
+     *  \param mptr pointer to the member function to be called
+     *  \param type Which serial interrupt to attach the member function to (Seriall::RxIrq for receive, TxIrq for transmit buffer empty)
      */
     template<typename T>
     void attach(T* tptr, void (T::*mptr)(void), IrqType type=RxIrq) {
@@ -110,9 +110,9 @@ public:
 #if DEVICE_SERIAL_FC
     /** Set the flow control type on the serial port
      *
-     *  @param type the flow control type (Disabled, RTS, CTS, RTSCTS)
-     *  @param flow1 the first flow control pin (RTS for RTS or RTSCTS, CTS for CTS)
-     *  @param flow2 the second flow control pin (CTS for RTSCTS)
+     *  \param type the flow control type (Disabled, RTS, CTS, RTSCTS)
+     *  \param flow1 the first flow control pin (RTS for RTS or RTSCTS, CTS for CTS)
+     *  \param flow2 the second flow control pin (CTS for RTSCTS)
      */
     void set_flow_control(Flow type, PinName flow1=NC, PinName flow2=NC);
 #endif

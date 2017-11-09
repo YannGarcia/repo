@@ -53,17 +53,17 @@ public:
     }
 
     /** Put a message in a Queue.
-      @param   data      message pointer.
-      @param   millisec  timeout value or 0 in case of no time-out. (default: 0)
-      @return  status code that indicates the execution status of the function.
+      \param   data      message pointer.
+      \param   millisec  timeout value or 0 in case of no time-out. (default: 0)
+      \return  status code that indicates the execution status of the function.
     */
     osStatus put(T* data, uint32_t millisec=0) {
         return osMessagePut(_queue_id, (uint32_t)data, millisec);
     }
 
     /** Get a message or Wait for a message from a Queue.
-      @param   millisec  timeout value or 0 in case of no time-out. (default: osWaitForever).
-      @return  event information that includes the message and the status code.
+      \param   millisec  timeout value or 0 in case of no time-out. (default: osWaitForever).
+      \return  event information that includes the message and the status code.
     */
     osEvent get(uint32_t millisec=osWaitForever) {
         return osMessageGet(_queue_id, millisec);

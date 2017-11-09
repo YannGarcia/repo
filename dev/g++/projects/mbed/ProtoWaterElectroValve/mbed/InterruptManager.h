@@ -45,10 +45,10 @@ public:
 
     /** Add a handler for an interrupt at the end of the handler list
      *
-     *  @param function the handler to add
-     *  @param irq interrupt number
+     *  \param function the handler to add
+     *  \param irq interrupt number
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'function'
      */
     pFunctionPointer_t add_handler(void (*function)(void), IRQn_Type irq) {
@@ -57,10 +57,10 @@ public:
 
     /** Add a handler for an interrupt at the beginning of the handler list
      *
-     *  @param function the handler to add
-     *  @param irq interrupt number
+     *  \param function the handler to add
+     *  \param irq interrupt number
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'function'
      */
     pFunctionPointer_t add_handler_front(void (*function)(void), IRQn_Type irq) {
@@ -69,11 +69,11 @@ public:
 
     /** Add a handler for an interrupt at the end of the handler list
      *
-     *  @param tptr pointer to the object that has the handler function
-     *  @param mptr pointer to the actual handler function
-     *  @param irq interrupt number
+     *  \param tptr pointer to the object that has the handler function
+     *  \param mptr pointer to the actual handler function
+     *  \param irq interrupt number
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'tptr' and 'mptr'
      */
     template<typename T>
@@ -83,11 +83,11 @@ public:
 
     /** Add a handler for an interrupt at the beginning of the handler list
      *
-     *  @param tptr pointer to the object that has the handler function
-     *  @param mptr pointer to the actual handler function
-     *  @param irq interrupt number
+     *  \param tptr pointer to the object that has the handler function
+     *  \param mptr pointer to the actual handler function
+     *  \param irq interrupt number
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'tptr' and 'mptr'
      */
     template<typename T>
@@ -97,10 +97,10 @@ public:
 
     /** Remove a handler from an interrupt
      *
-     *  @param handler the function object for the handler to remove
-     *  @param irq the interrupt number
+     *  \param handler the function object for the handler to remove
+     *  \param irq the interrupt number
      *
-     *  @returns
+     *  \returns
      *  true if the handler was found and removed, false otherwise
      */
     bool remove_handler(pFunctionPointer_t handler, IRQn_Type irq);

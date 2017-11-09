@@ -1,10 +1,10 @@
 /**
- * @File    gps_device.h
- * @brief   Header file for the lightweight gps devices library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    gps_device.h
+ * \brief   Header file for the lightweight gps devices library.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -20,8 +20,8 @@
 namespace gps {
 
   /**
-   * @class gps_device
-   * @brief This class provides a set of methods for lightweight GPS devices
+   * \class gps_device
+   * \brief This class provides a set of methods for lightweight GPS devices
    */
   class gps_device : public runnable {
   protected:
@@ -30,13 +30,13 @@ namespace gps {
 
   public:
     /**
-     * @brief Default constructor shall not be used
+     * \brief Default constructor shall not be used
      */
     gps_device() : _gps_device_name(), _gps_parser() { throw new std::runtime_error("Specialized ctor shall be implemented"); };
     /**
-     * @brief Specialized constructor
-     * @param[in] p_gps_device_name The GPS device name
-     * @param[in] p_gps_parser The GPS protocol parser to be used for GPS frame processing
+     * \brief Specialized constructor
+     * \param[in] p_gps_device_name The GPS device name
+     * \param[in] p_gps_parser The GPS protocol parser to be used for GPS frame processing
      */
     gps_device(const std::string & p_gps_device_name, std::shared_ptr<gps_parser> & p_gps_parser) : _gps_device_name(p_gps_device_name), _gps_parser(p_gps_parser) { };
     virtual ~gps_device() { };

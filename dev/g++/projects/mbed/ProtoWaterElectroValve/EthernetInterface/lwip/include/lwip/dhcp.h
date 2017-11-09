@@ -1,4 +1,4 @@
-/** @file
+/** \file
  */
 
 #ifndef __LWIP_DHCP_H__

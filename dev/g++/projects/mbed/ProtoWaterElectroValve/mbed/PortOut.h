@@ -51,8 +51,8 @@ public:
 
     /** Create an PortOut, connected to the specified port
      *
-     *  @param port Port to connect to (Port0-Port5)
-     *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
+     *  \param port Port to connect to (Port0-Port5)
+     *  \param mask A bitmask to identify which bits in the port should be included (0 - ignore)
      */
     PortOut(PortName port, int mask = 0xFFFFFFFF) {
         port_init(&_port, port, mask, PIN_OUTPUT);
@@ -60,7 +60,7 @@ public:
 
     /** Write the value to the output port
      *
-     *  @param value An integer specifying a bit to write for every corresponding PortOut pin
+     *  \param value An integer specifying a bit to write for every corresponding PortOut pin
      */
     void write(int value) {
         port_write(&_port, value);
@@ -68,7 +68,7 @@ public:
 
     /** Read the value currently output on the port
      *
-     *  @returns
+     *  \returns
      *    An integer with each bit corresponding to associated PortOut pin setting
      */
     int read() {

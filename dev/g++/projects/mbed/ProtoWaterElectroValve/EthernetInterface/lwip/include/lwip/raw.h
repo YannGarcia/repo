@@ -48,11 +48,11 @@ extern "C" {
 struct raw_pcb;
 
 /** Function prototype for raw pcb receive callback functions.
- * @param arg user supplied argument (raw_pcb.recv_arg)
- * @param pcb the raw_pcb which received data
- * @param p the packet buffer that was received
- * @param addr the remote IP address from which the packet was received
- * @return 1 if the packet was 'eaten' (aka. deleted),
+ * \param arg user supplied argument (raw_pcb.recv_arg)
+ * \param pcb the raw_pcb which received data
+ * \param p the packet buffer that was received
+ * \param addr the remote IP address from which the packet was received
+ * \return 1 if the packet was 'eaten' (aka. deleted),
  *         0 if the packet lives on
  * If returning 1, the callback is responsible for freeing the pbuf
  * if it's not used any more.

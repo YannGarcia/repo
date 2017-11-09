@@ -1,10 +1,10 @@
 /**
- * @file    libhal_factory.hpp
- * @brief   Header file for for lihal object factory.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    libhal_factory.hpp
+ * \brief   Header file for for lihal object factory.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -16,9 +16,9 @@
 #include "analog_in.hpp"
 
 /**
- * @class libhal_factory
- * @brief lihal object factory
- * @remark Refer to signeton pattern
+ * \class libhal_factory
+ * \brief lihal object factory
+ * \remark Refer to signeton pattern
  */
 class libhal_factory {
   /** Unique instance of this class
@@ -27,47 +27,47 @@ class libhal_factory {
 
 public:
   /**
-   * @brief Destructor
+   * \brief Destructor
    */
   virtual ~libhal_factory() { ::libhal_shutdown_sys(); };
   
   /**
-   * @brief Create a new instance of a digital_out class
-   * @param[in] p_gpio_name The gpio to connect
-   * @param[in] p_state The gpio state. Default: digital_state_t::digital_state_low
-   * @return The new instance of a digital_out class
+   * \brief Create a new instance of a digital_out class
+   * \param[in] p_gpio_name The gpio to connect
+   * \param[in] p_state The gpio state. Default: digital_state_t::digital_state_low
+   * \return The new instance of a digital_out class
    */
   inline std::unique_ptr<digital_out> create_digital_out_instance(const pin_name p_gpio_name, const digital_state_t p_state = digital_state_t::digital_state_low) const;
   /**
-   * @brief Create a new instance of an analog_in class
-   * @param[in] p_adc The analog input pin identifier
-   * @return The new instance of a analoh_in class
+   * \brief Create a new instance of an analog_in class
+   * \param[in] p_adc The analog input pin identifier
+   * \return The new instance of a analoh_in class
    */
   inline std::unique_ptr<analog_in> create_analog_in_instance(const pin_name p_adc) const;
   /**
-   * @brief Create a new instance of an i2c class
-   * @param[in] p_bus_id The I2C bus identifier (/dev/i2c-<p_bus_id>)
-   * @param[in] p_device_address The I2C device address on 7 bits (e.g. 1 0 1 0 A3 A2 A1 R/W for 24LCxx)
-   * @return The new instance of a i2c class
+   * \brief Create a new instance of an i2c class
+   * \param[in] p_bus_id The I2C bus identifier (/dev/i2c-<p_bus_id>)
+   * \param[in] p_device_address The I2C device address on 7 bits (e.g. 1 0 1 0 A3 A2 A1 R/W for 24LCxx)
+   * \return The new instance of a i2c class
    */
   inline std::unique_ptr<i2c> create_i2c_instance(const uint8_t p_bus_id, const uint8_t p_device_address) const;
   /**
-   * @brief Create a new instance of an spi class
-   * @param [in] p_spi_channel_id The SPI channel identifier
-   * @param [in] p_cs The chip select pin name. Default: NC
-   * @return The new instance of a spi class
+   * \brief Create a new instance of an spi class
+   * \param [in] p_spi_channel_id The SPI channel identifier
+   * \param [in] p_cs The chip select pin name. Default: NC
+   * \return The new instance of a spi class
    */
   inline std::unique_ptr<spi> create_spi_instance(const uint8_t p_spi_channel_id, const pin_name p_cs = pin_name::NC) const;
   
   /**
-   * @brief Get unique reference of this class
+   * \brief Get unique reference of this class
    * return The unique reference of this class
    */
   static inline const libhal_factory & get_instance() { return *g_instance; };
 
 private:
   /**
-   * @brief Private constructor. 
+   * \brief Private constructor. 
    * Refer to singleton design pattern
    */
   libhal_factory() { ::libhal_setup_sys(); };

@@ -1,5 +1,5 @@
 /**
- * @file
+ * \file
  * Generic MIB tree structures.
  *
  * @todo namespace prefixes

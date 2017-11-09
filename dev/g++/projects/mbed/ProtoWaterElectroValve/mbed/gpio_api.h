@@ -23,8 +23,8 @@ extern "C" {
 #endif
 
 /* Set the given pin as GPIO
- * @param pin The pin to be set as GPIO
- * @return The GPIO port mask for this pin
+ * \param pin The pin to be set as GPIO
+ * \return The GPIO port mask for this pin
  **/
 uint32_t gpio_set(PinName pin);
 

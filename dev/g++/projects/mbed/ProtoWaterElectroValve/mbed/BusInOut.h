@@ -28,7 +28,7 @@ public:
 
     /** Create an BusInOut, connected to the specified pins
      *
-     *  @param p<n> DigitalInOut pin to connect to bus bit p<n> (p5-p30, NC)
+     *  \param p<n> DigitalInOut pin to connect to bus bit p<n> (p5-p30, NC)
      *
      *  @note
      *  It is only required to specify as many pin variables as is required
@@ -47,14 +47,14 @@ public:
 
     /** Write the value to the output bus
      *
-     *  @param value An integer specifying a bit to write for every corresponding DigitalInOut pin
+     *  \param value An integer specifying a bit to write for every corresponding DigitalInOut pin
      */
     void write(int value);
 
 
     /** Read the value currently output on the bus
      *
-     *  @returns
+     *  \returns
      *    An integer with each bit corresponding to associated DigitalInOut pin setting
      */
     int read();
@@ -69,7 +69,7 @@ public:
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone
+     *  \param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
 

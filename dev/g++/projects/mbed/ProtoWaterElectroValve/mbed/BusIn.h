@@ -30,7 +30,7 @@ public:
 
     /** Create an BusIn, connected to the specified pins
      *
-     * @param <n> DigitalIn pin to connect to bus bit <n> (p5-p30, NC)
+     * \param <n> DigitalIn pin to connect to bus bit <n> (p5-p30, NC)
      *
      * @note
      *  It is only required to specify as many pin variables as is required
@@ -47,14 +47,14 @@ public:
 
     /** Read the value of the input bus
      *
-     *  @returns
+     *  \returns
      *   An integer with each bit corresponding to the value read from the associated DigitalIn pin
      */
     int read();
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone
+     *  \param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
 

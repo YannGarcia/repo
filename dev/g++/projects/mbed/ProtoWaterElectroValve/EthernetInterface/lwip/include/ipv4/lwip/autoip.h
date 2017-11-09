@@ -1,5 +1,5 @@
 /**
- * @file
+ * \file
  *
  * AutoIP Automatic LinkLocal IP Configuration
  */

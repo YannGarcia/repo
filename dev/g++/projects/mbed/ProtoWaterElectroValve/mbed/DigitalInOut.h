@@ -29,7 +29,7 @@ class DigitalInOut {
 public:
     /** Create a DigitalInOut connected to the specified pin
      *
-     *  @param pin DigitalInOut pin to connect to
+     *  \param pin DigitalInOut pin to connect to
      */
     DigitalInOut(PinName pin) : gpio() {
         gpio_init_in(&gpio, pin);
@@ -37,10 +37,10 @@ public:
 
     /** Create a DigitalInOut connected to the specified pin
      *
-     *  @param pin DigitalInOut pin to connect to
-     *  @param direction the initial direction of the pin
-     *  @param mode the initial mode of the pin
-     *  @param value the initial value of the pin if is an output
+     *  \param pin DigitalInOut pin to connect to
+     *  \param direction the initial direction of the pin
+     *  \param mode the initial mode of the pin
+     *  \param value the initial value of the pin if is an output
      */
     DigitalInOut(PinName pin, PinDirection direction, PinMode mode, int value) : gpio() {
         gpio_init_inout(&gpio, pin, direction, mode, value);
@@ -48,7 +48,7 @@ public:
 
     /** Set the output, specified as 0 or 1 (int)
      *
-     *  @param value An integer specifying the pin output value,
+     *  \param value An integer specifying the pin output value,
      *      0 for logical 0, 1 (or any other non-zero value) for logical 1
      */
     void write(int value) {
@@ -57,7 +57,7 @@ public:
 
     /** Return the output setting, represented as 0 or 1 (int)
      *
-     *  @returns
+     *  \returns
      *    an integer representing the output setting of the pin if it is an output,
      *    or read the input if set as an input
      */
@@ -79,7 +79,7 @@ public:
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone, OpenDrain
+     *  \param mode PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode pull) {
         gpio_mode(&gpio, pull);

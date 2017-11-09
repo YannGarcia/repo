@@ -59,10 +59,10 @@ public:
   /**Get current time (blocking)
   Update the time using the server host
   Blocks until completion
-  @param host NTP server IPv4 address or hostname (will be resolved via DNS)
-  @param port port to use; defaults to 123
-  @param timeout waiting timeout in ms (osWaitForever for blocking function, not recommended)
-  @return 0 on success, NTP error code (<0) on failure
+  \param host NTP server IPv4 address or hostname (will be resolved via DNS)
+  \param port port to use; defaults to 123
+  \param timeout waiting timeout in ms (osWaitForever for blocking function, not recommended)
+  \return 0 on success, NTP error code (<0) on failure
   */
   NTPResult setTime(const char* host, uint16_t port = NTP_DEFAULT_PORT, uint32_t timeout = NTP_DEFAULT_TIMEOUT); //Blocking
  

@@ -56,8 +56,8 @@ public:
 
     /** Create an InterruptIn connected to the specified pin
      *
-     *  @param pin InterruptIn pin to connect to
-     *  @param name (optional) A string to identify the object
+     *  \param pin InterruptIn pin to connect to
+     *  \param name (optional) A string to identify the object
      */
     InterruptIn(PinName pin);
     virtual ~InterruptIn();
@@ -70,14 +70,14 @@ public:
 
     /** Attach a function to call when a rising edge occurs on the input
      *
-     *  @param fptr A pointer to a void function, or 0 to set as none
+     *  \param fptr A pointer to a void function, or 0 to set as none
      */
     void rise(void (*fptr)(void));
 
     /** Attach a member function to call when a rising edge occurs on the input
      *
-     *  @param tptr pointer to the object to call the member function on
-     *  @param mptr pointer to the member function to be called
+     *  \param tptr pointer to the object to call the member function on
+     *  \param mptr pointer to the member function to be called
      */
     template<typename T>
     void rise(T* tptr, void (T::*mptr)(void)) {
@@ -87,14 +87,14 @@ public:
 
     /** Attach a function to call when a falling edge occurs on the input
      *
-     *  @param fptr A pointer to a void function, or 0 to set as none
+     *  \param fptr A pointer to a void function, or 0 to set as none
      */
     void fall(void (*fptr)(void));
 
     /** Attach a member function to call when a falling edge occurs on the input
      *
-     *  @param tptr pointer to the object to call the member function on
-     *  @param mptr pointer to the member function to be called
+     *  \param tptr pointer to the object to call the member function on
+     *  \param mptr pointer to the member function to be called
      */
     template<typename T>
     void fall(T* tptr, void (T::*mptr)(void)) {
@@ -104,7 +104,7 @@ public:
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone
+     *  \param mode PullUp, PullDown, PullNone
      */
     void mode(PinMode pull);
 

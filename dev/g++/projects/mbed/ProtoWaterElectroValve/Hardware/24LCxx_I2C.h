@@ -39,8 +39,8 @@ namespace _24LCXX_I2C {
      * - <vector>
      * - <mbed.h>
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class C24LCXX_I2C { // TODO: Add EE Polling for write methods
         /** Reference counter used to guarentee unicity of the instance of I2C class
@@ -66,11 +66,11 @@ namespace _24LCXX_I2C {
     public:
         /** Constructor with Write Protect command pin wired. Use it to manage the first I2C module on 3.3V or 5V network
          *
-         * @param p_sda: MBed pin for SDA
-         * @param p_scl: MBed pin for SCL
-         * @param p_address: Device address input: A0, A1, A2 (Pins <1,3>)
-         * @param p_wp: MBed pin to manage Write Protect input. If NC, WP is not managed, default value is NC, not connected
-         * @param p_frequency: Frequency of the I2C interface (SCL), default value is 400KHz
+         * \param p_sda: MBed pin for SDA
+         * \param p_scl: MBed pin for SCL
+         * \param p_address: Device address input: A0, A1, A2 (Pins <1,3>)
+         * \param p_wp: MBed pin to manage Write Protect input. If NC, WP is not managed, default value is NC, not connected
+         * \param p_frequency: Frequency of the I2C interface (SCL), default value is 400KHz
          * Example:
          * - If A1 and A2 pins are tired to Vdd and A0 is tired to Vss, address shall '00000110'B
          * - If A0 and A1 pins are tired to Vss and A2 is tired to Vdd, address shall '00000100'B
@@ -87,10 +87,10 @@ namespace _24LCXX_I2C {
 
         /** Erase of memory area starting at the specified address, using the specified pattern to fill the memory area
          *
-         * @param p_startAddress The address of the memory area (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_count The size of the memory area to erase
-         * @param p_pattern The pattern value to use to fill the memory area. Default vqlue: 0x00
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_count The size of the memory area to erase
+         * \param p_pattern The pattern value to use to fill the memory area. Default vqlue: 0x00
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * ...
@@ -102,9 +102,9 @@ namespace _24LCXX_I2C {
     
         /** Write a byte at the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_byte The byte value to save
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_byte The byte value to save
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * unsigned char value = 0xaa;
@@ -117,10 +117,10 @@ namespace _24LCXX_I2C {
     
         /** Write a short at the specified memory address according to the specified mode
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_short The short value to save
-         * @param p_mode The storage mode. Default value: BigEndian
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_short The short value to save
+         * \param p_mode The storage mode. Default value: BigEndian
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * short value = 0xcafe;
@@ -133,10 +133,10 @@ namespace _24LCXX_I2C {
     
         /** Write an integer at the specified memory address according to the specified mode
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_int The integer value to save
-         * @param p_mode The storage mode. Default value: BigEndian
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_int The integer value to save
+         * \param p_mode The storage mode. Default value: BigEndian
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * int value = 0xcafedeca;
@@ -149,31 +149,31 @@ namespace _24LCXX_I2C {
     
         /** Write a buffer of bytes at the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_datas The string to save
-         * @param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of bytes to write, -1 for all characters. Default value: -1
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_datas The string to save
+         * \param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of bytes to write, -1 for all characters. Default value: -1
+         * \return true on success, false otherwise
          */
         bool Write(const short p_address, const std::vector<unsigned char> & p_datas, bool p_storeLength = true, const int p_length2write = -1);
     
         /** Write a buffer of bytes at the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_datas The buffer of bytes to save
-         * @param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of bytes to write, -1 for all bytes. Default value: -1
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_datas The buffer of bytes to save
+         * \param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of bytes to write, -1 for all bytes. Default value: -1
+         * \return true on success, false otherwise
          */
         bool Write(const short p_address, const unsigned char *p_datas, bool p_storeLength = true, const int p_length2write = -1);
     
         /** Write a string at the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_string The string to save
-         * @param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of character to write, -1 for all characters
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_string The string to save
+         * \param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of character to write, -1 for all characters
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * std::string text2save("CafeDeca");
@@ -187,19 +187,19 @@ namespace _24LCXX_I2C {
         /** Write a buffer of characters at the specified memory address (from 0 to N - 1, N is the number of cells of the memory)
          *
          * Note that the length of the buffer is not saved and the string is saved in Big Endian mode
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_datas The string to save
-         * @param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param length2write The number of character to write, -1 for all characters
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_datas The string to save
+         * \param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param length2write The number of character to write, -1 for all characters
+         * \return true on success, false otherwise
          */
         bool Write(const short p_address, const char *p_datas, const bool p_storeLength = true, const int p_length2write = -1);
     
         /** Read a byte from the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_byte The byte value to read
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_byte The byte value to read
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * unsigned char value;
@@ -212,9 +212,9 @@ namespace _24LCXX_I2C {
     
         /** Read a short from the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_short The short value to read
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_short The short value to read
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * short value;
@@ -227,9 +227,9 @@ namespace _24LCXX_I2C {
     
         /** Read an integer from the specified memory address
          *
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_int The integer value to read
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_int The integer value to read
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * int value;
@@ -243,11 +243,11 @@ namespace _24LCXX_I2C {
         /** Read a buffer of bytes from the specified memory address and store it into a std::vector<unsigned char> object
          *
          * Note that the size of the buffer object is used for the number of bytes to read
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_datas The buffer to fill
-         * @param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
-         * @param p_length2read The number of character to write, -1 to use the size of the string buffer
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_datas The buffer to fill
+         * \param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
+         * \param p_length2read The number of character to write, -1 to use the size of the string buffer
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * std::vector<unsigned char> datas(bufferLength);
@@ -261,11 +261,11 @@ namespace _24LCXX_I2C {
         /** Read a buffer of characters from the specified memory address and store it into a string object
          *
          * Note that the size of the string object is used for the number of characters to read
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_string The string buffer to fill
-         * @param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
-         * @param p_length2write The number of character to write, -1 to use the size of the string buffer
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_string The string buffer to fill
+         * \param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
+         * \param p_length2write The number of character to write, -1 to use the size of the string buffer
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * std::string readtext;
@@ -279,13 +279,13 @@ namespace _24LCXX_I2C {
         /** Activate or deactivate write protect (pin 7)
          *
          * Note that a voltage of 3.3V apply to WP input of 24LCxx device is enough to enable write protect
-         * @param p_writeProtect: Set to true to activate write protection, false otherwise
-         * @return true on success, false otherwise
+         * \param p_writeProtect: Set to true to activate write protection, false otherwise
+         * \return true on success, false otherwise
          */
         bool WriteProtect(const bool p_writeProtect);
     
         /** Indicate the current WP state indicator  (pin 7)
-         * @return true is write protected, false otherwise
+         * \return true is write protected, false otherwise
          */
         inline bool IsWriteProtected() {
             return (_wp != NULL) ? (bool)(_wp->read() == 1) : false;
@@ -295,9 +295,9 @@ namespace _24LCXX_I2C {
         /** Dump a memory area
          * 
          * Note that this method is available only on debug mode
-         * @param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
-         * @param p_count The number of bytes toi dump
-         * @return true on success, false otherwise
+         * \param p_address The memory address (from 0 to N - 1, N is the number of cells of the memory)
+         * \param p_count The number of bytes toi dump
+         * \return true on success, false otherwise
          */
         void DumpMemoryArea(const int p_address, const int p_count);
         /** For debug purpose only

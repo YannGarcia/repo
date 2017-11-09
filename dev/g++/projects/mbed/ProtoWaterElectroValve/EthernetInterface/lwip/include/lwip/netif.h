@@ -97,31 +97,31 @@ extern "C" {
 /** Function prototype for netif init functions. Set up flags and output/linkoutput
  * callback functions in this function.
  *
- * @param netif The netif to initialize
+ * \param netif The netif to initialize
  */
 typedef err_t (*netif_init_fn)(struct netif *netif);
 /** Function prototype for netif->input functions. This function is saved as 'input'
  * callback function in the netif struct. Call it when a packet has been received.
  *
- * @param p The received packet, copied into a pbuf
- * @param inp The netif which received the packet
+ * \param p The received packet, copied into a pbuf
+ * \param inp The netif which received the packet
  */
 typedef err_t (*netif_input_fn)(struct pbuf *p, struct netif *inp);
 /** Function prototype for netif->output functions. Called by lwIP when a packet
  * shall be sent. For ethernet netif, set this to 'etharp_output' and set
  * 'linkoutput'.
  *
- * @param netif The netif which shall send a packet
- * @param p The packet to send (p->payload points to IP header)
- * @param ipaddr The IP address to which the packet shall be sent
+ * \param netif The netif which shall send a packet
+ * \param p The packet to send (p->payload points to IP header)
+ * \param ipaddr The IP address to which the packet shall be sent
  */
 typedef err_t (*netif_output_fn)(struct netif *netif, struct pbuf *p,
        ip_addr_t *ipaddr);
 /** Function prototype for netif->linkoutput functions. Only used for ethernet
  * netifs. This function is called by ARP when a packet shall be sent.
  *
- * @param netif The netif which shall send a packet
- * @param p The packet to send (raw ethernet packet)
+ * \param netif The netif which shall send a packet
+ * \param p The packet to send (raw ethernet packet)
  */
 typedef err_t (*netif_linkoutput_fn)(struct netif *netif, struct pbuf *p);
 /** Function prototype for netif status- or link-callback functions. */

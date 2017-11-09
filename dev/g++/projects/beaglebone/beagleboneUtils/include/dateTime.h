@@ -27,7 +27,7 @@ namespace beagleboneUtils {
 
   /** This class provides a set of date/time methods. V0.0.0.1
    *
-   * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+   * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
    */
   class dateTime {
 
@@ -40,8 +40,8 @@ namespace beagleboneUtils {
 
     /**
      * @desc Convert provided GPS UTC date/time int UTC time.
-     * @param p_gpsDateTime GPS UTC date/time (ddmmyy hhmmssdd)
-     * @return The Unix UTC time on success, 0 otherwise
+     * \param p_gpsDateTime GPS UTC date/time (ddmmyy hhmmssdd)
+     * \return The Unix UTC time on success, 0 otherwise
      */
     const time_t gps2utc(const std::string & p_gpsDateTime) const;
     inline const time_t utc2local(const time_t p_time) const {

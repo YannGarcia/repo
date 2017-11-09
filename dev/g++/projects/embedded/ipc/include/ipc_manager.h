@@ -1,10 +1,10 @@
 /**
- * @File    ipc_manager.h
- * @brief   Header file for IPC factory.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    ipc_manager.h
+ * \brief   Header file for IPC factory.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -23,8 +23,8 @@
 namespace ipc {
   
   /**
-   * @class ipc_manager
-   * @brief 
+   * \class ipc_manager
+   * \brief 
    */
   class ipc_manager {
     

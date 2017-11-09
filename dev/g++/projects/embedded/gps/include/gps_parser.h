@@ -1,10 +1,10 @@
 /**
- * @File    gps_parser.h
- * @brief   Header file for the lightweight gps_parser library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    gps_parser.h
+ * \brief   Header file for the lightweight gps_parser library.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -17,8 +17,8 @@ namespace gps {
   namespace parsers {
 
     /**
-     * @class gps_parser
-     * @brief This class provide a set of methods for lightweight GPS protocol parser
+     * \class gps_parser
+     * \brief This class provide a set of methods for lightweight GPS protocol parser
      */
     class gps_parser {
     public:

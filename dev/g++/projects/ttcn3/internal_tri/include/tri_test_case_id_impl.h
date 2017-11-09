@@ -1,11 +1,11 @@
 /**
- * @file    tri_test_case_id_impl.h
- * @brief   Header file for the tri test case id implementation
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
- * @see ETSI ES 201 873-5 
+ * \file    tri_test_case_id_impl.h
+ * \brief   Header file for the tri test case id implementation
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
+ * \see ETSI ES 201 873-5 
  */
 #pragma once
 

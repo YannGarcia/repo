@@ -1,10 +1,10 @@
 /**
- * @file      keyboard.h
- * @brief     Header file for the keyboard key stricked helper class.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
+ * \file      keyboard.h
+ * \brief     Header file for the keyboard key stricked helper class.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
  */
 #pragma once
 
@@ -13,24 +13,24 @@
 namespace helpers {
 
   /**
-   * @class keyboard
-   * @brief Helper class for key stricked interception
+   * \class keyboard
+   * \brief Helper class for key stricked interception
    */
   class keyboard {
       
   public:
     /**
-     * @brief Default constructor
+     * \brief Default constructor
      */
     keyboard() { };
     /**
-     * @brief Default destructor
+     * \brief Default destructor
      */
     ~keyboard() { };
       
     /**
-     * @brief Check if key stricked
-     * @return 1 on success, 0 otherwise
+     * \brief Check if key stricked
+     * \return 1 on success, 0 otherwise
      */
     static uint32_t kbhit();
       

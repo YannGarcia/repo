@@ -10,7 +10,7 @@
  * - Date range to activate it
  * - Periode to swith on
  *
- * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+ * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
  */
 class TaskImpl {
     

@@ -77,7 +77,7 @@ class debugHelper
 {
  public:
   /** Standard log method
-   * @param p_format Format string compliant with C 'printf' format string
+   * \param p_format Format string compliant with C 'printf' format string
    */
   static void debug(const char* p_format, ...);
   /** Break point method based on getchar() C function

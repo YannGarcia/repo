@@ -43,7 +43,7 @@ class DigitalOut {
 public:
     /** Create a DigitalOut connected to the specified pin
      *
-     *  @param pin DigitalOut pin to connect to
+     *  \param pin DigitalOut pin to connect to
      */
     DigitalOut(PinName pin) : gpio() {
         gpio_init_out(&gpio, pin);
@@ -51,8 +51,8 @@ public:
 
     /** Create a DigitalOut connected to the specified pin
      *
-     *  @param pin DigitalOut pin to connect to
-     *  @param value the initial pin value
+     *  \param pin DigitalOut pin to connect to
+     *  \param value the initial pin value
      */
     DigitalOut(PinName pin, int value) : gpio() {
         gpio_init_out_ex(&gpio, pin, value);
@@ -60,7 +60,7 @@ public:
 
     /** Set the output, specified as 0 or 1 (int)
      *
-     *  @param value An integer specifying the pin output value,
+     *  \param value An integer specifying the pin output value,
      *      0 for logical 0, 1 (or any other non-zero value) for logical 1
      */
     void write(int value) {
@@ -69,7 +69,7 @@ public:
 
     /** Return the output setting, represented as 0 or 1 (int)
      *
-     *  @returns
+     *  \returns
      *    an integer representing the output setting of the pin,
      *    0 for logical 0, 1 for logical 1
      */

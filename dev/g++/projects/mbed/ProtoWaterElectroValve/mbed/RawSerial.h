@@ -50,8 +50,8 @@ class RawSerial: public SerialBase {
 public:
     /** Create a RawSerial port, connected to the specified transmit and receive pins
      *
-     *  @param tx Transmit pin
-     *  @param rx Receive pin
+     *  \param tx Transmit pin
+     *  \param rx Receive pin
      *
      *  @note
      *    Either tx or rx may be specified as NC if unused
@@ -60,23 +60,23 @@ public:
 
     /** Write a char to the serial port
      *
-     * @param c The char to write
+     * \param c The char to write
      *
-     * @returns The written char or -1 if an error occured
+     * \returns The written char or -1 if an error occured
      */
     int putc(int c);
 
     /** Read a char from the serial port
      *
-     * @returns The char read from the serial port
+     * \returns The char read from the serial port
      */
     int getc();
 
     /** Write a string to the serial port
      *
-     * @param str The string to write
+     * \param str The string to write
      *
-     * @returns 0 if the write succeeds, EOF for error
+     * \returns 0 if the write succeeds, EOF for error
      */
     int puts(const char *str);
 

@@ -33,22 +33,22 @@ namespace beagleboneHw {
       static unsigned char DeviceId;
       /** 
        * @desc Ambient Temperature register
-       * @see DS21952B-page 14 Clause 5.3 Registers
+       * \see DS21952B-page 14 Clause 5.3 Registers
        */
       static unsigned char TA;
       /** 
        * @desc Temperature Limit-set register
-       * @see DS21952B-page 14 Clause 5.3 Registers
+       * \see DS21952B-page 14 Clause 5.3 Registers
        */
       static unsigned char TSET;
       /** 
        * @desc Temperature Hysteresis register
-       * @see DS21952B-page 14 Clause 5.3 Registers
+       * \see DS21952B-page 14 Clause 5.3 Registers
        */
       static unsigned char THYST;
       /** 
        * @desc Device Configuration register
-       * @see DS21952B-page 14 Clause 5.3 Registers
+       * \see DS21952B-page 14 Clause 5.3 Registers
        */
       static unsigned char CONFIG;
   
@@ -57,7 +57,7 @@ namespace beagleboneHw {
       
     public:
       /**
-       * @see DS21909D-page 18 REGISTER 5-3: CONFIGURATION REGISTER (CONFIG) – ADDRESS
+       * \see DS21909D-page 18 REGISTER 5-3: CONFIGURATION REGISTER (CONFIG) – ADDRESS
        */
       enum AdcResolution : unsigned char {
 	_0_5    = 0x00,
@@ -73,8 +73,8 @@ namespace beagleboneHw {
 
       /** 
        * @desc Get the ambiamt temperature
-       * @return The ambiant temperature on success, FLT_MIN otherwise
-       * @see DS21952B-page 16 Clause 5.3.1 AMBIENT TEMPERATURE REGISTER (TA)
+       * \return The ambiant temperature on success, FLT_MIN otherwise
+       * \see DS21952B-page 16 Clause 5.3.1 AMBIENT TEMPERATURE REGISTER (TA)
        */
       const float readTemp() const;
       

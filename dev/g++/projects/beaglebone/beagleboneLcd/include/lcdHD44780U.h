@@ -12,8 +12,8 @@ namespace beagleboneLcd {
 
   /**
    * @desc 
-   * @remark This implementation uses the wiringBbb library. It assumes this libary was set up before to instanciate this class 
-   * @see http://www.8051projects.net/lcd-interfacing/lcd-4-bit.php
+   * \remark This implementation uses the wiringBbb library. It assumes this libary was set up before to instanciate this class 
+   * \see http://www.8051projects.net/lcd-interfacing/lcd-4-bit.php
    */
   class lcdHD44780U : public abstractLcd {
     // Commands
@@ -78,8 +78,8 @@ namespace beagleboneLcd {
     /**
      * @desc Write data on the LCD port
      *       In 4bits mode: LSB contains 
-     * @param 
-     * @return 
+     * \param 
+     * \return 
      */
     int write(const unsigned char p_data, const bool p_waitBF = true);
     int write(const int p_row, const int p_column, const char p_char);
@@ -88,8 +88,8 @@ namespace beagleboneLcd {
 
     /**
      * @desc Wait for BF (Busy Flag) unset 
-     * @param 
-     * @return 
+     * \param 
+     * \return 
      */
     int waitBF();
 

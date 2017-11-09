@@ -61,7 +61,7 @@ public:
     int setBoardNumber(const unsigned char p_boardNumber);
     /**
      * @desc Force memory dump
-     * @remark __DEBUG flag shall be defined
+     * \remark __DEBUG flag shall be defined
      */
     void forceMemoryDump(const short p_address = 0, const short p_length = 128);
     void forceResetMemory();

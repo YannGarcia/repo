@@ -52,9 +52,9 @@ struct tcp_pcb;
 /** Function prototype for tcp accept callback functions. Called when a new
  * connection can be accepted on a listening pcb.
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param newpcb The new connection pcb
- * @param err An error code if there has been an error accepting.
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param newpcb The new connection pcb
+ * \param err An error code if there has been an error accepting.
  *            Only return ERR_ABRT if you have called tcp_abort from within the
  *            callback function!
  */
@@ -63,10 +63,10 @@ typedef err_t (*tcp_accept_fn)(void *arg, struct tcp_pcb *newpcb, err_t err);
 /** Function prototype for tcp receive callback functions. Called when data has
  * been received.
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param tpcb The connection pcb which received data
- * @param p The received data (or NULL when the connection has been closed!)
- * @param err An error code if there has been an error receiving
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param tpcb The connection pcb which received data
+ * \param p The received data (or NULL when the connection has been closed!)
+ * \param err An error code if there has been an error receiving
  *            Only return ERR_ABRT if you have called tcp_abort from within the
  *            callback function!
  */
@@ -77,10 +77,10 @@ typedef err_t (*tcp_recv_fn)(void *arg, struct tcp_pcb *tpcb,
  * been acknowledged by the remote side. Use it to free corresponding resources.
  * This also means that the pcb has now space available to send new data.
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param tpcb The connection pcb for which data has been acknowledged
- * @param len The amount of bytes acknowledged
- * @return ERR_OK: try to send some data by calling tcp_output
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param tpcb The connection pcb for which data has been acknowledged
+ * \param len The amount of bytes acknowledged
+ * \return ERR_OK: try to send some data by calling tcp_output
  *            Only return ERR_ABRT if you have called tcp_abort from within the
  *            callback function!
  */
@@ -88,11 +88,11 @@ typedef err_t (*tcp_sent_fn)(void *arg, struct tcp_pcb *tpcb,
                               u16_t len);
 
 /** Function prototype for tcp poll callback functions. Called periodically as
- * specified by @see tcp_poll.
+ * specified by \see tcp_poll.
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param tpcb tcp pcb
- * @return ERR_OK: try to send some data by calling tcp_output
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param tpcb tcp pcb
+ * \return ERR_OK: try to send some data by calling tcp_output
  *            Only return ERR_ABRT if you have called tcp_abort from within the
  *            callback function!
  */
@@ -103,8 +103,8 @@ typedef err_t (*tcp_poll_fn)(void *arg, struct tcp_pcb *tpcb);
  *
  * @note The corresponding pcb is already freed when this callback is called!
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param err Error code to indicate why the pcb has been closed
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param err Error code to indicate why the pcb has been closed
  *            ERR_ABRT: aborted through tcp_abort or by a TCP timer
  *            ERR_RST: the connection was reset by the remote host
  */
@@ -114,9 +114,9 @@ typedef void  (*tcp_err_fn)(void *arg, err_t err);
  * is connected to the remote side after initiating a connection attempt by
  * calling tcp_connect().
  *
- * @param arg Additional argument to pass to the callback function (@see tcp_arg())
- * @param tpcb The connection pcb which is connected
- * @param err An unused error code, always ERR_OK currently ;-) TODO!
+ * \param arg Additional argument to pass to the callback function (\see tcp_arg())
+ * \param tpcb The connection pcb which is connected
+ * \param err An unused error code, always ERR_OK currently ;-) TODO!
  *            Only return ERR_ABRT if you have called tcp_abort from within the
  *            callback function!
  *
@@ -140,10 +140,10 @@ enum tcp_state {
 
 #if LWIP_CALLBACK_API
   /* Function to call when a listener has been connected.
-   * @param arg user-supplied argument (tcp_pcb.callback_arg)
-   * @param pcb a new tcp_pcb that now is connected
-   * @param err an error argument (TODO: that is current always ERR_OK?)
-   * @return ERR_OK: accept the new connection,
+   * \param arg user-supplied argument (tcp_pcb.callback_arg)
+   * \param pcb a new tcp_pcb that now is connected
+   * \param err an error argument (TODO: that is current always ERR_OK?)
+   * \return ERR_OK: accept the new connection,
    *                 any other err_t abortsthe new connection
    */
 #define DEF_ACCEPT_CALLBACK  tcp_accept_fn accept;

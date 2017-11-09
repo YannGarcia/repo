@@ -1,10 +1,10 @@
 /**
- * @file    rs232.h
- * @brief   Header file for the rs232 library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    rs232.h
+ * \brief   Header file for the rs232 library.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 

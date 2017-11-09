@@ -17,8 +17,8 @@ namespace beagleboneComm {
     public:
       /**
        * @desc
-       * @param p_host Host address. "0.0.0.0" for server (INADDR_ANY)
-       * @param p_port Port number.
+       * \param p_host Host address. "0.0.0.0" for server (INADDR_ANY)
+       * \param p_port Port number.
        */
       socketAddress(const std::string & p_host, const int p_port = -1);
       socketAddress(const socketAddress & p_host);

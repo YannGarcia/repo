@@ -45,14 +45,14 @@ class IHTTPDataOut : public IHTTPData
   virtual void readReset() = 0;
 
   /** Read a piece of data to be transmitted
-   * @param buf Pointer to the buffer on which to copy the data
-   * @param len Length of the buffer
-   * @param pReadLen Pointer to the variable on which the actual copied data length will be stored
+   * \param buf Pointer to the buffer on which to copy the data
+   * \param len Length of the buffer
+   * \param pReadLen Pointer to the variable on which the actual copied data length will be stored
    */
   virtual int read(char* buf, size_t len, size_t* pReadLen) = 0;
   
   /** Get MIME type
-   * @param type Internet media type from Content-Type header
+   * \param type Internet media type from Content-Type header
    */
   virtual int getDataType(char* type, size_t maxTypeLen) = 0; //Internet media type for Content-Type header
   
@@ -80,13 +80,13 @@ class IHTTPDataIn : public IHTTPData
   virtual void writeReset() = 0;
 
   /** Write a piece of data transmitted by the server
-   * @param buf Pointer to the buffer from which to copy the data
-   * @param len Length of the buffer
+   * \param buf Pointer to the buffer from which to copy the data
+   * \param len Length of the buffer
    */
   virtual int write(const char* buf, size_t len) = 0;
 
   /** Set MIME type
-   * @param type Internet media type from Content-Type header
+   * \param type Internet media type from Content-Type header
    */
   virtual void setDataType(const char* type) = 0;
 

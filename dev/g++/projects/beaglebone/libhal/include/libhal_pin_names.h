@@ -1,22 +1,22 @@
 /**
- * @file    pin_names.h
- * @brief   Main header file for the Hardware Abstract Layer pins mapping.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    pin_names.h
+ * \brief   Main header file for the Hardware Abstract Layer pins mapping.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #if !defined(__BEAGLEBONEBLACK_PIN_NAMES_H__)
 #define __BEAGLEBONEBLACK_PIN_NAMES_H__
 
-/** @def Flagto define BeagleBoneBlack board
+/** \def Flagto define BeagleBoneBlack board
  */
 #define BEAGLEBONE_BLACK_BOARD 1
 
 #if defined(BEAGLEBONE_BLACK_BOARD)
 
-/** @enum pin_names_t
- * @brief Describes the pin name/pin kernel number 
+/** \enum pin_names_t
+ * \brief Describes the pin name/pin kernel number 
  */
 typedef enum {
   P9_22 = 2,

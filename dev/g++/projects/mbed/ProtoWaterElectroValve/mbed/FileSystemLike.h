@@ -35,7 +35,7 @@ class FileSystemLike : public FileBase {
 public:
     /** FileSystemLike constructor
      *
-     *  @param name The name to use for the filesystem.
+     *  \param name The name to use for the filesystem.
      */
     FileSystemLike(const char *name);
 
@@ -46,11 +46,11 @@ public:
 
     /** Opens a file from the filesystem
      *
-     *  @param filename The name of the file to open.
-     *  @param flags One of O_RDONLY, O_WRONLY, or O_RDWR, OR'd with
+     *  \param filename The name of the file to open.
+     *  \param flags One of O_RDONLY, O_WRONLY, or O_RDWR, OR'd with
      *    zero or more of O_CREAT, O_TRUNC, or O_APPEND.
      *
-     *  @returns
+     *  \returns
      *    A pointer to a FileHandle object representing the
      *   file on success, or NULL on failure.
      */
@@ -58,17 +58,17 @@ public:
 
     /** Remove a file from the filesystem.
      *
-     *  @param filename the name of the file to remove.
-     *  @param returns 0 on success, -1 on failure.
+     *  \param filename the name of the file to remove.
+     *  \param returns 0 on success, -1 on failure.
      */
     virtual int remove(const char *filename) { return -1; };
 
     /** Rename a file in the filesystem.
      *
-     *  @param oldname the name of the file to rename.
-     *  @param newname the name to rename it to.
+     *  \param oldname the name of the file to rename.
+     *  \param newname the name to rename it to.
      *
-     *  @returns
+     *  \returns
      *    0 on success,
      *   -1 on failure.
      */
@@ -77,9 +77,9 @@ public:
     /** Opens a directory in the filesystem and returns a DirHandle
      *   representing the directory stream.
      *
-     *  @param name The name of the directory to open.
+     *  \param name The name of the directory to open.
      *
-     *  @returns
+     *  \returns
      *    A DirHandle representing the directory stream, or
      *   NULL on failure.
      */
@@ -87,10 +87,10 @@ public:
 
     /** Creates a directory in the filesystem.
      *
-     *  @param name The name of the directory to create.
-     *  @param mode The permissions to create the directory with.
+     *  \param name The name of the directory to create.
+     *  \param mode The permissions to create the directory with.
      *
-     *  @returns
+     *  \returns
      *    0 on success,
      *   -1 on failure.
      */

@@ -47,7 +47,7 @@ extern "C" {
 
 /** Determine whether the mbed interface is connected, based on whether debug is enabled
  *
- *  @returns
+ *  \returns
  *    1 if interface is connected,
  *    0 otherwise
  */
@@ -55,7 +55,7 @@ int mbed_interface_connected(void);
 
 /** Instruct the mbed interface to reset, as if the reset button had been pressed
  *
- *  @returns
+ *  \returns
  *    1 if successful,
  *    0 otherwise (e.g. interface not present)
  */
@@ -64,7 +64,7 @@ int mbed_interface_reset(void);
 /** This will disconnect the debug aspect of the interface, so semihosting will be disabled.
  * The interface will still support the USB serial aspect
  *
- *  @returns
+ *  \returns
  *    0 if successful,
  *   -1 otherwise (e.g. interface not present)
  */
@@ -74,7 +74,7 @@ int mbed_interface_disconnect(void);
  * connected, also power down the interface. If the USB cable is connected, the interface
  * will remain powered up and visible to the host
  *
- *  @returns
+ *  \returns
  *    0 if successful,
  *   -1 otherwise (e.g. interface not present)
  */
@@ -83,9 +83,9 @@ int mbed_interface_powerdown(void);
 /** This returns a string containing the 32-character UID of the mbed interface
  *  This is a weak function that can be overwritten if required
  *
- *  @param uid A 33-byte array to write the null terminated 32-byte string
+ *  \param uid A 33-byte array to write the null terminated 32-byte string
  *
- *  @returns
+ *  \returns
  *    0 if successful,
  *   -1 otherwise (e.g. interface not present)
  */
@@ -99,7 +99,7 @@ int mbed_interface_uid(char *uid);
  * This is a weak function that can be overwritten if you want to provide your own mechanism to
  * provide a MAC address.
  *
- *  @param mac A 6-byte array to write the MAC address
+ *  \param mac A 6-byte array to write the MAC address
  */
 void mbed_mac_address(char *mac);
 

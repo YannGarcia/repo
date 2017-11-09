@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     core_cmInstr.h
- * @brief    CMSIS Cortex-M Core Instruction Access Header File
- * @version  V3.20
+ * \file     core_cmInstr.h
+ * \brief    CMSIS Cortex-M Core Instruction Access Header File
+ * \version  V3.20
  * @date     05. March 2013
  *
  * @note

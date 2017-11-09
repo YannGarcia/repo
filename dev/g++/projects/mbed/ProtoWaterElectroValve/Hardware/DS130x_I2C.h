@@ -43,8 +43,8 @@ namespace DS130X_I2C {
      * - <vector>
      * - <mbed.h>
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the MAXIM DS130x Real-Time Clock device
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the MAXIM DS130x Real-Time Clock device
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class CDS130X_I2C : public I2C {
 
@@ -56,7 +56,7 @@ namespace DS130X_I2C {
             Four_KHz, //<! Oscillator set for 4096Hz square signal generation
             Height_KHz, //<! Oscillator set for 8192Hz square signal generation
             ThirtyTwo_KHz, //<! Oscillator set for 32768Hz square signal generation
-            Output //<! Oscillator is not used, @see _outputControlLevel for logocal outpout level
+            Output //<! Oscillator is not used, \see _outputControlLevel for logocal outpout level
         };
 
         /** Time register format
@@ -97,8 +97,8 @@ namespace DS130X_I2C {
          *
          * See datasheet - Clause CLOCK AND CALENDAR (CH bit)
          *
-         * @param p_mode: true to restart the clock, false to halt it
-         * @return true on success, false otherwise
+         * \param p_mode: true to restart the clock, false to halt it
+         * \return true on success, false otherwise
          */
         bool ControlClock(bool p_mode);
 
@@ -116,12 +116,12 @@ namespace DS130X_I2C {
     public: // Construction methods
         /** Ctor with Write Protect command pin wired
          *
-         * @param p_slaveAddress: I2C device address
-         * @param p_sda: MBed pin for SDA
-         * @param p_scl: MBed pin for SCL
-         * @param p_oscillatorMode Indicate the oscillator mode (pin 7 - SQW/OUT). Default: Output (oscillator not used)
-         * @param p_outputLevel Indicate the output level (0V/Vdd) when oscillator mode is Output. Default: 0V
-         * @param p_frequency: Frequency of the I2C interface (SCL), default value is 100KHz - See datasheet - Clause I2C DATA BUS
+         * \param p_slaveAddress: I2C device address
+         * \param p_sda: MBed pin for SDA
+         * \param p_scl: MBed pin for SCL
+         * \param p_oscillatorMode Indicate the oscillator mode (pin 7 - SQW/OUT). Default: Output (oscillator not used)
+         * \param p_outputLevel Indicate the output level (0V/Vdd) when oscillator mode is Output. Default: 0V
+         * \param p_frequency: Frequency of the I2C interface (SCL), default value is 100KHz - See datasheet - Clause I2C DATA BUS
          */
         CDS130X_I2C(const unsigned char p_slaveAddress, const PinName p_sda, const PinName p_scl, const CDS130X_I2C::OscillatorMode p_oscillatorMode = Output, const bool p_outputLevel = false, const int p_frequency = 400000);
     
@@ -131,15 +131,15 @@ namespace DS130X_I2C {
 
         /** Initialize the module, configuring the module and starting the clock
          *
-         * @return true on success, false otherwise
+         * \return true on success, false otherwise
          */
         bool Initialize();
 
     public: // Time part
         /** This methods converts a packed BCD value < 99 into an hexadecimal value (e.g. 0x32 -> 0x10)
          *
-         * @param p_hexaValue: The hexadecimal value to convert
-         * @return The packed BCD value
+         * \param p_hexaValue: The hexadecimal value to convert
+         * \return The packed BCD value
          */
         inline unsigned char ConvertBCDToHex(const unsigned char p_bcdValue) {
             /*DEBUG("ConvertBCDToHex: %02x - %02x - %02x - %02x - %d", 
@@ -156,8 +156,8 @@ namespace DS130X_I2C {
 
         /** This methods converts an hexadecimal value < 99 into a packed BCD (e.g. 0x20 -> 0x32)
          *
-         * @param p_hexaValue: The hexadecimal value to convert
-         * @return The packed BCD value
+         * \param p_hexaValue: The hexadecimal value to convert
+         * \return The packed BCD value
          */
         inline unsigned char ConvertHexToBCD(const unsigned char p_hexaValue) {
             //DEBUG("ConvertHexToBCD: %02x - %02x - %02x", p_hexaValue, (unsigned char)(p_hexaValue / 10 << 4), (unsigned char)(p_hexaValue % 10))
@@ -168,14 +168,14 @@ namespace DS130X_I2C {
          *
          * See datasheet - Clause CLOCK AND CALENDAR (CH bit)
          *
-         * @return true on success, false otherwise
+         * \return true on success, false otherwise
          */
         bool RestartClock();
         /** Halt the clock
          *
          * See datasheet - Clause CLOCK AND CALENDAR (CH bit)
          *
-         * @return true on success, false otherwise
+         * \return true on success, false otherwise
          */
         bool HaltClock();
 
@@ -183,12 +183,12 @@ namespace DS130X_I2C {
          *
          * See datasheet - Clause CLOCK AND CALENDAR
          *
-         * @param p_address: The time register identifier the to read
-         * @param p_byte: The register value in BDC format
-         * @param p_format: The format of the value to return. Default is BCD
-         * @return true on success, false otherwise
-         * @see RegisterEnum
-         * @see RegisterFormatEnum
+         * \param p_address: The time register identifier the to read
+         * \param p_byte: The register value in BDC format
+         * \param p_format: The format of the value to return. Default is BCD
+         * \return true on success, false otherwise
+         * \see RegisterEnum
+         * \see RegisterFormatEnum
          */
         bool Read(const RegisterEnum p_address, unsigned char * p_byte, const CDS130X_I2C::RegisterFormatEnum p_format = Bcd);
 
@@ -196,25 +196,25 @@ namespace DS130X_I2C {
          *
          * See datasheet - Clause CLOCK AND CALENDAR
          *
-         * @param p_address: The time register identifier the to write
-         * @param p_byte: The value to write in BCD format
-         * @param p_format: The format of the value 'p_byte'. Default is BCD
-         * @return true on success, false otherwise
-         * @see RegisterEnum
-         * @see RegisterFormatEnum
+         * \param p_address: The time register identifier the to write
+         * \param p_byte: The value to write in BCD format
+         * \param p_format: The format of the value 'p_byte'. Default is BCD
+         * \return true on success, false otherwise
+         * \see RegisterEnum
+         * \see RegisterFormatEnum
          */
         bool Write(const RegisterEnum p_address, const unsigned char p_byte, const CDS130X_I2C::RegisterFormatEnum p_format = Bcd);
 
         /** Set RTC time using string format "Www Mmm dd hh:mm:ss yyyy", e.g. Thu 02 10 07:13:29 2011
          *
-         * @param p_utcTime: UTC string format
-         * @return true on success, false otherwise
+         * \param p_utcTime: UTC string format
+         * \return true on success, false otherwise
          */
         bool SetTime(const std::string p_utcTime);
 
         /** This methods returns the current time in string format "Www Mmm dd hh:mm:ss yyyy"
          *
-         * @return The current time in C struct tm format
+         * \return The current time in C struct tm format
          */
         struct tm GetTime();
 
@@ -223,10 +223,10 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_count The size of the memory area to erase
-         * @param p_pattern The pattern value to use to fill the memory area. Defqult vqlue: 0x00
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_count The size of the memory area to erase
+         * \param p_pattern The pattern value to use to fill the memory area. Defqult vqlue: 0x00
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * ...
@@ -240,9 +240,9 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_byte The byte value to save. The address start from 0.
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_byte The byte value to save. The address start from 0.
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const unsigned char p_byte);
     
@@ -250,10 +250,10 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_short The short value to save
-         * @param p_mode The storage mode. Default value: BigEndian
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_short The short value to save
+         * \param p_mode The storage mode. Default value: BigEndian
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const short p_short, const CDS130X_I2C::Mode p_mode = BigEndian);
     
@@ -261,10 +261,10 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_int The integer value to save
-         * @param p_mode The storage mode. Default value: BigEndian
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_int The integer value to save
+         * \param p_mode The storage mode. Default value: BigEndian
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const int p_int, const CDS130X_I2C::Mode p_mode = BigEndian);
     
@@ -272,11 +272,11 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_datas The string to save
-         * @param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of bytes to write, -1 for all characters. Default value: -1
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_datas The string to save
+         * \param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of bytes to write, -1 for all characters. Default value: -1
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const std::vector<unsigned char> & p_datas, bool p_storeLength = true, const int p_length2write = -1);
     
@@ -284,11 +284,11 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_datas The buffer of bytes to save
-         * @param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of bytes to write, -1 for all bytes. Default value: -1
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_datas The buffer of bytes to save
+         * \param p_storeLength If true, store also the length of the buffer in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of bytes to write, -1 for all bytes. Default value: -1
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const unsigned char *p_datas, bool p_storeLength = true, const int p_length2write = -1);
     
@@ -296,11 +296,11 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_string The string to save
-         * @param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param p_length2write The number of character to write, -1 for all characters
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_string The string to save
+         * \param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param p_length2write The number of character to write, -1 for all characters
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const std::string & p_string, const bool p_storeLength = true, const int p_length2write = -1);
     
@@ -309,11 +309,11 @@ namespace DS130X_I2C {
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
          * Note that the length of the buffer is not saved and the string is saved in Big Endian mode
-         * @param p_startAddress The address of the memory area.
-         * @param p_datas The string to save
-         * @param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
-         * @param length2write The number of character to write, -1 for all characters
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_datas The string to save
+         * \param p_storeLength If true, store also the length of the string in Big Endian mode, otherwise the length will be provided by p_length2write parameter. Default value: true.
+         * \param length2write The number of character to write, -1 for all characters
+         * \return true on success, false otherwise
          */
         bool WriteMemory(const unsigned char p_address, const char *p_datas, const bool p_storeLength = true, const int p_length2write = -1);
     
@@ -321,9 +321,9 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_byte The byte value to read
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_byte The byte value to read
+         * \return true on success, false otherwise
          */
         bool ReadMemory(const unsigned char p_address, unsigned char *p_value);
     
@@ -331,9 +331,9 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_short The short value to read
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_short The short value to read
+         * \return true on success, false otherwise
          */
         bool ReadMemory(const unsigned char p_address, short *p_short, const CDS130X_I2C::Mode p_mode = BigEndian);
     
@@ -341,9 +341,9 @@ namespace DS130X_I2C {
          *
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_int The integer value to read
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_int The integer value to read
+         * \return true on success, false otherwise
          */
         bool ReadMemory(const unsigned char p_address, int *p_int, const CDS130X_I2C::Mode p_mode = BigEndian);
     
@@ -352,11 +352,11 @@ namespace DS130X_I2C {
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that the size of the buffer object is used for the number of bytes to read
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_datas The buffer to fill
-         * @param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
-         * @param p_length2write The number of character to write, -1 to use the size of the string buffer
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_datas The buffer to fill
+         * \param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
+         * \param p_length2write The number of character to write, -1 to use the size of the string buffer
+         * \return true on success, false otherwise
          * Exemple:
          * @code
          * std::vector<unsigned char> datas(bufferLength);
@@ -372,11 +372,11 @@ namespace DS130X_I2C {
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that the size of the string object is used for the number of characters to read
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_string The string buffer to fill
-         * @param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
-         * @param p_length2write The number of character to write, -1 to use the size of the string buffer
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_string The string buffer to fill
+         * \param p_readLengthFirst If true, read the length first and p_length2write parameter is ignored, otherwise the length is provided by p_length2write parameter. Default value: true
+         * \param p_length2write The number of character to write, -1 to use the size of the string buffer
+         * \return true on success, false otherwise
          */
         bool ReadMemory(const unsigned char p_address, std::string & p_string, const bool p_readLengthFirst = true, const int p_length2write = -1);
     
@@ -386,9 +386,9 @@ namespace DS130X_I2C {
          * Note that for the DS1307, the memory segment is [08h, 3Fh]
          * Note that the size of the string object is used for the number of characters to read
          * Note that this method only access the memeory registered. The memory address starts from 0x00
-         * @param p_startAddress The address of the memory area.
-         * @param p_count The number of bytes toi dump
-         * @return true on success, false otherwise
+         * \param p_startAddress The address of the memory area.
+         * \param p_count The number of bytes toi dump
+         * \return true on success, false otherwise
          */
         void DumpMemoryArea(const unsigned char p_address, const int p_count);
 #endif // _DEBUG

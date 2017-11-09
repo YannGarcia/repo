@@ -29,14 +29,14 @@ public:
 
     /** Create a FunctionPointer, attaching a static function
      *
-     *  @param function The void static function to attach (default is none)
+     *  \param function The void static function to attach (default is none)
      */
     FunctionPointer(void (*function)(void) = 0);
 
     /** Create a FunctionPointer, attaching a member function
      *
-     *  @param object The object pointer to invoke the member function on (i.e. the this pointer)
-     *  @param function The address of the void member function to attach
+     *  \param object The object pointer to invoke the member function on (i.e. the this pointer)
+     *  \param function The address of the void member function to attach
      */
     template<typename T>
     FunctionPointer(T *object, void (T::*member)(void)) {
@@ -45,14 +45,14 @@ public:
 
     /** Attach a static function
      *
-     *  @param function The void static function to attach (default is none)
+     *  \param function The void static function to attach (default is none)
      */
     void attach(void (*function)(void) = 0);
 
     /** Attach a member function
      *
-     *  @param object The object pointer to invoke the member function on (i.e. the this pointer)
-     *  @param function The address of the void member function to attach
+     *  \param object The object pointer to invoke the member function on (i.e. the this pointer)
+     *  \param function The address of the void member function to attach
      */
     template<typename T>
     void attach(T *object, void (T::*member)(void)) {
