@@ -36,7 +36,7 @@ namespace MCP23017_I2C {
      * - <vector>
      * - <mbed.h>
      *
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class CMCP23017_I2C : public AbstractGpioExpender {
         /** Reference counter used to guarentee unicity of the instance of I2C class
@@ -61,14 +61,14 @@ namespace MCP23017_I2C {
     public:
         /** Constructor with Write Protect command pin wired. Use it to manage the first I2C module on 3.3V or 5V network
          *
-         * @param p_sda: MBed pin for SDA
-         * @param p_scl: MBed pin for SCL
-         * @param p_address: Device address input: A0, A1, A2 (Pins <1,3>)
-         * @param p_intA: MBed pin to manage interrupt on GPIOA, default value is NC, not connected
-         * @param p_intB: MBed pin to manage device reset. If NC, WP is not managed, default value is NC, not connected
-         * @param p_reset: MBed pin to manage Write Protect input. If NC, WP is not managed, default value is NC, not connected
-         * @param p_internalPullUp: Set to true to use internal pull-up resistor, default value is true
-         * @param p_frequency: Frequency of the I2C interface (SCL), default value is 400KHz
+         * \param p_sda: MBed pin for SDA
+         * \param p_scl: MBed pin for SCL
+         * \param p_address: Device address input: A0, A1, A2 (Pins <1,3>)
+         * \param p_intA: MBed pin to manage interrupt on GPIOA, default value is NC, not connected
+         * \param p_intB: MBed pin to manage device reset. If NC, WP is not managed, default value is NC, not connected
+         * \param p_reset: MBed pin to manage Write Protect input. If NC, WP is not managed, default value is NC, not connected
+         * \param p_internalPullUp: Set to true to use internal pull-up resistor, default value is true
+         * \param p_frequency: Frequency of the I2C interface (SCL), default value is 400KHz
          * Example:
          * - If A1 and A2 pins are tired to Vdd and A0 is tired to Vss, address shall '00000110'B
          * - If A0 and A1 pins are tired to Vss and A2 is tired to Vdd, address shall '00000100'B

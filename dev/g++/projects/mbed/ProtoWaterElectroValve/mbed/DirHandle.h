@@ -50,7 +50,7 @@ class DirHandle {
 public:
     /** Closes the directory.
      *
-     *  @returns
+     *  \returns
      *    0 on success,
      *   -1 on error.
      */
@@ -59,7 +59,7 @@ public:
     /** Return the directory entry at the current position, and
      *  advances the position to the next entry.
      *
-     * @returns
+     * \returns
      *  A pointer to a dirent structure representing the
      *  directory entry at the current position, or NULL on reaching
      *  end of directory or error.
@@ -72,7 +72,7 @@ public:
 
     /** Returns the current position of the DirHandle.
      *
-     * @returns
+     * \returns
      *   the current position,
      *  -1 on error.
      */
@@ -80,7 +80,7 @@ public:
 
     /** Sets the position of the DirHandle.
      *
-     *  @param location The location to seek to. Must be a value returned by telldir.
+     *  \param location The location to seek to. Must be a value returned by telldir.
      */
     virtual void seekdir(off_t location) { }
 

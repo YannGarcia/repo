@@ -59,18 +59,18 @@ public:
      *
      *  mosi or miso can be specfied as NC if not used
      *
-     *  @param mosi SPI Master Out, Slave In pin
-     *  @param miso SPI Master In, Slave Out pin
-     *  @param sclk SPI Clock pin
-     *  @param ssel SPI chip select pin
-     *  @param name (optional) A string to identify the object
+     *  \param mosi SPI Master Out, Slave In pin
+     *  \param miso SPI Master In, Slave Out pin
+     *  \param sclk SPI Clock pin
+     *  \param ssel SPI chip select pin
+     *  \param name (optional) A string to identify the object
      */
     SPISlave(PinName mosi, PinName miso, PinName sclk, PinName ssel);
 
     /** Configure the data transmission format
      *
-     *  @param bits Number of bits per SPI frame (4 - 16)
-     *  @param mode Clock polarity and phase mode (0 - 3)
+     *  \param bits Number of bits per SPI frame (4 - 16)
+     *  \param mode Clock polarity and phase mode (0 - 3)
      *
      * @code
      * mode | POL PHA
@@ -85,13 +85,13 @@ public:
 
     /** Set the spi bus clock frequency
      *
-     *  @param hz SCLK frequency in hz (default = 1MHz)
+     *  \param hz SCLK frequency in hz (default = 1MHz)
      */
     void frequency(int hz = 1000000);
 
     /** Polls the SPI to see if data has been received
      *
-     *  @returns
+     *  \returns
      *    0 if no data,
      *    1 otherwise
      */
@@ -99,7 +99,7 @@ public:
 
     /** Retrieve  data from receive buffer as slave
      *
-     *  @returns
+     *  \returns
      *    the data in the receive buffer
      */
     int read(void);
@@ -107,7 +107,7 @@ public:
     /** Fill the transmission buffer with the value to be written out
      *  as slave on the next received message from the master.
      *
-     *  @param value the data to be transmitted next
+     *  \param value the data to be transmitted next
      */
     void reply(int value);
 

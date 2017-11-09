@@ -1,10 +1,10 @@
 /**
- * @File    gps_device_factory.h
- * @brief   Header file for the lightweight gps library factory.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    gps_device_factory.h
+ * \brief   Header file for the lightweight gps library factory.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -19,9 +19,9 @@
 namespace gps {
 
   /**
-   * @class gps_device_factory
-   * @brief This class provide a set of methods for lightweight GPS factory
-   * @remark Singleton pattern
+   * \class gps_device_factory
+   * \brief This class provide a set of methods for lightweight GPS factory
+   * \remark Singleton pattern
    */
   class gps_device_factory {
     static std::unique_ptr<gps_device_factory> g_instance;
@@ -29,7 +29,7 @@ namespace gps {
     std::map<std::string, std::shared_ptr<gps_device> > _gpss;
 
     /**
-     * @brief Private constructor
+     * \brief Private constructor
      */
     gps_device_factory() : _gpss() { };
     
@@ -39,25 +39,25 @@ namespace gps {
     ~gps_device_factory() { _gpss.clear(); };
     
     /**
-     * @brief Retrieve an instance of GPS
-     * @param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
-     * @return A reference to the instance of the GPS on success, an exception is raised otherwise
+     * \brief Retrieve an instance of GPS
+     * \param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
+     * \return A reference to the instance of the GPS on success, an exception is raised otherwise
      * @exception std::invalid_argument
      */
     inline gps_device & get_gps(const std::string & p_gps_device_name);
 
     /**
-     * @brief Add a new instance of GPS
-     * @param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
-     * @param[in] p_device The device type
-     * @param[in] p_parser The GPS protocol parser
+     * \brief Add a new instance of GPS
+     * \param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
+     * \param[in] p_device The device type
+     * \param[in] p_parser The GPS protocol parser
      * @exception std::invalid_argument
      */
     inline void add_gps(const std::string & p_gps_device_name, const devices_t p_device = devices_t::ublox_device, const parsers_t p_parser = parsers_t::nmea_2000);
     
     /**
-     * @brief Remove an existing  instance of GPS
-     * @param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
+     * \brief Remove an existing  instance of GPS
+     * \param[in] p_gps_device_name The system device name of the GPS (e.g. /dev/ttyO1)
      * @exception std::invalid_argument
      */
     inline void remove_gps(const std::string & p_gps_device_name);

@@ -29,13 +29,13 @@ class HTTPText : public IHTTPDataIn, public IHTTPDataOut
 {
  public:
   /** Create an HTTPText instance for output
-   * @param str String to be transmitted
+   * \param str String to be transmitted
    */
   HTTPText(char* str);
 
   /** Create an HTTPText instance for input
-   * @param str Buffer to store the incoming string
-   * @param size Size of the buffer
+   * \param str Buffer to store the incoming string
+   * \param size Size of the buffer
    */
   HTTPText(char* str, size_t size);
 

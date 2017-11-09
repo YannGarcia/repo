@@ -43,19 +43,19 @@ extern "C" {
 /** Waits for a number of seconds, with microsecond resolution (within
  *  the accuracy of single precision floating point).
  *
- *  @param s number of seconds to wait
+ *  \param s number of seconds to wait
  */
 void wait(float s);
 
 /** Waits a number of milliseconds.
  *
- *  @param ms the whole number of milliseconds to wait
+ *  \param ms the whole number of milliseconds to wait
  */
 void wait_ms(int ms);
 
 /** Waits a number of microseconds.
  *
- *  @param us the whole number of microseconds to wait
+ *  \param us the whole number of microseconds to wait
  */
 void wait_us(int us);
 

@@ -39,8 +39,8 @@ namespace MCP4xxxx_SPI {
      * Note that MCP41xx/MCP42xx increment/decrement operations are not supported due to the 16 bits SPI setting
      * Note that for SPI details, please visit http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class CMCP4xxxx_SPI { 
         /** Reference counter used to guarentee unicity of the instance of SPI class
@@ -116,28 +116,28 @@ namespace MCP4xxxx_SPI {
    public:
         /** Constructor with Write Protect command pin wired.
          *
-         * @param p_mosi: MBed pin for SDI
-         * @param p_miso: MBed pin for SDO. Note that this pin does not exist for MCP41xxx
-         * @param p_sclk: MBed pin for CLK
-         * @param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
-         * @param p_reset: MBed pin to manage /RESET input. If NC, /RESET is not managed, default value is NC, not connected
-         * @param p_shdn: MBed pin to manage /SHDN input. If NC, /SHDN is not managed, default value is NC, not connected
-         * @param p_familly: MCP4xxx familly. Default: _41xxx
-         * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+         * \param p_mosi: MBed pin for SDI
+         * \param p_miso: MBed pin for SDO. Note that this pin does not exist for MCP41xxx
+         * \param p_sclk: MBed pin for CLK
+         * \param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
+         * \param p_reset: MBed pin to manage /RESET input. If NC, /RESET is not managed, default value is NC, not connected
+         * \param p_shdn: MBed pin to manage /SHDN input. If NC, /SHDN is not managed, default value is NC, not connected
+         * \param p_familly: MCP4xxx familly. Default: _41xxx
+         * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
          */
         CMCP4xxxx_SPI(const PinName p_mosi, const PinName p_miso, const PinName p_sclk, const PinName p_cs = NC, const PinName p_reset = NC, const PinName p_shdn = NC, const Mcp4xxxFamily family = _41xxx, const unsigned int p_frequency = 1000000);
     
         /** Constructor with Write Protect command pin wired.
          *
-         * @param p_mosi: MBed pin for SDI
-         * @param p_miso: MBed pin for SDO. Note that this pin does not exist for MCP41xxx
-         * @param p_sclk: MBed pin for CLK
-         * @param p_cs_gpio  : GPIO expender pin for Chip Select. If 0xFF, assumes that application manage /CS, default value is 0xFF, not connected
-         * @param p_reset_gpio: GPIO expender pin to manage /RESET input. If 0xFF, /RESET is not managed, default value is 0xFF, not connected
-         * @param p_shdn_gpio: GPIO expender pin to manage /SHDN input. If 0xFF, /SHDN is not managed, default value is 0xFF, not connected
-         * @param p_gpioExpender : Reference to the GPIO expender
-         * @param p_familly: MCP4xxx familly. Default: _41xxx
-         * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+         * \param p_mosi: MBed pin for SDI
+         * \param p_miso: MBed pin for SDO. Note that this pin does not exist for MCP41xxx
+         * \param p_sclk: MBed pin for CLK
+         * \param p_cs_gpio  : GPIO expender pin for Chip Select. If 0xFF, assumes that application manage /CS, default value is 0xFF, not connected
+         * \param p_reset_gpio: GPIO expender pin to manage /RESET input. If 0xFF, /RESET is not managed, default value is 0xFF, not connected
+         * \param p_shdn_gpio: GPIO expender pin to manage /SHDN input. If 0xFF, /SHDN is not managed, default value is 0xFF, not connected
+         * \param p_gpioExpender : Reference to the GPIO expender
+         * \param p_familly: MCP4xxx familly. Default: _41xxx
+         * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
          */
         CMCP4xxxx_SPI(const PinName p_mosi, const PinName p_miso, const PinName p_sclk, const unsigned char p_cs_gpio = 0xff, const unsigned char p_reset_gpio = 0xff, const unsigned char p_shdn_gpio = 0xff, AbstractGpioExpender * p_gpioExpender = NULL, const Mcp4xxxFamily family = _41xxx, const unsigned int p_frequency = 1000000);
     
@@ -150,35 +150,35 @@ namespace MCP4xxxx_SPI {
         inline const SPI * operator * () { return (const SPI *)_spiInstance; };
 
         /** Write a value to the specified register. Only for _41xx/_42xx famillies
-         * @param p_address The register to be written
-         * @param p_value The value to write
-         * @return 0x0000 on success, any value otherwise
+         * \param p_address The register to be written
+         * \param p_value The value to write
+         * \return 0x0000 on success, any value otherwise
          */
         unsigned short WriteRegister(const Addresses p_address, const unsigned char p_value);
         
         /** Read the content of the specified register. Only for _41xx/_42xx famillies
-         * @param p_address The register to be written
-         * @return The register value 
+         * \param p_address The register to be written
+         * \return The register value 
          */
         unsigned short ReadRegister(const Addresses p_address);
         
         /** Increment the specified digital potentiometer
-         * @param p_command The digital potentiometer to increment. Default: WriteToDigiPot1
-         * @return 0x0000 on success, any value otherwise
+         * \param p_command The digital potentiometer to increment. Default: WriteToDigiPot1
+         * \return 0x0000 on success, any value otherwise
          */
         unsigned short Increment(const Commands p_command = WriteToDigiPot1);
         
         /** Decrement the specified digital potentiometer
-         * @param p_command The digital potentiometer to decrement. Default: WriteToDigiPot1
-         * @return 0x0000 on success, any value otherwise
+         * \param p_command The digital potentiometer to decrement. Default: WriteToDigiPot1
+         * \return 0x0000 on success, any value otherwise
          */
         unsigned short Decrement(const Commands p_command = WriteToDigiPot1);
 
         /** Send a write a command (WriteToPot1, WriteToPot2 or WriteBoth)
          *
-         * @param p_command The command to execute (See DS11195C-page 18)
-         * @param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
-         * @return 0x0000 on success, 0Xffff otherwise
+         * \param p_command The command to execute (See DS11195C-page 18)
+         * \param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
+         * \return 0x0000 on success, 0Xffff otherwise
          * Exemple:
          * @code
          * unsigned char potLevel;
@@ -193,9 +193,9 @@ namespace MCP4xxxx_SPI {
     
         /** Send a shutdown a command (ShutdownPot1, ShutdownPot2 or ShutdownBoth)
          *
-         * @param p_command The command to execute (See DS11195C-page 18)
-         * @param p_set Set to true to shutdown, false to set up. Only used for _41xx/_42xx famillies (See DS22060B-page 36 REGISTER 4-2: TCON BITS)
-         * @return 0x0000 on success, 0Xffff otherwise
+         * \param p_command The command to execute (See DS11195C-page 18)
+         * \param p_set Set to true to shutdown, false to set up. Only used for _41xx/_42xx famillies (See DS22060B-page 36 REGISTER 4-2: TCON BITS)
+         * \return 0x0000 on success, 0Xffff otherwise
          * Exemple:
          * @code
          * ...
@@ -212,8 +212,8 @@ namespace MCP4xxxx_SPI {
         //unsigned short Write();
     
          /** Change the current family 
-          * @param family The new type of ICs 
-          * @return the previous type of ICs 
+          * \param family The new type of ICs 
+          * \return the previous type of ICs 
           */
         Mcp4xxxFamily SetFamilly(const Mcp4xxxFamily family);
     
@@ -234,7 +234,7 @@ namespace MCP4xxxx_SPI {
     private:
         /** Internal reference identifier. Only used when /RS in is available
          *
-         * @param p_set Set to true to shutdown, false to set up
+         * \param p_set Set to true to shutdown, false to set up
          */
         std::string _internalId;
 

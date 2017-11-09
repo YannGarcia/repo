@@ -52,8 +52,8 @@ public:
 
     /** Create an PortIn, connected to the specified port
      *
-     *  @param port Port to connect to (Port0-Port5)
-     *  @param mask A bitmask to identify which bits in the port should be included (0 - ignore)
+     *  \param port Port to connect to (Port0-Port5)
+     *  \param mask A bitmask to identify which bits in the port should be included (0 - ignore)
         */
     PortIn(PortName port, int mask = 0xFFFFFFFF) {
         port_init(&_port, port, mask, PIN_INPUT);
@@ -61,7 +61,7 @@ public:
 
     /** Read the value currently output on the port
      *
-     *  @returns
+     *  \returns
      *    An integer with each bit corresponding to associated port pin setting
      */
     int read() {
@@ -70,7 +70,7 @@ public:
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone, OpenDrain
+     *  \param mode PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode mode) {
         port_mode(&_port, mode);

@@ -44,17 +44,17 @@ class FileHandle {
 public:
     /** Write the contents of a buffer to the file
      *
-     *  @param buffer the buffer to write from
-     *  @param length the number of characters to write
+     *  \param buffer the buffer to write from
+     *  \param length the number of characters to write
      *
-     *  @returns
+     *  \returns
      *  The number of characters written (possibly 0) on success, -1 on error.
      */
     virtual ssize_t write(const void* buffer, size_t length) = 0;
 
     /** Close the file
      *
-     *  @returns
+     *  \returns
      *  Zero on success, -1 on error.
      */
     virtual int close() = 0;
@@ -62,10 +62,10 @@ public:
     /** Function read
      *  Reads the contents of the file into a buffer
      *
-     *  @param buffer the buffer to read in to
-     *  @param length the number of characters to read
+     *  \param buffer the buffer to read in to
+     *  \param length the number of characters to read
      *
-     *  @returns
+     *  \returns
      *  The number of characters read (zero at end of file) on success, -1 on error.
      */
     virtual ssize_t read(void* buffer, size_t length) = 0;
@@ -73,7 +73,7 @@ public:
     /** Check if the handle is for a interactive terminal device.
      * If so, line buffered behaviour is used by default
      *
-     *  @returns
+     *  \returns
      *    1 if it is a terminal,
      *    0 otherwise
      */
@@ -81,11 +81,11 @@ public:
 
     /** Move the file position to a given offset from a given location.
      *
-     *  @param offset The offset from whence to move to
-     *  @param whence SEEK_SET for the start of the file, SEEK_CUR for the
+     *  \param offset The offset from whence to move to
+     *  \param whence SEEK_SET for the start of the file, SEEK_CUR for the
      *   current file position, or SEEK_END for the end of the file.
      *
-     *  @returns
+     *  \returns
      *    new file position on success,
      *    -1 on failure or unsupported
      */
@@ -94,7 +94,7 @@ public:
     /** Flush any buffers associated with the FileHandle, ensuring it
      *  is up to date on disk
      *
-     *  @returns
+     *  \returns
      *    0 on success or un-needed,
      *   -1 on error
      */

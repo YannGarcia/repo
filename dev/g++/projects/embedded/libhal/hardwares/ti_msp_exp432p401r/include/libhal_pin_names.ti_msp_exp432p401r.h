@@ -1,13 +1,13 @@
 /**
- * @file      libhal_pin_names.ti_msp_exp432p401r.h
- * @brief     Header file for the Hardware Abstract Layer pins mapping.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
- * @see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
- * @see       EK-TM4C129EXL Firmware Development Package User's Guide
- * @see       EK-TM4C1294XL Firmware Development Package User's Guide
+ * \file      libhal_pin_names.ti_msp_exp432p401r.h
+ * \brief     Header file for the Hardware Abstract Layer pins mapping.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
+ * \see       TivaWare™ Peripheral Driver Library USER’S GUIDE - SW-TM4C-DRL-UG-2.1.3.156
+ * \see       EK-TM4C129EXL Firmware Development Package User's Guide
+ * \see       EK-TM4C1294XL Firmware Development Package User's Guide
  */
 #pragma once
 
@@ -20,12 +20,12 @@ extern "C" {
 
 #include "driverlib/driverlib.h"
 
-/** @enum pin_names_t
- * @brief Describes the pin name/pin kernel number
+/** \enum pin_names_t
+ * \brief Describes the pin name/pin kernel number
  *        Analog conversions only done on PORTB and PORTE pins (ADC0 module)
  *        PWM and analog comparators use ADC1 module
- * @see SLAS826 –MARCH 2015 Table Table 6-19. Port Mapping, Mnemonics, and Functions
- * @see MSP432P401R LaunchPad™ Development Kit (MSP‑EXP432P401R) Clause 2.7 BoosterPack Plug-in Module Pinout
+ * \see SLAS826 –MARCH 2015 Table Table 6-19. Port Mapping, Mnemonics, and Functions
+ * \see MSP432P401R LaunchPad™ Development Kit (MSP‑EXP432P401R) Clause 2.7 BoosterPack Plug-in Module Pinout
  */
 typedef enum {
   p1 = GPIO_PORT_P10 << 16 | GPIO_PIN1,

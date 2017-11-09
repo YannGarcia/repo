@@ -25,9 +25,9 @@ extern "C" {
  *  assert header file.
  *  In case of MBED_ASSERT failing condition, the assertation message is printed
  *  to stderr and mbed_die() is called.
- *  @param expr Expresion to be checked.
- *  @param file File where assertation failed.
- *  @param line Failing assertation line number.
+ *  \param expr Expresion to be checked.
+ *  \param file File where assertation failed.
+ *  \param line Failing assertation line number.
  */
 void mbed_assert_internal(const char *expr, const char *file, int line);
 

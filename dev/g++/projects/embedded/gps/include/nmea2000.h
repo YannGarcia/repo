@@ -1,10 +1,10 @@
 /**
- * @File    nmea2000.h
- * @brief   Header file for the lightweight nmea2000 library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    nmea2000.h
+ * \brief   Header file for the lightweight nmea2000 library.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -19,8 +19,8 @@ namespace gps {
   namespace parsers {
 
     /**
-     * @class nmea2000
-     * @brief This class implements gps_parser interface for NME 2000 GPS protocol
+     * \class nmea2000
+     * \brief This class implements gps_parser interface for NME 2000 GPS protocol
      */
     class nmea2000 : public gps_parser {
     protected:

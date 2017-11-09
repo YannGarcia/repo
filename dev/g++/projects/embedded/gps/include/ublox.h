@@ -1,10 +1,10 @@
 /**
- * @File    ublox.h
- * @brief   Header file for the lightweight gps devices library.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    ublox.h
+ * \brief   Header file for the lightweight gps devices library.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -17,8 +17,8 @@
 namespace gps {
   
   /**
-   * @class ublox
-   * @brief This class implements a set of methods for lightweight UBLOX GPS device
+   * \class ublox
+   * \brief This class implements a set of methods for lightweight UBLOX GPS device
    */
   class ublox : public gps_device {
   protected:

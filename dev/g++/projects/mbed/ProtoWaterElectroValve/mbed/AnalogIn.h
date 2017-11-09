@@ -49,8 +49,8 @@ public:
 
     /** Create an AnalogIn, connected to the specified pin
      *
-     * @param pin AnalogIn pin to connect to
-     * @param name (optional) A string to identify the object
+     * \param pin AnalogIn pin to connect to
+     * \param name (optional) A string to identify the object
      */
     AnalogIn(PinName pin) {
         analogin_init(&_adc, pin);
@@ -58,7 +58,7 @@ public:
 
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]
      *
-     * @returns A floating-point value representing the current input voltage, measured as a percentage
+     * \returns A floating-point value representing the current input voltage, measured as a percentage
      */
     float read() {
         return analogin_read(&_adc);
@@ -66,7 +66,7 @@ public:
 
     /** Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
      *
-     * @returns
+     * \returns
      *   16-bit unsigned short representing the current input voltage, normalised to a 16-bit value
      */
     unsigned short read_u16() {

@@ -1,10 +1,10 @@
 /**
- * @file      channel_manager.h
- * @brief     Header file for communication channel factory.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
+ * \file      channel_manager.h
+ * \brief     Header file for communication channel factory.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
  */
 #pragma once
 
@@ -21,8 +21,8 @@
 namespace comm {
   
   /**
-   * @class channel_manager
-   * @brief 
+   * \class channel_manager
+   * \brief 
    */
   class channel_manager {
     

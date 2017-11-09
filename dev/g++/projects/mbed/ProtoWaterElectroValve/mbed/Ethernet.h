@@ -74,10 +74,10 @@ public:
      *
      *  It will append size bytes of data to the previously written bytes.
      *
-     *  @param data An array to write.
-     *  @param size The size of data.
+     *  \param data An array to write.
+     *  \param size The size of data.
      *
-     *  @returns
+     *  \returns
      *   The number of written bytes.
      */
     int write(const char *data, int size);
@@ -87,7 +87,7 @@ public:
      *  After filling in the data in an ethernet packet it must be send.
      *  Send will provide a new packet to write to.
      *
-     *  @returns
+     *  \returns
      *    0 if the sending was failed,
      *    or the size of the packet successfully sent.
      */
@@ -99,7 +99,7 @@ public:
      *  and make a new ethernet packet ready to read.
      *  If no ethernet packet is arrived it will return 0.
      *
-     *  @returns
+     *  \returns
      *    0 if no ethernet packet is arrived,
      *    or the size of the arrived packet.
      */
@@ -114,20 +114,20 @@ public:
      *  It is possible to use read multible times.
      *  Each time read will start reading after the last read byte before.
      *
-     *  @returns
+     *  \returns
      *  The number of byte read.
      */
     int read(char *data, int size);
 
     /** Gives the ethernet address of the mbed.
      *
-     *  @param mac Must be a pointer to a 6 byte char array to copy the ethernet address in.
+     *  \param mac Must be a pointer to a 6 byte char array to copy the ethernet address in.
      */
     void address(char *mac);
 
     /** Returns if an ethernet link is pressent or not. It takes a wile after Ethernet initializion to show up.
      *
-     *  @returns
+     *  \returns
      *   0 if no ethernet link is pressent,
      *   1 if an ethernet link is pressent.
      *
@@ -158,7 +158,7 @@ public:
      * - HalfDuplex100      100 Mbit, half duplex
      * - FullDuplex100      100 Mbit, full duplex
      *
-     *  @param mode the speed and duplex mode to set the link to:
+     *  \param mode the speed and duplex mode to set the link to:
      */
     void set_link(Mode mode);
 };

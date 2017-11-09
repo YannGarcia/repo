@@ -37,22 +37,22 @@ namespace rtos {
 class RtosTimer {
 public:
     /** Create and Start timer.
-      @param   task      name of the timer call back function.
-      @param   type      osTimerOnce for one-shot or osTimerPeriodic for periodic behaviour. (default: osTimerPeriodic)
-      @param   argument  argument to the timer call back function. (default: NULL)
+      \param   task      name of the timer call back function.
+      \param   type      osTimerOnce for one-shot or osTimerPeriodic for periodic behaviour. (default: osTimerPeriodic)
+      \param   argument  argument to the timer call back function. (default: NULL)
     */
     RtosTimer(void (*task)(void const *argument),
           os_timer_type type=osTimerPeriodic,
           void *argument=NULL);
 
     /** Stop the timer.
-      @return  status code that indicates the execution status of the function.
+      \return  status code that indicates the execution status of the function.
     */
     osStatus stop(void);
 
     /** start a timer.
-      @param   millisec  time delay value of the timer.
-      @return  status code that indicates the execution status of the function.
+      \param   millisec  time delay value of the timer.
+      \return  status code that indicates the execution status of the function.
     */
     osStatus start(uint32_t millisec);
 

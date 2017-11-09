@@ -96,10 +96,10 @@ struct local_hostlist_entry {
 
 /** Callback which is invoked when a hostname is found.
  * A function of this type must be implemented by the application using the DNS resolver.
- * @param name pointer to the name that was looked up.
- * @param ipaddr pointer to an ip_addr_t containing the IP address of the hostname,
+ * \param name pointer to the name that was looked up.
+ * \param ipaddr pointer to an ip_addr_t containing the IP address of the hostname,
  *        or NULL if the name could not be found (or on any other error).
- * @param callback_arg a user-specified callback argument passed to dns_gethostbyname
+ * \param callback_arg a user-specified callback argument passed to dns_gethostbyname
 */
 typedef void (*dns_found_callback)(const char *name, ip_addr_t *ipaddr, void *callback_arg);
 

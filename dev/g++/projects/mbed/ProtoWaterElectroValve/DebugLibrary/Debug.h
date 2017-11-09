@@ -83,28 +83,28 @@ class DebugHelper
 {
     /** Convert the specified digit into hexadecimal number (0x30..0x39 (0..9), 0x47..x4c (A..F))
      *
-     * @param p_digit The digit to convert
-     * @return An hexadecimal digit (0..9-A..F)
+     * \param p_digit The digit to convert
+     * \return An hexadecimal digit (0..9-A..F)
      */
     static inline unsigned char ToHexDigit(unsigned char p_digit) { return ((p_digit < 10) ? (p_digit + 0x30) : (p_digit + 0x37)); };
     /** Convert the specified hexadecimal digit into a character if it is printable, or replace by a '.' otherwise
      *
-     * @param p_digit The hexadecimal digit to convert
-     * @return A character is it's printable, '.' otherwise
+     * \param p_digit The hexadecimal digit to convert
+     * \return A character is it's printable, '.' otherwise
      */
     static inline char ToCharDigit(unsigned char p_digit) { return (((p_digit < 0x20) || (p_digit > 0x80)) ? '.' : (char)p_digit); };
 public:
     /** Standard log method
-     * @param p_format Format string compliant with C 'printf' format string
+     * \param p_format Format string compliant with C 'printf' format string
      */
     static void Debug(const char* p_format, ...);
     /** Log an hexadecimal buffer
      *
      * Note that parameters 'p_offset' and 'p_length' are not supported yet
      *
-     * @param p_buffer The buffer to dump
-     * @param p_count Number of bytes to dump
-     * @param p_offset Offset to start the dump. Default: 0
+     * \param p_buffer The buffer to dump
+     * \param p_count Number of bytes to dump
+     * \param p_offset Offset to start the dump. Default: 0
      */
     static void HexaDump(unsigned char* p_buffer, int p_count, int p_offset = 0);
     /** Break point method based on getchar() C function

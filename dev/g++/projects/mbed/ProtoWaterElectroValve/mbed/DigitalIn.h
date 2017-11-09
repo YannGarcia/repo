@@ -48,7 +48,7 @@ class DigitalIn {
 public:
     /** Create a DigitalIn connected to the specified pin
      *
-     *  @param pin DigitalIn pin to connect to
+     *  \param pin DigitalIn pin to connect to
      */
     DigitalIn(PinName pin) : gpio() {
         gpio_init_in(&gpio, pin);
@@ -56,15 +56,15 @@ public:
 
     /** Create a DigitalIn connected to the specified pin
      *
-     *  @param pin DigitalIn pin to connect to
-     *  @param mode the initial mode of the pin
+     *  \param pin DigitalIn pin to connect to
+     *  \param mode the initial mode of the pin
      */
     DigitalIn(PinName pin, PinMode mode) : gpio() {
         gpio_init_in_ex(&gpio, pin, mode);
     }
     /** Read the input, represented as 0 or 1 (int)
      *
-     *  @returns
+     *  \returns
      *    An integer representing the state of the input pin,
      *    0 for logical 0, 1 for logical 1
      */
@@ -74,7 +74,7 @@ public:
 
     /** Set the input pin mode
      *
-     *  @param mode PullUp, PullDown, PullNone, OpenDrain
+     *  \param mode PullUp, PullDown, PullNone, OpenDrain
      */
     void mode(PinMode pull) {
         gpio_mode(&gpio, pull);

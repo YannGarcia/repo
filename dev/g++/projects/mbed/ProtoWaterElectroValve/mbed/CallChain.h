@@ -63,26 +63,26 @@ class CallChain {
 public:
     /** Create an empty chain
      *
-     *  @param size (optional) Initial size of the chain
+     *  \param size (optional) Initial size of the chain
      */
     CallChain(int size = 4);
     virtual ~CallChain();
 
     /** Add a function at the end of the chain
      *
-     *  @param function A pointer to a void function
+     *  \param function A pointer to a void function
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'function'
      */
     pFunctionPointer_t add(void (*function)(void));
 
     /** Add a function at the end of the chain
      *
-     *  @param tptr pointer to the object to call the member function on
-     *  @param mptr pointer to the member function to be called
+     *  \param tptr pointer to the object to call the member function on
+     *  \param mptr pointer to the member function to be called
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'tptr' and 'mptr'
      */
     template<typename T>
@@ -92,19 +92,19 @@ public:
 
     /** Add a function at the beginning of the chain
      *
-     *  @param function A pointer to a void function
+     *  \param function A pointer to a void function
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'function'
      */
     pFunctionPointer_t add_front(void (*function)(void));
 
     /** Add a function at the beginning of the chain
      *
-     *  @param tptr pointer to the object to call the member function on
-     *  @param mptr pointer to the member function to be called
+     *  \param tptr pointer to the object to call the member function on
+     *  \param mptr pointer to the member function to be called
      *
-     *  @returns
+     *  \returns
      *  The function object created for 'tptr' and 'mptr'
      */
     template<typename T>
@@ -118,18 +118,18 @@ public:
 
     /** Get a function object from the chain
      *
-     *  @param i function object index
+     *  \param i function object index
      *
-     *  @returns
+     *  \returns
      *  The function object at position 'i' in the chain
      */
     pFunctionPointer_t get(int i) const;
 
     /** Look for a function object in the call chain
      *
-     *  @param f the function object to search
+     *  \param f the function object to search
      *
-     *  @returns
+     *  \returns
      *  The index of the function object if found, -1 otherwise.
      */
     int find(pFunctionPointer_t f) const;
@@ -142,7 +142,7 @@ public:
      *
      *  @arg f the function object to remove
      *
-     *  @returns
+     *  \returns
      *  true if the function object was found and removed, false otherwise.
      */
     bool remove(pFunctionPointer_t f);

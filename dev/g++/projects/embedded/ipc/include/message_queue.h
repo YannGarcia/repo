@@ -1,10 +1,10 @@
 /**
- * @file    message_queue.h
- * @brief   Header file for Message Queue IPC.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    message_queue.h
+ * \brief   Header file for Message Queue IPC.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -40,37 +40,37 @@ namespace ipc {
     virtual ~message_queue();
 
     /**
-     * @brief Send data to peer
-     * @param p_string The string data to send
-     * @return 0 on success, -1 otherwise
+     * \brief Send data to peer
+     * \param p_string The string data to send
+     * \return 0 on success, -1 otherwise
      */
     virtual const int32_t write(const std::string & p_string) const;
     /**
-     * @brief Send data to peer
-     * @param p_buffer The bytes data to send
-     * @return 0 on success, -1 otherwise
+     * \brief Send data to peer
+     * \param p_buffer The bytes data to send
+     * \return 0 on success, -1 otherwise
      */
     virtual const int32_t write(const std::vector<uint8_t> & p_buffer) const;
     /**
-     * @brief Retrieve data sent by peer
-     * @param p_buffer The data to read. The size of p_buffer indicates the number of bytes to read. 
-     * @return 0 on success, -1 otherwise
+     * \brief Retrieve data sent by peer
+     * \param p_buffer The data to read. The size of p_buffer indicates the number of bytes to read. 
+     * \return 0 on success, -1 otherwise
      */
     virtual const int32_t read(std::vector<uint8_t> & p_buffer) const;
     /**
-     * @brief Retrieve the first byte available
-     * @return 0 on success, -1 otherwise
+     * \brief Retrieve the first byte available
+     * \return 0 on success, -1 otherwise
      */
     virtual const uint8_t read() const { return 0x00; };
     /**
-     * @brief Retrieve the number of bytes available
-     * @return 0 on success, -1 otherwise
+     * \brief Retrieve the number of bytes available
+     * \return 0 on success, -1 otherwise
      */
     virtual const int32_t data_available() const { return 0; };
     
     /**
-     * @brief Retrieve the shared memory descriptor
-     * @return The shared memory descriptor on success, -1 otherwise
+     * \brief Retrieve the shared memory descriptor
+     * \return The shared memory descriptor on success, -1 otherwise
      */
     inline virtual const int32_t get_fd() const { return _mq; };
     

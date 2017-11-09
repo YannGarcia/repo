@@ -56,7 +56,7 @@ public:
 
     /** Create a PwmOut connected to the specified pin
      *
-     *  @param pin PwmOut pin to connect to
+     *  \param pin PwmOut pin to connect to
      */
     PwmOut(PinName pin) {
         pwmout_init(&_pwm, pin);
@@ -64,7 +64,7 @@ public:
 
     /** Set the ouput duty-cycle, specified as a percentage (float)
      *
-     *  @param value A floating-point value representing the output duty-cycle,
+     *  \param value A floating-point value representing the output duty-cycle,
      *    specified as a percentage. The value should lie between
      *    0.0f (representing on 0%) and 1.0f (representing on 100%).
      *    Values outside this range will be saturated to 0.0f or 1.0f.
@@ -75,7 +75,7 @@ public:
 
     /** Return the current output duty-cycle setting, measured as a percentage (float)
      *
-     *  @returns
+     *  \returns
      *    A floating-point value representing the current duty-cycle being output on the pin,
      *    measured as a percentage. The returned value will lie between
      *    0.0f (representing on 0%) and 1.0f (representing on 100%).

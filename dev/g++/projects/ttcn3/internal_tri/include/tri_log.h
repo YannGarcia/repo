@@ -1,10 +1,10 @@
 /**
- * @file    tri_log.h
- * @brief   Header file for the tri_log class.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    tri_log.h
+ * \brief   Header file for the tri_log class.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 

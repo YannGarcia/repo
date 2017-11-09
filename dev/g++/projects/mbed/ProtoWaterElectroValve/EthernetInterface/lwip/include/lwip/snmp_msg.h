@@ -1,5 +1,5 @@
 /**
- * @file
+ * \file
  * SNMP Agent message handling structures.
  */
 

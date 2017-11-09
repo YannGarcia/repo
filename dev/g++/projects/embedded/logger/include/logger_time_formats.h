@@ -1,18 +1,18 @@
 /**
- * @File      logger_time_formats.h
- * @brief     Header file for the lightweight logger library.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
+ * \file      logger_time_formats.h
+ * \brief     Header file for the lightweight logger library.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
  */
 #pragma once
 
 namespace logger {
 
   /**
-   * @enum logger_time_formats_t
-   * @brief List of authorized log levels
+   * \enum logger_time_formats_t
+   * \brief List of authorized log levels
    */
   enum logger_time_formats_t : uint8_t { 
     time     = 0x01,    /** Time format */

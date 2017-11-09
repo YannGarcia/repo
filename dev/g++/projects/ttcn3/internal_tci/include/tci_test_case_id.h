@@ -1,10 +1,10 @@
 /**
- * @file    tci_test_case_id.h
- * @brief   Main header file for the tci_test_case_id class.
- * @author garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    tci_test_case_id.h
+ * \brief   Main header file for the tci_test_case_id class.
+ * \author garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 

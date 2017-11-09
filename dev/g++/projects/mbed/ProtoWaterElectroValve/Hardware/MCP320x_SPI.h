@@ -34,8 +34,8 @@ namespace MCP320x_SPI {
      * Note that MCP3201 has no SI pin, only a SO output pin
      * Note that for SPI details, please visit http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class CMCP320x_SPI { 
         /** Reference counter used to guarentee unicity of the instance of SPI class
@@ -72,7 +72,7 @@ namespace MCP320x_SPI {
          */
         unsigned char _channelsNum;
         /** Set to true for single-ended inputs configuration, false for pseudo-differential inputs
-         * @see DS21298E-page 19 Clause 5.0 SERIAL COMMUNICATIONS
+         * \see DS21298E-page 19 Clause 5.0 SERIAL COMMUNICATIONS
          */
         unsigned char _settings;
    public:
@@ -99,24 +99,24 @@ namespace MCP320x_SPI {
    public:
         /** Constructor with Write Protect command pin wired.
          *
-         * @param p_mosi: MBed pin for SDI
-         * @param p_miso: MBed pin for SDO
-         * @param p_sclk: MBed pin for CLK
-         * @param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
-         * @param p_familly: MCP320x familly. Default: _3201
-         * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+         * \param p_mosi: MBed pin for SDI
+         * \param p_miso: MBed pin for SDO
+         * \param p_sclk: MBed pin for CLK
+         * \param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
+         * \param p_familly: MCP320x familly. Default: _3201
+         * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
          */
         CMCP320x_SPI(const PinName p_mosi, const PinName p_miso, const PinName p_sclk, const PinName p_cs = NC, const Mcp320xFamilly p_familly = _3201, const unsigned int p_frequency = 1000000);
 
         /** Constructor with Write Protect command pin wired.
          *
-         * @param p_mosi: MBed pin for SDI
-         * @param p_miso: MBed pin for SDO
-         * @param p_sclk: MBed pin for CLK
-         * @param p_cs_gpio: GPIO expender pin for Chip Select
-         * @param p_gpioExpender : Reference to the GPIO expender
-         * @param p_familly: MCP320x familly. Default: _3201
-         * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+         * \param p_mosi: MBed pin for SDI
+         * \param p_miso: MBed pin for SDO
+         * \param p_sclk: MBed pin for CLK
+         * \param p_cs_gpio: GPIO expender pin for Chip Select
+         * \param p_gpioExpender : Reference to the GPIO expender
+         * \param p_familly: MCP320x familly. Default: _3201
+         * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
          */
         CMCP320x_SPI(const PinName p_mosi, const PinName p_miso, const PinName p_sclk, const unsigned char p_cs_gpio = 0xff, AbstractGpioExpender * p_gpioExpender = NULL, const Mcp320xFamilly p_familly = _3201, const unsigned int p_frequency = 1000000);
     
@@ -131,15 +131,15 @@ namespace MCP320x_SPI {
 
         /** 
          * @desc Launch an analog to digital conversion on the specified channel
-         * @param p_channel The channel to convert
-         * @return The converted value
+         * \param p_channel The channel to convert
+         * \return The converted value
          */
         float Read(const Mcp320xChannels p_channels = CH1);
         
         /** 
          * @desc Change current configuration (only for MCP3204/8)
-         * @param p_setConfig Set to true for single-ended inputs configuration, false for pseudo-differential inputs
-         * @see DS21298E-page 17 Clause 4.1 Analog Inputs
+         * \param p_setConfig Set to true for single-ended inputs configuration, false for pseudo-differential inputs
+         * \see DS21298E-page 17 Clause 4.1 Analog Inputs
          */
         void SetConfig(const bool p_settings);
     
@@ -156,14 +156,14 @@ namespace MCP320x_SPI {
     
         /** 
          * @desc Launch an analog to digital conversion on the specified channel for MCP3201
-         * @see DS21290F-page 17 Clause 4.1 Analog Inputs
+         * \see DS21290F-page 17 Clause 4.1 Analog Inputs
          */
         void Read_3201();
         
         /** 
          * @desc Launch an analog to digital conversion on the specified channel for MCP3204/8
-         * @param p_setConfig Set to true for single-ended inputs configuration, false for pseudo-differential inputs
-         * @see DS21298E-page 17 Clause 4.1 Analog Inputs
+         * \param p_setConfig Set to true for single-ended inputs configuration, false for pseudo-differential inputs
+         * \see DS21298E-page 17 Clause 4.1 Analog Inputs
          */
         void Read_320x(const Mcp320xChannels p_channels);
         

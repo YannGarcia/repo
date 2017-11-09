@@ -1,11 +1,11 @@
 /**********************************************************************
 * $Id$		lpc_phy.h			2011-11-20
 *//**
-* @file		lpc_phy.h
-* @brief	Common PHY definitions used with all PHYs
-* @version	1.0
+* \file		lpc_phy.h
+* \brief	Common PHY definitions used with all PHYs
+* \version	1.0
 * @date		20 Nov. 2011
-* @author	NXP MCU SW Application Team
+* \author	NXP MCU SW Application Team
 * 
 * Copyright(C) 2011, NXP Semiconductor
 * All rights reserved.
@@ -130,7 +130,7 @@ void lpc_mii_read_noblock(u32_t PhyReg);
  * This function provides a method for the PHY to setup the EMAC
  * for the PHY negotiated duplex mode.
  *
- * @param[in] full_duplex 0 = half duplex, 1 = full duplex
+ * \param[in] full_duplex 0 = half duplex, 1 = full duplex
  */
 void lpc_emac_set_duplex(int full_duplex);
 
@@ -138,7 +138,7 @@ void lpc_emac_set_duplex(int full_duplex);
  * This function provides a method for the PHY to setup the EMAC
  * for the PHY negotiated bit rate.
  *
- * @param[in] mbs_100     0 = 10mbs mode, 1 = 100mbs mode
+ * \param[in] mbs_100     0 = 10mbs mode, 1 = 100mbs mode
  */
 void lpc_emac_set_speed(int mbs_100);
 

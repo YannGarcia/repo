@@ -49,8 +49,8 @@ class Serial : public SerialBase, public Stream {
 public:
     /** Create a Serial port, connected to the specified transmit and receive pins
      *
-     *  @param tx Transmit pin
-     *  @param rx Receive pin
+     *  \param tx Transmit pin
+     *  \param rx Receive pin
      *
      *  @note
      *    Either tx or rx may be specified as NC if unused

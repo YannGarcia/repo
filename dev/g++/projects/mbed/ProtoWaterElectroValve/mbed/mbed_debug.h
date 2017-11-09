@@ -27,7 +27,7 @@ extern "C" {
 
 /** Output a debug message
  *
- * @param format printf-style format string, followed by variables
+ * \param format printf-style format string, followed by variables
  */
 static inline void debug(const char *format, ...) {
     va_list args;
@@ -41,8 +41,8 @@ static inline void debug(const char *format, ...) {
  * NOTE: If the condition is constant false (!= 1) and the compiler optimization
  * level is greater than 0, then the whole function will be compiled away.
  *
- * @param condition output only if condition is true (== 1)
- * @param format printf-style format string, followed by variables
+ * \param condition output only if condition is true (== 1)
+ * \param format printf-style format string, followed by variables
  */
 static inline void debug_if(int condition, const char *format, ...) {
     if (condition == 1) {

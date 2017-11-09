@@ -29,7 +29,7 @@ namespace beagleboneThingspeak {
 
   /** This class provides a wrapper to the licurl. V0.0.0.1
    *
-   * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+   * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
    */
   class thingspeakImpl {
     std::string _apiKey;

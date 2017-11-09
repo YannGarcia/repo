@@ -1,10 +1,10 @@
 /**
- * @File      logger.h
- * @brief     Header file for the lightweight logger library.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
+ * \file      logger.h
+ * \brief     Header file for the lightweight logger library.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
  */
 #pragma once
 
@@ -23,8 +23,8 @@
 namespace logger {
 
   /**
-   * @class logger
-   * @brief This class provide a set of methods for lightweight logging
+   * \class logger
+   * \brief This class provide a set of methods for lightweight logging
    */
   class logger {
     /*!< Logger name */
@@ -50,18 +50,18 @@ namespace logger {
     
   public:
     /**
-     * @brief Constructor
+     * \brief Constructor
      *        Create a new instance of the logger class
-     * @param[in] p_logger_name         The name of this instance of the logger class 
-     * @param[in] p_file_name           The full path name to store logs
-     * @param[in] p_logger_level_filter The authorised log level. Default: logger_levels_t::error
-     * @param[in] p_logger_time_format  The timestamp format to use. Default: logger_time_formats_t::datetime
+     * \param[in] p_logger_name         The name of this instance of the logger class 
+     * \param[in] p_file_name           The full path name to store logs
+     * \param[in] p_logger_level_filter The authorised log level. Default: logger_levels_t::error
+     * \param[in] p_logger_time_format  The timestamp format to use. Default: logger_time_formats_t::datetime
      * @throws std::runtime_error in case of IO error
      */
     logger(const std::string & p_logger_name, const std::string & p_file_name, const uint8_t p_logger_level_filter = logger_levels_t::error, const logger_time_formats_t p_logger_time_format = logger_time_formats_t::datetime) : _name(p_logger_name), _os(p_file_name, std::ofstream::out | std::ofstream::trunc), _levels(p_logger_level_filter), _time_format(p_logger_time_format), _timestamp(), _start_time(NULL), _tm(NULL) { if (!_os.is_open()) throw std::runtime_error("logger::logger: Failed to open log file"); };
 
     /**
-     * @brief Destructor
+     * \brief Destructor
      */
     virtual ~logger() { _os << std::endl; _os.close(); };
 

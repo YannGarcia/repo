@@ -45,7 +45,7 @@ struct udp_pcb;
 struct netif;
 
 /**
- * @see RFC1213, "MIB-II, 6. Definitions"
+ * \see RFC1213, "MIB-II, 6. Definitions"
  */
 enum snmp_ifType {
   snmp_ifType_other=1,                /* none of the following */

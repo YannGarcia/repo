@@ -16,7 +16,7 @@ namespace beagleboneComm {
     public:
       /** 
        * @desc Create an HTTPText instance for output
-       * @param buffer String to be transmitted
+       * \param buffer String to be transmitted
        */
       httpText(const char * p_buffer, const std::size_t p_length = 0) : _str(p_buffer), _pos(0) { 
 	if ((p_length != 0) && (_str.length() > p_length)) {
@@ -40,10 +40,10 @@ namespace beagleboneComm {
       
       /** 
        * @desc Read a piece of data to be transmitted
-       * @param p_buffer Pointer to the buffer on which to copy the data
-       * @param p_length Length of the buffer
-       * @param p_readLength Pointer to the variable on which the actual copied data length will be stored
-       * @return 0 on success, -1 otherwise
+       * \param p_buffer Pointer to the buffer on which to copy the data
+       * \param p_length Length of the buffer
+       * \param p_readLength Pointer to the variable on which the actual copied data length will be stored
+       * \return 0 on success, -1 otherwise
        */
       inline int read(std::string & p_buffer, const std::size_t p_length, std::size_t * p_readLength) {
 	*p_readLength = fmin(p_length, _str.length());
@@ -55,8 +55,8 @@ namespace beagleboneComm {
       
       /** 
        * @desc Get MIME type
-       * @param p_type Internet media type from Content-Type header
-       * @return 0 on success, -1 otherwise
+       * \param p_type Internet media type from Content-Type header
+       * \return 0 on success, -1 otherwise
        */
       inline int getDataType(std::string & p_type, const std::size_t p_maxTypeLength) {
 	p_type.assign("text/plain");
@@ -85,9 +85,9 @@ namespace beagleboneComm {
 
       /** 
        * @desc Write a piece of data transmitted by the server
-       * @param p_buffer Pointer to the buffer from which to copy the data
-       * @param p_length Length of the buffer
-       * @return 0 on success, -1 otherwise
+       * \param p_buffer Pointer to the buffer from which to copy the data
+       * \param p_length Length of the buffer
+       * \return 0 on success, -1 otherwise
        */
       inline int write(const std::string & p_buffer, const std::size_t p_length) {
 	_str.append(p_buffer);
@@ -98,7 +98,7 @@ namespace beagleboneComm {
 
       /** 
        * @desc Set MIME type
-       * @param p_type Internet media type from Content-Type header
+       * \param p_type Internet media type from Content-Type header
        */
       inline void setDataType(const std::string & p_type) { };
 

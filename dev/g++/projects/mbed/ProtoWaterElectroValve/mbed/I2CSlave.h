@@ -70,20 +70,20 @@ public:
 
     /** Create an I2C Slave interface, connected to the specified pins.
      *
-     *  @param sda I2C data line pin
-     *  @param scl I2C clock line pin
+     *  \param sda I2C data line pin
+     *  \param scl I2C clock line pin
      */
     I2CSlave(PinName sda, PinName scl);
 
     /** Set the frequency of the I2C interface
      *
-     *  @param hz The bus frequency in hertz
+     *  \param hz The bus frequency in hertz
      */
     void frequency(int hz);
 
     /** Checks to see if this I2C Slave has been addressed.
      *
-     *  @returns
+     *  \returns
      *  A status indicating if the device has been addressed, and how
      *  - NoData            - the slave has not been addressed
      *  - ReadAddressed     - the master has requested a read from this slave
@@ -94,10 +94,10 @@ public:
 
     /** Read from an I2C master.
      *
-     *  @param data pointer to the byte array to read data in to
-     *  @param length maximum number of bytes to read
+     *  \param data pointer to the byte array to read data in to
+     *  \param length maximum number of bytes to read
      *
-     *  @returns
+     *  \returns
      *       0 on success,
      *   non-0 otherwise
      */
@@ -105,17 +105,17 @@ public:
 
     /** Read a single byte from an I2C master.
      *
-     *  @returns
+     *  \returns
      *    the byte read
      */
     int read(void);
 
     /** Write to an I2C master.
      *
-     *  @param data pointer to the byte array to be transmitted
-     *  @param length the number of bytes to transmite
+     *  \param data pointer to the byte array to be transmitted
+     *  \param length the number of bytes to transmite
      *
-     *  @returns
+     *  \returns
      *       0 on success,
      *   non-0 otherwise
      */
@@ -125,7 +125,7 @@ public:
      *
      *  @data the byte to write
      *
-     *  @returns
+     *  \returns
      *    '1' if an ACK was received,
      *    '0' otherwise
      */
@@ -133,7 +133,7 @@ public:
 
     /** Sets the I2C slave address.
      *
-     *  @param address The address to set for the slave (ignoring the least
+     *  \param address The address to set for the slave (ignoring the least
      *  signifcant bit). If set to 0, the slave will only respond to the
      *  general call address.
      */

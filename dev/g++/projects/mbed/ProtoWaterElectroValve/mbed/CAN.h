@@ -69,8 +69,8 @@ class CAN {
 public:
     /** Creates an CAN interface connected to specific pins.
      *
-     *  @param rd read from transmitter
-     *  @param td transmit to transmitter
+     *  \param rd read from transmitter
+     *  \param td transmit to transmitter
      *
      * Example:
      * @code
@@ -110,9 +110,9 @@ public:
 
     /** Set the frequency of the CAN interface
      *
-     *  @param hz The bus frequency in hertz
+     *  \param hz The bus frequency in hertz
      *
-     *  @returns
+     *  \returns
      *    1 if successful,
      *    0 otherwise
      */
@@ -120,9 +120,9 @@ public:
 
     /** Write a CANMessage to the bus.
      *
-     *  @param msg The CANMessage to write.
+     *  \param msg The CANMessage to write.
      *
-     *  @returns
+     *  \returns
      *    0 if write failed,
      *    1 if write was successful
      */
@@ -130,10 +130,10 @@ public:
 
     /** Read a CANMessage from the bus.
      *
-     *  @param msg A CANMessage to read to.
-     *  @param handle message filter handle (0 for any message)
+     *  \param msg A CANMessage to read to.
+     *  \param handle message filter handle (0 for any message)
      *
-     *  @returns
+     *  \returns
      *    0 if no message arrived,
      *    1 if message arrived
      */
@@ -147,7 +147,7 @@ public:
 
     /** Puts or removes the CAN interface into silent monitoring mode
      *
-     *  @param silent boolean indicating whether to go into silent mode or not
+     *  \param silent boolean indicating whether to go into silent mode or not
      */
     void monitor(bool silent);
 
@@ -162,9 +162,9 @@ public:
 
     /** Change CAN operation to the specified mode
      *
-     *  @param mode The new operation mode (CAN::Normal, CAN::Silent, CAN::LocalTest, CAN::GlobalTest, CAN::SilentTest)
+     *  \param mode The new operation mode (CAN::Normal, CAN::Silent, CAN::LocalTest, CAN::GlobalTest, CAN::SilentTest)
      *
-     *  @returns
+     *  \returns
      *    0 if mode change failed or unsupported,
      *    1 if mode change was successful
      */
@@ -172,12 +172,12 @@ public:
 
     /** Filter out incomming messages
      *
-     *  @param id the id to filter on
-     *  @param mask the mask applied to the id
-     *  @param format format to filter on (Default CANAny)
-     *  @param handle message filter handle (Optional)
+     *  \param id the id to filter on
+     *  \param mask the mask applied to the id
+     *  \param format format to filter on (Default CANAny)
+     *  \param handle message filter handle (Optional)
      *
-     *  @returns
+     *  \returns
      *    0 if filter change failed or unsupported,
      *    new filter handle if successful
      */
@@ -206,17 +206,17 @@ public:
     /** Attach a function to call whenever a CAN frame received interrupt is
      *  generated.
      *
-     *  @param fptr A pointer to a void function, or 0 to set as none
-     *  @param event Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted, CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost, CAN::BeIrq for bus error)
+     *  \param fptr A pointer to a void function, or 0 to set as none
+     *  \param event Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted, CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost, CAN::BeIrq for bus error)
      */
     void attach(void (*fptr)(void), IrqType type=RxIrq);
 
    /** Attach a member function to call whenever a CAN frame received interrupt
     *  is generated.
     *
-    *  @param tptr pointer to the object to call the member function on
-    *  @param mptr pointer to the member function to be called
-    *  @param event Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, TxIrq for transmitted or aborted, EwIrq for error warning, DoIrq for data overrun, WuIrq for wake-up, EpIrq for error passive, AlIrq for arbitration lost, BeIrq for bus error)
+    *  \param tptr pointer to the object to call the member function on
+    *  \param mptr pointer to the member function to be called
+    *  \param event Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, TxIrq for transmitted or aborted, EwIrq for error warning, DoIrq for data overrun, WuIrq for wake-up, EpIrq for error passive, AlIrq for arbitration lost, BeIrq for bus error)
     */
    template<typename T>
    void attach(T* tptr, void (T::*mptr)(void), IrqType type=RxIrq) {

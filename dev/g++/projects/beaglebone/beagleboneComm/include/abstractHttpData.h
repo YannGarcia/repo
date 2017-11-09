@@ -25,17 +25,17 @@ namespace beagleboneComm {
 
       /** 
        * @desc Read a piece of data to be transmitted
-       * @param p_buffer Pointer to the buffer on which to copy the data
-       * @param p_length Length of the buffer
-       * @param p_readLength Pointer to the variable on which the actual copied data length will be stored
-       * @return 0 on success, -1 otherwise
+       * \param p_buffer Pointer to the buffer on which to copy the data
+       * \param p_length Length of the buffer
+       * \param p_readLength Pointer to the variable on which the actual copied data length will be stored
+       * \return 0 on success, -1 otherwise
        */
       virtual int read(std::string & p_buffer, const std::size_t p_length, std::size_t * p_readLength) = 0;
   
       /** 
        * @desc Get MIME type
-       * @param p_type Internet media type from Content-Type header
-       * @return 0 on success, -1 otherwise
+       * \param p_type Internet media type from Content-Type header
+       * \return 0 on success, -1 otherwise
        */
       virtual int getDataType(std::string & p_type, const std::size_t p_maxTypeLength) = 0;
   
@@ -63,15 +63,15 @@ namespace beagleboneComm {
 
       /** 
        * @desc Write a piece of data transmitted by the server
-       * @param p_buffer Pointer to the buffer from which to copy the data
-       * @param p_length Length of the buffer
-       * @return 0 on success, -1 otherwise
+       * \param p_buffer Pointer to the buffer from which to copy the data
+       * \param p_length Length of the buffer
+       * \return 0 on success, -1 otherwise
        */
       virtual int write(const std::string & p_buffer, const std::size_t p_length) = 0;
 
       /** 
        * @desc Set MIME type
-       * @param p_type Internet media type from Content-Type header
+       * \param p_type Internet media type from Content-Type header
        */
       virtual void setDataType(const std::string & p_type) = 0;
 

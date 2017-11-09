@@ -40,8 +40,8 @@ namespace beagleboneHw {
      * Note that MCP41xx/MCP42xx increment/decrement operations are not supported due to the 16 bits SPI setting
      * Note that for SPI details, please visit http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V and in mixte power mode 3.3V for mbed and 5V for the Microchip 24LCxx Serial EEPROM device
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class mcp4xxxx_spi { 
       /** Reference counter used to guarentee unicity of the instance of SPI class
@@ -99,10 +99,10 @@ namespace beagleboneHw {
     public:
       /** Constructor with Write Protect command pin wired.
        *
-       * @param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
-       * @param p_reset: MBed pin to manage /RESET input. If NC, /RESET is not managed, default value is NC, not connected
-       * @param p_shdn: MBed pin to manage /SHDN input. If NC, /SHDN is not managed, default value is NC, not connected
-       * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+       * \param p_cs  : MBed pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
+       * \param p_reset: MBed pin to manage /RESET input. If NC, /RESET is not managed, default value is NC, not connected
+       * \param p_shdn: MBed pin to manage /SHDN input. If NC, /SHDN is not managed, default value is NC, not connected
+       * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
        */
       mcp4xxxx_spi(const unsigned char p_cs = 0xff, const unsigned char p_reset = 0xff, const unsigned char p_shdn = 0xff, const Mcp4xxxxFamily p_family = _41xxx, const unsigned int p_frequency = 1000000);
     
@@ -111,35 +111,35 @@ namespace beagleboneHw {
       virtual ~mcp4xxxx_spi();
 
       /** Write a value to the specified register. Only for _41xx/_42xx families
-       * @param p_address The register to be written
-       * @param p_value The value to write
-       * @return 0x0000 on success, any value otherwise
+       * \param p_address The register to be written
+       * \param p_value The value to write
+       * \return 0x0000 on success, any value otherwise
        */
       unsigned short writeRegister(const Addresses p_address, const unsigned char p_value);
     
       /** Read the content of the specified register. Only for _41xx/_42xx families
-       * @param p_address The register to be written
-       * @return The register value 
+       * \param p_address The register to be written
+       * \return The register value 
        */
       unsigned short readRegister(const Addresses p_address);
     
       /** Increment the specified digital potentiometer
-       * @param p_command The digital potentiometer to increment. Default: WriteToDigiPot1
-       * @return 0x0000 on success, any value otherwise
+       * \param p_command The digital potentiometer to increment. Default: WriteToDigiPot1
+       * \return 0x0000 on success, any value otherwise
        */
       unsigned short increment(const Hwands p_command = WriteToDigiPot1);
     
       /** Decrement the specified digital potentiometer
-       * @param p_command The digital potentiometer to decrement. Default: WriteToDigiPot1
-       * @return 0x0000 on success, any value otherwise
+       * \param p_command The digital potentiometer to decrement. Default: WriteToDigiPot1
+       * \return 0x0000 on success, any value otherwise
        */
       unsigned short decrement(const Hwands p_command = WriteToDigiPot1);
     
       /** Send a write a command (WriteToPot1, WriteToPot2 or WriteBoth)
        *
-       * @param p_command The command to execute: Write or Shutdown (See DS11195C-page 18)
-       * @param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
-       * @return 0x0000 on success, 0Xffff otherwise
+       * \param p_command The command to execute: Write or Shutdown (See DS11195C-page 18)
+       * \param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
+       * \return 0x0000 on success, 0Xffff otherwise
        * Exemple:
        * @code
        * unsigned char potLevel;
@@ -154,9 +154,9 @@ namespace beagleboneHw {
     
       /** Send a shutdown a command (ShutdownPot1, ShutdownPot2 or ShutdownBoth)
        *
-       * @param p_command The command to execute: Write or Shutdown (See DS11195C-page 18)
-       * @param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
-       * @return 0x0000 on success, 0Xffff otherwise
+       * \param p_command The command to execute: Write or Shutdown (See DS11195C-page 18)
+       * \param p_value The potentiometer selection bits (See DS11195C-page 14 Clause 4.1 Modes of Operation)
+       * \return 0x0000 on success, 0Xffff otherwise
        * Exemple:
        * @code
        * ...
@@ -169,8 +169,8 @@ namespace beagleboneHw {
       unsigned short shutdown(const Hwands p_command, const bool p_set);
     
       /** Change the current family 
-       * @param family The new type of ICs 
-       * @return the previous type of ICs 
+       * \param family The new type of ICs 
+       * \return the previous type of ICs 
        */
       Mcp4xxxxFamily setFamily(const Mcp4xxxxFamily p_family);
     

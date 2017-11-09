@@ -38,8 +38,8 @@ namespace beagleboneHw {
      *
      * Note that for SPI details, please visit http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
      *
-     * @remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V
-     * @author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
+     * \remark This class was validated with Tektronix TDS2014 oscilloscope in 3.3V
+     * \author Yann Garcia (Don't hesitate to contact me: garcia.yann@gmail.com)
      */
     class mcp251x_spi { 
       /** Reference counter used to guarentee unicity of the instance of SPI class
@@ -77,8 +77,8 @@ namespace beagleboneHw {
     public:
       /** Constructor.
        *
-       * @param p_cs  : Pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
-       * @param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
+       * \param p_cs  : Pin for Chip Select. If NC, assumes that application manage /CS, default value is NC, not connected
+       * \param p_frequency: Frequency of the SPI interface (SCK), default value is 1MHz
        */
       mcp251x_spi(const unsigned char p_rx, const unsigned char p_tx, const unsigned char p_cs = 0xff, const unsigned char p_isr1 = 0xff, const unsigned char p_isr2 = 0xff, const unsigned char p_hwReset = 0xff, const unsigned int p_frequency = 1000000);
     
@@ -88,8 +88,8 @@ namespace beagleboneHw {
       virtual ~mcp251x_spi();
 	  
 	  /** Initialize the component
-	   * @see http://www.bittiming.can-wiki.info/
-	   * @see http://www.bittiming.can-wiki.info/
+	   * \see http://www.bittiming.can-wiki.info/
+	   * \see http://www.bittiming.can-wiki.info/
 	   */
 	  int initialize(const canClock p_clock = _8MHz, const canSpeed p_speed = _500kBPS);
 	  
@@ -108,7 +108,7 @@ namespace beagleboneHw {
 	  void spiReset();
 	  void spiRead(const unsigned char p_register, unsigned char * p_value);
       /** Write one byte into the specified register
-	   *  @see DS21291F-page 57 Clause 11.3 Write Instruction
+	   *  \see DS21291F-page 57 Clause 11.3 Write Instruction
 	   */
 	  void spiWrite(const unsigned char p_register, const unsigned char p_value);
     }; // End of class mcp251x_spi

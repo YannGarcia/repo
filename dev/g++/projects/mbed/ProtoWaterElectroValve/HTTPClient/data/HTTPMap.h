@@ -39,8 +39,8 @@ class HTTPMap: public IHTTPDataOut
 
   /** Put Key/Value pair
       The references to the parameters must remain valid as long as the clear() function is not called
-      @param key The key to use
-      @param value The corresponding value
+      \param key The key to use
+      \param value The corresponding value
   */
   void put(const char* key, const char* value);
 

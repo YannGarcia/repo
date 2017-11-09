@@ -78,11 +78,11 @@ struct udp_pcb;
  * ATTENTION: Be aware that 'addr' points into the pbuf 'p' so freeing this pbuf
  *            makes 'addr' invalid, too.
  *
- * @param arg user supplied argument (udp_pcb.recv_arg)
- * @param pcb the udp_pcb which received data
- * @param p the packet buffer that was received
- * @param addr the remote IP address from which the packet was received
- * @param port the remote port from which the packet was received
+ * \param arg user supplied argument (udp_pcb.recv_arg)
+ * \param pcb the udp_pcb which received data
+ * \param p the packet buffer that was received
+ * \param addr the remote IP address from which the packet was received
+ * \param port the remote port from which the packet was received
  */
 typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     ip_addr_t *addr, u16_t port);

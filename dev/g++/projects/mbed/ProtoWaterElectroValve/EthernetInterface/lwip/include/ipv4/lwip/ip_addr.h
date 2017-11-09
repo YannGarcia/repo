@@ -189,7 +189,7 @@ extern const ip_addr_t ip_addr_broadcast;
  * @arg addr1 IP address 1
  * @arg addr2 IP address 2
  * @arg mask network identifier mask
- * @return !0 if the network identifiers of both address match
+ * \return !0 if the network identifiers of both address match
  */
 #define ip_addr_netcmp(addr1, addr2, mask) (((addr1)->addr & \
                                               (mask)->addr) == \

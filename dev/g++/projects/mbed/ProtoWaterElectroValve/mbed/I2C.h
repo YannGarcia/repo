@@ -58,14 +58,14 @@ public:
 
     /** Create an I2C Master interface, connected to the specified pins
      *
-     *  @param sda I2C data line pin
-     *  @param scl I2C clock line pin
+     *  \param sda I2C data line pin
+     *  \param scl I2C clock line pin
      */
     I2C(PinName sda, PinName scl);
 
     /** Set the frequency of the I2C interface
      *
-     *  @param hz The bus frequency in hertz
+     *  \param hz The bus frequency in hertz
      */
     void frequency(int hz);
 
@@ -74,12 +74,12 @@ public:
      * Performs a complete read transaction. The bottom bit of
      * the address is forced to 1 to indicate a read.
      *
-     *  @param address 8-bit I2C slave address [ addr | 1 ]
-     *  @param data Pointer to the byte-array to read data in to
-     *  @param length Number of bytes to read
-     *  @param repeated Repeated start, true - don't send stop at end
+     *  \param address 8-bit I2C slave address [ addr | 1 ]
+     *  \param data Pointer to the byte-array to read data in to
+     *  \param length Number of bytes to read
+     *  \param repeated Repeated start, true - don't send stop at end
      *
-     *  @returns
+     *  \returns
      *       0 on success (ack),
      *   non-0 on failure (nack)
      */
@@ -87,9 +87,9 @@ public:
 
     /** Read a single byte from the I2C bus
      *
-     *  @param ack indicates if the byte is to be acknowledged (1 = acknowledge)
+     *  \param ack indicates if the byte is to be acknowledged (1 = acknowledge)
      *
-     *  @returns
+     *  \returns
      *    the byte read
      */
     int read(int ack);
@@ -99,12 +99,12 @@ public:
      * Performs a complete write transaction. The bottom bit of
      * the address is forced to 0 to indicate a write.
      *
-     *  @param address 8-bit I2C slave address [ addr | 0 ]
-     *  @param data Pointer to the byte-array data to send
-     *  @param length Number of bytes to send
-     *  @param repeated Repeated start, true - do not send stop at end
+     *  \param address 8-bit I2C slave address [ addr | 0 ]
+     *  \param data Pointer to the byte-array data to send
+     *  \param length Number of bytes to send
+     *  \param repeated Repeated start, true - do not send stop at end
      *
-     *  @returns
+     *  \returns
      *       0 on success (ack),
      *   non-0 on failure (nack)
      */
@@ -112,9 +112,9 @@ public:
 
     /** Write single byte out on the I2C bus
      *
-     *  @param data data to write out on bus
+     *  \param data data to write out on bus
      *
-     *  @returns
+     *  \returns
      *    '1' if an ACK was received,
      *    '0' otherwise
      */

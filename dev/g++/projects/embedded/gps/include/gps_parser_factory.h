@@ -1,10 +1,10 @@
 /**
- * @File    gps_parser_factory.h
- * @brief   Header file for the lightweight gps library factory.
- * @author  garciay.yann@gmail.com
- * @copyright Copyright (c) 2015 ygarcia. All rights reserved
- * @license This project is released under the MIT License
- * @version 0.1
+ * \file    gps_parser_factory.h
+ * \brief   Header file for the lightweight gps library factory.
+ * \author  garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015 ygarcia. All rights reserved
+ * \license This project is released under the MIT License
+ * \version 0.1
  */
 #pragma once
 
@@ -20,15 +20,15 @@ namespace gps {
   namespace parsers {
 
     /**
-     * @class gps_parser_factory
-     * @brief This class provide a set of methods for lightweight GPS protocol parsers factory
-     * @remark Singleton pattern
+     * \class gps_parser_factory
+     * \brief This class provide a set of methods for lightweight GPS protocol parsers factory
+     * \remark Singleton pattern
      */
     class gps_parser_factory {
       static std::unique_ptr<gps_parser_factory> g_instance;
       
       /**
-       * @brief Private constructor
+       * \brief Private constructor
        */
     gps_parser_factory() { };
     

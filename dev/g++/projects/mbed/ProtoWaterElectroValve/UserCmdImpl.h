@@ -8,7 +8,7 @@
 
 /**
  * @desc
- * @remark The user command syntax uses basic grammar: <command>[=[parm[,]]]
+ * \remark The user command syntax uses basic grammar: <command>[=[parm[,]]]
  *         where:
  *               <command> could be:
  *                  ALV: Alive, check the server is alive

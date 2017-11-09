@@ -1,12 +1,12 @@
 /**********************************************************************
 * $Id$        lpc17xx_emac.h                2010-05-21
 *//**
-* @file        lpc17xx_emac.h
-* @brief    Contains all macro definitions and function prototypes
+* \file        lpc17xx_emac.h
+* \brief    Contains all macro definitions and function prototypes
 *             support for Ethernet MAC firmware library on LPC17xx
-* @version    2.0
+* \version    2.0
 * @date        21. May. 2010
-* @author    NXP MCU SW Application Team
+* \author    NXP MCU SW Application Team
 *
 * Copyright(C) 2010, NXP Semiconductor
 * All rights reserved.
@@ -25,7 +25,7 @@
 **********************************************************************/
 
 /* Peripheral group ----------------------------------------------------------- */
-/** @defgroup EMAC EMAC (Ethernet Media Access Controller)
+/** \defgroup EMAC EMAC (Ethernet Media Access Controller)
  * @ingroup LPC1700CMSIS_FwLib_Drivers
  * @{
  */
@@ -45,7 +45,7 @@ extern "C"
 //#define IAR_LPC_1768
 
 /* Public Macros -------------------------------------------------------------- */
-/** @defgroup EMAC_Public_Macros EMAC Public Macros
+/** \defgroup EMAC_Public_Macros EMAC Public Macros
  * @{
  */
 
@@ -66,7 +66,7 @@ extern "C"
  * @}
  */
 /* Private Macros ------------------------------------------------------------- */
-/** @defgroup EMAC_Private_Macros EMAC Private Macros
+/** \defgroup EMAC_Private_Macros EMAC Private Macros
  * @{
  */
 
@@ -583,14 +583,14 @@ EMAC_RINFO_LEN_ERR   | EMAC_RINFO_ALIGN_ERR | EMAC_RINFO_OVERRUN)
 
 
 /* Public Types --------------------------------------------------------------- */
-/** @defgroup EMAC_Public_Types EMAC Public Types
+/** \defgroup EMAC_Public_Types EMAC Public Types
  * @{
  */
 
 /* Descriptor and status formats ---------------------------------------------- */
 
 /**
- * @brief RX Descriptor structure type definition
+ * \brief RX Descriptor structure type definition
  */
 typedef struct {
     uint32_t Packet;    /**< Receive Packet Descriptor */
@@ -598,7 +598,7 @@ typedef struct {
 } RX_Desc;
 
 /**
- * @brief RX Status structure type definition
+ * \brief RX Status structure type definition
  */
 typedef struct {
     uint32_t Info;        /**< Receive Information Status */
@@ -606,7 +606,7 @@ typedef struct {
 } RX_Stat;
 
 /**
- * @brief TX Descriptor structure type definition
+ * \brief TX Descriptor structure type definition
  */
 typedef struct {
     uint32_t Packet;    /**< Transmit Packet Descriptor */
@@ -614,7 +614,7 @@ typedef struct {
 } TX_Desc;
 
 /**
- * @brief TX Status structure type definition
+ * \brief TX Status structure type definition
  */
 typedef struct {
    uint32_t Info;        /**< Transmit Information Status */
@@ -622,7 +622,7 @@ typedef struct {
 
 
 /**
- * @brief TX Data Buffer structure definition
+ * \brief TX Data Buffer structure definition
  */
 typedef struct {
     uint32_t ulDataLen;            /**< Data length */
@@ -630,7 +630,7 @@ typedef struct {
 } EMAC_PACKETBUF_Type;
 
 /**
- * @brief EMAC configuration structure definition
+ * \brief EMAC configuration structure definition
  */
 typedef struct {
     uint32_t    Mode;                        /**< Supported EMAC PHY device speed, should be one of the following:

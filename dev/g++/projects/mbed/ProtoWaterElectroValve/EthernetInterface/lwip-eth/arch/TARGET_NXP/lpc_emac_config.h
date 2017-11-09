@@ -1,11 +1,11 @@
 /**********************************************************************
 * $Id$		lpc_emac_config.h			2011-11-20
 *//**
-* @file		lpc_emac_config.h
-* @brief	PHY and EMAC configuration file
-* @version	1.0
+* \file		lpc_emac_config.h
+* \brief	PHY and EMAC configuration file
+* \version	1.0
 * @date		20 Nov. 2011
-* @author	NXP MCU SW Application Team
+* \author	NXP MCU SW Application Team
 * 
 * Copyright(C) 2011, NXP Semiconductor
 * All rights reserved.
@@ -33,7 +33,7 @@ extern "C"
 {
 #endif
 
-/** @defgroup lwip_phy_config	LWIP PHY configuration
+/** \defgroup lwip_phy_config	LWIP PHY configuration
  * @ingroup lwip_phy
  *
  * Configuration options for the PHY connected to the LPC EMAC.
@@ -67,7 +67,7 @@ extern "C"
  * @}
  */
 
-/** @defgroup lwip_emac_config	LWIP EMAC configuration
+/** \defgroup lwip_emac_config	LWIP EMAC configuration
  * @ingroup lwip_emac
  *
  * Configuration options for the LPC EMAC.

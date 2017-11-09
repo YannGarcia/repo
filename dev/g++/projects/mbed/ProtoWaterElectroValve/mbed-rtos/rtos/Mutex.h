@@ -36,18 +36,18 @@ public:
     Mutex();
 
     /** Wait until a Mutex becomes available.
-      @param   millisec  timeout value or 0 in case of no time-out. (default: osWaitForever)
-      @return  status code that indicates the execution status of the function.
+      \param   millisec  timeout value or 0 in case of no time-out. (default: osWaitForever)
+      \return  status code that indicates the execution status of the function.
      */
     osStatus lock(uint32_t millisec=osWaitForever);
 
     /** Try to lock the mutex, and return immediately
-      @return  true if the mutex was acquired, false otherwise.
+      \return  true if the mutex was acquired, false otherwise.
      */
     bool trylock();
 
     /** Unlock the mutex that has previously been locked by the same thread
-      @return  status code that indicates the execution status of the function.
+      \return  status code that indicates the execution status of the function.
      */
     osStatus unlock();
 
