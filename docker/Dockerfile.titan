@@ -49,6 +49,7 @@ RUN echo "docker-titan" > /etc/hostname \
     && cd /home/yann/frameworks \
     && git clone https://github.com/vlm/asn1c.git asn1c \
     && cd ./asn1c \
+        && git checkout f22184d \
         && test -f configure || autoreconf -iv \
         && ./configure \
         && make && make install \
@@ -59,6 +60,7 @@ RUN echo "docker-titan" > /etc/hostname \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
     && cd ../etsi_its/src/Test/objs \
+    && ../bin/testcodec_generate_makefile.bash \
     && cd /home/yann > /home/yann/tmp/docker_build.log
 
 CMD ["/bin/bash"]
