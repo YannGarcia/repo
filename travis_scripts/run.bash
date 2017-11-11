@@ -1,6 +1,6 @@
 #!/bin/bash
 # Execute all test library applications. This script does not check results.
-set -e # Exit with non 0 if any command fails
+#set -e # Exit with non 0 if any command fails
 set -vx
 
 OLD_PWD=`pwd`

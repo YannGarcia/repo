@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script checks results.
-set -e # Exit with non 0 if any command fails
+#set -e # Exit with non 0 if any command fails
 set -vx
 
 function check_docs {

@@ -1,0 +1,31 @@
+FROM ubuntu:latest
+
+MAINTAINER Yann Garcia
+
+LABEL description="TITAN Docker Image for Travis CI debug"
+
+ENV TERM=linux
+ENV HOSTNAME docker-travis
+
+RUN echo "docker-travis" > /etc/hostname \
+    && apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get autoremove \
+    && apt-get autoclean \
+    && apt-get install git-core -y \
+    && mkdir -p /home/yann \
+    && cd /home/yann \
+    && mkdir -p bin lib include tmp frameworks docs \
+    && git clone https://github.com/YannGarcia/repo.git repo \
+    && export HOME=/home/yann \
+    && export TRAVIS_CONTEXT="NoCoveralls" \
+    && cd /home/yann/repo \
+    && git config user.name "YannGarcia" \
+    && git config user.email "garcia.yann@gmail.com" \
+    && cd /home/yann/repo/travis_scripts \
+    && ./install.bash \
+    && ./build.bash \
+    && cd /home/yann > /home/yann/tmp/docker_build.log
+
+CMD ["/bin/bash"]
+
