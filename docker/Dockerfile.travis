@@ -23,8 +23,10 @@ RUN echo "docker-travis" > /etc/hostname \
     && git config user.name "YannGarcia" \
     && git config user.email "garcia.yann@gmail.com" \
     && cd /home/yann/repo/travis_scripts \
-    && ./install.bash \
+    && . ./install.bash \
     && ./build.bash \
+    && ./test.bash \
+    && ./run.bash \
     && cd /home/yann > /home/yann/tmp/docker_build.log
 
 CMD ["/bin/bash"]

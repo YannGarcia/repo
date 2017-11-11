@@ -1,6 +1,6 @@
 #!/bin/bash
 #set -e # Exit with non 0 if any command fails
-set -vx
+#set -vx
 
 OLD_PWD=`pwd`
 # Use ${PATH_DEV}/g++/projectsxs/embedded/Makefile at the end of the full review
