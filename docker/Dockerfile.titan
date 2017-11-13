@@ -58,7 +58,7 @@ RUN echo "docker-titan" > /etc/hostname \
     && ./build_titan.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-    && cd ../etsi_its/src/Test/objs \
+    && cd ../etsi_its/src/TestCodec/objs \
     && cd /home/yann > /home/yann/tmp/docker_build.log
 
 CMD ["/bin/bash"]
