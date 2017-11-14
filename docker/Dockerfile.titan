@@ -57,11 +57,12 @@ RUN echo "docker-titan" > /etc/hostname \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
+    && cd /home/yann \
     && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-    && tree -d /home/yann/TriesAndDelete \
-    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
+    && tree -d /home/yann/TriesAndDelete
+#    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
 #    && ../bin/testcodec_generate_makefile.bash \
 
 CMD ["/bin/bash"]
