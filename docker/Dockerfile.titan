@@ -46,7 +46,6 @@ RUN echo "docker-titan" > /etc/hostname \
     && rm -fr ./repo \
     && export HOME=/home/yann \
     && . /home/yann/devenv.bash \
-    && set \
     && cd /home/yann/frameworks \
     && git clone https://github.com/vlm/asn1c.git asn1c \
     && cd ./asn1c \
@@ -58,12 +57,13 @@ RUN echo "docker-titan" > /etc/hostname \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
+    && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-    && cd ../etsi_its/src/TestCodec/objs \
-    && set \
-    && ../bin/testcodec_generate_makefile.bash \
-    && cd /home/yann > /home/yann/tmp/docker_build.log
+    && tree -d /home/yann/TriesAndDelete \
+    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
+#    && ../bin/testcodec_generate_makefile.bash \
 
 CMD ["/bin/bash"]
 
+# That's all Floks
