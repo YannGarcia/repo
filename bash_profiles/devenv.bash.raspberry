@@ -27,13 +27,13 @@ export PATH=${HOME_BIN}:${PATH}
 # Update LD_LIBRARY_PATH environment variable
 export LD_LIBRARY_PATH=${HOME_LIB}:${LD_LIBRARY_PATH}
 
-if [ -d ~/repo ]
+if [ -d ${HOME}/repo ]
 then 
-    export PATH_DEV=~/repo/dev
-    export PATH_DEPLOY=~/repo/docs
+    export PATH_DEV=${HOME}/repo/dev
+    export PATH_DEPLOY=${HOME}/repo/docs
 else
-    export PATH_DEV=~/dev
-    export PATH_DEPLOY=~/repo/docs
+    export PATH_DEV=${HOME}/dev
+    export PATH_DEPLOY=${HOME}/repo/docs
 fi
 
 export SELECTED_HW=raspberry_pi
@@ -62,9 +62,9 @@ then
     export CROSS_COMPILER_ARM_GCC_PATH=${CROSS_COMPILER_PATH}/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
     export CROSS_COMPILER_ARM_GCC_LIB_PATH=${CROSS_COMPILER_PATH}/lib/gcc/arm-willtm-linux-gnueabi/${CROSS_COMPILER_VERSION}
 
-    export KERNEL_SRC=~/Kernel/linux/
+    export KERNEL_SRC=${HOME}/Kernel/linux/
     export CCPREFIX=arm-linux-gnueabihf-
-    export KBUILD_OUTPUT=~/tmp
+    export KBUILD_OUTPUT=${HOME}/tmp
 
     export PATH=${CROSS_COMPILER_BIN}:${PATH}
 fi
@@ -133,5 +133,5 @@ fi
 #then
 #    eval `/usr/bin/ssh-agent -s`
 #    ssh-add -l
-#    ssh-add ~/.ssh/git_server_ssh_key_name
+#    ssh-add ${HOME}/.ssh/git_server_ssh_key_name
 #fi
