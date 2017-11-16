@@ -61,8 +61,8 @@ RUN echo "docker-titan" > /etc/hostname \
     && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs \
-    && ../bin/testcodec_generate_makefile.bash
+    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
+#    && ../bin/testcodec_generate_makefile.bash
 
 CMD ["/bin/bash"]
 
