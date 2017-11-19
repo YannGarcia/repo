@@ -12,7 +12,7 @@ ARG PASSWORD
 
 RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive 
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       vsftpd \
       xutils-dev \
     && apt-get autoremove \
