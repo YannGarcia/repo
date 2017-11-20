@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e # Exit with non 0 if any command fails
+#set -e # Exit with non 0 if any command fails
 #set -vx
 
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]

@@ -14,6 +14,18 @@ include ../Makefile.inc
 #############################################################################
 # Override CC, CCP and LD in case of cross compiler
 
+ifneq ($(MBED_CROSS_COMPILER_PATH), )
+CC=$(MBED_CC)
+CCP=$(MBED_CCP)
+LD=$(MBED_LD)
+
+GLOBAL_DEF_STD_GLD=$(MBED_GLOBAL_DEF_STD_GLD)
+
+GLOBAL_DEF_GCC_DEBUG=$(MBED_GLOBAL_DEF_GCC_DEBUG)
+GLOBAL_DEF_GCC=$(MBED_GLOBAL_DEF_GCC)
+
+endif
+
 #############################################################################
 # Shared library version
 

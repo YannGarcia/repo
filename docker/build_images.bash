@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-set -vx
+#set -vx
 
 if [ "$1" == "" ]
 then
@@ -13,7 +13,7 @@ if [ -f ${DOCKER_FILE} ]
 then
     if [ "$2" == "r" ]
     then
-        docker rmi $(docker images -q)
+        docker rmi -f $(docker images -q)
     fi
     if [ -d ${BUILD_FOLDER} ]
     then

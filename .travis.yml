@@ -12,7 +12,7 @@ env:
   - TRAVIS_CONTEXT="NoCoveralls"
 #  - TRAVIS_CONTEXT="WithValgrind"
 #  - TRAVIS_CONTEXT="WithCoveralls"
-#  - TRAVIS_CONTEXT="BaremetalHW"
+  - TRAVIS_CONTEXT="BaremetalHW"
 #  - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`

@@ -12,27 +12,7 @@ ARG PASSWORD
 
 RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      bison \
-      curl \
-      doxygen \
-      emacs \
-      expect \
-      flex \
-      graphviz \
-      git \
-      default-jre \
-      libncurses5-dev libpcap-dev libwireshark-dev libssl-dev libxml2-dev \
-      lsof \
-      ntp \
-      sshpass \
-      texlive-font-utils \
-      tcpdump \ 
-      tree \
-      tshark \
-      unzip \
-      valgrind \
       vsftpd \
       xutils-dev \
     && apt-get autoremove \
@@ -43,12 +23,15 @@ RUN echo "docker-titan" > /etc/hostname \
     && git clone https://github.com/YannGarcia/repo.git repo \
     && git clone https://github.com/YannGarcia/TriesAndDelete.git TriesAndDelete \
     && cp /home/yann/repo/bash_profiles/devenv.bash.ubuntu /home/yann/devenv.bash \
+    && cp /home/yann/repo/emacs/.emacs /home/yann/ \
+    && cp -Rp /home/yann/repo/emacs/emacs_ttcn /home/yann \
     && rm -fr ./repo \
     && export HOME=/home/yann \
     && . /home/yann/devenv.bash \
     && cd /home/yann/frameworks \
     && git clone https://github.com/vlm/asn1c.git asn1c \
     && cd ./asn1c \
+        && git checkout f22184d \
         && test -f configure || autoreconf -iv \
         && ./configure \
         && make && make install \
@@ -56,10 +39,18 @@ RUN echo "docker-titan" > /etc/hostname \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
+    && cd /home/yann \
+    && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
+<<<<<<< HEAD
     && cd ../etsi_its/src/TestCodec/objs \
     && cd /home/yann > /home/yann/tmp/docker_build.log
+=======
+    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
+#    && ../bin/testcodec_generate_makefile.bash
+>>>>>>> d39fa1286afd664d8e875449638657be7b870202
 
 CMD ["/bin/bash"]
 
+# That's all Floks
