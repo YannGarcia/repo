@@ -11,6 +11,8 @@
 #include <vector>
 #include <cstdint>
 
+namespace security {
+
 class sha256 {
   std::vector<uint8_t> _vector;
 
@@ -18,3 +20,6 @@ public:
   sha256(): _vector(0x00, 32) {};
   virtual ~sha256() { _vector.clear(); };
 } // End of class sha256
+
+} // End of namespace security
+

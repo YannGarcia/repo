@@ -10,6 +10,7 @@ ENV HOSTNAME docker-titan
 ARG USERNAME
 ARG PASSWORD
 
+#useradd -d/home/titan -m -s/bin/bash titan && su - titan &&
 RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -43,13 +44,8 @@ RUN echo "docker-titan" > /etc/hostname \
     && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-<<<<<<< HEAD
-    && cd ../etsi_its/src/TestCodec/objs \
-    && cd /home/yann > /home/yann/tmp/docker_build.log
-=======
     && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
 #    && ../bin/testcodec_generate_makefile.bash
->>>>>>> d39fa1286afd664d8e875449638657be7b870202
 
 CMD ["/bin/bash"]
 

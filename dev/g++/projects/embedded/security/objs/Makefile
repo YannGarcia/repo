@@ -87,16 +87,16 @@ MODULE_TEST=$(BIN)
 # Object app
 OBJS=$(TEST_OBJS)
 LIB_OBJS=\
-	$(LOGGER_OBJ)
+	$(SHA256_OBJ)
 
 # Objects
 TEST_OBJ=testlib.o
-LOGGER_OBJ=logger.o 
+SHA256_OBJ=sha256.o 
 
 # Headears
-LOGGER_INC=logger.h
+SHA256_INC=sha256.h
 
-INC_MODULES=$(LOGGER_INC)
+INC_MODULES=$(SHA256_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -122,8 +122,8 @@ $(TEST_TARGET): $(TEST_OBJ)
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(LOGGER_OBJ): $(SRCDIRS)$(LOGGER_OBJ:.o=.cpp)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LOGGER_OBJ)
+$(SHA256_OBJ): $(SRCDIRS)$(SHA256_OBJ:.o=.cpp)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SHA256_OBJ)
 
 compile :
 	${MAKE} -f Makefile \
@@ -205,17 +205,17 @@ endif
 #			echo "$(LN) $(PWD)/$(INCDIRS)$$header $(HOME_INC)/$$header" \
 #		fi \
 #	done
-ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_INC) $(HOME_INC)/$(LOGGER_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA256_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA256_INC) $(HOME_INC)/$(SHA256_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_FACTORY_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_FACTORY_INC) $(HOME_INC)/$(LOGGER_FACTORY_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA256_FACTORY_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA256_FACTORY_INC) $(HOME_INC)/$(SHA256_FACTORY_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_LEVELS_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_LEVELS_INC) $(HOME_INC)/$(LOGGER_LEVELS_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA256_LEVELS_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA256_LEVELS_INC) $(HOME_INC)/$(SHA256_LEVELS_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LOGGER_TIME_FORMATS_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(LOGGER_TIME_FORMATS_INC) $(HOME_INC)/$(LOGGER_TIME_FORMATS_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA256_TIME_FORMATS_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA256_TIME_FORMATS_INC) $(HOME_INC)/$(SHA256_TIME_FORMATS_INC)
 endif
 	@echo "*** $@ done ***"
 
@@ -235,7 +235,7 @@ install: compile cleanlinks
 	@echo "*** $@ done ***"
 
 install-devel: install
-	@$(CP) $(INCDIRS)$(LOGGER_INC) $(PATH_INSTALL_INC)/$(LOGGER_INC)
+	@$(CP) $(INCDIRS)$(SHA256_INC) $(PATH_INSTALL_INC)/$(SHA256_INC)
 	@echo "*** $@ done ***"
 
 depend :
