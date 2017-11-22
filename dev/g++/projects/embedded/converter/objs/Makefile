@@ -94,7 +94,7 @@ TEST_OBJ=testlib.o
 CONVERTER_OBJ=converter.o 
 
 # Headears
-CONVERTER_INC=converter.h
+CONVERTER_INC=converter.hh
 
 INC_MODULES=$(CONVERTER_INC)
 
@@ -119,10 +119,10 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) -L$(HOME_LIB) -lconverter $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(CONVERTER_OBJ): $(SRCDIRS)$(CONVERTER_OBJ:.o=.cpp)
+$(CONVERTER_OBJ): $(SRCDIRS)$(CONVERTER_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(CONVERTER_OBJ)
 
 compile :
@@ -232,7 +232,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

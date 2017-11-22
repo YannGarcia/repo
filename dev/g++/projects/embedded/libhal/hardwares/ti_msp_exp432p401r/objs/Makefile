@@ -92,12 +92,9 @@ LIBHAL_OBJ=libhal.o
 LIBHAL_SHIFT_OBJ=libhal_shift.o
 
 # Header files
-LIBHAL_INC=libhal.h
-LIBHAL_DIGITALOUT_INC=digital_out.hpp
-LIBHAL_SHIFT_INC=libhal_shift.hpp
-LIBHAL_FACTORY_INC=libhal_factory.hpp
+LIBHALPINNAMES_INC=libhal_pin_names.$(SELECTED_HW).h
 
-INC_MODULES=LIBLIBHAL_INC LIBHAL_DIGITALOUT_INC LIBHAL_SHIFT_INC LIBHAL_FACTORY_INC
+INC_MODULES=$(LIBHALPINNAMES_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -194,8 +191,8 @@ links:
 ifeq (,$(wildcard $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)))
 		ln -s $(PWD)/$(LIB) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHAL_INC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHAL_INC) $(HOME_INC)/$(LIBHAL_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(LIBHALPINNAMES_INC)))
+		ln -s $(PWD)/$(INCDIRS)$(LIBHALPINNAMES_INC) $(HOME_INC)/$(LIBHALPINNAMES_INC)
 endif
 
 upload: compile

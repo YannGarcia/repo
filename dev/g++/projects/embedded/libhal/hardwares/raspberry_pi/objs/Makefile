@@ -109,15 +109,14 @@ I2C_OBJ=i2c.o
 SPI_OBJ=spi.o
 
 # Header files
-LIBHALINC=libhal.$(SELECTED_HW).h
-LIBHALPINNAMESINC=libhal_pin_names.$(SELECTED_HW).h
-LIBHALI2C_INCP=libhal_i2c.hpp
-LIBHALSPI_INCP=libhal_spi.hpp
-LIBHAL_DIGITALOUT_INC=digital_out.hpp
-LIBHAL_ANALOGIN_INC=analog_in.hpp
-LIBHAL_FACTORY_INC=libhal_factory.hpp
+LIBHALPINNAMES_INC=libhal_pin_names.$(SELECTED_HW).h
+LIBHALI2C_INCP=libhal_i2c.hh
+LIBHALSPI_INCP=libhal_spi.hh
+LIBHAL_DIGITALOUT_INC=digital_out.hh
+LIBHAL_ANALOGIN_INC=analog_in.hh
+LIBHAL_FACTORY_INC=libhal_factory.hh
 
-INC_MODULES=$(LIBHALINC) $(LIBHALPINNAMESINC) $(LIBHALI2C_INCP) $(LIBHALSPI_INCP) $(LIBHAL_DIGITALOUT_INC) $(LIBHAL_ANALOGIN_INC) $(LIBHAL_FACTORY_INC)
+INC_MODULES=$(LIBHALPINNAMES_INC) $(LIBHALI2C_INCP) $(LIBHALSPI_INCP) $(LIBHAL_DIGITALOUT_INC) $(LIBHAL_ANALOGIN_INC) $(LIBHAL_FACTORY_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -141,7 +140,7 @@ $(TEST_TARGET): $(TEST_OBJ)
 	@echo "*** $@ done ***"
 
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.c)
-	$(CCP) $(CC_OPTION) -D$(SELECTED_HW) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
+	$(CCP) $(CC_OPTION) -D$(SELECTED_HW) -I$(HOME_INC) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
 $(LIBHAL_OBJ): $(SRCDIRS)$(LIBHAL_OBJ:.o=.c)
 	$(CC) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LIBHAL_OBJ)
@@ -158,10 +157,10 @@ $(LIBHALSERIAL_OBJ): $(SRCDIRS)$(LIBHALSERIAL_OBJ:.o=.c)
 $(LIBHALSHIFT_OBJ): $(SRCDIRS)$(LIBHALSHIFT_OBJ:.o=.c)
 	$(CC) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LIBHALSHIFT_OBJ)
 
-$(SPI_OBJ): $(SRCDIRS)$(SPI_OBJ:.o=.cpp)
+$(SPI_OBJ): $(SRCDIRS)$(SPI_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SPI_OBJ)
 
-$(I2C_OBJ): $(SRCDIRS)$(I2C_OBJ:.o=.cpp)
+$(I2C_OBJ): $(SRCDIRS)$(I2C_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(I2C_OBJ)
 
 compile :
@@ -231,9 +230,6 @@ endif
 ifeq (,$(wildcard $(HOME_LIB)/$(LIBRARY)++$(SHARED_LIBRARY_EXT_NAME)))
 		ln -s $(PWD)/$(LIBP) $(HOME_LIB)/$(LIBRARY)++$(SHARED_LIBRARY_EXT_NAME)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(LIBHALINC)))
-		ln -s $(PWD)/$(INCDIRS)$(LIBHALINC) $(HOME_INC)/$(LIBHALINC)
-endif
 ifeq (,$(wildcard $(HOME_INC)/$(LIBHALPINNAMES_INC)))
 		ln -s $(PWD)/$(INCDIRS)$(LIBHALPINNAMES_INC) $(HOME_INC)/$(LIBHALPINNAMES_INC)
 endif
@@ -270,7 +266,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

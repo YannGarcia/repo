@@ -1,10 +1,10 @@
-/**
- * @file      main.c
- * @brief     Application to validate libhal libary
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   1.0
+/*!
+ * \file      main.c
+ * \brief     Application to validate libhal libary
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   1.0
  */
 #include <limits.h>
 

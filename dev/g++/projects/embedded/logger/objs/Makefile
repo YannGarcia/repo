@@ -94,10 +94,10 @@ TEST_OBJ=testlib.o
 LOGGER_OBJ=logger.o 
 
 # Headears
-LOGGER_FACTORY_INC=logger_factory.h
-LOGGER_INC=logger.h
-LOGGER_LEVELS_INC=logger_levels.h
-LOGGER_TIME_FORMATS_INC=logger_time_formats.h
+LOGGER_FACTORY_INC=logger_factory.hh
+LOGGER_INC=logger.hh
+LOGGER_LEVELS_INC=logger_levels.hh
+LOGGER_TIME_FORMATS_INC=logger_time_formats.hh
 
 INC_MODULES=$(LOGGER_FACTORY_INC) $(LOGGER_INC) $(LOGGER_LEVELS_INC) $(LOGGER_TIME_FORMATS_INC)
 
@@ -122,10 +122,10 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(LOGGER_OBJ): $(SRCDIRS)$(LOGGER_OBJ:.o=.cpp)
+$(LOGGER_OBJ): $(SRCDIRS)$(LOGGER_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(LOGGER_OBJ)
 
 compile :

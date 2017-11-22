@@ -1,4 +1,4 @@
-/**
+/*!
  * \file      ibstream.t.h
  * \brief     Header file for input binary stream template.
  * \author    garciay.yann@gmail.com
@@ -6,8 +6,8 @@
  * \license   This project is released under the MIT License
  * \version   0.1
  */
-#include "ibstream.h"
-#include "converter.h"
+#include "ibstream.hh"
+#include "converter.hh"
 
 namespace helpers {
   

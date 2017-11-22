@@ -72,7 +72,7 @@ OBJS=$(BIN_OBJS)
 BIN_OBJ=main.o udp_echo.o
 
 # Headears
-BIN_INC=udp_echo.h
+BIN_INC=udp_echo.hh
 
 INC_MODULES=$(BIN_INC)
 
@@ -86,7 +86,7 @@ $(BIN_TARGET): $(BIN_OBJ)
 	$(LD) $(BIN_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(BIN_OBJ): $(SRCDIRS)$(BIN_OBJ:.o=.cpp)
+$(BIN_OBJ): $(SRCDIRS)$(BIN_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(BIN_OBJ)
 
 compile :
@@ -135,7 +135,7 @@ clean:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

@@ -102,10 +102,10 @@ SM_OBJ=shared_memory.o
 MQ_OBJ=message_queue.o
 
 # Headears
-ABSTRACT_IPC_INC=abstract_ipc.h
-IPC_MANAGER_INC=ipc_manager.h
-SM_INC=shared_memory.h
-MQ_INC=message_queue.h
+ABSTRACT_IPC_INC=abstract_ipc.hh
+IPC_MANAGER_INC=ipc_manager.hh
+SM_INC=shared_memory.hh
+MQ_INC=message_queue.hh
 
 INC_MODULES=$(ABSTRACT_IPC_INC) $(IPC_MANAGER_INC) $(SM_INC) $(MQ_INC)
 
@@ -130,16 +130,16 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(IPC_MANAGER_OBJ): $(SRCDIRS)$(IPC_MANAGER_OBJ:.o=.cpp)
+$(IPC_MANAGER_OBJ): $(SRCDIRS)$(IPC_MANAGER_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(IPC_MANAGER_OBJ)
 
-$(SM_OBJ): $(SRCDIRS)$(SM_OBJ:.o=.cpp)
+$(SM_OBJ): $(SRCDIRS)$(SM_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SM_OBJ)
 
-$(MQ_OBJ): $(SRCDIRS)$(MQ_OBJ:.o=.cpp)
+$(MQ_OBJ): $(SRCDIRS)$(MQ_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(MQ_OBJ)
 
 compile :
@@ -258,7 +258,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

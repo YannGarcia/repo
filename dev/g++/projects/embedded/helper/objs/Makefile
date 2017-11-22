@@ -108,16 +108,16 @@ GET_OPT_OBJ=get_opt.o
 KEYBOARD_OBJ=keyboard.o
 
 # Headears
-HELPER_INC=helper.h
+HELPER_INC=helper.hh
 HELPER_INC_TEMP=helper.t.h
-DATE_TIME_INC=date_time.h
-IBSTREAM_INC=ibstream.h
-OBSTREAM_INC=obstream.h
+DATE_TIME_INC=date_time.hh
+IBSTREAM_INC=ibstream.hh
+OBSTREAM_INC=obstream.hh
 IBSTREAM_TEMP=ibstream.t.h
 OBSTREAM_TEMP=obstream.t.h
-GET_OPT_INC=get_opt.h
-KEYBOARD_INC=keyboard.h
-RUNNABLE_INC=runnable.h
+GET_OPT_INC=get_opt.hh
+KEYBOARD_INC=keyboard.hh
+RUNNABLE_INC=runnable.hh
 
 INC_MODULES=$(HELPER_INC) $(HELPER_INC_TEMP) $(DATE_TIME_INC) $(IBSTREAM_INC) $(OBSTREAM_INC) $(IBSTREAM_TEMP) $(OBSTREAM_TEMP) $(GET_OPT_INC) $(KEYBOARD_INC) $(RUNNABLE_INC)
 
@@ -142,25 +142,25 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) -L$(HOME_LIB) -lhelper $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(HELPER_OBJ): $(SRCDIRS)$(HELPER_OBJ:.o=.cpp)
+$(HELPER_OBJ): $(SRCDIRS)$(HELPER_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(HELPER_OBJ)
 
-$(DATE_TIME_OBJ): $(SRCDIRS)$(DATE_TIME_OBJ:.o=.cpp)
+$(DATE_TIME_OBJ): $(SRCDIRS)$(DATE_TIME_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(DATE_TIME_OBJ)
 
-$(IBSTREAM_OBJ): $(SRCDIRS)$(IBSTREAM_OBJ:.o=.cpp)
+$(IBSTREAM_OBJ): $(SRCDIRS)$(IBSTREAM_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -I$(HOME_INC) -c $? -o $(OBJSDIRS)$(IBSTREAM_OBJ)
 
-$(OBSTREAM_OBJ): $(SRCDIRS)$(OBSTREAM_OBJ:.o=.cpp)
+$(OBSTREAM_OBJ): $(SRCDIRS)$(OBSTREAM_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -I$(HOME_INC) -c $? -o $(OBJSDIRS)$(OBSTREAM_OBJ)
 
-$(KEYBOARD_OBJ): $(SRCDIRS)$(KEYBOARD_OBJ:.o=.cpp)
+$(KEYBOARD_OBJ): $(SRCDIRS)$(KEYBOARD_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -I$(HOME_INC) -c $? -o $(OBJSDIRS)$(KEYBOARD_OBJ)
 
-$(GET_OPT_OBJ): $(SRCDIRS)$(GET_OPT_OBJ:.o=.cpp)
+$(GET_OPT_OBJ): $(SRCDIRS)$(GET_OPT_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -I$(HOME_INC) -c $? -o $(OBJSDIRS)$(GET_OPT_OBJ)
 
 compile :
@@ -302,7 +302,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

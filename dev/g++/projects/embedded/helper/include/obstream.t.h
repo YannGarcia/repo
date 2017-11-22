@@ -1,4 +1,4 @@
-/**
+/*!
  * \file      obstream.t.h
  * \brief     Template header file for output binary stream template.
  * \author    garciay.yann@gmail.com
@@ -8,8 +8,8 @@
  */
 #include <type_traits>
 
-#include "obstream.h"
-#include "converter.h"
+#include "obstream.hh"
+#include "converter.hh"
 
 namespace helpers {
   

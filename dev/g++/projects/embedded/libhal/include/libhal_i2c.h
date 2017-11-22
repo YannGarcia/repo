@@ -1,4 +1,4 @@
-/**
+/*!
  * \file      libhal_i2c.h
  * \brief     Header file for the I2C Hardware Abstract Layer library.
  * \author    garciay.yann@gmail.com
@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-  /**
+  /*!
    * \fn int32_t libhal_i2c_setup(const uint8_t p_device_id)
    * \brief Open the default I2C device, and register the target device
    * \param[in] p_i2c_bus_id I2C bus identifier
@@ -24,7 +24,7 @@ extern "C" {
    * \return The I2C file descriptor on success, -1 otherwise
    */
   extern int32_t libhal_i2c_setup(const uint8_t p_i2c_bus_id, const uint8_t p_device_address);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_setup_interface(const int32_t p_device_id)
    * \brief Open the specified I2C device, register the target device
    * \param[in] p_bus_id         I2C bus identifier. Default: /dev/i2c-1
@@ -32,14 +32,14 @@ extern "C" {
    * \return The I2C file descriptor on success, -1 otherwise
    */
   extern int32_t libhal_i2c_setup_interface(const char *p_i2c_bus_id, const uint8_t p_device_address);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_read(const int32_t p_fd)
    * \brief Read one byte from openend I2C bus
    * \param[in] p_fd    The I2C file descriptor 
    * \return The 8-bits read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_read(const int32_t p_fd);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_read_register8(const int32_t p_fd, const uint8_t p_register)
    * \brief Read a 8-bits value from a register on the device
    * \param[in] p_fd        The I2C file descriptor 
@@ -47,7 +47,7 @@ extern "C" {
    * \return The 8-bits read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_read_register8(const int32_t p_fd, const uint8_t p_register);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_read_register16(const int32_t p_fd, const uint16_t p_register)
    * \brief Read a 16-bits value from a register on the device
    * \param[in] p_fd        The I2C file descriptor 
@@ -55,7 +55,7 @@ extern "C" {
    * \return The 16-bits value read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_read_register16(const int32_t p_fd, const uint8_t p_register);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_ext_read_register8(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register)
    * \brief Read a 8-bits value from a 16 bit address register on the device, MSB first
    * \param[in] p_fd             The I2C file descriptor 
@@ -64,7 +64,7 @@ extern "C" {
    * \return The 8-bits read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_ext_read_register8(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_ext_read_register16(const int32_t p_fd, const uint16_t p_register)
    * \brief Read a 8-bits value from a 16 bit address register on the device
    * \param[in] p_fd             The I2C file descriptor 
@@ -73,7 +73,7 @@ extern "C" {
    * \return The 8-bits read on success, -1 otherwise
    */
   extern int32_t libhal_i2c_ext_read_register16(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_write(const int32_t p_fd, const int32_t p_buffer)
    * \brief Write one byte from openend I2C bus to the 8 bits address register
    * \param[in] p_fd        The I2C file descriptor 
@@ -81,7 +81,7 @@ extern "C" {
    * \return 0 on success, -1 otherwise
    */
   extern int32_t libhal_i2c_write(const int32_t p_fd, const int32_t p_value);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_write_register8(const int32_t p_fd, const uint32_t p_register, const uint8_t p_value)
    * \brief Write one byte from openend I2C bus to the 8 bits address register
    * \param[in] p_fd        The I2C file descriptor 
@@ -90,7 +90,7 @@ extern "C" {
    * \return 0 on success, -1 otherwise
    */
   extern int32_t libhal_i2c_write_register8(const int32_t p_fd, const uint8_t p_register, const uint8_t p_value);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_write_register16(const int32_t p_fd, const uint32_t p_register, const uint16_t p_value)
    * \brief Write one byte from openend I2C bus to the 16 bits address register, MSB first
    * \param[in] p_fd        The I2C file descriptor 
@@ -99,7 +99,7 @@ extern "C" {
    * \return 0 on success, -1 otherwise
    */
   extern int32_t libhal_i2c_write_register16(const int32_t p_fd, const uint8_t p_register, const uint16_t p_value);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_ext_write_register8(const int32_t p_fd, const uint8_t p_device_address, const uint32_t p_register, const uint8_t pvalue)
    * \brief Write one byte from openend I2C bus to the 16 bits address register
    * \param[in] p_fd             The I2C file descriptor 
@@ -109,7 +109,7 @@ extern "C" {
    * \return 0 on success, -1 otherwise
    */
   extern int32_t libhal_i2c_ext_write_register8(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register, const uint8_t p_value);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_ext_write_register16(const int32_t p_fd, const uint8_t p_device_address, const uint32_t p_register, const uint16_t p_value)
    * \brief Write one byte from openend I2C bus to the 16 bits address register, MSB first
    * \param[in] p_fd             The I2C file descriptor 
@@ -119,7 +119,7 @@ extern "C" {
    * \return 0 on success, -1 otherwise
    */
   extern int32_t libhal_i2c_ext_write_register16(const int32_t p_fd, const uint8_t p_device_address, const uint16_t p_register, const uint16_t p_value);
-  /**
+  /*!
    * \fn int32_t libhal_i2c_close(const uint8_t p_channel)
    * \brief Close the I2C channel
    * \param[in] p_fd The file descriptor to close

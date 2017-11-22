@@ -1,10 +1,10 @@
-/**
- * @file      libhal.c
- * @brief     Implementation file for the Hardware Abstract Layer library.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
+/*!
+ * \file      libhal.c
+ * \brief     Implementation file for the Hardware Abstract Layer library.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
  */
 #include <stdio.h>
 #include <stdarg.h>
@@ -44,11 +44,11 @@ void libhal_shutdown_sys(void) {
   return;
 }
 
-void pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
+int32_t pin_mode(const pin_name p_gpio, const gpio_modes_t p_mode)
 {
   // Sanity check
   pinMode((int)p_gpio, (int)p_mode);
-  return;
+  return 0;
 } // End of function pin_mode
 
 int32_t pull_up_dn_control(const pin_name p_gpio, const pud_t p_pud) {

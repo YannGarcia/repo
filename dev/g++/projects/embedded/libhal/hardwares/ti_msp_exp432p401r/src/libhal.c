@@ -1,11 +1,11 @@
-/**
- * @file      libhal.c
- * @brief     Main implementation file for the Hardware Abstract Layer library.
- * @author    garciay.yann@gmail.com
- * @copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
- * @license   This project is released under the MIT License
- * @version   0.1
- * @see       MSP432® Peripheral Driver Library - USER’S GUIDE
+/*!
+ * \file      libhal.c
+ * \brief     Main implementation file for the Hardware Abstract Layer library.
+ * \author    garciay.yann@gmail.com
+ * \copyright Copyright (c) 2016-2017 ygarcia. All rights reserved
+ * \license   This project is released under the MIT License
+ * \version   0.1
+ * \see       MSP432® Peripheral Driver Library - USER’S GUIDE
  */
 #include <stdio.h>
 #include <stdint.h>

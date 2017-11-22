@@ -1,4 +1,4 @@
-/**
+/*!
  * \file    helper.t.h
  * \brief   Main header file for the template Helper library.
  * \author garciay.yann@gmail.com
@@ -6,7 +6,7 @@
  * \license This project is released under the MIT License
  * \version 0.1
  */
-#include "helper.h"
+#include "helper.hh"
 
 namespace helpers {
  

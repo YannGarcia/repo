@@ -97,7 +97,7 @@ TEST_OBJ=testlib.o
 RS232_OBJ=rs232.o 
 
 # Headears
-RS232_INC=rs232.h
+RS232_INC=rs232.hh
 
 INC_MODULES=$(RS232_INC)
 
@@ -122,10 +122,10 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(RS232_OBJ): $(SRCDIRS)$(RS232_OBJ:.o=.cpp)
+$(RS232_OBJ): $(SRCDIRS)$(RS232_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(RS232_OBJ)
 
 compile :
@@ -241,7 +241,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

@@ -101,14 +101,14 @@ UBLOX_OBJ=ublox.o
 GPS_PARSER_OBJ=gps_parser.o
 
 # Headears
-GPS_DEVICE_FACTORY_INC=gps_device_factory.h
-GPS_PARSER_FACTORY_INC=gps_parser_factory.h
-GPS_DEVICE_INC=gps_device.h
-GPS_PARSER_INC=gps_parser.h
-DEVICES_INC=devices.h
-PARSERS_INC=parsers.h
-NMEA_2000_INC=nmea2000.h 
-UBLOX_INC=ublox.h 
+GPS_DEVICE_FACTORY_INC=gps_device_factory.hh
+GPS_PARSER_FACTORY_INC=gps_parser_factory.hh
+GPS_DEVICE_INC=gps_device.hh
+GPS_PARSER_INC=gps_parser.hh
+DEVICES_INC=devices.hh
+PARSERS_INC=parsers.hh
+NMEA_2000_INC=nmea2000.hh
+UBLOX_INC=ublox.hh
 
 INC_MODULES=$(GPS_DEVICE_FACTORY_INC) $(GPS_PARSER_FACTORY_INC) $(GPS_DEVICE_INC) $(GPS_PARSER_INC) $(DEVICES_INC) $(PARSERS_INC) $(NMEA_2000_INC) $(UBLOX_INC)
 
@@ -133,16 +133,16 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(NMEA_2000_OBJ): $(SRCDIRS)$(NMEA_2000_OBJ:.o=.cpp)
+$(NMEA_2000_OBJ): $(SRCDIRS)$(NMEA_2000_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(NMEA_2000_OBJ)
 
-$(UBLOX_OBJ): $(SRCDIRS)$(UBLOX_OBJ:.o=.cpp)
+$(UBLOX_OBJ): $(SRCDIRS)$(UBLOX_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(UBLOX_OBJ)
 
-$(GPS_PARSER_OBJ): $(SRCDIRS)$(GPS_PARSER_OBJ:.o=.cpp)
+$(GPS_PARSER_OBJ): $(SRCDIRS)$(GPS_PARSER_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(GPS_PARSER_OBJ)
 
 compile :
@@ -279,7 +279,7 @@ pushO2:
 	@echo "*** $@ done ***"
 
 depend :
-	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cpp -f$(MAKEFILE)
+	makedepend -m $(CC_OPTIONS) $(SRCDIR)/*.cc -f$(MAKEFILE)
 	@echo "*** $@ done ***"
 
 gendoc: $(DOCCONF)

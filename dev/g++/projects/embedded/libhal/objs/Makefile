@@ -25,7 +25,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-debug: links
+debug:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile debug; \
 	cd -
@@ -43,7 +43,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-recompile: cleanlinks
+recompile: clean
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile recompile; \
 	cd -
@@ -61,7 +61,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-install: links
+install:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile install; \
 	cd -
@@ -70,7 +70,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-install-devel: links
+install-devel:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile install-devel; \
 	cd -
@@ -88,7 +88,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-test_d: links
+test_d:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile test_d; \
 	cd -
@@ -97,7 +97,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-test_v: links
+test_v:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile test_v; \
 	cd -
@@ -106,7 +106,7 @@ else
 endif
 	@echo "*** $@ done ***"
 
-run: links
+run:
 ifneq ($(SELECTED_HW), )
 	cd ../hardwares/$(SELECTED_HW)/objs && $(MAKE) -f Makefile run; \
 	cd -
@@ -161,6 +161,11 @@ help:
 	@echo "   test         : Build and execute the test application."
 	@echo "--------------------------------------------------------------------------------------------------------------"
 	@echo "   NOTE         : The env. variable SELECTED_HW shall be set"
+	@echo "                : Possible values are:"
+	@echo "                :   raspberry_pi, for Raspberry PI family"
+	@echo "                :   chip for C.H.I.P hardware"
+	@echo "                :   bbb for Beagle Bone Black family"
+	@echo "                :   ti_msp_exp432p401r for TI MSP432P family"
 	@echo "*** $@ done ***"
 
 #############################################################################
