@@ -1,5 +1,5 @@
 /*!
- * \File      converter.cpp
+ * \file      converter.cpp
  * \brief     Implementation file for the types converter library.
  * \author    garciay.yann@gmail.com
  * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved

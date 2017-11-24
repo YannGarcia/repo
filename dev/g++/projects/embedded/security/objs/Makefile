@@ -38,9 +38,9 @@ endif
 # Libraries and options.
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../..
-CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I../..
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../..
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
 
 # Linker flags
 LD_DEBUG_OPTIONS=-g -shared -Wall $(GLOBAL_DEF_STD_GLD)
@@ -94,7 +94,7 @@ TEST_OBJ=testlib.o
 SHA256_OBJ=sha256.o 
 
 # Headears
-SHA256_INC=sha256.h
+SHA256_INC=sha256.hh
 
 INC_MODULES=$(SHA256_INC)
 
@@ -119,10 +119,10 @@ $(TEST_TARGET): $(TEST_OBJ)
 	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
-$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cpp)
+$(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(SHA256_OBJ): $(SRCDIRS)$(SHA256_OBJ:.o=.cpp)
+$(SHA256_OBJ): $(SRCDIRS)$(SHA256_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SHA256_OBJ)
 
 compile :
@@ -153,19 +153,19 @@ debug :
 test : compile
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 test_c : coverage
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 run : test
