@@ -155,6 +155,15 @@ else # Linux amd64
         sudo make install
     fi
     
+    # Install crypto++
+    git clone https://github.com/weidai11/cryptopp.git cryptopp
+    cd ${HOME_FRAMEWORKS}/cryptopp
+    make
+    if [ -f ./cryptest.exe ]
+    then
+        sudo make install PREFIX=/usr/locol
+    fi
+    
     # install latest LCOV
     mkdir -p ${HOME_FRAMEWORKS}/lcov
     cd ${HOME_FRAMEWORKS}/lcov
