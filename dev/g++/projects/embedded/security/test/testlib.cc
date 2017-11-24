@@ -14,7 +14,7 @@
 #include <gtest.h>
 #define ASSERT_TRUE_MSG(exp1, msg) ASSERT_TRUE(exp1) << msg
 
-#include "logger_factory.h"
+#include "logger_factory.hh"
 
 #include "sha256.hh"
 

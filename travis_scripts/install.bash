@@ -156,6 +156,7 @@ else # Linux amd64
     fi
     
     # Install crypto++
+    cd ${HOME_FRAMEWORKS}
     git clone https://github.com/weidai11/cryptopp.git cryptopp
     cd ${HOME_FRAMEWORKS}/cryptopp
     make
