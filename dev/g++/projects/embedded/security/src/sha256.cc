@@ -6,7 +6,7 @@
  * \license   This project is released under the MIT License
  * \version   0.1
  */
-#include "sha256.h"
+#include "sha256.hh"
 
 namespace security {
 

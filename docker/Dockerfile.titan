@@ -47,6 +47,10 @@ RUN echo "docker-titan" > /etc/hostname \
         && test -f configure || autoreconf -iv \
         && ./configure \
         && make && make install \
+    && cd /home/yann/frameworks \
+    && git clone https://github.com/weidai11/cryptopp.git cryptopp \
+    && cd ./cryptopp \
+        && make && make install PREFIX=/usr/local \
     && cd /home/yann/tmp \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \

@@ -11,15 +11,18 @@
 #include <vector>
 #include <cstdint>
 
+#include <base64.h>
+
 namespace security {
 
-class sha256 {
-  std::vector<uint8_t> _vector;
-
-public:
-  sha256(): _vector(0x00, 32) {};
-  virtual ~sha256() { _vector.clear(); };
-} // End of class sha256
+  class sha256 {
+    std::vector<uint8_t> _vector;
+    CryptoPP::Base64Encoder _enc;
+  
+  public:
+    sha256(): _vector(0x00, 32), _enc() {};
+    virtual ~sha256() { _vector.clear(); };
+  }; // End of class sha256
 
 } // End of namespace security
 

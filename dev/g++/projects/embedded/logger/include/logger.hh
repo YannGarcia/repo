@@ -138,14 +138,14 @@ namespace logger {
     /*!
      * \fn void info(const std::string & p_string);
      * \brief Write the string to the IO if the info level is set
-     * \param[in] p_stringThe string to write
+     * \param[in] p_string The string to write
      * \inline
      */
     inline void info(const std::string & p_string) { if ((_levels & logger_levels_t::info) != 0x00) log(logger_levels_t::info, p_string); };
     /*!
      * \fn void trace(const std::string & p_string);
      * \brief Write the string to the IO if the trace level is set
-     * \param[in] p_stringThe string to write
+     * \param[in] p_string The string to write
      * \inline
      */
     inline void warning(const std::string & p_string) { if ((_levels & logger_levels_t::warning) != 0x00) log(logger_levels_t::warning, p_string); };
@@ -191,7 +191,7 @@ namespace logger {
     /*!
      * \fn void set_start_time();
      * \brief Initialise a timer to measure duration (in ms) of a section of code
-     * \sa 
+     * \bug To achieve
      */
     void set_start_time();
     

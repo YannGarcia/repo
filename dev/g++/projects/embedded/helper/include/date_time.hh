@@ -1,4 +1,4 @@
-/**
+/*!
  * \file      date_time.h
  * \brief     Header file for the Date and Time helper class.
  * \author    garciay.yann@gmail.com
@@ -17,7 +17,7 @@
 
 namespace helpers {
 
-  /**
+  /*!
    * \enum month_t
    * \brief List of the months, starting from 0 (refer to std::tm::mon)
    */
@@ -25,29 +25,29 @@ namespace helpers {
     Jan = 0, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
   } month_t;
 
-  /**
+  /*!
    * \class date_time
    * \brief This class provides date and time helper methods
    */
   class date_time {
-  public:
-    /**
+  public: /*! \publicsection */
+    /*!
      * \brief Default constructor, date and time are set to the current time
      */
     date_time();
-    /**
+    /*!
      * \brief Specialized constructor, date and time are parsed from the provided parameter
      * \param[in] p_date_time Date/Time string value to parse (e.g. Thu May 15 04:36:00 2014)
      */
     date_time(const std::string & p_date_time) { parse_date_time(p_date_time); };
-    /**
+    /*!
      * \brief Default destructor
      */
     virtual ~date_time() { };
 
-    /**
+    /*!
      * \struct date_time_t
-     * \brief concrete daytime structure to store the data
+     * \brief Concrete daytime structure to store the data
      */
     typedef struct {
       struct tm date_time_tm;
@@ -61,44 +61,55 @@ namespace helpers {
       };
     } date_time_t;
 
-    /**
+    /*!
+     * \fn uint32_t get_day() const;
      * \brief Retrieve the day in the month of the date/time
      * \return The day value (1 to 31)
      */
     inline uint32_t get_day() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_mday); }
-    /**
+    /*!
+     * \fn uint32_t get_month() const;
      * \brief Retrieve the month of the date/time
      * \return The month value (1 to 12)
+     * \inline
      */
     inline uint32_t get_month() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_mon + 1); }
-    /**
+    /*!
+     * \fn uint32_t get_year() const;
      * \brief Retrieve the year of the date/time
      * \return The year value (e.g. 2015)
+     * \inline
      */
     inline uint32_t get_year() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_year); }
-    /**
+    /*!
+     * \fn uint32_t get_hour() const;
      * \brief Retrieve the hour of the date/time
      * \return The hour value (0 to 23)
+     * \inline
      */
     inline uint32_t get_hour() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_hour); }
-    /**
+    /*!
+     * \fn uint32_t get_minutes() const;
      * \brief Retrieve the minutes of the date/time
      * \return The minutes value (0 to 59)
+     * \inline
      */
     inline uint32_t get_minutes() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_min); }
-    /**
+    /*!
+     * \fn uint32_t get_seconds() const;
      * \brief Retrieve the seconds of the date/time
      * \return The seconds value (0 to 59)
+     * \inline
      */
     inline uint32_t get_seconds() const { return static_cast<uint32_t>(_date_time.date_time_tm.tm_sec); }
-    /**
+    /*!
      * \brief Retrieve the day of the date/time in string format
      * \return The day value (e.g. Mon for Monday)
      */
     inline std::string get_sday() const { return _date_time.sday; }
 
-  private:
-    /**
+  private: /*! \privatesection */
+    /*!
      * \brief Date format regex string
      * \remark Format: Thu May 15 04:36:00 2014 
      * \see http://www.regexr.com/
@@ -109,7 +120,7 @@ namespace helpers {
     uint32_t get_month(const std::string & p_month);
   
     date_time_t _date_time;
-    /**
+    /*!
      * \brief Lookup table for month string to integer convertion
      */
     static std::array<std::pair<std::string, uint32_t>, 12> month_desc;
