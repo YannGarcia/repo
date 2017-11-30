@@ -1,4 +1,4 @@
-FROM library/gcc:latest
+FROM library/gcc:6.4
 
 MAINTAINER Yann Garcia
 
@@ -14,6 +14,16 @@ ARG PASSWORD
 RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      bison \
+      emacs \
+      expect \
+      flex \
+      libpcap-dev \
+      libssl-dev \
+      libwireshark-dev \
+      libxml2-dev \
+      tcpdump \
+      tshark \
       vsftpd \
       xutils-dev \
     && apt-get autoremove \
@@ -26,6 +36,7 @@ RUN echo "docker-titan" > /etc/hostname \
     && cp /home/yann/repo/bash_profiles/devenv.bash.ubuntu /home/yann/devenv.bash \
     && cp /home/yann/repo/emacs/.emacs /home/yann/ \
     && cp -Rp /home/yann/repo/emacs/emacs_ttcn /home/yann \
+    && cp -Rp /home/yann/repo/emacs/emacs_ttcn/* /usr/local/share/emacs/site-lisp \
     && rm -fr ./repo \
     && export HOME=/home/yann \
     && . /home/yann/devenv.bash \
