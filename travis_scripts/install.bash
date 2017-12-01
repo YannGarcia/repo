@@ -162,7 +162,7 @@ else # Linux amd64
     make
     if [ -f ./cryptest.exe ]
     then
-        sudo make install PREFIX=/usr/locol
+        sudo make install PREFIX=/usr/local
     fi
     
     # install latest LCOV

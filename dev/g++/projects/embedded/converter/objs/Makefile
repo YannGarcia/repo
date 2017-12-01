@@ -116,7 +116,7 @@ $(LIB_D): $(LIB_OBJS)
 	@echo "*** $@ done ***"
 
 $(TEST_TARGET): $(TEST_OBJ)
-	$(LD) $(TEST_OBJ) -o $(BIN) -L$(HOME_LIB) -lconverter $(LD_OPTION)
+	$(CCP) $(TEST_OBJ) -o $(BIN) -L$(HOME_LIB) -lconverter $(LD_OPTION)
 	@echo "*** $@ done ***"
 
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)

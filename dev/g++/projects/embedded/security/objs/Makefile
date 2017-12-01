@@ -1,6 +1,5 @@
 #############################################################################
-#
-#       Makefile for embedded framework - logger library
+#       Makefile for embedded framework - security library
 #
 #       ident  "$Id$"
 #
@@ -38,9 +37,9 @@ endif
 # Libraries and options.
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
-CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/cryptopp/
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(GCOV_DEF_GCC) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include/
 
 # Linker flags
 LD_DEBUG_OPTIONS=-g -shared -Wall $(GLOBAL_DEF_STD_GLD)
@@ -87,16 +86,21 @@ MODULE_TEST=$(BIN)
 # Object app
 OBJS=$(TEST_OBJS)
 LIB_OBJS=\
-	$(SHA256_OBJ)
+	$(SHA_OBJ) \
+	$(KEYS_PAIR_OBJ)
 
 # Objects
 TEST_OBJ=testlib.o
-SHA256_OBJ=sha256.o 
+SHA_OBJ=sha.o
+KEYS_PAIR_OBJ=keys_pair.o
 
 # Headears
-SHA256_INC=sha256.hh
-
-INC_MODULES=$(SHA256_INC)
+SHA_INC=sha.hh
+KEYS_PAIR_INC=keys_pair.hh
+KEY_INC=key.hh
+SHA_ALG_INC=sha_algorithms.hh
+SIGNATURE_ALG_INC=signature_algorithms.hh
+INC_MODULES=$(SHA_INC) $(KEYS_PAIR_INC) $(KEY_INC) $(SHA_ALG_INC) $(SIGNATURE_ALG_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -116,14 +120,17 @@ $(LIB_D): $(LIB_OBJS)
 	@echo "*** $@ done ***"
 
 $(TEST_TARGET): $(TEST_OBJ)
-	$(LD) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
+	$(CCP) $(TEST_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(SHA256_OBJ): $(SRCDIRS)$(SHA256_OBJ:.o=.cc)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SHA256_OBJ)
+$(SHA_OBJ): $(SRCDIRS)$(SHA_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SHA_OBJ)
+
+$(KEYS_PAIR_OBJ): $(SRCDIRS)$(KEYS_PAIR_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(KEYS_PAIR_OBJ)
 
 compile :
 	${MAKE} -f Makefile \
@@ -152,20 +159,20 @@ debug :
 
 test : compile
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include/cryptopp/ -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
+		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 test_c : coverage
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include/cryptopp/ -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
+		CC_OPTION="$(GLOBAL_DEF_GCC) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
-		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include/cryptopp/ -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
+		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB) -L/usr/local/lib -lcryptopp" \
 		directories $(TEST_TARGET)
 
 run : test
@@ -190,7 +197,7 @@ clean: cleanlinks
 
 cleanlinks:
 	@$(RM) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)
-	@for header in $(INC_MODULES); do \
+	for header in $(INC_MODULES); do \
 		$(RM) $(HOME_INC)/$$header; \
 	done
 	@echo "*** $@ done ***"
@@ -199,23 +206,25 @@ links:
 ifeq (,$(wildcard $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)))
 	$(LN) $(PWD)/$(LIBDIRS)$(TARGET) $(HOME_LIB)/$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)
 endif
-#	@for header in $(INC_MODULES); do \
-#		echo "### $(HOME_INC)/$$header"
-#		if test -s $(HOME_INC)/$$header; then \
-#			echo "$(LN) $(PWD)/$(INCDIRS)$$header $(HOME_INC)/$$header" \
+#	for header in $(INC_MODULES); do \
+#		if test -L $(HOME_INC)/$$header; then \
+#			$(LN) $(PWD)/$(INCDIRS)$$header $(HOME_INC)/$$header; \
 #		fi \
 #	done
-ifeq (,$(wildcard $(HOME_INC)/$(SHA256_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(SHA256_INC) $(HOME_INC)/$(SHA256_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA_ALG_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA_ALG_INC) $(HOME_INC)/$(SHA_ALG_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(SHA256_FACTORY_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(SHA256_FACTORY_INC) $(HOME_INC)/$(SHA256_FACTORY_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SIGNATURE_ALG_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SIGNATURE_ALG_INC) $(HOME_INC)/$(SIGNATURE_ALG_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(SHA256_LEVELS_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(SHA256_LEVELS_INC) $(HOME_INC)/$(SHA256_LEVELS_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(SHA_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(SHA_INC) $(HOME_INC)/$(SHA_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(SHA256_TIME_FORMATS_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(SHA256_TIME_FORMATS_INC) $(HOME_INC)/$(SHA256_TIME_FORMATS_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(KEYS_PAIR_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(KEYS_PAIR_INC) $(HOME_INC)/$(KEYS_PAIR_INC)
+endif
+ifeq (,$(wildcard $(HOME_INC)/$(KEY_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(KEY_INC) $(HOME_INC)/$(KEY_INC)
 endif
 	@echo "*** $@ done ***"
 
@@ -235,7 +244,7 @@ install: compile cleanlinks
 	@echo "*** $@ done ***"
 
 install-devel: install
-	@$(CP) $(INCDIRS)$(SHA256_INC) $(PATH_INSTALL_INC)/$(SHA256_INC)
+	@$(CP) $(INCDIRS)$(SHA_INC) $(PATH_INSTALL_INC)/$(SHA_INC)
 	@echo "*** $@ done ***"
 
 depend :

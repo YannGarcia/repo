@@ -83,7 +83,7 @@ all: $(BIN_TARGET)
 	@echo "*** $@ done ***"
 
 $(BIN_TARGET): $(BIN_OBJ)
-	$(LD) $(BIN_OBJ) -o $(BIN) $(LD_OPTION)
+	$(CCP) $(BIN_OBJ) -o $(BIN) $(LD_OPTION)
 	@echo "*** $@ done ***"
 
 $(BIN_OBJ): $(SRCDIRS)$(BIN_OBJ:.o=.cc)
