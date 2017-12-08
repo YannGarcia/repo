@@ -23,7 +23,9 @@ RUN echo "docker-travis" > /etc/hostname \
     && export TRAVIS_CONTEXT=NoCoveralls \
     && git clone https://github.com/YannGarcia/repo.git repo \
     && cd /home/yann/repo/bash_profiles \
+    && ls -ltr $HOME \
     && . ./devenv.bash.ubuntu \
+    && echo $PATH_DEV \
     && cd /home/yann/repo \
     && git config user.name "YannGarcia" \
     && git config user.email "garcia.yann@gmail.com" \
@@ -32,7 +34,7 @@ RUN echo "docker-travis" > /etc/hostname \
     && ./build.bash \
     && ./test.bash \
     && ./run.bash \
-    && cd /home/yann > /home/yann/tmp/docker_build.log
+    && cd /home/yann
 
 CMD ["/bin/bash"]
 
