@@ -18,10 +18,12 @@ RUN echo "docker-titan" > /etc/hostname \
       emacs \
       expect \
       flex \
+      gdb \
       libpcap-dev \
       libssl-dev \
       libwireshark-dev \
       libxml2-dev \
+      sudo \
       tcpdump \
       tshark \
       vsftpd \
