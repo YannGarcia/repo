@@ -18,16 +18,24 @@ RUN echo "docker-titan" > /etc/hostname \
       emacs \
       expect \
       flex \
+      gdb \
       libpcap-dev \
       libssl-dev \
       libwireshark-dev \
       libxml2-dev \
+      sudo \
       tcpdump \
       tshark \
       vsftpd \
       xutils-dev \
     && apt-get autoremove \
     && apt-get autoclean \
+    && echo "" >> /etc/profile \
+    && echo "export HOME=/home/yann" >> /etc/profile \
+    && echo "export LD_LIBRARY_PATH=/home/yann/TriesAndDelete/etsi_its/lib:$LD_LIBRARY_PATH" >> /etc/profile \
+    && echo "export PATH=/home/yann/bin:$PATH" >> /etc/profile \
+    && echo "cd /home/yann" >> /etc/profile \
+    && echo ". ./devenv.bash" >> /etc/profile \
     && mkdir -p /home/yann \
     && cd /home/yann \
     && mkdir -p bin lib include tmp frameworks docs \
