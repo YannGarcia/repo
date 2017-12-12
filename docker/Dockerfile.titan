@@ -28,12 +28,6 @@ RUN echo "docker-titan" > /etc/hostname \
       xutils-dev \
     && apt-get autoremove \
     && apt-get autoclean \
-    && echo "" >> /etc/profile \
-    && echo "export HOME=/home/yann" >> /etc/profile \
-    && echo "export LD_LIBRARY_PATH=/home/yann/TriesAndDelete/etsi_its/lib:$LD_LIBRARY_PATH" >> /etc/profile \
-    && echo "export PATH=/home/yann/bin:$PATH" >> /etc/profile \
-    && echo "cd /home/yann" >> /etc/profile \
-    && echo ". ./devenv.bash" >> /etc/profile \
     && mkdir -p /home/yann \
     && cd /home/yann \
     && mkdir -p bin lib include tmp frameworks docs \
@@ -53,11 +47,13 @@ RUN echo "docker-titan" > /etc/hostname \
         && test -f configure || autoreconf -iv \
         && ./configure \
         && make && make install \
-    && cd /home/yann/frameworks \
-    && git clone https://github.com/weidai11/cryptopp.git cryptopp \
-    && cd ./cryptopp \
-        && make && make install PREFIX=/usr/local \
     && cd /home/yann/tmp \
+    && echo "" >> /etc/profile \
+    && echo "export HOME=/home/yann" >> /etc/profile \
+    && echo "export LD_LIBRARY_PATH=/home/yann/TriesAndDelete/etsi_its/lib:$LD_LIBRARY_PATH" >> /etc/profile \
+    && echo "export PATH=/home/yann/bin:$PATH" >> /etc/profile \
+    && echo "cd /home/yann" >> /etc/profile \
+    && echo ". ./devenv.bash" >> /etc/profile \
     && svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525 \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./build_titan.bash \
@@ -65,8 +61,8 @@ RUN echo "docker-titan" > /etc/hostname \
     && . /home/yann/devenv.bash \
     && cd /home/yann/TriesAndDelete/scripts \
     && ./update_its_project.bash \
-    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs
-#    && ../bin/testcodec_generate_makefile.bash
+    && cd /home/yann/TriesAndDelete/etsi_its/src/TestCodec/objs \
+    && ../bin/testcodec_generate_makefile.bash
 
 CMD ["/bin/bash"]
 
