@@ -63,6 +63,31 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /u
 # Install frameworks
 cd ${HOME_FRAMEWORKS}
 
+# Install GoogleTest
+git clone https://github.com/google/googletest.git googletest
+cd ${HOME_FRAMEWORKS}/googletest/ci
+ADD_GCC='s/^make.*/& CC=gcc/'
+sed --in-place "${ADD_GCC}" ./travis.sh
+SAMPLES_OFF='s/=ON/=OFF/g'
+sed --in-place "${SAMPLES_OFF}" ./travis.sh
+#cat ./travis.sh
+cd ${HOME_FRAMEWORKS}/googletest
+./ci/travis.sh
+if [ -d ./build ]
+then
+    cd ./build
+    sudo make install
+fi
+
+# Install Crypto++ library
+git clone https://github.com/weidai11/cryptopp.git cryptopp
+cd ${HOME_FRAMEWORKS}/cryptopp
+CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
+if [ -f crypttest.exe ]
+then
+    sudo make install PREFIX=/usr/local
+fi
+
 if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
     # Install ARM cross compiler for Linux hardware
@@ -71,7 +96,7 @@ then
     #sudo apt-get install gcc-5-arm-linux-gnueabihf g++-5-arm-linux-gnueabihf -y
     sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
     #sudo apt-add-repository  --remove "deb http://fr.archive.ubuntu.com/ubuntu/ wily main"
-#    ls -l /usr/bin | grep gnueab
+    #    ls -l /usr/bin | grep gnueab
     #sudo rm -f /usr/bin/arm-linux-gnueabihf-gcc /usr/bin/arm-linux-gnueabihf-g++
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-gcc-5 /usr/bin/arm-linux-gnueabihf-gcc
     #sudo ln -s /usr/bin/arm-linux-gnueabihf-g++-5 /usr/bin/arm-linux-gnueabihf-g++
@@ -90,30 +115,6 @@ then
     done
     cd -
     
-    # Install GoogleTest
-    git clone https://github.com/google/googletest.git googletest
-    cd ${HOME_FRAMEWORKS}/googletest
-    ADD_GCC='s/^make.*/& CC=gcc/'
-    sed --in-place "${ADD_GCC}" ./travis.sh
-    SAMPLES_OFF='s/=ON/=OFF/g'
-    sed --in-place "${SAMPLES_OFF}" ./travis.sh
-    #cat ./travis.sh
-    ./travis.sh
-    if [ -d ./build ]
-    then
-        cd ./build
-        sudo make install
-    fi
-    
-    # Install Crypto++ library
-    git clone https://github.com/weidai11/cryptopp.git cryptopp
-    cd ${HOME_FRAMEWORKS}/cryptopp
-    CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
-    if [ -f crypttest.exe ]
-    then
-    	sudo make install PREFIX=/usr/local
-    fi
-
     export SELECTED_HW="raspberry_pi"
     CROSS_COMPILER_VERSION=4.8.4
     export CROSS_COMPILER_PATH=/usr
@@ -137,7 +138,7 @@ then
     wget https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
     bzip2 -d ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
     tar xvf ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
-#    rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
+    #    rm ./gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar
 
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc --version
     ./gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ --version
@@ -164,30 +165,6 @@ then
         exit -1
     fi
 else # Linux amd64
-    # Install GoogleTest
-    git clone https://github.com/google/googletest.git googletest
-    cd ${HOME_FRAMEWORKS}/googletest
-    ADD_GCC='s/^make.*/& CC=gcc/'
-    sed --in-place "${ADD_GCC}" ./travis.sh
-    SAMPLES_OFF='s/=ON/=OFF/g'
-    sed --in-place "${SAMPLES_OFF}" ./travis.sh
-    #cat ./travis.sh
-    ./travis.sh
-    if [ -d ./build ]
-    then
-        cd ./build
-        sudo make install
-    fi
-    
-    # Install Crypto++ library
-    git clone https://github.com/weidai11/cryptopp.git cryptopp
-    cd ${HOME_FRAMEWORKS}/cryptopp
-    CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
-    if [ -f crypttest.exe ]
-    then
-        sudo make install PREFIX=/usr/local
-    fi
-
     # install latest LCOV
     mkdir -p ${HOME_FRAMEWORKS}/lcov
     cd ${HOME_FRAMEWORKS}/lcov
