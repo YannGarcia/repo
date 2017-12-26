@@ -80,13 +80,10 @@ then
 fi
 
 # Install Crypto++ library
+cd ${HOME_FRAMEWORKS}
 git clone https://github.com/weidai11/cryptopp.git cryptopp
 cd ${HOME_FRAMEWORKS}/cryptopp
 CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
-if [ -f crypttest.exe ]
-then
-    sudo make install PREFIX=/usr/local
-fi
 
 if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
