@@ -25,7 +25,7 @@ export HOME_INC=${HOME}/include
 export PATH=${HOME_BIN}:${PATH}
 
 # Update LD_LIBRARY_PATH environment variable
-if [ ${LD_LIBRARY_PATH} == ""]
+if [ "${LD_LIBRARY_PATH}" == "" ]
 then
     export LD_LIBRARY_PATH=${HOME_LIB}:/usr/local/lib
 else 
