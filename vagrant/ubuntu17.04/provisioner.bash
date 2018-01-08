@@ -101,10 +101,8 @@ cd ${HOME_FRAMEWORKS}
 # Install asn1c
 # FIXME While asn1c is buggee, use tarball asn1c
 cd ${HOME_FRAMEWORKS}
-tar xvf /media/sf_F_DRIVE/asn1c.tar
-#git clone https://github.com/vlm/asn1c.git asn1c
+git clone https://github.com/vlm/asn1c.git asn1c
 cd ${HOME_FRAMEWORKS}/asn1c
-#git checkout f22184d
 test -f configure || autoreconf -iv
 ./configure
 make && sudo make install
