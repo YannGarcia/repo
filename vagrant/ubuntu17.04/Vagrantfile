@@ -37,10 +37,10 @@ Vagrant.configure("2") do |config|
   # your network.
   #config.vm.network "public_network"
   # Home
-  #config.vm.network "public_network", ip: "192.168.1.253", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
-  #config.vm.network "public_network", bridge:"en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: true
+  #config.vm.network "public_network", ip: "192.168.1.252", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
+  config.vm.network "public_network", ip: "192.168.1.252", bridge:"en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: true
   # ETSI
-  #config.vm.network "public_network", ip: "172.28.1.253", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
+  #config.vm.network "public_network", ip: "172.28.1.252", bridge: "en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: "true"
   
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
