@@ -113,21 +113,17 @@ cd -
 # Install GoogleTest
 cd ${HOME_FRAMEWORKS}
 git clone https://github.com/google/googletest.git googletest
-cd ${HOME_FRAMEWORKS}/googletest/googletest
+cd ${HOME_FRAMEWORKS}/googletest/build
 cmake .
-make
-if [ -f ./libgtest.a ]
-then
-    sudo cp -rp ./include/* /usr/local/include
-    sudo cp ./*.a /usr/local/lib
-fi
+make CXX=g++
+sudo make install
 cd -
 
 # Install Crypto++ library
 cd ${HOME_FRAMEWORKS}
 git clone https://github.com/weidai11/cryptopp.git cryptopp
 cd ${HOME_FRAMEWORKS}/cryptopp
-CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
+CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" CXX=g++ make
 if [ -f cryptest.exe ]
 then
     sudo make install PREFIX=/usr/local

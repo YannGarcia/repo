@@ -119,7 +119,7 @@ pushO2:
 help:
 	@clear
 	@echo
-        @echo "make options are:"
+	@echo "make options are:"
 	@echo
 	@echo "   help         : This menu."
 	@echo "   clean        : Erase objects, binaries and temporary files."
