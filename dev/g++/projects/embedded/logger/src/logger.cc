@@ -6,18 +6,22 @@
  * \license   This project is released under the MIT License
  * \version   0.1
  */
+#include <sstream>      // std::ostringstream
+#include <iomanip>
+#include <algorithm>
+
 #include "logger.hh"
 
 namespace logger {
 
   /* TODO To be continued
-  template<typename T> 
-  logger & operator <<(logger &p_logger, const logger_levels_t p_logger_level, T const & p_value) { 
-    if (is_set(p_logger_level)) { 
-      _os << p_value; 
-    } 
-    return p_logger; 
-  }*/
+     template<typename T> 
+     logger & operator <<(logger &p_logger, const logger_levels_t p_logger_level, T const & p_value) { 
+     if (is_set(p_logger_level)) { 
+     _os << p_value; 
+     } 
+     return p_logger; 
+     }*/
   
   void logger::set_start_time() {
     ::gettimeofday(&_start_time_val, NULL);
@@ -37,39 +41,39 @@ namespace logger {
     if (_time_format == logger_time_formats_t::seconds) {
       struct timeval diff = {0};
       if (_time_val.tv_usec < _start_time_val.tv_usec) {
-	diff.tv_sec = _tm->tm_sec - _start_time->tm_sec - 1;
-	diff.tv_usec = _time_val.tv_usec + (1000000L - _start_time_val.tv_usec);
+        diff.tv_sec = _tm->tm_sec - _start_time->tm_sec - 1;
+        diff.tv_usec = _time_val.tv_usec + (1000000L - _start_time_val.tv_usec);
       } else {
-	diff.tv_sec = _tm->tm_sec - _start_time->tm_sec;
-	diff.tv_usec = _time_val.tv_usec - _start_time_val.tv_usec;
+        diff.tv_sec = _tm->tm_sec - _start_time->tm_sec;
+        diff.tv_usec = _time_val.tv_usec - _start_time_val.tv_usec;
       }
       ::sprintf(
-		_buffer,
-		"%ld.%06ld",
-		diff.tv_sec,
-		diff.tv_usec
-		);
+                _buffer,
+                "%ld.%06ld",
+                diff.tv_sec,
+                diff.tv_usec
+                );
     } else if (_time_format == logger_time_formats_t::time) {
       ::sprintf(
-		_buffer,
-		"%02d:%02d:%02d.%06ld",
-		_tm->tm_hour,
-		_tm->tm_min,
-		_tm->tm_sec,
-		_time_val.tv_usec
-		);
+                _buffer,
+                "%02d:%02d:%02d.%06ld",
+                _tm->tm_hour,
+                _tm->tm_min,
+                _tm->tm_sec,
+                _time_val.tv_usec
+                );
     } else {
       ::sprintf(
-		_buffer,
-		"%4d/%.3s/%02d %02d:%02d:%02d.%06ld",
-		_tm->tm_year + 1900,
-		mon_name[_tm->tm_mon],
-		_tm->tm_mday,
-		_tm->tm_hour,
-		_tm->tm_min,
-		_tm->tm_sec,
-		_time_val.tv_usec
-		);
+                _buffer,
+                "%4d/%.3s/%02d %02d:%02d:%02d.%06ld",
+                _tm->tm_year + 1900,
+                mon_name[_tm->tm_mon],
+                _tm->tm_mday,
+                _tm->tm_hour,
+                _tm->tm_min,
+                _tm->tm_sec,
+                _time_val.tv_usec
+                );
     }
     _timestamp.assign(_buffer);
     
@@ -128,4 +132,26 @@ namespace logger {
     }
   }
   
+  void logger::hexa_dump(const char *p_prompt, const std::vector<unsigned char>& p_buffer)
+  {
+    // Trace level check
+    if ((_levels & logger_levels_t::trace) == 0x00) {
+      return;
+    }
+    
+    std::ostringstream oss;
+    oss << std::setfill('0');
+    std::for_each(
+                  p_buffer.begin(), 
+                  p_buffer.end(),
+                  [&oss](uint8_t ch) {
+                    oss << std::hex
+                      << std::setw(2)
+                      << static_cast<int>(ch);
+                  }
+                  );
+    oss << std::endl;
+    trace("%s", oss.str().c_str());
+  }
+
 } // End of namespace logger

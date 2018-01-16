@@ -22,6 +22,9 @@ namespace security {
     case sha256:
       _sha.reset(new CryptoPP::SHA256, [p_sha_algorithms](const void* p_sha){sha::shared_ptr_deleter(p_sha, p_sha_algorithms);});
       break;
+    case sha384:
+      _sha.reset(new CryptoPP::SHA384, [p_sha_algorithms](const void* p_sha){sha::shared_ptr_deleter(p_sha, p_sha_algorithms);});
+      break;
     } // End of 'switch' statement
   } // End of contructor
 
@@ -36,6 +39,9 @@ namespace security {
       break;
     case sha256:
       delete (CryptoPP::SHA256*)p_sha;
+      break;
+    case sha384:
+      delete (CryptoPP::SHA384*)p_sha;
       break;
     } // End of 'switch' statement
   } // End of shared_ptr_deleter
@@ -54,6 +60,10 @@ namespace security {
     case sha256:
       p_hash.resize(CryptoPP::SHA256::DIGESTSIZE);
       ((CryptoPP::SHA256*)_sha.get())->CalculateDigest(static_cast<uint8_t *>(p_hash.data()), p_data.data(), p_data.size());
+      break;
+    case sha384:
+      p_hash.resize(CryptoPP::SHA384::DIGESTSIZE);
+      ((CryptoPP::SHA384*)_sha.get())->CalculateDigest(static_cast<uint8_t *>(p_hash.data()), p_data.data(), p_data.size());
       break;
     } // End of 'switch' statement
 

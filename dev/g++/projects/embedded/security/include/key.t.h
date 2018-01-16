@@ -6,6 +6,8 @@
  * \license   This project is released under the MIT License
  * \version   0.1
  */
+#include <typeinfo>       // operator typeid
+
 namespace security {
 
   /*!
@@ -31,7 +33,19 @@ namespace security {
     
     // Generate private key
     int32_t result = -1;
-    _key.Initialize(prng, CryptoPP::ASN1::secp160r1()); // Use Koblitz curve 160 bits ellipctic curve
+    std::clog <<"int32_t key<T1, T2>::generate: T1: " << typeid(T1).name() << std::endl;
+    std::clog <<"int32_t key<T1, T2>::generate: T2: " << typeid(T2).name() << std::endl;
+    switch (_algorithms) {
+    case sha1:
+      _key.Initialize(prng, CryptoPP::ASN1::secp160r1()); // Use Koblitz curve 160 bits ellipctic curve
+      break;
+    case sha256:
+      _key.Initialize(prng, CryptoPP::ASN1::secp256r1()); // Use Koblitz curve 256 bits ellipctic curve
+      break;
+    case sha384:
+      _key.Initialize(prng, CryptoPP::ASN1::secp384r1()); // Use Koblitz curve 384 bits ellipctic curve
+      break;
+    } // End of 'switch' statement
     // Check result
     if (_key.Validate(prng, 3)) {
       result = 0;
@@ -39,6 +53,8 @@ namespace security {
       _key_vector.resize(i.ByteCount());
       i.Encode(_key_vector.data(), _key_vector.size());
     }
+
+    return result;
   }
     
   template<class T1, class T2>
