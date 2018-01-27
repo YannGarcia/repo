@@ -9,20 +9,23 @@ export PASSWORD=$2
 # Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo apt-get update && sudo apt full-upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils oracle-java9-installer oracle-java9-set-default kubuntu-desktop -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --reinstall g++ -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass texlive-font-utils kubuntu-desktop -y
 gcc --version
 g++ --version
 java --version
+
+# Install ARM compiler for Raspberry/BBB
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
 arm-linux-gnueabihf-gcc --version
 arm-linux-gnueabihf-g++ --version
-sudo apt-get autoremove
+sudo apt-get autoremove -y
 sudo apt-get clean
 
 export PATH_DEV=${HOME}/dev
@@ -134,7 +137,7 @@ then
     sudo make install PREFIX=/usr/local
 fi
 
-# install latest LCOV
+# Install latest LCOV
 mkdir -p ${HOME_FRAMEWORKS}/lcov
 cd ${HOME_FRAMEWORKS}/lcov
 wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.13.orig.tar.gz
@@ -142,16 +145,23 @@ tar xf lcov_1.13.orig.tar.gz
 sudo make -C lcov-1.13/ install
 cd -
 
-# install lcov to coveralls conversion
+# Install lcov to coveralls conversion
 sudo gem install coveralls-lcov
 
 lcov --version
 coveralls-lcov -h
+
+# Install valgrind
+sudo apt-get install valgrind -y
 valgrind --version
+
+# Install java
+sudo DEBIAN_FRONTEND=noninteractive apt-get install oracle-java9-installer oracle-java9-set-default -y
+java --version
 
 # Install eclipse
 cd ${HOME_FRAMEWORKS}
-wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz -Oeclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 tar -zxvf eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 rm -f eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 
