@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <ctime>
 #include <sys/time.h>
+#include <vector>
 
 #include "logger_levels.hh"
 #include "logger_time_formats.hh"
@@ -169,6 +170,13 @@ namespace logger {
      * \param[in] p_fmt The message formating, such as C printf function
      */
     void debug(const char * p_fmt, ...);
+    /*!
+     * \fn void hexa_dump(const char *p_prompt, const std::vector<unsigned char>& p_buffer);
+     * \brief Write a formated hexadecimal dump string to the IO
+     * \param[in] p_prompt Message label
+     * \remark This methos is active at \see logger_levels_t::trace level
+     */
+    void hexa_dump(const char *p_prompt, const std::vector<unsigned char>& p_buffer);
     /*!
      * \fn void info(const char * p_fmt, ...);
      * \brief Write a formated info string to the IO

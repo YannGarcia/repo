@@ -29,6 +29,10 @@ namespace security {
       _private_key.reset(new CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PrivateKey, [p_sha_algorithms](const void* p_key){keys_pair::private_key_ptr_deleter(p_key, p_sha_algorithms);});
       _public_key.reset(new CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PublicKey, [p_sha_algorithms](const void* p_key){keys_pair::public_key_ptr_deleter(p_key, p_sha_algorithms);});
       break;
+    case sha384:
+      _private_key.reset(new CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey, [p_sha_algorithms](const void* p_key){keys_pair::private_key_ptr_deleter(p_key, p_sha_algorithms);});
+      _public_key.reset(new CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PublicKey, [p_sha_algorithms](const void* p_key){keys_pair::public_key_ptr_deleter(p_key, p_sha_algorithms);});
+      break;
     } // End of 'switch' statement
   } // End of contructor
 
@@ -45,6 +49,9 @@ namespace security {
     case sha256:
       delete (CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PrivateKey*)p_key;
       break;
+    case sha384:
+      delete (CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey*)p_key;
+      break;
     } // End of 'switch' statement
   } // End of private_key_ptr_deleter
 
@@ -55,6 +62,9 @@ namespace security {
       break;
     case sha256:
       delete (CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PublicKey*)p_key;
+      break;
+    case sha384:
+      delete (CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PublicKey*)p_key;
       break;
     } // End of 'switch' statement
   } // End of public_key_ptr_deleter
@@ -82,10 +92,19 @@ namespace security {
       }
       break;
     case sha256:
-      ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA1>::PrivateKey*)_private_key.get())->Initialize(prng, CryptoPP::ASN1::secp256r1()); // Use NIST P-256, P-256, prime256v1 ECC curve
+      ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PrivateKey*)_private_key.get())->Initialize(prng, CryptoPP::ASN1::secp256r1()); // Use NIST P-256, P-256, prime256v1 ECC curve
       if (((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PrivateKey*)_private_key.get())->Validate(prng, 3)) {
         result = 0;
         const CryptoPP::Integer& i = ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PrivateKey*)_private_key.get())->GetPrivateExponent();
+        _private_key_v.resize(i.ByteCount());
+        i.Encode(_private_key_v.data(), _private_key_v.size());
+      }
+      break;
+    case sha384:
+      ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey*)_private_key.get())->Initialize(prng, CryptoPP::ASN1::secp384r1()); // Use NIST P-384, P-384, prime384v1 ECC curve
+      if (((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey*)_private_key.get())->Validate(prng, 3)) {
+        result = 0;
+        const CryptoPP::Integer& i = ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey*)_private_key.get())->GetPrivateExponent();
         _private_key_v.resize(i.ByteCount());
         i.Encode(_private_key_v.data(), _private_key_v.size());
       }
@@ -117,6 +136,18 @@ namespace security {
       if (((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PublicKey*)_public_key.get())->Validate(prng, 3)) {
         result = 0;
         const CryptoPP::ECPPoint& e = ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PublicKey*)_public_key.get())->GetPublicElement();
+        _public_key_v_x.resize(e.x.ByteCount());
+        e.x.Encode(_public_key_v_x.data(), _public_key_v_x.size());
+        _public_key_v_y.resize(e.y.ByteCount());
+        e.y.Encode(_public_key_v_y.data(), _public_key_v_y.size());
+      }
+      break;
+    case sha384:
+      ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PrivateKey*)_private_key.get())->MakePublicKey(*((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PublicKey*)_public_key.get()));
+      // Check result
+      if (((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PublicKey*)_public_key.get())->Validate(prng, 3)) {
+        result = 0;
+        const CryptoPP::ECPPoint& e = ((CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA384>::PublicKey*)_public_key.get())->GetPublicElement();
         _public_key_v_x.resize(e.x.ByteCount());
         e.x.Encode(_public_key_v_x.data(), _public_key_v_x.size());
         _public_key_v_y.resize(e.y.ByteCount());

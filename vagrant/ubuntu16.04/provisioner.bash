@@ -115,7 +115,7 @@ cd -
 # Install GoogleTest
 cd ${HOME_FRAMEWORKS}
 git clone https://github.com/google/googletest.git googletest
-cd ${HOME_FRAMEWORKS}/googletest/build
+cd ${HOME_FRAMEWORKS}/googletest
 cmake .
 make CXX=g++
 sudo make install

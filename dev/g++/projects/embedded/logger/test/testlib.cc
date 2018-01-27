@@ -133,7 +133,21 @@ TEST(logger_test_suite, logger_multiple) {
   logger_factory::get_instance().get_logger(s).error("Test logger6: This a multiple variable error: %d - %s", 666, "The devil is in the details");
   ASSERT_NO_THROW(logger_factory::get_instance().remove_logger(s));
 }
-  
+
+/*!
+ * \brief Test case for @see logger::logger
+ *        Variable arguments
+ */
+TEST(logger_test_suite, logger_hexa_dump) {
+  std::string s("logger7");
+  std::string path(std::getenv("HOME_TMP") + std::string("/") + s + ".log");
+  logger_factory::get_instance().add_logger(s, path, logger_levels_t::trace);
+  uint8_t b[] = { 0xBA, 0x78, 0x16, 0xBF, 0x8F, 0x01, 0xCF, 0xEA, 0x41, 0x41, 0x40, 0xDE, 0x5D, 0xAE, 0x22, 0x23, 0xB0, 0x03, 0x61, 0xA3, 0x96, 0x17, 0x7A, 0x9C, 0xB4, 0x10, 0xFF, 0x61, 0xF2, 0x00, 0x15, 0xAD };
+  std::vector<uint8_t> result(b, b + sizeof(b));
+  logger_factory::get_instance().get_logger(s).hexa_dump("hexa_dump", result);
+  ASSERT_NO_THROW(logger_factory::get_instance().remove_logger(s));
+}
+
 /*!
  * \brief Test case for @see logger::logger
  */
