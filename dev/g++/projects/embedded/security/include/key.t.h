@@ -39,6 +39,8 @@ namespace security {
       _key_vector.resize(i.ByteCount());
       i.Encode(_key_vector.data(), _key_vector.size());
     }
+
+    return result;
   }
     
   template<class T1, class T2>
