@@ -9,10 +9,15 @@ export PASSWORD=$2
 # Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
+sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
+sudo apt-get update && sudo apt full-upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils oracle-java9-installer oracle-java9-set-default kubuntu-desktop -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --reinstall g++ -y
 gcc --version
 g++ --version
+java --version
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
 arm-linux-gnueabihf-gcc --version
@@ -143,6 +148,13 @@ sudo gem install coveralls-lcov
 lcov --version
 coveralls-lcov -h
 valgrind --version
+
+# Install eclipse
+cd ${HOME_FRAMEWORKS}
+wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+tar -zxvf eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+rm -f eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+
 
 # Checkout the project
 if [ ${USERNAME} != '' ] && [ ${PASSWORD} != '' ]
