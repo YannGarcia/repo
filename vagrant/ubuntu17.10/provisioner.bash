@@ -6,18 +6,20 @@
 export USERNAME=$1
 export PASSWORD=$2
 
-# Update system
+# Update
+
+  system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo apt-get update && sudo apt full-upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass texlive-font-utils kubuntu-desktop valgrind -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass kubuntu-desktop valgrind -y
+sudo apt-get --reinstall install g++ -y
 gcc --version
 g++ --version
 valgrind --version
-
 
 # Install ARM compiler for Raspberry/BBB
 sudo apt-get update
