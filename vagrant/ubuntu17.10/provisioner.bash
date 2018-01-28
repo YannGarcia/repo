@@ -9,16 +9,15 @@ export PASSWORD=$2
 # Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test
-sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo apt-get update && sudo apt full-upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass texlive-font-utils kubuntu-desktop -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass texlive-font-utils kubuntu-desktop valgrind -y
 gcc --version
 g++ --version
-java --version
+valgrind --version
+
 
 # Install ARM compiler for Raspberry/BBB
 sudo apt-get update
@@ -150,10 +149,6 @@ sudo gem install coveralls-lcov
 
 lcov --version
 coveralls-lcov -h
-
-# Install valgrind
-sudo apt-get install valgrind -y
-valgrind --version
 
 # Install java
 sudo DEBIAN_FRONTEND=noninteractive apt-get install oracle-java9-installer oracle-java9-set-default -y
