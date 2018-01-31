@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.boot_timeout = 900 
 
   # Use this hostname to force provisioner script to using SVN instead of external HDD
-  #config.vm.hostname = "vagrant-prov"
+  config.vm.hostname = "vagrant-prov"
   
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
