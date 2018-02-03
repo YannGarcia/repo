@@ -44,7 +44,7 @@ CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/l
 # Linker flags
 LD_DEBUG_OPTIONS=-g -shared -Wall /usr/local/lib/libcryptopp.a $(GLOBAL_DEF_STD_GLD)
 LD_COVERAGE_OPTIONS=-g -shared -Wall $(GCOV_DEF_GCC) $(GLOBAL_DEF_STD_GLD)
-LD_RELEASE_OPTIONS=-shared -Wall $(GLOBAL_DEF_STD_GLD)
+LD_RELEASE_OPTIONS=-shared -Wall /usr/local/lib/libcryptopp.a $(GLOBAL_DEF_STD_GLD)
 
 # Define Include paths + definition flags
 #DEFS_CC=-I$(GLOBAL_INC_CPP_PATH) -I$(INCDIRS) -I$(GLOBAL_INC_BOOST_PATH) $(DEFS_CC_RELEASE)
@@ -160,19 +160,19 @@ debug :
 test : compile
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -lcryptopp -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_c : coverage
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -lcryptopp -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I/usr/local/include -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -lcryptopp -L$(HOME_LIB) -lsecurity -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 run : test
