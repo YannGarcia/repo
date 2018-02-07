@@ -157,10 +157,10 @@ java --version
 
 # Install eclipse
 cd ${HOME_FRAMEWORKS}
-wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz -Oeclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
-tar -zxvf eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
-rm -f eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 
+wget 'http://ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz' -Oeclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+tar -zxvf ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+rm -f ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 
 # Install eclipse
 cd ${HOME_FRAMEWORKS}
