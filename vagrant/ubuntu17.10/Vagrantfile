@@ -12,17 +12,17 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "bittercold/ubuntu-17.10"
+  config.vm.box = "bento/ubuntu-17.10"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
 
-  config.vm.boot_timeout = 900 
+  #config.vm.boot_timeout = 900 
 
   # Use this hostname to force provisioner script to using SVN instead of external HDD
-  config.vm.hostname = "vagrant-prov"
+  #config.vm.hostname = "vagrant-prov"
   
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -41,13 +41,20 @@ Vagrant.configure("2") do |config|
   #config.vm.network "public_network", ip: "192.168.1.252", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
   #config.vm.network "public_network", ip: "192.168.1.251", bridge:"en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: true
   # ETSI
-  config.vm.network "public_network", ip: "172.28.7.252", bridge: "en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: "true"
+  #config.vm.network "public_network", ip: "172.28.7.252", bridge: "en1: Wi-Fi (AirPort)", use_dhcp_assigned_default_route: "true"
+  #config.vm.network "public_network", ip: "172.28.1.253", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
+  # Angelika
+  #config.vm.network "public_network", ip: "192.168.178.253", bridge: "Intel(R) Dual Band Wireless-AC 7265", use_dhcp_assigned_default_route: "true"
+  # F-Fokus
+  config.vm.network "public_network", ip: "192.168.0.252", bridge: "Intel(R) Ethernet Connection (3) I218-LM", use_dhcp_assigned_default_route: "true"
+  # F-Fokus/Konnektor
+  #config.vm.network "public_network", ip: "10.10.8.34", bridge: "Realtek USB GBE Family Controller"
   
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  #config.vm.synced_folder "F:/", "/media/sf_F_DRIVE"
+  config.vm.synced_folder "F:/", "/media/sf_F_DRIVE"
   #config.vm.synced_folder "/Volumes/Yann", "/media/sf_F_DRIVE"
 
   # Provider-specific configuration so you can fine-tune various
