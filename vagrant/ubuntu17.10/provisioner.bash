@@ -15,7 +15,7 @@ sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo apt-get update && sudo apt full-upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev wget tree unzip sshpass kubuntu-desktop valgrind -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default -y
 sudo apt-get --reinstall install g++ -y
 gcc --version
 g++ --version

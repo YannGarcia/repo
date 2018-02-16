@@ -15,14 +15,22 @@ RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bison \
+      curl \
       emacs \
       expect \
       flex \
+      pkg-config \
       gdb \
+      gnutls-bin \
+      libglib2.0-dev \
       libpcap-dev \
+      libgcrypt-dev \
       libssl-dev \
+      libtool-bin \
+      libtool \
       libwireshark-dev \
       libxml2-dev \
+      qt5-default \
       sudo \
       tcpdump \
       tshark \
