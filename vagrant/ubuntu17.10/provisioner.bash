@@ -6,9 +6,7 @@
 export USERNAME=$1
 export PASSWORD=$2
 
-# Update
-
-  system
+# Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java
@@ -17,6 +15,7 @@ sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo apt-get update && sudo apt full-upgrade
 sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default -y
 sudo apt-get --reinstall install g++ -y
+# Check version
 gcc --version
 g++ --version
 valgrind --version
@@ -162,6 +161,13 @@ cd ${HOME_FRAMEWORKS}
 wget 'http://ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz' -Oeclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 tar -zxvf ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 rm -f ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+
+# Install eclipse
+cd ${HOME_FRAMEWORKS}
+wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+tar -zxvf eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+rm -f eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+
 
 # Checkout the project
 if [ ${USERNAME} != '' ] && [ ${PASSWORD} != '' ]
