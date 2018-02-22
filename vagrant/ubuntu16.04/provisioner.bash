@@ -11,8 +11,7 @@ sudo apt-get update
 sudo apt-get dist-upgrade -y
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --reinstall g++ -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev libgeoip-dev libnl-3-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default -y
 gcc --version
 g++ --version
 sudo apt-get update
@@ -152,6 +151,22 @@ then
     cd ${HOME}/tmp
     svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525
 fi
+
+# Install java
+sudo DEBIAN_FRONTEND=noninteractive apt-get install oracle-java9-installer oracle-java9-set-default -y
+java --version
+
+# Install eclipse
+cd ${HOME_FRAMEWORKS}
+wget 'http://ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz' -Oeclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+tar -zxvf ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+rm -f ./eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+
+# Install eclipse
+cd ${HOME_FRAMEWORKS}
+wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/oxygen/2/eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+tar -zxvf eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
+rm -f eclipse-cpp-oxygen-2-linux-gtk-x86_64.tar.gz
 
 cd ${HOME}/TriesAndDelete/scripts
 . ${HOME}/devenv.bash
