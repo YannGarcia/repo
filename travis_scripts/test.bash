@@ -57,7 +57,7 @@ function check_test {
 function check_includes {
     for i in $1
     do
-        if [ ! -L ${HOME_INC}/$1 ] # Check if the "file" exists and is a symbolic link 
+        if [ ! -L "${HOME_INC}/$i" ] || [ ! -f "${HOME_INC}/$i" ] # Check if the "file" exists and is a symbolic link 
         then
             return "-1"
         fi
@@ -95,7 +95,7 @@ then
         echo "Checking test failed"
         exit -3
     fi
-    declare -a include_files=("logger_factory.h" "logger.h" "logger_levels.h" "logger_time_formats.h")
+    declare -a include_files=("logger_factory.hh" "logger.hh" "logger_levels.hh" "logger_time_formats.hh")
     check_includes "${include_files[@]}"
     if [ "$?" != "0" ]
     then
@@ -130,7 +130,7 @@ then
         echo "Checking test failed"
         exit -3
     fi
-    declare -a include_files=("date_time.h" "helper.h" "ibstream.h" "keyboard.h" "obstream.t.h" "get_opt.h" "helper.t.h" "ibstream.t.h" "obstream.h" "runnable.h")
+    declare -a include_files=("date_time.hh" "helper.hh" "ibstream.hh" "keyboard.hh" "obstream.t.hh" "get_opt.hh" "helper.t.hh" "ibstream.t.hh" "obstream.hh" "runnable.hh")
     check_includes "${include_files[@]}"
     if [ "$?" != "0" ]
     then
@@ -165,7 +165,7 @@ then
         echo "Checking test failed"
         exit -3
     fi
-    declare -a include_files=("converter.h")
+    declare -a include_files=("converter.hh")
     check_includes "${include_files[@]}"
     if [ "$?" != "0" ]
     then
@@ -200,7 +200,7 @@ then
         echo "Checking test failed"
         exit -3
     fi
-    declare -a include_files=("abstract_ipc.h" "ipc_rights.h" "message_queue.h" "ipc_manager.h" "ipc_type.h" "shared_memory.h")
+    declare -a include_files=("abstract_ipc.hh" "ipc_rights.hh" "message_queue.hh" "ipc_manager.hh" "ipc_type.hh" "shared_memory.hh")
     check_includes "${include_files[@]}"
     if [ "$?" != "0" ]
     then
