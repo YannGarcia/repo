@@ -14,7 +14,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef"
 sudo DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:kubuntu-ppa/backports
 sudo DEBIAN_FRONTEND=noninteractive apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y full-upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default
+sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default texlive-font-utils
 sudo apt-get --reinstall install g++ -y
 # Check version
 gcc --version

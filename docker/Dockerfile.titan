@@ -33,6 +33,7 @@ RUN echo "docker-titan" > /etc/hostname \
       qt5-default \
       sudo \
       tcpdump \
+      texlive-font-utils \
       tshark \
       vsftpd \
       xutils-dev \
