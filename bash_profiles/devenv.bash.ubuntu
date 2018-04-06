@@ -131,6 +131,8 @@ then
     export PATH_DEV_TTCN=${HOME}/dev/ttcn3
     # ITS support
     export PATH_DEV_ITS=${HOME}/TriesAndDelete/etsi_its
+    # EMTEL support
+    export PATH_DEV_EMTEL=${HOME}/TriesAndDelete/etsi_emtel
 fi
 
 if [ -f /opt/ros/kinetic/setup.bash ]

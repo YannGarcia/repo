@@ -11,7 +11,7 @@ sudo apt-get update
 sudo apt-get dist-upgrade -y
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tschark tcpdump libpcap-dev libwireshark-dev libglib2.0-dev libgeoip-dev libnl-3-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install gcc-6 g++-6 emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libtool-bin libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev libglib2.0-dev libgeoip-dev libnl-3-dev curl wget tree unzip sshpass kubuntu-desktop valgrind pkg-config libgcrypt-dev gnutls-bin qt5-default qtmultimedia5-dev libqt5svg5-dev texlive-font-utils -y
 gcc --version
 g++ --version
 sudo apt-get update
