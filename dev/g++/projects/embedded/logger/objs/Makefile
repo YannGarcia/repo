@@ -8,6 +8,8 @@
 
 include $(PATH_DEV)/Makefile.inc
 
+.PHONY: clean compile test run help
+
 #############################################################################
 # Override CC, CCP and LD in case of cross compiler
 
@@ -80,8 +82,8 @@ LIB_D=$(LIBDIR)/$(TARGET_D)
 TEST_TARGET=testlib
 BIN=$(TESTDIRS)$(TEST_TARGET)
 
-MODULE_LIBS=$(LIB) 
-MODULE_LIBS_D=$(LIB_D) 
+MODULE_LIBS=$(LIB)
+MODULE_LIBS_D=$(LIB_D)
 MODULE_TEST=$(BIN)
 
 # Object app
@@ -91,7 +93,7 @@ LIB_OBJS=\
 
 # Objects
 TEST_OBJ=testlib.o
-LOGGER_OBJ=logger.o 
+LOGGER_OBJ=logger.o
 
 # Headears
 LOGGER_FACTORY_INC=logger_factory.hh

@@ -9,7 +9,7 @@ export PASSWORD=$2
 # Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tschark tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --reinstall g++ -y
 gcc --version
 g++ --version
