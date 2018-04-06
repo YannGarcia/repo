@@ -31,6 +31,8 @@ RUN echo "docker-titan" > /etc/hostname \
       libwireshark-dev \
       libxml2-dev \
       qt5-default \
+      qtmultimedia5-dev \
+      libqt5svg5-dev \
       sudo \
       tcpdump \
       texlive-font-utils \
