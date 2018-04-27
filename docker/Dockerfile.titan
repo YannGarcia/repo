@@ -10,7 +10,6 @@ ENV HOSTNAME docker-titan
 ARG USERNAME
 ARG PASSWORD
 
-#useradd -d/home/titan -m -s/bin/bash titan && su - titan &&
 RUN echo "docker-titan" > /etc/hostname \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -41,7 +40,10 @@ RUN echo "docker-titan" > /etc/hostname \
       xutils-dev \
     && apt-get autoremove \
     && apt-get autoclean \
-    && mkdir -p /home/yann \
+    && useradd --create-home --shell /bin/bash yann \
+    && echo "yann:yann" | chpasswd \
+    && adduser yann sudo \
+    && su - yann \
     && cd /home/yann \
     && mkdir -p bin lib include tmp frameworks docs \
     && git clone https://github.com/YannGarcia/repo.git repo \
