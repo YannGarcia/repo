@@ -4,6 +4,8 @@ include $(PATH_DEV)/Makeinclude
 UNAME := $(shell uname -n)
 ifeq ($(UNAME), imac.lan)
 include $(PATH_DEV)/Makeinclude.macosx
+else ifeq ($(UNAME), MacBook-Pro-de-GARCIA.local)
+include $(PATH_DEV)/Makeinclude.macosx
 else ifeq ($(UNAME), mbp-de-garcia.home)
 include $(PATH_DEV)/Makeinclude.macosx
 else ifeq ($(UNAME), debian32)

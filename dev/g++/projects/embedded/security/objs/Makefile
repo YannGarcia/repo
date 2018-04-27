@@ -87,20 +87,23 @@ MODULE_TEST=$(BIN)
 OBJS=$(TEST_OBJS)
 LIB_OBJS=\
 	$(SHA_OBJ) \
-	$(KEYS_PAIR_OBJ)
+	$(KEYS_PAIR_OBJ) \
+	$(ECDSA_SIGN_OBJ)
 
 # Objects
 TEST_OBJ=testlib.o
 SHA_OBJ=sha.o
 KEYS_PAIR_OBJ=keys_pair.o
+ECDSA_SIGN_OBJ=ecdsa_signature.o
 
 # Headears
 SHA_INC=sha.hh
 KEYS_PAIR_INC=keys_pair.hh
 KEY_INC=key.hh
+ECDSA_SIGN_INC=ecdsa_signature.hh
 SHA_ALG_INC=sha_algorithms.hh
 SIGNATURE_ALG_INC=signature_algorithms.hh
-INC_MODULES=$(SHA_INC) $(KEYS_PAIR_INC) $(KEY_INC) $(SHA_ALG_INC) $(SIGNATURE_ALG_INC)
+INC_MODULES=$(SHA_INC) $(KEYS_PAIR_INC) $(ECDSA_SIGN_INC) $(KEY_INC) $(SHA_ALG_INC) $(SIGNATURE_ALG_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -225,6 +228,9 @@ ifeq (,$(wildcard $(HOME_INC)/$(KEYS_PAIR_INC)))
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(KEY_INC)))
 	$(LN) $(PWD)/$(INCDIRS)$(KEY_INC) $(HOME_INC)/$(KEY_INC)
+endif
+ifeq (,$(wildcard $(HOME_INC)/$(ECDSA_SIGN_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(ECDSA_SIGN_INC) $(HOME_INC)/$(ECDSA_SIGN_INC)
 endif
 	@echo "*** $@ done ***"
 
