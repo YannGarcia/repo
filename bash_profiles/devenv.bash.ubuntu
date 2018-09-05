@@ -128,11 +128,10 @@ then
     export LD_LIBRARY_PATH=${TTCN3_DIR}/lib:${LD_LIBRARY_PATH}
     export MANPATH=${TTCN3_DIR}/man:${MANPATH}
     export TTCN3_LICENSE_FILE=${TTCN3_DIR}/etc/license/license.dat
-    export PATH_DEV_TTCN=${HOME}/dev/ttcn3
     # ITS support
-    export PATH_DEV_ITS=${HOME}/TriesAndDelete/etsi_its
+    export PATH_DEV_ITS=${HOME}/dev/etsi_its
     # Emergency Communication support
-    export PATH_DEV_EMCOM=${HOME}/TriesAndDelete/etsi_emcom
+    export PATH_DEV_EMCOM=${HOME}/dev/etsi_emcom
 fi
 
 if [ -f /opt/ros/kinetic/setup.bash ]

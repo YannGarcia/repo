@@ -172,7 +172,7 @@
 	      "hex2bit" "hex2int" "hex2oct" "hex2str" "int2bit" "int2char"
 	      "int2float" "int2hex" "int2oct" "int2str" "int2unichar" "ischosen"
 	      "ispresent" "lengthof" "oct2bit" "oct2hex" "oct2int"
-	      "oct2str" "regexp" "rnd" "sizeof" "str2int" "str2oct"
+	      "oct2str" "oct2char" "regexp" "rnd" "sizeof" "str2int" "str2oct"
 	      "substr" "unichar2int") t) "\\>")
 	  '(1 (ttcn3-builtin-face)))
 	 ;; TTCN-3 types
@@ -375,6 +375,7 @@ If point is on a keyword, help for that keyword will be shown."
 	     ((looking-at "oct2hex") "tf_oct2hex")
 	     ((looking-at "oct2int") "tf_oct2int")
 	     ((looking-at "oct2str") "tf_oct2str")
+	     ((looking-at "oct2char") "tf_oct2char")
 	     ((looking-at "octetstring") "OctetStringKeyword")
 	     ((looking-at "of") "OfKeyword")
 	     ((looking-at "omit") "OmitKeyword")
