@@ -1,4 +1,4 @@
-FROM library/gcc:6.4
+FROM library/gcc:7.3
 
 MAINTAINER Yann Garcia
 

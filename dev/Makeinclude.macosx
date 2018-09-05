@@ -9,13 +9,13 @@
 #############################################################################
 # C/C++ compiler
 #############################################################################
-GCC_VERSION=7.3.0_1
-GCC_LIB_VERSION=7
-CCP=g++-7
-CXX=g++-7
-CC=gcc-7
-LD=g++-7
-AR=gcc-ar-7
+GCC_VERSION=8.2.0
+GCC_LIB_VERSION=8
+CCP=g++-8
+CXX=g++-8
+CC=gcc-8
+LD=g++-8
+AR=gcc-ar-8
 MAKE=/usr/bin/make
 
 GLOBAL_DEF_GCC+=-fPIC -mmacosx-version-min=10.6
