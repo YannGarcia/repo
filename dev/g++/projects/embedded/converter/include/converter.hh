@@ -2,7 +2,7 @@
  * \file      converter.h
  * \brief     Header file for the types converter library.
  * \author    garciay.yann@gmail.com
- * \copyright Copyright (c) 2015-2017 ygarcia. All rights reserved
+ * \copyright Copyright (c) 2015-2020 ygarcia. All rights reserved
  * \license   This project is released under the MIT License
  * \version   0.1
  */
@@ -29,12 +29,14 @@ namespace helpers {
    * \remark Singleton pattern
    */
   class converter {
-    
+
+    const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
     /*!
      * \brief Unique static object reference of this class
      */
     static converter * instance;
-    
+
     /*!
      * \brief Default private ctor
      */
@@ -48,7 +50,7 @@ namespace helpers {
 	instance = NULL;
       }
     };
-    
+
   public: /*! \publicsection */
     /*!
      * \brief Public accessor to the single object reference
@@ -57,7 +59,7 @@ namespace helpers {
       if (instance == NULL) instance = new converter();
       return *instance;
     };
-    
+
   public:
     /*!
      * \enum endian_t
@@ -69,6 +71,19 @@ namespace helpers {
     } endian_t;
 
   public:
+    /**
+     * \brief Convert the specified digit into hexadecimal number (0x30..0x39 (0..9), 0x47..x4c (A..F))
+     * \param[in] p_digit The digit to convert
+     * \return An hexadecimal digit (0..9-A..F)
+     */
+    inline unsigned char to_hex_digit(const unsigned char p_digit) { return ((p_digit < 10) ? (p_digit + 0x30) : (p_digit + 0x37)); };
+
+    /** Convert the specified hexadecimal digit into a character if it is printable, or replace by a '.' otherwise
+     * \param[in] p_digit The hexadecimal digit to convert
+     * \return A character is it's printable, '.' otherwise
+     */
+    inline char to_char_digit(const unsigned char p_digit) { return (((p_digit < 0x20) || (p_digit > 0x80)) ? '.' : (char)p_digit); };
+
     /*!
      * \brief Convert a Binary Coded Decimal value into a binary value
      * \param[in] p_value The BDC value
@@ -127,7 +142,7 @@ namespace helpers {
      * \return The bytes array value
      */
     std::vector<uint8_t> hexa_to_bytes(const std::string & p_value);
-    
+
     /*!
      * \brief Convert a time in time_t format into a string formated according to RFC 822, 1036, 1123, 2822
      * \param[in] p_time The time to convert in time_t format
@@ -147,7 +162,7 @@ namespace helpers {
      * \see http://www.unixtimestamp.com/
      */
     std::string time_to_string(const struct tm & p_time);
-    
+
     /*!
      * \brief Convert a 16-bits integer (int16_t) into a bytes array
      * \param[in] p_value The 16-bits integer value
@@ -157,8 +172,8 @@ namespace helpers {
     inline std::vector<uint8_t> short_to_bytes(const int16_t p_value, const endian_t p_endianess = big_endian) const {
       std::vector<uint8_t> result(sizeof(short), 0x00);
       for (int i = sizeof(short) - 1; i >= 0; i--) {
-	int offset = (sizeof(short) - 1 - i) * 8;
-	result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
+        int offset = (sizeof(short) - 1 - i) * 8;
+        result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
       } // End of 'for' statement
       return result;
     }; // End of short_to_bytes
@@ -172,15 +187,15 @@ namespace helpers {
     inline int16_t bytes_to_short(const std::vector<uint8_t> & p_value, const endian_t p_endianess = big_endian) const {
       // Sanity check
       if (p_value.size() > sizeof(short)) {
-	return SHRT_MAX;
+        return SHRT_MAX;
       }
       int16_t value = 0;
       for (size_t i = 0; i < p_value.size(); i++) {
-	value = (value << 8) + (p_value[i] & 0xff);
+        value = (value << 8) + (p_value[i] & 0xff);
       } // End of 'for' statement
       return value;
     }; // End of bytes_to_short
-    
+
     /*!
      * \brief Convert a 32-bits integer (int32_t) into a bytes array
      * \param[in] p_value The 32-bits integer value
@@ -197,8 +212,8 @@ namespace helpers {
 		std::vector<uint8_t> result(bytes, bytes + sizeof(bytes) / sizeof(uint8_t));*/
       std::vector<uint8_t> result(sizeof(int), 0x00);
       for (int i = sizeof(int) - 1; i >= 0; i--) {
-	int offset = (sizeof(int) - 1 - i) * 8;
-	result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
+        int offset = (sizeof(int) - 1 - i) * 8;
+        result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
       } // End of 'for' statement
       return result;
     }; // End of int_to_bytes
@@ -212,16 +227,16 @@ namespace helpers {
     inline int32_t bytes_to_int(const std::vector<uint8_t> & p_value, const endian_t p_endianess = big_endian) const {
       // Sanity check
       if (p_value.size() > sizeof(int)) {
-	return INT_MAX;
+        return INT_MAX;
       }
       int32_t value = 0;
       for (size_t i = 0; i < p_value.size(); i++) {
-	value = (value << 8) + (p_value[i] & 0xff);
+        value = (value << 8) + (p_value[i] & 0xff);
       } // End of 'for' statement
       return value;
       //      return *((int *)(&p_value[0]));
     }; // End of bytes_to_int
-    
+
     /*!
      * \brief Convert a 64-bits integer (int64_t) into a bytes array
      * \param[in] p_value The 64-bits integer value
@@ -238,8 +253,8 @@ namespace helpers {
 		std::vector<uint8_t> result(bytes, bytes + sizeof(bytes) / sizeof(uint8_t));*/
       std::vector<uint8_t> result(sizeof(int64_t), 0x00);
       for (int i = sizeof(int64_t) - 1; i >= 0; i--) {
-	int offset = (sizeof(int64_t) - 1 - i) * 8;
-	result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
+        int offset = (sizeof(int64_t) - 1 - i) * 8;
+        result[i] = static_cast<uint8_t>((p_value >> offset) & 0xFF);
       } // End of 'for' statement
       return result;
     }; // End of long_to_bytes
@@ -253,16 +268,16 @@ namespace helpers {
     inline int64_t bytes_to_long(const std::vector<uint8_t> & p_value, const endian_t p_endianess = big_endian) const {
       // Sanity check
       if (p_value.size() > sizeof(int64_t)) {
-	return LLONG_MAX;
+        return LLONG_MAX;
       }
       int64_t value = 0;
       for (size_t i = 0; i < p_value.size(); i++) {
-	value = (value << 8) + (p_value[i] & 0xff);
+        value = (value << 8) + (p_value[i] & 0xff);
       } // End of 'for' statement
       return value;
       //      return *((long *)(&p_value[0]));
     }; // End of bytes_to_long
-    
+
     /*!
      * \brief Convert a float value into a bytes array
      * \param[in] p_value The float value
@@ -287,7 +302,7 @@ namespace helpers {
     inline float bytes_to_float(const std::vector<uint8_t> & p_value) const {
       return *((float *)(&p_value[0]));
     }; // End of bytes_to_float
-    
+
     /*!
      * \brief Convert a string into a bytes array
      * \param[in] p_value The string value
@@ -296,7 +311,7 @@ namespace helpers {
     inline std::vector<uint8_t> string_to_bytes(const std::string & p_value) const {
       return std::vector<uint8_t>(p_value.begin(), p_value.end());
     }; // End of string_to_bytes
-    
+
     /*!
      * \brief Convert a bytes array into a string
      * \param[in] p_value The bytes array value
@@ -305,7 +320,7 @@ namespace helpers {
     inline std::string bytes_to_string(const std::vector<uint8_t> & p_value) const {
       return std::string(p_value.begin(), p_value.end());
     }; // End of bytes_to_string
-    
+
   public:
     /*!
      * \brief Convert a string into an integer
@@ -352,7 +367,19 @@ namespace helpers {
      * \endcode
      */
     std::vector<std::string> split_arguments_line(const std::string & p_value);
-                  
+
+    /** Convert the UTF-8 formatted string into base 64 string
+     * \param[in] p_base64 The UTF-8string
+     * \return The base 64 formatted string
+     */
+    std::string string_to_base64(const std::string& p_string);
+
+    /** Convert the base 64 string into UTF-8 string
+     * \param[in] p_base64 The base 64 formatted string
+     * \return The UTF-8 string
+     */
+    std::string base64_to_string(const std::string& p_base64);
+
   }; // End of class converter
 
 } // End of namespace helpers

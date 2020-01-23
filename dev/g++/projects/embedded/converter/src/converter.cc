@@ -146,4 +146,48 @@ namespace helpers {
     return output;
   }
 
-} // End of namespace helpers
+  std::string converter::string_to_base64(const std::string& p_string) {
+    std::string base64;
+
+    int val = 0, valb =- 6;
+    for (char c : p_string) {
+      val = (val << 8) + c;
+      valb += 8;
+      while (valb >= 0) {
+        base64.push_back(converter::base64_chars[(val >> valb) & 0x3F]);
+        valb -= 6;
+      } // End of 'while' statement
+    } // End of 'for' statement
+    if (valb > -6) {
+      base64.push_back(converter::base64_chars[((val << 8) >> (valb + 8)) & 0x3F]);
+    }
+    while (base64.size() % 4) {
+      base64.push_back('=');
+    }
+
+    return base64;
+  }
+
+  std::string converter::base64_to_string(const std::string& p_base64) {
+    std::string buffer;
+
+    std::vector<int> T(256, -1);
+    for (int i = 0; i < 64; i++) T[converter::base64_chars[i]] = i;
+
+    int val = 0, valb = -8;
+    for (char c : p_base64) {
+      if (T[c] == -1) {
+        break;
+      }
+      val = (val <<6 ) + T[c];
+      valb += 6;
+      if (valb >= 0) {
+        buffer.push_back(char((val >> valb) & 0xFF));
+        valb -= 8;
+      }
+    } // End of 'for' statement
+
+    return buffer;
+  }
+
+} // End of namespace converter

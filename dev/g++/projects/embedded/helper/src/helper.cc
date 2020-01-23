@@ -17,15 +17,15 @@
 namespace helpers {
 
   helper * helper::instance = NULL;
-  
+
   void helper::hexa_dump(const std::vector<unsigned char> p_buffer, const unsigned int p_offset, const unsigned int p_length) {
     hexa_dump(
-	     static_cast<const unsigned char *>(p_buffer.data()), 
-	     p_offset, 
+	     static_cast<const unsigned char *>(p_buffer.data()),
+	     p_offset,
 	     (p_length == static_cast<unsigned int>(-1)) ? p_buffer.size() - p_offset : p_length
 	     );
   }
-  
+
   void helper::hexa_dump(const unsigned char * p_buffer, const unsigned int p_offset, const unsigned int p_length) {
     std::ostringstream os;
     hexa_dump(os, p_buffer, p_offset, p_length);
@@ -33,10 +33,10 @@ namespace helpers {
   } // End of method helper::hexa_dump
 
   void helper::hexa_dump(std::ostringstream & p_output, const unsigned char * p_buffer, const unsigned int p_offset, const unsigned int p_length) {
-    
+
     int current_index = p_offset;
     unsigned short start_address = ((unsigned short)(p_offset / 16)) * 16;
-    
+
     // Display header
     p_output << " HEX | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F  : 0 1 2 3 4 5 6 7 8 9 A B C D E F " << std::endl;
     p_output << "-----|+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-:--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+" << std::endl;
@@ -63,7 +63,7 @@ namespace helpers {
       for ( ; (idx < 16) && (current_index < end_of_dump); idx++) {
 	line[hex_offset] = helper::to_hex_digit(*(p_buffer + current_index) >> 4);
 	line[hex_offset + 1] = helper::to_hex_digit(*(p_buffer + current_index) & 0x0f);
-	line[char_offset] = helper::toCharDigit(*(p_buffer + current_index));
+	line[char_offset] = helper::to_char_digit(*(p_buffer + current_index));
 	// Prepare next byte
 	hex_offset += 3;
 	char_offset += 2;
@@ -72,7 +72,7 @@ namespace helpers {
       // Display the line
       line[56] = ':';
       line[__LINE_LENGTH__ - 1] = 0x0d;
-      line[__LINE_LENGTH__] = 0x0a;    
+      line[__LINE_LENGTH__] = 0x0a;
       p_output << line;
       if (current_index < end_of_dump) { // Prepare next line, one line = 16 digits
 	start_address += 16;
