@@ -18,7 +18,7 @@
  */
 namespace http_server {
 
-  typedef void (*http_response_callback)(const std::unique_ptr<http_request>& p_request, std::string& p_response, void*);
+  typedef void (*http_response_callback)(const std::unique_ptr<http_request>& p_request, std::map<std::string, std::string>& p_response_headers, std::string& p_response, void*);
 
   /**
    * \brief 
@@ -53,7 +53,7 @@ namespace http_server {
     int32_t start();
     int32_t stop();
     void register_response_callback(const std::string& p_callback_id, http_response_callback p_callback, void* p_param);
-    void prepare_response(const std::string& p_callback_id, std::string& p_response);
+    void prepare_response(const std::string& p_callback_id, std::map<std::string, std::string>& p_response_headers, std::string& p_response);
 
     inline void set_bad_request(const std::string& p_bad_request) { _bad_request = p_bad_request; };
     inline void set_not_found(const std::string& p_not_found) { _not_found = p_not_found; };

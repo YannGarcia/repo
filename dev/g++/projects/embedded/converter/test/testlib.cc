@@ -253,6 +253,20 @@ TEST(converter_test_suite, string_to_base64_2) {
 }
 
 /**
+ * @brief Test case for @see converter::binary_to_base64
+ */
+TEST(converter_test_suite, binary_to_base64_1) {
+  std::vector<uint8_t> plain_binary;
+  plain_binary.push_back(0xca);
+  plain_binary.push_back(0xfe);
+  plain_binary.push_back(0xde);
+  plain_binary.push_back(0xca);
+  std::string expected_result = "yv7eyg==";
+  std::string base64 = converter::get_instance().binary_to_base64(plain_binary);
+  ASSERT_TRUE(base64.compare(expected_result) == 0);
+}
+
+/**
  * @brief Test case for @see converter::.base64_to_string
  */
 TEST(converter_test_suite,  base64_to_string_1) {
@@ -270,6 +284,23 @@ TEST(converter_test_suite, base64_to_string_2) {
   std::string base64 = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBhbiBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbSBhIHNwZWNpZmljIE1JTUUgY29udGVudCB0cmFuc2ZlciBlbmNvZGluZy4gRWFjaCBCYXNlNjQgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLiBUaHJlZSA4LWJpdCBieXRlcyAoaS5lLiwgYSB0b3RhbCBvZiAyNCBiaXRzKSBjYW4gdGhlcmVmb3JlIGJlIHJlcHJlc2VudGVkIGJ5IGZvdXIgNi1iaXQgQmFzZTY0IGRpZ2l0cy4KCkNvbW1vbiB0byBhbGwgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcywgQmFzZTY0IGlzIGRlc2lnbmVkIHRvIGNhcnJ5IGRhdGEgc3RvcmVkIGluIGJpbmFyeSBmb3JtYXRzIGFjcm9zcyBjaGFubmVscyB0aGF0IG9ubHkgcmVsaWFibHkgc3VwcG9ydCB0ZXh0IGNvbnRlbnQuIEJhc2U2NCBpcyBwYXJ0aWN1bGFybHkgcHJldmFsZW50IG9uIHRoZSBXb3JsZCBXaWRlIFdlYlsxXSB3aGVyZSBpdHMgdXNlcyBpbmNsdWRlIHRoZSBhYmlsaXR5IHRvIGVtYmVkIGltYWdlIGZpbGVzIG9yIG90aGVyIGJpbmFyeSBhc3NldHMgaW5zaWRlIHRleHR1YWwgYXNzZXRzIHN1Y2ggYXMgSFRNTCBhbmQgQ1NTIGZpbGVzLgo=";
   std::string plain_text = converter::get_instance().base64_to_string(base64);
   ASSERT_TRUE(plain_text.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::.base64_to_binary
+ */
+TEST(converter_test_suite,  base64_to_binary_1) {
+  std::vector<uint8_t> expected_result;
+  expected_result.push_back(0xca);
+  expected_result.push_back(0xfe);
+  expected_result.push_back(0xde);
+  expected_result.push_back(0xca);
+  std::string base64 = "yv7eyg==";
+  std::vector<uint8_t> plain_binary = converter::get_instance().base64_to_binary(base64);
+  ASSERT_TRUE(plain_binary[0] == expected_result[0]);
+  ASSERT_TRUE(plain_binary[1] == expected_result[1]);
+  ASSERT_TRUE(plain_binary[2] == expected_result[2]);
+  ASSERT_TRUE(plain_binary[3] == expected_result[3]);
 }
 
 /**

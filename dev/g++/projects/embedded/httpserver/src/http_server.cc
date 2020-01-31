@@ -115,14 +115,14 @@ namespace http_server {
     _callbacks.insert(std::make_pair<const std::string&, std::tuple<void*/*http_response_callback*/, void*> >(p_callback_id, std::make_tuple((void*)p_callback, p_param)));
   }
 
-  void http_server::prepare_response(const std::string& p_callback_id, std::string& p_response) {
+  void http_server::prepare_response(const std::string& p_callback_id, std::map<std::string, std::string>& p_response_headers, std::string& p_response) {
     _logger.info(">>> http_server::prepare_response: %s.", p_callback_id.c_str());
 
     std::map<const std::string, std::tuple<void*/*http_response_callback*/, void*> >::const_iterator it = _callbacks.find(p_callback_id);
     if (it == _callbacks.cend()) {
       p_response.assign(_bad_request);
     } else {
-      ((http_response_callback)(std::get<0>(it->second)))(_request, p_response, std::get<1>(it->second));
+      ((http_response_callback)(std::get<0>(it->second)))(_request, p_response_headers, p_response, std::get<1>(it->second));
     }
     _logger.info("<<< http_server::prepare_response: %d.", p_response.length());
   }
@@ -185,8 +185,18 @@ namespace http_server {
 
     /* Prepare the response */
     const std::string& callback_id = _request->get_uri();
-    prepare_response(callback_id, _buffer);
+    std::map<std::string, std::string> response_headers;
+    prepare_response(callback_id, response_headers, _buffer);
     struct MHD_Response* response = MHD_create_response_from_buffer(_buffer.length(), (void*)_buffer.c_str(), MHD_RESPMEM_PERSISTENT);
+    if (response_headers.size() != 0) {
+      std::map<std::string, std::string>::const_iterator it;
+      for (it = response_headers.cbegin(); it != response_headers.cend(); ++it) {
+        _logger.info("http_server::process_http_request_answer: Add header: %s/%s.", it->first.c_str(), it->second.c_str());
+        if (MHD_add_response_header(response, it->first.c_str(), it->second.c_str()) == MHD_NO) {
+          _logger.error("http_server::process_http_request_answer: Failed to add header %s.", it->first.c_str());
+        }
+      } // End of 'for' statetement
+    }
     int32_t result = MHD_queue_response(p_connection, MHD_HTTP_OK, response);
     MHD_destroy_response(response);
 

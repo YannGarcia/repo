@@ -16,7 +16,7 @@ env:
   - TRAVIS_CONTEXT="LinuxHW"
 before_install:
   - export HOME=`pwd`
-  - export SCP_REMOTE_ADDRESS= #192.168.0.107 # Linux Hardware remote address for scp command
+  - export SCP_REMOTE_ADDRESS=yanngarcia.ddns.net #192.168.0.107 # Linux Hardware remote address for scp command
   - export SCP_REMOTE_USER=pi  # Linux Hardware remote user name for scp command
   - git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials 2>/dev/null
   - git config user.name "YannGarcia"

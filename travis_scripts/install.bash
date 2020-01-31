@@ -89,6 +89,18 @@ then
     sudo make install PREFIX=/usr/local
 fi
 
+# Install libmicrohttpd library
+cd ${HOME_FRAMEWORKS}
+git clone https://git.gnunet.org/libmicrohttpd.git libmicrohttpd
+cd ${HOME_FRAMEWORKS}/libmicrohttpd
+autoreconf -fi
+./configure --enable-https
+make
+if [ -f ./src/microhttpd/.libs/libmicrohttpd.so ]
+then
+    sudo make install PREFIX=/usr/local
+fi
+
 if [ "${TRAVIS_CONTEXT}" == "LinuxHW" ]
 then
     # Install ARM cross compiler for Linux hardware

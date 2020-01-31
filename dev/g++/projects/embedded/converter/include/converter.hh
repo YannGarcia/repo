@@ -369,16 +369,28 @@ namespace helpers {
     std::vector<std::string> split_arguments_line(const std::string & p_value);
 
     /** Convert the UTF-8 formatted string into base 64 string
-     * \param[in] p_base64 The UTF-8string
+     * \param[in] p_string The UTF-8string
      * \return The base 64 formatted string
      */
     std::string string_to_base64(const std::string& p_string);
+
+    /** Convert the UTF-8 formatted string into base 64 string
+     * \param[in] p_bufer The binary packet
+     * \return The base 64 formatted string
+     */
+    std::string binary_to_base64(const std::vector<uint8_t>& p_buffer);
 
     /** Convert the base 64 string into UTF-8 string
      * \param[in] p_base64 The base 64 formatted string
      * \return The UTF-8 string
      */
     std::string base64_to_string(const std::string& p_base64);
+
+    /** Convert the base 64 string into binary format
+     * \param[in] p_base64 The base 64 formatted string
+     * \return The byte array
+     */
+    std::vector<uint8_t> base64_to_binary(const std::string& p_base64);
 
   }; // End of class converter
 
