@@ -98,6 +98,21 @@ namespace helpers {
      */
     void hexa_dump(const unsigned char * p_buffer, const unsigned int p_offset, const unsigned int p_length);
 
+    /**
+     * \brief Retrieve the size of a file
+     * \param[in] p_file_name The full file name
+     * \return The size of a file on success, -1 otherwise
+     */
+    int file_size(const std::string& p_file_name);
+
+    /**
+     * \brief Load a file in binary format
+     * \param[in] p_file_name The full file name
+     * \param[out] p_buffer The file content
+     * \return The number of bytes read on success, -1 otherwise
+     */
+    int file_load(const std::string& p_file_name, std::vector<unsigned char>& p_buffer);
+
   private:
     /**
      * \brief Convert the specified digit into hexadecimal number (0x30..0x39 (0..9), 0x47..x4c (A..F))

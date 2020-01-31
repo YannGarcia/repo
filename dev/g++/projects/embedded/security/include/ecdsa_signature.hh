@@ -8,6 +8,9 @@
  */
 #pragma once
 
+#include <vector>
+#include <cstdint>
+
 #include "keys_pair.hh"
 
 namespace security {
@@ -31,8 +34,8 @@ namespace security {
      */
     virtual ~ecdsa_signature();
 
-    int sign(const std::vector<unit8_t> p_message, std::vector<unit8_t> p_signature);
-    bool verify_sign(const std::vector<unit8_t> p_message, const std::vector<unit8_t> p_signature);
+    int sign(const std::vector<uint8_t> p_message, std::vector<uint8_t> p_signature);
+    bool verify_sign(const std::vector<uint8_t> p_message, const std::vector<uint8_t> p_signature);
 
 
     std::string to_string();

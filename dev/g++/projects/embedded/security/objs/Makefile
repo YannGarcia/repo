@@ -87,23 +87,26 @@ MODULE_TEST=$(BIN)
 OBJS=$(TEST_OBJS)
 LIB_OBJS=\
 	$(SHA_OBJ) \
+	$(RND_OBJ) \
 	$(KEYS_PAIR_OBJ) \
 	$(ECDSA_SIGN_OBJ)
 
 # Objects
 TEST_OBJ=testlib.o
+RND_OBJ=rnd.o
 SHA_OBJ=sha.o
 KEYS_PAIR_OBJ=keys_pair.o
 ECDSA_SIGN_OBJ=ecdsa_signature.o
 
 # Headears
 SHA_INC=sha.hh
+RND_INC=rnd.hh
 KEYS_PAIR_INC=keys_pair.hh
 KEY_INC=key.hh
 ECDSA_SIGN_INC=ecdsa_signature.hh
 SHA_ALG_INC=sha_algorithms.hh
 SIGNATURE_ALG_INC=signature_algorithms.hh
-INC_MODULES=$(SHA_INC) $(KEYS_PAIR_INC) $(ECDSA_SIGN_INC) $(KEY_INC) $(SHA_ALG_INC) $(SIGNATURE_ALG_INC)
+INC_MODULES=$(SHA_INC) $(RND_INC) $(KEYS_PAIR_INC) $(ECDSA_SIGN_INC) $(KEY_INC) $(SHA_ALG_INC) $(SIGNATURE_ALG_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -132,8 +135,14 @@ $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 $(SHA_OBJ): $(SRCDIRS)$(SHA_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(SHA_OBJ)
 
+$(RND_OBJ): $(SRCDIRS)$(RND_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(RND_OBJ)
+
 $(KEYS_PAIR_OBJ): $(SRCDIRS)$(KEYS_PAIR_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(KEYS_PAIR_OBJ)
+
+$(ECDSA_SIGN_OBJ): $(SRCDIRS)$(ECDSA_SIGN_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(ECDSA_SIGN_OBJ)
 
 compile :
 	${MAKE} -f Makefile \
@@ -219,6 +228,9 @@ ifeq (,$(wildcard $(HOME_INC)/$(SHA_ALG_INC)))
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(SIGNATURE_ALG_INC)))
 	$(LN) $(PWD)/$(INCDIRS)$(SIGNATURE_ALG_INC) $(HOME_INC)/$(SIGNATURE_ALG_INC)
+endif
+ifeq (,$(wildcard $(HOME_INC)/$(RND_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(RND_INC) $(HOME_INC)/$(RND_INC)
 endif
 ifeq (,$(wildcard $(HOME_INC)/$(SHA_INC)))
 	$(LN) $(PWD)/$(INCDIRS)$(SHA_INC) $(HOME_INC)/$(SHA_INC)

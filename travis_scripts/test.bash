@@ -220,6 +220,113 @@ then
         exit -1
     fi
 
+
+
+    project="comm"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("abstract_channel.hh channel_type.hh ipv4_socket.hh ipv6_socket.hh ipvx_socket.hh socket_address.hh tcp_channel.hh channel_manager.hh ipv4_address.hh ipv6_address.hh ipvx_address.hh raw_channel.hh socket.hh udp_channel.hh")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
+
+    project="httpserver"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("http_request.hh http_server.hh")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
+
+    project="security"
+    echo "Processing ${project} project"
+    cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    check_lib ${project}
+    if [ "$?" != "0" ]
+    then
+        echo "Checking lib failed"
+        exit -2
+    fi
+    check_test "testlib"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking test failed"
+        exit -3
+    fi
+    declare -a include_files=("ecdsa_signature.hh key.hh keys_pair.hh key.t.h rnd.hh sha_algorithms.hh sha.hh signature_algorithms.hh")
+    check_includes "${include_files[@]}"
+    if [ "$?" != "0" ]
+    then
+        echo "Checking includes failed"
+        exit -4
+    fi
+    check_docs
+    if [ "$?" != "0" ]
+    then
+        echo "Checking docs failed"
+        exit -1
+    fi
+    check_gtest_verdicts
+    if [ "$?" != "0" ]
+    then
+        echo "GoogleTest found FAIL verdicts"
+        exit -1
+    fi
+
     cd ${OLD_PWD}
 fi
 

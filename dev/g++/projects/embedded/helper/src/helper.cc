@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdarg>
+#include <fstream>
 
 #include "helper.hh"
 
@@ -20,10 +21,10 @@ namespace helpers {
 
   void helper::hexa_dump(const std::vector<unsigned char> p_buffer, const unsigned int p_offset, const unsigned int p_length) {
     hexa_dump(
-	     static_cast<const unsigned char *>(p_buffer.data()),
-	     p_offset,
-	     (p_length == static_cast<unsigned int>(-1)) ? p_buffer.size() - p_offset : p_length
-	     );
+              static_cast<const unsigned char *>(p_buffer.data()),
+              p_offset,
+              (p_length == static_cast<unsigned int>(-1)) ? p_buffer.size() - p_offset : p_length
+              );
   }
 
   void helper::hexa_dump(const unsigned char * p_buffer, const unsigned int p_offset, const unsigned int p_length) {
@@ -61,13 +62,13 @@ namespace helpers {
     int end_of_dump = p_length + p_offset;
     while(current_index < end_of_dump) {
       for ( ; (idx < 16) && (current_index < end_of_dump); idx++) {
-	line[hex_offset] = helper::to_hex_digit(*(p_buffer + current_index) >> 4);
-	line[hex_offset + 1] = helper::to_hex_digit(*(p_buffer + current_index) & 0x0f);
-	line[char_offset] = helper::to_char_digit(*(p_buffer + current_index));
-	// Prepare next byte
-	hex_offset += 3;
-	char_offset += 2;
-	current_index += 1;
+        line[hex_offset] = helper::to_hex_digit(*(p_buffer + current_index) >> 4);
+        line[hex_offset + 1] = helper::to_hex_digit(*(p_buffer + current_index) & 0x0f);
+        line[char_offset] = helper::to_char_digit(*(p_buffer + current_index));
+        // Prepare next byte
+        hex_offset += 3;
+        char_offset += 2;
+        current_index += 1;
       }
       // Display the line
       line[56] = ':';
@@ -75,17 +76,42 @@ namespace helpers {
       line[__LINE_LENGTH__] = 0x0a;
       p_output << line;
       if (current_index < end_of_dump) { // Prepare next line, one line = 16 digits
-	start_address += 16;
-	::memset(line, 0x20, __LINE_LENGTH__);
-	::sprintf(line, "%04x |", (unsigned short)start_address);
-	line[6] = 0x20; // Remove NULL character added by ::sprintf
-	idx = 0;
-	hex_offset = 7;
-	char_offset = 58;
+        start_address += 16;
+        ::memset(line, 0x20, __LINE_LENGTH__);
+        ::sprintf(line, "%04x |", (unsigned short)start_address);
+        line[6] = 0x20; // Remove NULL character added by ::sprintf
+        idx = 0;
+        hex_offset = 7;
+        char_offset = 58;
       } else { // End of line padding
-	break;
+        break;
       }
     } // End of 'while' statement
   } // End of method helper::hexa_dump
+
+  int helper::file_size(const std::string& p_file_name) {
+    std::ifstream is(p_file_name, std::ios::in | std::ios::binary | std::ios::ate);
+    if (is.is_open()) {
+      is.seekg(0, std::ios_base::end);
+      int size = is.tellg();
+      is.close();
+      return size;
+    }
+
+    return -1;
+  }
+
+  int helper::file_load(const std::string& p_file_name, std::vector<unsigned char>& p_buffer) {
+    std::ifstream is(p_file_name, std::ios::in | std::ios::binary | std::ios::ate);
+    if (is.is_open()) {
+      is.seekg(0, is.end);
+      p_buffer.reserve(is.tellg());
+      is.seekg(0, is.beg);
+      p_buffer.assign((std::istreambuf_iterator<char>(is)), std::istreambuf_iterator<char>());
+      return p_buffer.size();
+    }
+
+    return -1;
+  }
 
 } // End of namespace helpers

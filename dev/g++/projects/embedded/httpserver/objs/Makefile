@@ -41,9 +41,9 @@ CC_INS=$(PTHREAD_INC)
 LD_INS=$(PTHREAD_LD)
 
 # Compiler flags
-CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
-CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
-CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I../../uart/include
+CC_DEBUG_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include
+CC_COVERAGE_OPTIONS=$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include
+CC_RELEASE_OPTIONS=$(GLOBAL_DEF_GCC) $(CC_INS) -I$(GLOBAL_INC_CPP_PATH) -I/usr/local/include
 
 # Linker flags
 LD_DEBUG_OPTIONS=-g -shared -Wall $(GLOBAL_DEF_STD_GLD)
@@ -73,7 +73,7 @@ DOCDIRS=../docs
 DOCCONF=$(DOCDIR)/o2.cfg
 
 # Needed to build application.
-LIBRARY=libgps
+LIBRARY=libhttpserver
 
 # Targets
 TARGET=$(LIBRARY)$(SHARED_LIBRARY_EXT_NAME)$(VERSION)
@@ -83,34 +83,26 @@ LIB_D=$(LIBDIR)/$(TARGET_D)
 TEST_TARGET=testlib
 BIN=$(TESTDIRS)$(TEST_TARGET)
 
-MODULE_LIBS=$(LIB) 
-MODULE_LIBS_D=$(LIB_D) 
+MODULE_LIBS=$(LIB)
+MODULE_LIBS_D=$(LIB_D)
 MODULE_TEST=$(BIN)
 
 # Object app
 OBJS=$(TEST_OBJS)
 LIB_OBJS=\
-	$(NMEA_2000_OBJ) \
-	$(UBLOX_OBJ) \
-	$(GPS_PARSER_OBJ)
+	$(HTTP_REQUEST_OBJ) \
+	$(HTTP_SERVER_OBJ)
 
 # Objects
 TEST_OBJ=testlib.o
-NMEA_2000_OBJ=nmea2000.o 
-UBLOX_OBJ=ublox.o
-GPS_PARSER_OBJ=gps_parser.o
+HTTP_REQUEST_OBJ=http_request.o
+HTTP_SERVER_OBJ=http_server.o
 
 # Headears
-GPS_DEVICE_FACTORY_INC=gps_device_factory.hh
-GPS_PARSER_FACTORY_INC=gps_parser_factory.hh
-GPS_DEVICE_INC=gps_device.hh
-GPS_PARSER_INC=gps_parser.hh
-DEVICES_INC=devices.hh
-PARSERS_INC=parsers.hh
-NMEA_2000_INC=nmea2000.hh
-UBLOX_INC=ublox.hh
+HTTP_REQUEST_INC=http_request.hh
+HTTP_SERVER_INC=http_server.hh
 
-INC_MODULES=$(GPS_DEVICE_FACTORY_INC) $(GPS_PARSER_FACTORY_INC) $(GPS_DEVICE_INC) $(GPS_PARSER_INC) $(DEVICES_INC) $(PARSERS_INC) $(NMEA_2000_INC) $(UBLOX_INC)
+INC_MODULES=$(HTTP_REQUEST_INC) $(HTTP_SERVER_INC)
 
 #############################################################################
 # Real compilation sections.
@@ -136,14 +128,11 @@ $(TEST_TARGET): $(TEST_OBJ)
 $(TEST_OBJ): $(TESTDIRS)$(TEST_OBJ:.o=.cc)
 	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(TEST_OBJ)
 
-$(NMEA_2000_OBJ): $(SRCDIRS)$(NMEA_2000_OBJ:.o=.cc)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(NMEA_2000_OBJ)
+$(HTTP_REQUEST_OBJ): $(SRCDIRS)$(HTTP_REQUEST_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(HTTP_REQUEST_OBJ)
 
-$(UBLOX_OBJ): $(SRCDIRS)$(UBLOX_OBJ:.o=.cc)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(UBLOX_OBJ)
-
-$(GPS_PARSER_OBJ): $(SRCDIRS)$(GPS_PARSER_OBJ:.o=.cc)
-	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(GPS_PARSER_OBJ)
+$(HTTP_SERVER_OBJ): $(SRCDIRS)$(HTTP_SERVER_OBJ:.o=.cc)
+	$(CCP) $(CC_OPTION) -I$(INCDIR) -c $? -o $(OBJSDIRS)$(HTTP_SERVER_OBJ)
 
 compile :
 	${MAKE} -f Makefile \
@@ -173,19 +162,19 @@ debug :
 test : compile
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lgps -luart -lhal $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lconverter -lhelper -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_c : coverage
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(GCOV_DEF_GCC) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -luart -lhal -lconverter $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(GCOV_DEF_GCC) $(LD_INS) -L$(HOME_LIB) -lconverter -lhelper -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 test_d : debug
 	${MAKE} -f Makefile \
 		CC_OPTION="$(GLOBAL_DEF_GCC_DEBUG) $(CC_INS) $(CPP_TEST_INC) -I$(HOME_INC)" \
-		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lgps -luart -lhal $(CPP_TEST_LIB)" \
+		LD_OPTION="$(GLOBAL_DEF_STD_GLD) $(LD_INS) -L$(HOME_LIB) -lconverter -lhelper -llogger $(CPP_TEST_LIB)" \
 		directories $(TEST_TARGET)
 
 run : test
@@ -225,29 +214,11 @@ endif
 #			echo "$(LN) $(PWD)/$(INCDIRS)$$header $(HOME_INC)/$$header" \
 #		fi \
 #	done
-ifeq (,$(wildcard $(HOME_INC)/$(GPS_PARSER_FACTORY_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(GPS_PARSER_FACTORY_INC) $(HOME_INC)/$(GPS_PARSER_FACTORY_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(HTTP_REQUEST_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(HTTP_REQUEST_INC) $(HOME_INC)/$(HTTP_REQUEST_INC)
 endif
-ifeq (,$(wildcard $(HOME_INC)/$(GPS_DEVICE_FACTORY_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(GPS_DEVICE_FACTORY_INC) $(HOME_INC)/$(GPS_DEVICE_FACTORY_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(GPS_DEVICE_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(GPS_DEVICE_INC) $(HOME_INC)/$(GPS_DEVICE_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(GPS_PARSER_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(GPS_PARSER_INC) $(HOME_INC)/$(GPS_PARSER_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(DEVICES_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(DEVICES_INC) $(HOME_INC)/$(DEVICES_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(PARSERS_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(PARSERS_INC) $(HOME_INC)/$(PARSERS_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(NMEA_2000_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(NMEA_2000_INC) $(HOME_INC)/$(NMEA_2000_INC)
-endif
-ifeq (,$(wildcard $(HOME_INC)/$(UBLOX_INC)))
-	$(LN) $(PWD)/$(INCDIRS)$(UBLOX_INC) $(HOME_INC)/$(UBLOX_INC)
+ifeq (,$(wildcard $(HOME_INC)/$(HTTP_SERVER_INC)))
+	$(LN) $(PWD)/$(INCDIRS)$(HTTP_SERVER_INC) $(HOME_INC)/$(HTTP_SERVER_INC)
 endif
 	@echo "*** $@ done ***"
 
@@ -267,7 +238,8 @@ install: compile cleanlinks
 	@echo "*** $@ done ***"
 
 install-devel: install
-	@$(CP) $(INCDIRS)$(GPS_DEVICE_INC) $(PATH_INSTALL_INC)/$(GPS_DEVICE_INC)
+	@$(CP) $(INCDIRS)$(HTTP_REQUEST_INC) $(PATH_INSTALL_INC)/$(HTTP_REQUEST_INC)
+	@$(CP) $(INCDIRS)$(HTTP_SERVER_INC) $(PATH_INSTALL_INC)/$(HTTP_SERVER_INC)
 	@echo "*** $@ done ***"
 
 push2coveralls:
