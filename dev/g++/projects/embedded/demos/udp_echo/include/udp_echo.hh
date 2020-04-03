@@ -25,4 +25,7 @@ class udp_echo {
 public:
   udp_echo(const std::string& p_address, const uint16_t p_port);
   virtual ~udp_echo();
+
+  int32_t send(const std::string& p_message);
+  int32_t receive(std::string& p_message);
 }; // End of class udp_echo

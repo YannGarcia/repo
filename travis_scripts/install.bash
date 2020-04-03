@@ -90,6 +90,7 @@ then
 fi
 
 # Install libmicrohttpd library
+git config --global http.sslVerify false
 cd ${HOME_FRAMEWORKS}
 git clone https://git.gnunet.org/libmicrohttpd.git libmicrohttpd
 cd ${HOME_FRAMEWORKS}/libmicrohttpd
