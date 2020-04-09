@@ -27,24 +27,24 @@ namespace comm {
       // Try parsing p_host as IPv4
       std::unique_ptr<ipv4_address> ipv4;
       if (ipv4_address::try_parse(p_host, ipv4)) { // This is an IPv4 address
-    	_address.reset(ipv4.release());
+        _address.reset(ipv4.release());
       } else { // Try IPv6
-    	std::unique_ptr<ipv6_address> ipv6;
-    	if (ipv6_address::try_parse(p_host, ipv6)) { // This is an IPv4 address
-    	  _address.reset(ipv6.release());
-    	} else { // Error
-    	  throw new std::invalid_argument("socket_address::socket_address: Wrong parameters");
-    	}
+        std::unique_ptr<ipv6_address> ipv6;
+        if (ipv6_address::try_parse(p_host, ipv6)) { // This is an IPv4 address
+          _address.reset(ipv6.release());
+        } else { // Error
+          throw new std::invalid_argument("socket_address::socket_address: Wrong parameters");
+        }
       }
     } // End of ctor
 
     socket_address::socket_address(const socket_address & p_host) : _port(p_host.port()) {
       if (p_host.is_ipv4()) {
-    	_address.reset(new ipv4_address(static_cast<const in_addr *>(p_host.addr())));
+        _address.reset(new ipv4_address(static_cast<const in_addr *>(p_host.addr())));
       } else if (p_host.is_ipv6()) {
-    	_address.reset(new ipv6_address(static_cast<const in6_addr *>(p_host.addr())));
+        _address.reset(new ipv6_address(static_cast<const in6_addr *>(p_host.addr())));
       } else { // Error
-    	throw new std::invalid_argument("socket_address::socket_address: Wrong parameters");
+        throw new std::invalid_argument("socket_address::socket_address: Wrong parameters");
       }
     } // End of ctor
 
@@ -52,7 +52,7 @@ namespace comm {
       // Sanity checks
       std::unique_ptr<socket_address> ptr;
       if (p_address.empty()) {
-	return ptr;
+        return ptr;
       }
 
       // TODO

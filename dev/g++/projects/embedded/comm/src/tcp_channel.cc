@@ -19,30 +19,34 @@ namespace comm {
 
     tcp_channel::tcp_channel(const socket_address & p_host_address) { // Constructor for a TCP client
       _socket.reset(new socket(p_host_address, channel_type::tcp));
-      if (_socket.get() == NULL) { 
-      	std::cerr << "tcp_channel::connect(1): " << std::strerror(errno) << std::endl;
-	throw new std::runtime_error("tcp_channel::tcp_channel");
+      if (_socket.get() == NULL) {
+      	std::cerr << "tcp_channel::tcp_channel(1): " << std::strerror(errno) << std::endl;
+        throw new std::runtime_error("tcp_channel::tcp_channel");
       }
-      _socket->bind();
+      _socket->set_no_delay(true);
+      //      _socket->bind();
     }
 
     tcp_channel::tcp_channel(const socket_address & p_host_address, const socket_address & p_remote_address) { // Constructor for a TCP server
       _socket.reset(new socket(p_host_address, p_remote_address, channel_type::tcp));
-      if (_socket.get() == NULL) { 
-      	std::cerr << "tcp_channel::connect(2): " << std::strerror(errno) << std::endl;
-	throw new std::runtime_error("tcp_channel::tcp_channel");
+      if (_socket.get() == NULL) {
+      	std::cerr << "tcp_channel::tcp_channel(2): " << std::strerror(errno) << std::endl;
+        throw new std::runtime_error("tcp_channel::tcp_channel");
       }
       _socket->bind(); // TODO Check if it's correct to add bind/list here
       _socket->listen();
     }
 
-    tcp_channel::tcp_channel(const int32_t p_socket, const socket_address & p_host_address, const socket_address & p_remote_address) { // Constructor for a TCP server
-      throw new std::runtime_error("tcp_channel::tcp_channel: Not implemented yet");
-      // if ((_socket = new socket(p_socket, p_host_address, p_remote_address)) == NULL) { 
-      // 	std::cerr << "tcp_channel::connect(3): " << std::strerror(errno) << std::endl;
-      // 	throw new std::runtime_error("tcp_channel::tcp_channel");
-      // }
-      // _socket->set_no_delay(true);
+    tcp_channel::tcp_channel(const int32_t p_socket, const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) { // Constructor for a TCP server
+      std::clog << ">>> tcp_channel::tcp_channel(3): " << p_socket << std::endl;
+
+      _socket.reset(new socket(p_socket, p_host_address, p_remote_address, p_type));
+      if (_socket.get() == NULL) {
+       	std::cerr << "tcp_channel::tcp_channel(3): " << std::strerror(errno) << std::endl;
+       	throw new std::runtime_error("tcp_channel::tcp_channel");
+      }
+      _socket->set_no_delay(true);
+      std::clog << "<<< tcp_channel::tcp_channel(3)" << std::endl;
     }
 
     tcp_channel::~tcp_channel() {
@@ -64,7 +68,7 @@ namespace comm {
 
     const int32_t tcp_channel::write(const std::string & p_string) const {
       if (p_string.length() == 0) {
-	return 0;
+        return 0;
       }
       
       return _socket->send(converter::get_instance().string_to_bytes(p_string));
@@ -72,7 +76,7 @@ namespace comm {
 
     const int32_t tcp_channel::write(const std::vector<uint8_t> & p_buffer) const {
       if (p_buffer.size() == 0) {
-	return 0;
+        return 0;
       }
 
       return _socket->send(p_buffer);
@@ -82,7 +86,7 @@ namespace comm {
       std::clog << ">>> tcp_channel::read" << std::endl;
 
       if (p_buffer.size() == 0) {
-	return 0;
+        return 0;
       }
 
       return _socket->receive(p_buffer);
@@ -94,7 +98,7 @@ namespace comm {
       uint32_t length = 1;
       uint8_t buffer[1] = { 0 };
       if (_socket->receive(&buffer[0], &length) < 0) {
-	return '\00';
+        return '\00';
       }
       return (uint8_t)buffer[0];
     }

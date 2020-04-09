@@ -12,7 +12,11 @@
 
 #include "tcp_echo.hh"
 #include "tcp_echo_server.hh"
+#include "keyboard.hh"
 #include "runnable.hh" // Thread implementation
+
+static int g_index = 0;
+std::vector<int8_t> g_wait_cursor { '|', '/', '-', '\\', '|', '/', '-', '\\' };
 
 int32_t main(const int32_t p_argc, const char** p_argv) {
   // Create logger instance
@@ -36,14 +40,25 @@ int32_t main(const int32_t p_argc, const char** p_argv) {
   server.start();
   std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
+  /***
+  // Wait for stop keyword
+  while (static_cast<char>(keyboard::kbhit()) == 0) {
+    std::clog << g_wait_cursor[g_index] << '\b';
+    g_index = (g_index + 1) % g_wait_cursor.size();
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  };
+  ***/
+
   // Send a TCP message to the server
   int32_t result;
   tcp_echo client(address.c_str(), port, logger_factory::get_instance().get_logger(s));
   result = client.send(std::string("This is a message from the client side"));
-
   // Wait for the response
-  str::vector<uint8_t> buffer(128, 0x00;
-  result = client.receive(buffer);
+  std::string response;
+  result = client.receive(response);
+  logger_factory::get_instance().get_logger(s).info("Receive from server: %s", response.c_str());
+  // Wait some few seconds
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
   // Stop the server
   server.stop();

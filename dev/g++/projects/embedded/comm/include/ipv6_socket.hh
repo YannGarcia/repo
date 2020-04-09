@@ -49,6 +49,9 @@ namespace comm {
        * \see socket_address
        */
       ipv6_socket(const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type = channel_type::udp);
+
+      ipv6_socket(const int32_t p_socket, const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type = channel_type::tcp);
+
       /**
        * \brief Close socket and reset class members
        */

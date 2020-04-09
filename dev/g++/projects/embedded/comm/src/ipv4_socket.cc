@@ -23,7 +23,7 @@ namespace comm {
   namespace network {
 
     ipv4_socket::ipv4_socket(const socket_address & p_remote_address, const channel_type p_type) {
-      std::clog << ">>> ipv4_socket::ipv4_socket: " << p_remote_address.to_string() << " - " <<  static_cast<unsigned int>(p_type) << std::endl;
+      std::clog << ">>> ipv4_socket::ipv4_socket(1): " << p_remote_address.to_string() << " - " <<  static_cast<unsigned int>(p_type) << std::endl;
 
       uint32_t family = PF_INET;
       uint32_t proto;
@@ -56,7 +56,7 @@ namespace comm {
       } // End of 'switch' statement
       // Create the socket
       if ((_socket = ::socket(family, type, proto)) < 0) {
-        std::cerr << "ipv4_socket: " << std::strerror(errno) << std::endl;
+        std::cerr << "ipv4_socket::ipv4_socket(1): " << std::strerror(errno) << std::endl;
         _socket = -1;
         throw std::runtime_error("ipv4_socket");
       }
@@ -64,21 +64,104 @@ namespace comm {
       ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
       _remote.sin_family = family;
       _remote.sin_port = htons(p_remote_address.port());
-      ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
+      ::memcpy((void*)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
       // Reset _host, note used
       ::memset((void *)&_host, 0x00, sizeof(_host));
     } // End of ctor
 
-    ipv4_socket::ipv4_socket(const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) : ipv4_socket(p_remote_address, p_type) {
-      std::clog << ">>> ipv4_socket::ipv4_socket: " << p_host_address.to_string() << " - " << p_remote_address.to_string() << " - " << static_cast<unsigned int>(p_type) << std::endl;
+    ipv4_socket::ipv4_socket(const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) {
+      std::clog << ">>> ipv4_socket::ipv4_socket(2): " << p_host_address.to_string() << " - " << p_remote_address.to_string() << " - " << static_cast<unsigned int>(p_type) << std::endl;
 
-      // Construct the host sockaddr_in structure
+      uint32_t family = PF_INET;
+      uint32_t proto;
+      uint32_t type;
+      _type = p_type;
+      switch (_type) {
+      case channel_type::udp:
+        proto = IPPROTO_UDP;
+        type = SOCK_DGRAM;
+        break;
+      case channel_type::tcp:
+        proto = IPPROTO_TCP;
+        type = SOCK_STREAM;
+        break;
+      case channel_type::sctp:
+        proto = IPPROTO_SCTP;
+        type = SOCK_SEQPACKET;
+        break;
+      case channel_type::raw:
+        proto = IPPROTO_RAW;
+        type = SOCK_RAW;
+        family = AF_PACKET;
+        memset(&_if_interface, 0x00, sizeof(struct ifreq));
+        memset(&_if_mac_addr, 0x00, sizeof(struct ifreq));
+        // Need to setup up the NIC index using set_nic_name()
+        break;
+      default:
+        proto = 0;
+        type = SOCK_STREAM;
+      } // End of 'switch' statement
+      // Create the socket
+      if ((_socket = ::socket(family, type, proto)) < 0) {
+        std::cerr << "ipv4_socket::ipv4_socket(2): " << std::strerror(errno) << std::endl;
+        _socket = -1;
+        throw std::runtime_error("ipv4_socket");
+      }
+      // Construct the remote sockaddr_in structure
       ::memset((void *)&_host, 0x00, sizeof(struct sockaddr_in));
-      _host.sin_family = PF_INET;
-      ::memcpy((void *)&_host.sin_addr, p_host_address.addr(), p_host_address.length());
+      _host.sin_family = family;
       _host.sin_port = htons(p_host_address.port());
+      _host.sin_addr.s_addr = htonl(INADDR_ANY);
+      std::clog << "ipv4_socket::ipv4_socket: _host.sin_family=" << _host.sin_family << ", _host.sin_port=" << _host.sin_port << ", _host.sin_addr.s_addr=" << _host.sin_addr.s_addr << std::endl;
+      //      ::memcpy((void *)&_host.sin_addr, p_host_address.addr(), p_host_address.length());
+      // Construct the remote sockaddr_in structure
+      ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
+      _remote.sin_family = family;
+      ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
+      _remote.sin_port = htons(p_remote_address.port());
     } // End of ctor
-    
+
+    ipv4_socket::ipv4_socket(const int32_t p_socket, const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) {
+      std::clog << ">>> ipv4_socket::ipv4_socket(3): " << p_socket << " - " << p_host_address.to_string() << " - " << p_remote_address.to_string() << " - " << static_cast<unsigned int>(p_type) << std::endl;
+
+      uint32_t family = PF_INET;
+      uint32_t type;
+      _type = p_type;
+      switch (_type) {
+      case channel_type::udp:
+        type = SOCK_DGRAM;
+        break;
+      case channel_type::tcp:
+        type = SOCK_STREAM;
+        break;
+      case channel_type::sctp:
+        type = SOCK_SEQPACKET;
+        break;
+      case channel_type::raw:
+        type = SOCK_RAW;
+        family = AF_PACKET;
+        memset(&_if_interface, 0x00, sizeof(struct ifreq));
+        memset(&_if_mac_addr, 0x00, sizeof(struct ifreq));
+        // Need to setup up the NIC index using set_nic_name()
+        break;
+      default:
+        type = SOCK_STREAM;
+      } // End of 'switch' statement
+      // Create the socket
+      _socket = p_socket;
+      // Construct the remote sockaddr_in structure
+      ::memset((void *)&_host, 0x00, sizeof(struct sockaddr_in));
+      _host.sin_family = family;
+      _host.sin_port = htons(p_host_address.port());
+      ::memcpy((void *)&_host.sin_addr, p_host_address.addr(), p_host_address.length());
+      // Construct the remote sockaddr_in structure
+      ::memset((void *)&_remote, 0x00, sizeof(struct sockaddr_in));
+      _remote.sin_family = family;
+      ::memcpy((void *)&_remote.sin_addr, p_remote_address.addr(), p_remote_address.length());
+      _remote.sin_port = htons(p_remote_address.port());
+      std::clog << "<<< ipv4_socket::ipv4_socket(3)" << std::endl;
+    } // End of ctor
+
     ipv4_socket::~ipv4_socket() {
       close();
       ::memset((void *)&_host, 0x00, sizeof(_host));
@@ -86,10 +169,13 @@ namespace comm {
     } // End of dtor
 
     const int32_t ipv4_socket::connect() const {
+      std::clog << ">>> ipv4_socket::connect: " << _socket << std::endl;
+
       if (::connect(_socket, (const sockaddr *)&_remote, sizeof(struct sockaddr)) == -1) {
         return process_result();
       }
 
+      std::clog << "<<< ipv4_socket::connect succeed" << std::endl;
       return 0; // Succeed
     } // End of connect
 
@@ -112,10 +198,17 @@ namespace comm {
     const int32_t ipv4_socket::bind() const {
       std::clog << ">>> ipv4_socket::bind: " << _socket << std::endl;
 
+      int32_t reuse = 1;
+      if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse)) < 0) {
+        return process_result();
+      }
+
+      std::clog << "ipv4_socket::bind: _host.sin_family=" << _host.sin_family << ", _host.sin_port=" << _host.sin_port << ", _host.sin_addr.s_addr=" << _host.sin_addr.s_addr << std::endl;
       if (::bind(_socket, reinterpret_cast<const struct sockaddr *>(&_host), sizeof(struct sockaddr)) == -1) {
         return process_result();
       }
       
+      std::clog << "<<< ipv4_socket::bind: succeed" << std::endl;
       return 0;
     } // End of bind
     
@@ -126,6 +219,7 @@ namespace comm {
         return process_result();
       }
       
+      std::clog << "<<< ipv4_socket::listen: succeed" << std::endl;
       return 0;
     } // End of listen
 
@@ -135,6 +229,7 @@ namespace comm {
       struct sockaddr_in addr = { 0 };
       socklen_t len  = sizeof(addr);
       int32_t fd = ::accept(_socket, (struct sockaddr *)&addr, &len);
+      std::clog << "ipv4_socket::accept: fd=" << fd << std::endl;
       if (fd < 0) {
         if (process_result() == -1) {
           return -1;
@@ -146,9 +241,12 @@ namespace comm {
       socket_address remote(std::string(ipstr), htons(addr.sin_port));
       inet_ntop(_host.sin_family, &_host.sin_addr, ipstr, sizeof(ipstr));
       socket_address host(std::string(ipstr), htons(_host.sin_port));
-      std::clog << "ipv4_socket::accept: new connection from " << remote.to_string() << std::endl;
+      //      std::clog << "ipv4_socket::accept: new connection from " << addr.sin_addr << ", port: " << htons(addr.sin_port) << std::endl;
 
-      return channel_manager::get_instance().create_channel(fd, host, remote);
+      int32_t result = channel_manager::get_instance().create_channel(fd, host, remote);
+      std::clog << "<<< ipv4_socket::accept: channel idx=" << result << std::endl;
+      return result;
+      //      return channel_manager::get_instance().create_channel(fd, host, remote);
     }
     
     const int32_t ipv4_socket::send(const std::vector<uint8_t> & p_buffer) const {
@@ -443,7 +541,7 @@ namespace comm {
               return -1; // Terminate here
             } else if (result != 0) {
               std::cerr <<  "ipv4_socket::process_result (Delayed): " << std::strerror(errno) << std::endl;
-              return -1; // Terminate here
+              break; //return -1; // Terminate here
             } else { // Connected
               std::clog << "ipv4_socket::process_result: done" << std::endl;
               break; // exit loop

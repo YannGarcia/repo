@@ -75,6 +75,10 @@ namespace comm {
       _host.sin6_port = htons(p_host_address.port());
     } // End of ctor
 
+    ipv6_socket::ipv6_socket(const int32_t p_socket, const socket_address & p_host_address, const socket_address & p_remote_address, const channel_type p_type) {
+      throw std::runtime_error("ipv6_socket::socket: Not implemented yet");
+    }
+
     ipv6_socket::~ipv6_socket() {
       close();
       ::memset((void *)&_host, 0x00, sizeof(_host));
