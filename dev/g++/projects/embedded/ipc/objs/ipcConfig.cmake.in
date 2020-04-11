@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+# Install layout
+set(IPC_INCLUDE_DIR $ENV{HOME_INC})
+set(IPC_LIB_DIR $ENV{HOME_LIB})
+set(IPC_LIB_NAME ipc)
