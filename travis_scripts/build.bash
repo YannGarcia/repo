@@ -18,7 +18,6 @@ else # Release mode
     cmake -DCMAKE_BUILD_TYPE=Release .
 fi
 make
-make doc
 cd ${OLD_PWD}
 
 exit 0

@@ -83,6 +83,7 @@ then
     project="logger"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -118,6 +119,7 @@ then
     project="helper"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -153,6 +155,7 @@ then
     project="converter"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -188,6 +191,7 @@ then
     project="ipc"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -220,11 +224,10 @@ then
         exit -1
     fi
 
-
-
     project="comm"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -260,6 +263,7 @@ then
     project="httpserver"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then
@@ -295,6 +299,7 @@ then
     project="security"
     echo "Processing ${project} project"
     cd ${PATH_DEV}/g++/projects/embedded/${project}/objs
+    make doc_${project}
     check_lib ${project}
     if [ "$?" != "0" ]
     then

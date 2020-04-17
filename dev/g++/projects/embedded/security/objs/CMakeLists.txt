@@ -29,6 +29,7 @@ file(GLOB_RECURSE security_test_SOURCES "../test/*.cc")
 # Setup header files path
 include_directories(
   "../include"
+  "../../logger/include"
   "/usr/local/include"
   "/usr/local/include/gtest")
 
@@ -71,7 +72,7 @@ configure_file(securityConfig.cmake.in securityConfig.cmake)
 export(PACKAGE security)
 
 # Installation
-set_target_properties(security PROPERTIES PUBLIC_HEADER "../include/ecdsa_signature.hh;../include/key.hh;key.t.h;../include/keys_pair.hh;../include/rnd.hh;../include/sha.hh;../include/sha_algorithms.hh;../include/signature_algorithms.hh")
+set_target_properties(security PROPERTIES PUBLIC_HEADER "../include/ecdsa_signature.hh;../include/key.hh;../include/key.t.h;../include/keys_pair.hh;../include/rnd.hh;../include/sha.hh;../include/sha_algorithms.hh;../include/signature_algorithms.hh")
 install(
   TARGETS security EXPORT security
   LIBRARY DESTINATION $ENV{HOME_LIB}
@@ -83,36 +84,36 @@ install(
 
 # Add target to build documents
 if(${DOXYGEN_FOUND})
-  add_custom_target(doc
+  add_custom_target(doc_${PROJECT_NAME}
     COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
-    WORKING_DIRECTORY ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM
     )
 endif(${DOXYGEN_FOUND})
 
 # run commands
-add_custom_target(run
+add_custom_target(run_${PROJECT_NAME}
   COMMAND ../bin/test_security
   )
 
 if(${LCOV_FOUND})
-  add_custom_target(run_c
+  add_custom_target(run_${PROJECT_NAME}_c
     COMMAND ${LCOV_BIN} --directory . --zerocounters
     COMMAND ../bin/test_security --gtest_output=xml:gtestresults.xml
     COMMAND ${LCOV_BIN} --directory . --output-file test_security.coverage.info --capture
     ${LCOV_BIN} --list test_security.coverage.coverage.info
   )
 elseif(${GCOV_FOUND})
-  add_custom_target(run_c
+  add_custom_target(run_${PROJECT_NAME}_c
     COMMAND ${GCOV_BIN} ../bin/test_security
   )
 endif(${LCOV_FOUND})
 
-add_custom_target(run_v
+add_custom_target(run_${PROJECT_NAME}_v
   COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_security
   )
 
-add_custom_target(run_d
+add_custom_target(run_${PROJECT_NAME}_d
   COMMAND gdb ../bin/test_security
   )

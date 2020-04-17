@@ -7,18 +7,30 @@ OLD_PWD=`pwd`
 cd ${PATH_DEV}/g++/projects/embedded/
 
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
-then
-    make test_d
-    make run # Compiled in debug mode but running without gdb
+then # Compiled in debug mode but running without gdb
+    make run_logger
+    make run_converter
+    make run_helper
+    make run_ipc
+    make run_comm
+    make run_security
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
 then
-    make test_c
-    make run_c
+    make run_logger_c
+    make run_converter_c
+    make run_helper_c
+    make run_ipc_c
+    make run_comm_c
+    make run_security_c
     make push2coveralls
 elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
 then
-    make test
-    make run_v
+    make run_logger_v
+    make run_vonverter_v
+    make run_helper_v
+    make run_ipc_v
+    make run_vomm_v
+    make run_security_v
 elif [ ${TRAVIS_CONTEXT} == "LinuxHW" ]
 then
     if [ "${SCP_REMOTE_ADDRESS}" != "" ] && [ "${SCP_REMOTE_USER}" != "" ]

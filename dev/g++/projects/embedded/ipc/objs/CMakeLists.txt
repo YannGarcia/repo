@@ -74,36 +74,36 @@ install(
 
 # Add target to build documents
 if(${DOXYGEN_FOUND})
-  add_custom_target(doc
+  add_custom_target(doc_${PROJECT_NAME}
     COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
-    WORKING_DIRECTORY ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM
     )
 endif(${DOXYGEN_FOUND})
 
 # run commands
-add_custom_target(run
+add_custom_target(run_${PROJECT_NAME}
   COMMAND ../bin/test_ipc
   )
 
 if(${LCOV_FOUND})
-  add_custom_target(run_c
+  add_custom_target(run_${PROJECT_NAME}_c
     COMMAND ${LCOV_BIN} --directory . --zerocounters
     COMMAND ../bin/test_ipc --gtest_output=xml:gtestresults.xml
     COMMAND ${LCOV_BIN} --directory . --output-file test_ipc.coverage.info --capture
     ${LCOV_BIN} --list test_ipc.coverage.coverage.info
   )
 elseif(${GCOV_FOUND})
-  add_custom_target(run_c
+  add_custom_target(run_${PROJECT_NAME}_c
     COMMAND ${GCOV_BIN} ../bin/test_ipc
   )
 endif(${LCOV_FOUND})
 
-add_custom_target(run_v
+add_custom_target(run_${PROJECT_NAME}_v
   COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_ipc
   )
 
-add_custom_target(run_d
+add_custom_target(run_${PROJECT_NAME}_d
   COMMAND gdb ../bin/test_ipc
   )

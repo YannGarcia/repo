@@ -75,8 +75,12 @@ add_custom_target(distclean
     find . -name '*.cmake' -type f -exec rm -f {} "\;" &&
     find . -name 'install_manifest.txt' -type f -exec rm -f {} "\;" &&
     find . -name 'Makefile' -type f -exec rm -f {} "\;" &&
+    find . -name 'CMakeDoxyfile.in' -type f -exec rm -f {} "\;" &&
     find . -name '*~' -type f -exec rm -f {} "\;" &&
-    find . -name 'CMakeFiles' -type d -exec rm -fr {} "\;"
+    find . -name 'CMakeFiles' -type d -exec rm -fr {} "\;" &&
+    find . -name 'html' -type d -exec rm -fr {} "\;" &&
+    find . -name 'latex' -type d -exec rm -fr {} "\;" &&
+    find . -name 'man' -type d -exec rm -fr {} "\;"
   )
 
 configure_file (
