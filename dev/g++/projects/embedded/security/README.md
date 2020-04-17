@@ -43,22 +43,19 @@ You also need to link against libsecurity.so:
 -L <path-to-security-dir> -lsecurity
 ```
 
-##Make options
-The make options are:
-  - help         : This menu.
-  - clean        : Erase objects, binaries and temporary files.
-  - debug        : Build a debug version.
-  - compile      : Build the application in release mode.
-  - recompile    : Rebuild the application in release mode.
-  - rel          : Clean and rebuild the application in release mode.
-  - test         : Build the test application.
-  - test_d       : Build the test application in debug mod.
-  - run          : Build and execute the test application.
-  - run_d        : Build and execute the test application in debug mode.
-  - run_v        : Build and execute the test application in debug mode, using Valgrind.
-  - dist         : Build a compressed archive of the applicatione.
-  - install      : Install binaries, libraries and configuration files into final directory $(PATH_INSTALL)xxx.
-  - install-devel: Same as 'install' plus include files.
-  - depend       : Build the file dependencies for $(MAKE).
-  - gendoc       : Build the Doxygen documantation.
+##How to build the library
+All CMake files are located in objs folder.
+To build this library and its test application, to test it and to install it, please follow the steps below:
+```bash
+$ cd objs
+$ cmake .
+$ make
+$ ../bin/testlib
+$ make prefix=$HOME install
+```
 
+To cleanup everything, please follow the steps below:
+```bash
+$ cd objs
+$ make distclean
+```

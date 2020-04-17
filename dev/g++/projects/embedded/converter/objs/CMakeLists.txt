@@ -11,10 +11,6 @@ set(converter VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Build type. Default Release
-#set(DEFAULT_BUILD_TYPE "Release")
-set(DEFAULT_BUILD_TYPE "Debug")
-
 # Install directories
 include(GNUInstallDirs)
 
@@ -37,14 +33,14 @@ include_directories(
   "/usr/local/include"
   "/usr/local/include/gtest")
 
-# Add compile flags
-add_definitions(-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC)
-
 # Library source files dependencies
 add_library(converter SHARED ${converter_SOURCES})
 
 # Testing application source files dependencies
 add_executable(test_converter ${converter_test_SOURCES})
+
+# Add doxygen support
+find_package(Doxygen)
 
 # Add googletest support
 find_package(GTest REQUIRED)
@@ -72,3 +68,38 @@ install(
 
 # Deinstallation
 
+# Add target to build documents
+if(${DOXYGEN_FOUND})
+  add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs/o2.cfg
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+    )
+endif(${DOXYGEN_FOUND})
+
+# run commands
+add_custom_target(run
+  COMMAND ../bin/test_converter
+  )
+
+if(${LCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${LCOV_BIN} --directory . --zerocounters
+    COMMAND ../bin/test_converter --gtest_output=xml:gtestresults.xml
+    COMMAND ${LCOV_BIN} --directory . --output-file test_converter.coverage.info --capture
+    ${LCOV_BIN} --list test_converter.coverage.coverage.info
+  )
+elseif(${GCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${GCOV_BIN} ../bin/test_converter
+  )
+endif(${LCOV_FOUND})
+
+add_custom_target(run_v
+  COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_converter
+  )
+
+add_custom_target(run_d
+  COMMAND gdb ../bin/test_converter
+  )

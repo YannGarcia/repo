@@ -11,6 +11,54 @@ set(embedded VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Add doxygen support
+find_package(Doxygen)
+
+# Add lcov support
+find_package(Lcov)
+
+# Add gcov support
+find_package(Gcov)
+
+# Add doxygen support
+find_package(Doxygen)
+
+# Add googletest support
+find_package(GTest REQUIRED)
+
+# Add libpthread support
+find_package(Threads REQUIRED)
+
+# Build type. Default Release
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release) # Possible value Debug, Valgrind and Coverage
+endif(NOT CMAKE_BUILD_TYPE)
+
+# Build type. Default Release
+if(CMAKE_BUILD_TYPE MATCHES Release)
+  message("Set Release mode")
+  set(CMAKE_CXX_FLAGS "-O3 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC")
+elseif(CMAKE_BUILD_TYPE MATCHES Debug)
+  message("-- Set Debug mode")
+  set(CMAKE_CXX_FLAGS "-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC")
+elseif(CMAKE_BUILD_TYPE MATCHES Coverage)
+  set(CMAKE_CXX_FLAGS "-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC --coverage")
+  set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} --coverage")
+  if(${LCOV_FOUND})
+    message("Set Coverage mode with LCOV")
+  elseif(${GCOV_FOUND})
+    message("-- Set Coverage mode with GCOV")
+  endif(${LCOV_FOUND})
+elseif(CMAKE_BUILD_TYPE MATCHES Valgrind)
+  message("Set Coverage mode")
+  set(VALGRIND "valgrind")
+  set(VALGRIND_OPTIONS "-v --leak-check=yes --leak-check=full --show-leak-kinds=all --track-origins=yes")
+  set(CMAKE_CXX_FLAGS "-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC --coverage")
+else(1)
+  message("Set Debug mode")
+  set(CMAKE_CXX_FLAGS "-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC")
+endif(CMAKE_BUILD_TYPE MATCHES Release)
+
 # Add sub directories
 add_subdirectory(logger/objs)
 add_subdirectory(converter/objs)

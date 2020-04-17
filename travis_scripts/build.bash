@@ -5,20 +5,20 @@ set -vx
 OLD_PWD=`pwd`
 # Use ${PATH_DEV}/g++/projectsxs/embedded/Makefile at the end of the full review
 cd ${PATH_DEV}/g++/projects/embedded
-cmake .
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
-then
-    make # TODO debug
+then # Debug mode
+    cmake -DCMAKE_BUILD_TYPE=Debug .
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
-then
-    make # TODO coverage
+then # Using LCov
+    cmake -DCMAKE_BUILD_TYPE=Coverage .
 elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
-then
-    make # TODO valgrind
-else
-    make
+then # Using Valgrind
+    cmake -DCMAKE_BUILD_TYPE=Valgrind .
+else # Release mode
+    cmake -DCMAKE_BUILD_TYPE=Release .
 fi
-# TODO make gendoc
+make
+make doc
 cd ${OLD_PWD}
 
 exit 0

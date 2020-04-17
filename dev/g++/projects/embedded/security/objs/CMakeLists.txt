@@ -11,10 +11,6 @@ set(security VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Build type. Default Release
-#set(DEFAULT_BUILD_TYPE "Release")
-set(DEFAULT_BUILD_TYPE "Debug")
-
 # Install directories
 include(GNUInstallDirs)
 
@@ -36,9 +32,6 @@ include_directories(
   "/usr/local/include"
   "/usr/local/include/gtest")
 
-# Add compile flags
-add_definitions(-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC)
-
 # Add converter support
 find_package(converter REQUIRED)
 include_directories(${CONVERTER_INCLUDE_DIR})
@@ -48,6 +41,9 @@ link_directories(${CONVERTER_LIB_DIR})
 find_package(logger REQUIRED)
 include_directories(${LOGGER_INCLUDE_DIR})
 link_directories(${LOGGER_LIB_DIR})
+
+# Add doxygen support
+find_package(Doxygen)
 
 # Add googletest support
 find_package(GTest REQUIRED)
@@ -84,3 +80,39 @@ install(
   )
 
 # Deinstallation
+
+# Add target to build documents
+if(${DOXYGEN_FOUND})
+  add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs/o2.cfg
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+    )
+endif(${DOXYGEN_FOUND})
+
+# run commands
+add_custom_target(run
+  COMMAND ../bin/test_security
+  )
+
+if(${LCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${LCOV_BIN} --directory . --zerocounters
+    COMMAND ../bin/test_security --gtest_output=xml:gtestresults.xml
+    COMMAND ${LCOV_BIN} --directory . --output-file test_security.coverage.info --capture
+    ${LCOV_BIN} --list test_security.coverage.coverage.info
+  )
+elseif(${GCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${GCOV_BIN} ../bin/test_security
+  )
+endif(${LCOV_FOUND})
+
+add_custom_target(run_v
+  COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_security
+  )
+
+add_custom_target(run_d
+  COMMAND gdb ../bin/test_security
+  )

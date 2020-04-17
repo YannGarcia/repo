@@ -11,10 +11,6 @@ set(logger VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Build type. Default Release
-#set(DEFAULT_BUILD_TYPE "Release")
-set(DEFAULT_BUILD_TYPE "Debug")
-
 # Install directories
 include(GNUInstallDirs)
 
@@ -34,10 +30,11 @@ file(GLOB_RECURSE logger_test_SOURCES "../test/*.cc")
 include_directories(
   "../include"
   "/usr/local/include"
-  "/usr/local/include/gtest")
+  "/usr/local/include/gtest"
+  )
 
-# Add compile flags
-add_definitions(-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC)
+# Add doxygen support
+find_package(Doxygen)
 
 # Add googletest support
 find_package(GTest REQUIRED)
@@ -52,36 +49,57 @@ add_library(logger SHARED ${logger_SOURCES})
 add_executable(test_logger ${logger_test_SOURCES})
 target_compile_options(test_logger PUBLIC "-pthread")
 
-# Set public shared libraries path
-#link_directories($ENV{HOME_LIB})
-
 # Copy output file into bin directory
 target_link_libraries(test_logger LINK_PUBLIC logger ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
-
-#ADD_CUSTOM_TARGET(distclean
-#  DEPENDS clean
-#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/logger
-#  COMMAND rm -f $ENV{HOME_INC}/include/logger.hh $ENV{HOME_INC}/include/logger_factory.hh $ENV{HOME_INC}/include/logger_levels.hh $ENV{HOME_INC}/include/logger_time_formats.hh
-#  COMMAND rm -f $ENV{HOME_LIB}/liblogger.so
-#  # cmake files production
-#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
-#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
-#  )
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 configure_file(loggerConfig.cmake.in loggerConfig.cmake)
 export(PACKAGE logger)
 
-# Installing
+# Installation
 set_target_properties(logger PROPERTIES PUBLIC_HEADER "../include/logger.hh;../include/logger_factory.hh;../include/logger_levels.hh;../include/logger_time_formats.hh")
 install(
   TARGETS logger EXPORT logger
   LIBRARY DESTINATION $ENV{HOME_LIB}
   ARCHIVE DESTINATION $ENV{HOME_LIB}
   PUBLIC_HEADER DESTINATION $ENV{HOME_INC}
+  )
+
+# Deinstallation
+
+# Add target to build documents
+if(${DOXYGEN_FOUND})
+  add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs/o2.cfg
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+    )
+endif(${DOXYGEN_FOUND})
+
+# run commands
+add_custom_target(run
+  COMMAND ../bin/test_logger
+  )
+
+if(${LCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${LCOV_BIN} --directory . --zerocounters
+    COMMAND ../bin/test_logger --gtest_output=xml:gtestresults.xml
+    COMMAND ${LCOV_BIN} --directory . --output-file test_logger.coverage.info --capture
+    ${LCOV_BIN} --list test_logger.coverage.coverage.info
+  )
+elseif(${GCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${GCOV_BIN} ../bin/test_logger
+  )
+endif(${LCOV_FOUND})
+
+add_custom_target(run_v
+  COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_logger
+  )
+
+add_custom_target(run_d
+  COMMAND gdb ../bin/test_logger
   )

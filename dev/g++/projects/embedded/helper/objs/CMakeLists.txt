@@ -11,10 +11,6 @@ set(helper VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Build type. Default Release
-#set(DEFAULT_BUILD_TYPE "Release")
-set(DEFAULT_BUILD_TYPE "Debug")
-
 # Install directories
 include(GNUInstallDirs)
 
@@ -37,13 +33,13 @@ include_directories(
   "/usr/local/include"
   "/usr/local/include/gtest")
 
-# Add compile flags
-add_definitions(-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEBUG -fPIC)
-
 # Add converter support
 find_package(converter REQUIRED)
 include_directories(${CONVERTER_INCLUDE_DIR})
 link_directories(${CONVERTER_LIB_DIR})
+
+# Add doxygen support
+find_package(Doxygen)
 
 # Add googletest support
 find_package(GTest REQUIRED)
@@ -58,25 +54,8 @@ add_library(helper SHARED ${helper_SOURCES})
 add_executable(test_helper ${helper_test_SOURCES})
 target_compile_options(test_helper PUBLIC "-pthread")
 
-# Set public shared libraries path
-#link_directories($ENV{HOME_LIB})
-
 # Copy output file into bin directory
 target_link_libraries(test_helper LINK_PUBLIC helper ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
-
-#ADD_CUSTOM_TARGET(distclean
-#  DEPENDS clean
-#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/helper
-#  COMMAND rm -f $ENV{HOME_INC}/date_time.hh $ENV{HOME_INC}/get_opt.hh $ENV{HOME_INC}/helper.hh $ENV{HOME_INC}/helper.t.h $ENV{HOME_INC}/ibstream.hh $ENV{HOME_INC}/ibstream.t.h $ENV{HOME_INC}/keyboard.hh $ENV{HOME_INC}/obstream.hh $ENV{HOME_INC}/obstream.t.h $ENV{HOME_INC}/runnable.hh
-#  rm -f $ENV{HOME_LIB}/libhelper.so
-#  # cmake files production
-#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
-#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
-#  )
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
@@ -93,3 +72,39 @@ install(
   )
 
 # Deinstallation
+
+# Add target to build documents
+if(${DOXYGEN_FOUND})
+  add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ../docs/o2.cfg
+    WORKING_DIRECTORY ../docs/o2.cfg
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+    )
+endif(${DOXYGEN_FOUND})
+
+# run commands
+add_custom_target(run
+  COMMAND ../bin/test_helper
+  )
+
+if(${LCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${LCOV_BIN} --directory . --zerocounters
+    COMMAND ../bin/test_helper --gtest_output=xml:gtestresults.xml
+    COMMAND ${LCOV_BIN} --directory . --output-file test_helper.coverage.info --capture
+    ${LCOV_BIN} --list test_helper.coverage.coverage.info
+  )
+elseif(${GCOV_FOUND})
+  add_custom_target(run_c
+    COMMAND ${GCOV_BIN} ../bin/test_helper
+  )
+endif(${LCOV_FOUND})
+
+add_custom_target(run_v
+  COMMAND ${VALGRIND} ${VALGRIND_OPTIONS} ../bin/test_helper
+  )
+
+add_custom_target(run_d
+  COMMAND gdb ../bin/test_helper
+  )
