@@ -44,32 +44,38 @@ add_definitions(-g -ggdb -O0 -Wall -MMD -MP -std=c++11 -fmessage-length=0 -D_DEB
 add_library(converter SHARED ${converter_SOURCES})
 
 # Testing application source files dependencies
-add_executable(testlib ${converter_test_SOURCES})
+add_executable(test_converter ${converter_test_SOURCES})
 
 # Add googletest support
 find_package(GTest REQUIRED)
 
 # Add libpthread support
 find_package(Threads REQUIRED)
-target_compile_options(testlib PUBLIC "-pthread")
+target_compile_options(test_converter PUBLIC "-pthread")
 
 # Copy output file into bin directory
-target_link_libraries(testlib LINK_PUBLIC converter gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_converter LINK_PUBLIC converter gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
-# Custom targets
-ADD_CUSTOM_TARGET(distclean
-  rm -fr $ENV{HOME}/.cmake/packages/converter
-  rm -f $ENV{HOME_INC}/converter.hh
-  rm -f $ENV{HOME_LIB}/libconverter.so
-  rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake converterConfig.cmake install_manifest.txt Makefile *~
-  )
+#ADD_CUSTOM_TARGET(distclean
+#  DEPENDS clean
+#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/converter
+#  COMMAND rm -f $ENV{HOME_INC}/converter.hh
+#  COMMAND rm -f $ENV{HOME_LIB}/libconverter.so
+#  # cmake files production
+#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
+#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
+#  )
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 configure_file(converterConfig.cmake.in converterConfig.cmake)
 export(PACKAGE converter)
 
-# Installing
+# Installation
 set_target_properties(converter PROPERTIES PUBLIC_HEADER "../include/converter.hh")
 install(
   TARGETS converter EXPORT converter
@@ -77,3 +83,6 @@ install(
   ARCHIVE DESTINATION $ENV{HOME_LIB}
   PUBLIC_HEADER DESTINATION $ENV{HOME_INC}
   )
+
+# Deinstallation
+

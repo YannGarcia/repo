@@ -49,22 +49,28 @@ find_package(Threads REQUIRED)
 add_library(logger SHARED ${logger_SOURCES})
 
 # Testing application source files dependencies
-add_executable(testlib ${logger_test_SOURCES})
-target_compile_options(testlib PUBLIC "-pthread")
+add_executable(test_logger ${logger_test_SOURCES})
+target_compile_options(test_logger PUBLIC "-pthread")
 
 # Set public shared libraries path
 #link_directories($ENV{HOME_LIB})
 
 # Copy output file into bin directory
-target_link_libraries(testlib LINK_PUBLIC logger ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_logger LINK_PUBLIC logger ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
-# Custom targets
-ADD_CUSTOM_TARGET(distclean
-  rm -fr $ENV{HOME}/.cmake/packages/logger
-  rm -f $ENV{HOME_INC}/include/logger.hh $ENV{HOME_INC}/include/logger_factory.hh $ENV{HOME_INC}/include/logger_levels.hh $ENV{HOME_INC}/include/logger_time_formats.hh
-  rm -f $ENV{HOME_LIB}/liblogger.so
-  rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake loggerConfig.cmake install_manifest.txt Makefile *~
-  )
+#ADD_CUSTOM_TARGET(distclean
+#  DEPENDS clean
+#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/logger
+#  COMMAND rm -f $ENV{HOME_INC}/include/logger.hh $ENV{HOME_INC}/include/logger_factory.hh $ENV{HOME_INC}/include/logger_levels.hh $ENV{HOME_INC}/include/logger_time_formats.hh
+#  COMMAND rm -f $ENV{HOME_LIB}/liblogger.so
+#  # cmake files production
+#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
+#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
+#  )
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)

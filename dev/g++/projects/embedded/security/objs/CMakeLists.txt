@@ -55,6 +55,10 @@ find_package(GTest REQUIRED)
 # Add libpthread support
 find_package(Threads REQUIRED)
 
+# Add CryptoPP support
+link_directories("/usr/local/lib")
+find_library(LIB_CRYPTOPP libcryptopp.a REQUIRED)
+
 # Library source files dependencies
 add_library(security SHARED ${security_SOURCES})
 
@@ -62,26 +66,15 @@ add_library(security SHARED ${security_SOURCES})
 add_executable(testlib ${security_test_SOURCES})
 target_compile_options(testlib PUBLIC "-pthread")
 
-# Set public shared libraries path
-#link_directories($ENV{HOME_LIB})
-
 # Copy output file into bin directory
-target_link_libraries(testlib LINK_PUBLIC security ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
-
-# Custom targets
-ADD_CUSTOM_TARGET(distclean
-  rm -fr $ENV{HOME}/.cmake/packages/security
-  rm -f $ENV{HOME_INC}/ecdsa_signature.hh $ENV{HOME_INC}/key.hh key.t.h $ENV{HOME_INC}/keys_pair.hh $ENV{HOME_INC}/rnd.hh $ENV{HOME_INC}/sha.hh $ENV{HOME_INC}/sha_algorithms.hh $ENV{HOME_INC}/signature_algorithms.hh
-  rm -f $ENV{HOME_LIB}/libsecurity.so
-  rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake securityConfig.cmake install_manifest.txt Makefile *~
-  )
+target_link_libraries(testlib LINK_PUBLIC security ${LIB_CRYPTOPP} ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 configure_file(securityConfig.cmake.in securityConfig.cmake)
 export(PACKAGE security)
 
-# Installing
+# Installation
 set_target_properties(security PROPERTIES PUBLIC_HEADER "../include/ecdsa_signature.hh;../include/key.hh;key.t.h;../include/keys_pair.hh;../include/rnd.hh;../include/sha.hh;../include/sha_algorithms.hh;../include/signature_algorithms.hh")
 install(
   TARGETS security EXPORT security
@@ -89,3 +82,5 @@ install(
   ARCHIVE DESTINATION $ENV{HOME_LIB}
   PUBLIC_HEADER DESTINATION $ENV{HOME_INC}
   )
+
+# Deinstallation

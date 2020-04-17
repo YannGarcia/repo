@@ -54,29 +54,35 @@ find_package(Threads REQUIRED)
 add_library(helper SHARED ${helper_SOURCES})
 
 # Testing application source files dependencies
-add_executable(testlib ${helper_test_SOURCES})
-target_compile_options(testlib PUBLIC "-pthread")
+add_executable(test_helper ${helper_test_SOURCES})
+target_compile_options(test_helper PUBLIC "-pthread")
 
 # Set public shared libraries path
 #link_directories($ENV{HOME_LIB})
 
 # Copy output file into bin directory
-target_link_libraries(testlib LINK_PUBLIC helper ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_helper LINK_PUBLIC helper ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
-# Custom targets
-ADD_CUSTOM_TARGET(distclean
-  rm -fr $ENV{HOME}/.cmake/packages/helper
-  rm -f $ENV{HOME_INC}/date_time.hh $ENV{HOME_INC}/get_opt.hh $ENV{HOME_INC}/helper.hh $ENV{HOME_INC}/helper.t.h $ENV{HOME_INC}/ibstream.hh $ENV{HOME_INC}/ibstream.t.h $ENV{HOME_INC}/keyboard.hh $ENV{HOME_INC}/obstream.hh $ENV{HOME_INC}/obstream.t.h $ENV{HOME_INC}/runnable.hh
-  rm -f $ENV{HOME_LIB}/libhelper.so
-  rm -fr CMakeCache.txt CMakeFiles cmake_install.cmake helperConfig.cmake install_manifest.txt Makefile *~
-  )
+#ADD_CUSTOM_TARGET(distclean
+#  DEPENDS clean
+#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/helper
+#  COMMAND rm -f $ENV{HOME_INC}/date_time.hh $ENV{HOME_INC}/get_opt.hh $ENV{HOME_INC}/helper.hh $ENV{HOME_INC}/helper.t.h $ENV{HOME_INC}/ibstream.hh $ENV{HOME_INC}/ibstream.t.h $ENV{HOME_INC}/keyboard.hh $ENV{HOME_INC}/obstream.hh $ENV{HOME_INC}/obstream.t.h $ENV{HOME_INC}/runnable.hh
+#  rm -f $ENV{HOME_LIB}/libhelper.so
+#  # cmake files production
+#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
+#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
+#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
+#  )
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 configure_file(helperConfig.cmake.in helperConfig.cmake)
 export(PACKAGE helper)
 
-# Installing
+# Installation
 set_target_properties(helper PROPERTIES PUBLIC_HEADER "../include/date_time.hh;../include/get_opt.hh;../include/helper.hh;../include/helper.t.h;../include/ibstream.hh;../include/ibstream.t.h;../include/keyboard.hh;../include/obstream.hh;../include/obstream.t.h;../include/runnable.hh")
 install(
   TARGETS helper EXPORT helper
@@ -84,3 +90,5 @@ install(
   ARCHIVE DESTINATION $ENV{HOME_LIB}
   PUBLIC_HEADER DESTINATION $ENV{HOME_INC}
   )
+
+# Deinstallation
