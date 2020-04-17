@@ -56,20 +56,6 @@ target_compile_options(test_converter PUBLIC "-pthread")
 # Copy output file into bin directory
 target_link_libraries(test_converter LINK_PUBLIC converter gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
-#ADD_CUSTOM_TARGET(distclean
-#  DEPENDS clean
-#  COMMAND rm -fr $ENV{HOME}/.cmake/packages/converter
-#  COMMAND rm -f $ENV{HOME_INC}/converter.hh
-#  COMMAND rm -f $ENV{HOME_LIB}/libconverter.so
-#  # cmake files production
-#  COMMAND find . -name "CMakeFiles" -type d -exec rm -fr {} "\;"
-#  COMMAND find . -name "CMakeCache.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*.cmake" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "install_manifest.txt" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "Makefile" -type f -exec rm -f {} "\;"
-#  COMMAND find . -name "*~" -type f -exec rm -f {} "\;"
-#  )
-
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 configure_file(converterConfig.cmake.in converterConfig.cmake)

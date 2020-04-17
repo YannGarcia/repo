@@ -63,11 +63,11 @@ find_library(LIB_CRYPTOPP libcryptopp.a REQUIRED)
 add_library(security SHARED ${security_SOURCES})
 
 # Testing application source files dependencies
-add_executable(testlib ${security_test_SOURCES})
-target_compile_options(testlib PUBLIC "-pthread")
+add_executable(test_security ${security_test_SOURCES})
+target_compile_options(test_security PUBLIC "-pthread")
 
 # Copy output file into bin directory
-target_link_libraries(testlib LINK_PUBLIC security ${LIB_CRYPTOPP} ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_security LINK_PUBLIC security ${LIB_CRYPTOPP} ${CONVERTER_LIB_NAME} gtest gtest_main ${CMAKE_THREAD_LIBS_INIT})
 
 # Packaging
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)

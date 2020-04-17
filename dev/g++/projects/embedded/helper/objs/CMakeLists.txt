@@ -33,6 +33,7 @@ file(GLOB_RECURSE helper_test_SOURCES "../test/*.cc")
 # Setup header files path
 include_directories(
   "../include"
+  "../../converter/include"
   "/usr/local/include"
   "/usr/local/include/gtest")
 

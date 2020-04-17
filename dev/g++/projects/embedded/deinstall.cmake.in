@@ -12,7 +12,7 @@ set(INC_LIST
   $ENV{HOME_INC}/date_time.hh $ENV{HOME_INC}/get_opt.hh $ENV{HOME_INC}/helper.hh $ENV{HOME_INC}/helper.t.h $ENV{HOME_INC}/ibstream.hh $ENV{HOME_INC}/ibstream.t.h $ENV{HOME_INC}/keyboard.hh $ENV{HOME_INC}/obstream.hh $ENV{HOME_INC}/obstream.t.h $ENV{HOME_INC}/runnable.hh
   $ENV{HOME_INC}/include/abstract_ipc.hh $ENV{HOME_INC}/include/ipc_manager.hh $ENV{HOME_INC}/include/ipc_rights.hh $ENV{HOME_INC}/include/ipc_type.hh $ENV{HOME_INC}/include/message_queue.hh $ENV{HOME_INC}/include/shared_memory.hh
   $ENV{HOME_INC}/abstract_channel.hh $ENV{HOME_INC}/channel_type.hh $ENV{HOME_INC}/ipv4_socket.hh $ENV{HOME_INC}/ipv6_socket.hh $ENV{HOME_INC}/ipvx_socket.hh $ENV{HOME_INC}/socket.hh $ENV{HOME_INC}/tcp_channel.hh $ENV{HOME_INC}/channel_manager.hh $ENV{HOME_INC}/ipv4_address.hh $ENV{HOME_INC}/ipv6_address.hh $ENV{HOME_INC}/ipvx_address.hh $ENV{HOME_INC}/raw_channel.hh $ENV{HOME_INC}/socket_address.hh $ENV{HOME_INC}/udp_channel.hh
-  $ENV{HOME_INC}/ecdsa_signature.hh $ENV{HOME_INC}/key.hh key.t.h $ENV{HOME_INC}/keys_pair.hh $ENV{HOME_INC}/rnd.hh $ENV{HOME_INC}/sha.hh $ENV{HOME_INC}/sha_algorithms.hh $ENV{HOME_INC}/signature_algorithms.hh
+  $ENV{HOME_INC}/ecdsa_signature.hh $ENV{HOME_INC}/key.hh $ENV{HOME_INC}/key.t.h $ENV{HOME_INC}/keys_pair.hh $ENV{HOME_INC}/rnd.hh $ENV{HOME_INC}/sha.hh $ENV{HOME_INC}/sha_algorithms.hh $ENV{HOME_INC}/signature_algorithms.hh
   )
 set(LIB_LIST
   $ENV{HOME_LIB}/liblogger.so
@@ -23,7 +23,7 @@ set(LIB_LIST
   $ENV{HOME_LIB}/libsecurity.so
   )
 foreach(file ${PACKAGES_LIST})
-  message (STATUS "Deinstalling \"${file}\"")
+#  message (STATUS "Deinstalling \"${file}\"")
   execute_process(
     COMMAND "@CMAKE_COMMAND@" -E remove "${file}"
     OUTPUT_VARIABLE rm_out
@@ -31,7 +31,7 @@ foreach(file ${PACKAGES_LIST})
     )
 endforeach()
 foreach(file ${INC_LIST})
-  message (STATUS "Deinstalling \"${file}\"")
+#  message (STATUS "Deinstalling \"${file}\"")
   execute_process(
     COMMAND "@CMAKE_COMMAND@" -E remove "${file}"
     OUTPUT_VARIABLE rm_out
@@ -39,7 +39,7 @@ foreach(file ${INC_LIST})
     )
 endforeach()
 foreach(file ${LIB_LIST})
-  message (STATUS "Deinstalling \"${file}\"")
+#  message (STATUS "Deinstalling \"${file}\"")
   execute_process(
     COMMAND "@CMAKE_COMMAND@" -E remove "${file}"
     OUTPUT_VARIABLE rm_out
