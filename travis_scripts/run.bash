@@ -10,26 +10,26 @@ if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
 then # Compiled in debug mode but running without gdb
     make run_logger
     make run_converter
-    make run_helper
+    #make run_helper
     make run_ipc
-    make run_comm
+    #make run_comm
     make run_security
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
 then
     make run_logger_c
     make run_converter_c
-    make run_helper_c
+    #make run_helper_c
     make run_ipc_c
-    make run_comm_c
+    #make run_comm_c
     make run_security_c
     make push2coveralls
 elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
 then
     make run_logger_v
-    make run_vonverter_v
+    #make run_converter_v
     make run_helper_v
     make run_ipc_v
-    make run_vomm_v
+    #make run_comm_v
     make run_security_v
 elif [ ${TRAVIS_CONTEXT} == "LinuxHW" ]
 then
