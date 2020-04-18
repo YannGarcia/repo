@@ -134,12 +134,12 @@ fi
 #    ssh-add ${HOME}/.ssh/git_server_ssh_key_name
 #fi
 
-# Homebrew installed GCC version 8.2.0
-alias gcc='gcc-8'
-alias cc='gcc-8'
-alias g++='g++-8'
-alias c++='c++-8'
-alias ar='gcc-ar-8'
+# Homebrew installed GCC version 9.1.0
+alias gcc='gcc-9'
+alias cc='gcc-9'
+alias g++='g++-9'
+alias c++='c++-9'
+alias ar='gcc-ar-9'
 alias pi='ssh pi@192.168.1.36'
 alias chip='ssh chip@192.168.1.27'
 alias bbb='ssh debian@192.168.1.21'
