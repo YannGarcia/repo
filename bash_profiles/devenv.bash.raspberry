@@ -4,8 +4,8 @@
 #set -x
 
 # Colors and Prompt
-export PS1="\w\$ "
-export PS1="\D{%Y-%m-%d %H:%M:%S} \w\n\$ "
+#export PS1="\w\$ "
+#export PS2="\D{%Y-%m-%d %H:%M:%S} \w\n\$ "
 
 export EDITOR=emacs
 set -o emacs

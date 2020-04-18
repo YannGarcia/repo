@@ -205,11 +205,9 @@ TEST(converter_test_suite, bytes_to_float_2) {
 TEST(converter_test_suite, time_to_string_1) {
   time_t current_time = 1489755780;
   std::string str = converter::get_instance().time_to_string(current_time);
-  cout << "test_time_to_string_1: " << str << "\r" << endl;
-  std::string result("Fri, 17 Mar 2017 13:03:00 +0000");
-  cout << "expected test_time_to_string_1: " << result << "\r" << endl;
-  cout << "test_time_to_string_1: " << str.compare(result) << "\r" << endl;
-  ASSERT_TRUE(str.compare(result) == 0); // http://www.unixtimestamp.com/
+  std::string expected_result_1("Fri, 17 Mar 2017 14:03:00 +0100");
+  std::string expected_result_2("Fri, 17 Mar 2017 13:03:00 +0000");
+  ASSERT_TRUE((str.compare(expected_result_1) == 0) || (str.compare(expected_result_2) == 0)); // http://www.unixtimestamp.com/
 }
 
 /**
@@ -232,6 +230,77 @@ TEST(converter_test_suite, split_arguments_line_1) {
     std::clog << "   " << *it << std::endl;
   }
   ASSERT_TRUE(tokens.size() == 4);
+}
+
+/**
+ * @brief Test case for @see converter::string_to_base64
+ */
+TEST(converter_test_suite, string_to_base64_1) {
+  std::string plain_text = "Decode from Base64 format";
+  std::string expected_result = "RGVjb2RlIGZyb20gQmFzZTY0IGZvcm1hdA==";
+  std::string base64 = converter::get_instance().string_to_base64(plain_text);
+  ASSERT_TRUE(base64.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::string_to_base64
+ */
+TEST(converter_test_suite, string_to_base64_2) {
+  std::string plain_text = "In computer science, Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. Each Base64 digit represents exactly 6 bits of data. Three 8-bit bytes (i.e., a total of 24 bits) can therefore be represented by four 6-bit Base64 digits.\n\nCommon to all binary-to-text encoding schemes, Base64 is designed to carry data stored in binary formats across channels that only reliably support text content. Base64 is particularly prevalent on the World Wide Web[1] where its uses include the ability to embed image files or other binary assets inside textual assets such as HTML and CSS files.\n";
+  std::string expected_result = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBhbiBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbSBhIHNwZWNpZmljIE1JTUUgY29udGVudCB0cmFuc2ZlciBlbmNvZGluZy4gRWFjaCBCYXNlNjQgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLiBUaHJlZSA4LWJpdCBieXRlcyAoaS5lLiwgYSB0b3RhbCBvZiAyNCBiaXRzKSBjYW4gdGhlcmVmb3JlIGJlIHJlcHJlc2VudGVkIGJ5IGZvdXIgNi1iaXQgQmFzZTY0IGRpZ2l0cy4KCkNvbW1vbiB0byBhbGwgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcywgQmFzZTY0IGlzIGRlc2lnbmVkIHRvIGNhcnJ5IGRhdGEgc3RvcmVkIGluIGJpbmFyeSBmb3JtYXRzIGFjcm9zcyBjaGFubmVscyB0aGF0IG9ubHkgcmVsaWFibHkgc3VwcG9ydCB0ZXh0IGNvbnRlbnQuIEJhc2U2NCBpcyBwYXJ0aWN1bGFybHkgcHJldmFsZW50IG9uIHRoZSBXb3JsZCBXaWRlIFdlYlsxXSB3aGVyZSBpdHMgdXNlcyBpbmNsdWRlIHRoZSBhYmlsaXR5IHRvIGVtYmVkIGltYWdlIGZpbGVzIG9yIG90aGVyIGJpbmFyeSBhc3NldHMgaW5zaWRlIHRleHR1YWwgYXNzZXRzIHN1Y2ggYXMgSFRNTCBhbmQgQ1NTIGZpbGVzLgo=";
+  std::string base64 = converter::get_instance().string_to_base64(plain_text);
+  ASSERT_TRUE(base64.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::binary_to_base64
+ */
+TEST(converter_test_suite, binary_to_base64_1) {
+  std::vector<uint8_t> plain_binary;
+  plain_binary.push_back(0xca);
+  plain_binary.push_back(0xfe);
+  plain_binary.push_back(0xde);
+  plain_binary.push_back(0xca);
+  std::string expected_result = "yv7eyg==";
+  std::string base64 = converter::get_instance().binary_to_base64(plain_binary);
+  ASSERT_TRUE(base64.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::.base64_to_string
+ */
+TEST(converter_test_suite,  base64_to_string_1) {
+  std::string expected_result = "Decode from Base64 format";
+  std::string base64 = "RGVjb2RlIGZyb20gQmFzZTY0IGZvcm1hdA==";
+  std::string plain_text = converter::get_instance().base64_to_string(base64);
+  ASSERT_TRUE(plain_text.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::.base64_to_string
+ */
+TEST(converter_test_suite, base64_to_string_2) {
+  std::string expected_result = "In computer science, Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The term Base64 originates from a specific MIME content transfer encoding. Each Base64 digit represents exactly 6 bits of data. Three 8-bit bytes (i.e., a total of 24 bits) can therefore be represented by four 6-bit Base64 digits.\n\nCommon to all binary-to-text encoding schemes, Base64 is designed to carry data stored in binary formats across channels that only reliably support text content. Base64 is particularly prevalent on the World Wide Web[1] where its uses include the ability to embed image files or other binary assets inside textual assets such as HTML and CSS files.\n";
+  std::string base64 = "SW4gY29tcHV0ZXIgc2NpZW5jZSwgQmFzZTY0IGlzIGEgZ3JvdXAgb2YgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcyB0aGF0IHJlcHJlc2VudCBiaW5hcnkgZGF0YSBpbiBhbiBBU0NJSSBzdHJpbmcgZm9ybWF0IGJ5IHRyYW5zbGF0aW5nIGl0IGludG8gYSByYWRpeC02NCByZXByZXNlbnRhdGlvbi4gVGhlIHRlcm0gQmFzZTY0IG9yaWdpbmF0ZXMgZnJvbSBhIHNwZWNpZmljIE1JTUUgY29udGVudCB0cmFuc2ZlciBlbmNvZGluZy4gRWFjaCBCYXNlNjQgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLiBUaHJlZSA4LWJpdCBieXRlcyAoaS5lLiwgYSB0b3RhbCBvZiAyNCBiaXRzKSBjYW4gdGhlcmVmb3JlIGJlIHJlcHJlc2VudGVkIGJ5IGZvdXIgNi1iaXQgQmFzZTY0IGRpZ2l0cy4KCkNvbW1vbiB0byBhbGwgYmluYXJ5LXRvLXRleHQgZW5jb2Rpbmcgc2NoZW1lcywgQmFzZTY0IGlzIGRlc2lnbmVkIHRvIGNhcnJ5IGRhdGEgc3RvcmVkIGluIGJpbmFyeSBmb3JtYXRzIGFjcm9zcyBjaGFubmVscyB0aGF0IG9ubHkgcmVsaWFibHkgc3VwcG9ydCB0ZXh0IGNvbnRlbnQuIEJhc2U2NCBpcyBwYXJ0aWN1bGFybHkgcHJldmFsZW50IG9uIHRoZSBXb3JsZCBXaWRlIFdlYlsxXSB3aGVyZSBpdHMgdXNlcyBpbmNsdWRlIHRoZSBhYmlsaXR5IHRvIGVtYmVkIGltYWdlIGZpbGVzIG9yIG90aGVyIGJpbmFyeSBhc3NldHMgaW5zaWRlIHRleHR1YWwgYXNzZXRzIHN1Y2ggYXMgSFRNTCBhbmQgQ1NTIGZpbGVzLgo=";
+  std::string plain_text = converter::get_instance().base64_to_string(base64);
+  ASSERT_TRUE(plain_text.compare(expected_result) == 0);
+}
+
+/**
+ * @brief Test case for @see converter::.base64_to_binary
+ */
+TEST(converter_test_suite,  base64_to_binary_1) {
+  std::vector<uint8_t> expected_result;
+  expected_result.push_back(0xca);
+  expected_result.push_back(0xfe);
+  expected_result.push_back(0xde);
+  expected_result.push_back(0xca);
+  std::string base64 = "yv7eyg==";
+  std::vector<uint8_t> plain_binary = converter::get_instance().base64_to_binary(base64);
+  ASSERT_TRUE(plain_binary[0] == expected_result[0]);
+  ASSERT_TRUE(plain_binary[1] == expected_result[1]);
+  ASSERT_TRUE(plain_binary[2] == expected_result[2]);
+  ASSERT_TRUE(plain_binary[3] == expected_result[3]);
 }
 
 /**

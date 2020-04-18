@@ -132,7 +132,7 @@ namespace logger {
     /*!
      * \fn void debug(const std::string & p_string);
      * \brief Write the string to the IO if the debug level is set
-     * \param[in] p_stringThe string to write
+     * \param[in] p_string The string to write
      * \inline
      */
     inline void debug(const std::string & p_string) { if ((_levels & logger_levels_t::debug) != 0x00) log(logger_levels_t::debug, p_string); };

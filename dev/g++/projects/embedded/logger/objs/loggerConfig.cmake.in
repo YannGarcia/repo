@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+# Install layout
+set(LOGGER_INCLUDE_DIR $ENV{HOME_INC})
+set(LOGGER_LIB_DIR $ENV{HOME_LIB})
+set(LOGGER_LIB_NAME logger)

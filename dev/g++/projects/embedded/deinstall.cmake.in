@@ -1,0 +1,48 @@
+set(PACKAGES_LIST
+  $ENV{HOME}/.cmake/packages/logger
+  $ENV{HOME}/.cmake/packages/converter
+  $ENV{HOME}/.cmake/packages/helper
+  $ENV{HOME}/.cmake/packages/ipc
+  $ENV{HOME}/.cmake/packages/comm
+  $ENV{HOME}/.cmake/packages/security
+  )
+set(INC_LIST
+  $ENV{HOME_INC}/logger.hh $ENV{HOME_INC}/logger_factory.hh $ENV{HOME_INC}/logger_levels.hh $ENV{HOME_INC}/logger_time_formats.hh
+  $ENV{HOME_INC}/converter.hh
+  $ENV{HOME_INC}/date_time.hh $ENV{HOME_INC}/get_opt.hh $ENV{HOME_INC}/helper.hh $ENV{HOME_INC}/helper.t.h $ENV{HOME_INC}/ibstream.hh $ENV{HOME_INC}/ibstream.t.h $ENV{HOME_INC}/keyboard.hh $ENV{HOME_INC}/obstream.hh $ENV{HOME_INC}/obstream.t.h $ENV{HOME_INC}/runnable.hh
+  $ENV{HOME_INC}/abstract_ipc.hh $ENV{HOME_INC}/ipc_manager.hh $ENV{HOME_INC}/ipc_rights.hh $ENV{HOME_INC}/ipc_type.hh $ENV{HOME_INC}/message_queue.hh $ENV{HOME_INC}/shared_memory.hh
+  $ENV{HOME_INC}/abstract_channel.hh $ENV{HOME_INC}/channel_type.hh $ENV{HOME_INC}/ipv4_socket.hh $ENV{HOME_INC}/ipv6_socket.hh $ENV{HOME_INC}/ipvx_socket.hh $ENV{HOME_INC}/socket.hh $ENV{HOME_INC}/tcp_channel.hh $ENV{HOME_INC}/channel_manager.hh $ENV{HOME_INC}/ipv4_address.hh $ENV{HOME_INC}/ipv6_address.hh $ENV{HOME_INC}/ipvx_address.hh $ENV{HOME_INC}/raw_channel.hh $ENV{HOME_INC}/socket_address.hh $ENV{HOME_INC}/udp_channel.hh
+  $ENV{HOME_INC}/ecdsa_signature.hh $ENV{HOME_INC}/key.hh $ENV{HOME_INC}/key.t.h $ENV{HOME_INC}/keys_pair.hh $ENV{HOME_INC}/rnd.hh $ENV{HOME_INC}/sha.hh $ENV{HOME_INC}/sha_algorithms.hh $ENV{HOME_INC}/signature_algorithms.hh
+  )
+set(LIB_LIST
+  $ENV{HOME_LIB}/liblogger.so
+  $ENV{HOME_LIB}/libconverter.so
+  $ENV{HOME_LIB}/libhelper.so
+  $ENV{HOME_LIB}/libipc.so
+  $ENV{HOME_LIB}/libcomm.so
+  $ENV{HOME_LIB}/libsecurity.so
+  )
+foreach(file ${PACKAGES_LIST})
+#  message (STATUS "Deinstalling \"${file}\"")
+  execute_process(
+    COMMAND "@CMAKE_COMMAND@" -E remove_directory "${file}"
+    OUTPUT_VARIABLE rm_out
+    RESULT_VARIABLE rm_retval
+    )
+endforeach()
+foreach(file ${INC_LIST})
+#  message (STATUS "Deinstalling \"${file}\"")
+  execute_process(
+    COMMAND "@CMAKE_COMMAND@" -E remove -f "${file}"
+    OUTPUT_VARIABLE rm_out
+    RESULT_VARIABLE rm_retval
+    )
+endforeach()
+foreach(file ${LIB_LIST})
+#  message (STATUS "Deinstalling \"${file}\"")
+  execute_process(
+    COMMAND "@CMAKE_COMMAND@" -E remove -f "${file}"
+    OUTPUT_VARIABLE rm_out
+    RESULT_VARIABLE rm_retval
+    )
+endforeach()

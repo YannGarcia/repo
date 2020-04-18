@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+# Install layout
+set(COMM_INCLUDE_DIR $ENV{HOME_INC})
+set(COMM_LIB_DIR $ENV{HOME_LIB})
+set(COMM_LIB_NAME comm)

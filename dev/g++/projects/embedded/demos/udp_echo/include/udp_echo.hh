@@ -19,10 +19,16 @@
 #include "socket_address.hh"
 #include "channel_manager.hh"
 
+#include "logger.hh"
+
 class udp_echo {
+  logger::logger& _logger;
   socket_address _addr;
   uint32_t _channel;
 public:
-  udp_echo(const std::string& p_address, const uint16_t p_port);
+  udp_echo(const std::string& p_address, const uint16_t p_port, logger::logger& p_logger);
   virtual ~udp_echo();
+
+  int32_t send(const std::string& p_message);
+  int32_t receive(std::string& p_message);
 }; // End of class udp_echo

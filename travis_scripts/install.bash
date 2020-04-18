@@ -54,11 +54,11 @@ then
     exit -1
 fi
 
-# Install gcc-6
+# Install gcc-9
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt-get update
-sudo apt-get install gcc-6 g++-6 gdb make cmake doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+sudo apt-get install gcc- g++-9 gdb make cmake doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9
 
 # Install frameworks
 cd ${HOME_FRAMEWORKS}
@@ -85,6 +85,19 @@ git clone https://github.com/weidai11/cryptopp.git cryptopp
 cd ${HOME_FRAMEWORKS}/cryptopp
 CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
 if [ -f cryptest.exe ]
+then
+    sudo make install PREFIX=/usr/local
+fi
+
+# Install libmicrohttpd library
+git config --global http.sslVerify false
+cd ${HOME_FRAMEWORKS}
+git clone https://git.gnunet.org/libmicrohttpd.git libmicrohttpd
+cd ${HOME_FRAMEWORKS}/libmicrohttpd
+autoreconf -fi
+./configure --enable-https
+make
+if [ -f ./src/microhttpd/.libs/libmicrohttpd.so ]
 then
     sudo make install PREFIX=/usr/local
 fi

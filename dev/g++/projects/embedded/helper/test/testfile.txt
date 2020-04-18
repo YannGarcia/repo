@@ -1,0 +1,33 @@
+[----------] 1 test from date_time_test_suite
+[ RUN      ] date_time_test_suite.parse_date_time
+[       OK ] date_time_test_suite.parse_date_time (0 ms)
+[----------] 1 test from date_time_test_suite (0 ms total)
+
+[----------] 13 tests from ibstream_test_suite
+[ RUN      ] ibstream_test_suite.ibstream_1
+[       OK ] ibstream_test_suite.ibstream_1 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_2
+[       OK ] ibstream_test_suite.ibstream_2 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_3
+[       OK ] ibstream_test_suite.ibstream_3 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_4
+[       OK ] ibstream_test_suite.ibstream_4 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_5
+[       OK ] ibstream_test_suite.ibstream_5 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_6
+[       OK ] ibstream_test_suite.ibstream_6 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_7
+[       OK ] ibstream_test_suite.ibstream_7 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_8
+[       OK ] ibstream_test_suite.ibstream_8 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_9
+[       OK ] ibstream_test_suite.ibstream_9 (1 ms)
+[ RUN      ] ibstream_test_suite.ibstream_10
+[       OK ] ibstream_test_suite.ibstream_10 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_11
+[       OK ] ibstream_test_suite.ibstream_11 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_12
+[       OK ] ibstream_test_suite.ibstream_12 (0 ms)
+[ RUN      ] ibstream_test_suite.ibstream_13
+[       OK ] ibstream_test_suite.ibstream_13 (0 ms)
+[----------] 13 tests from ibstream_test_suite (2 ms total)

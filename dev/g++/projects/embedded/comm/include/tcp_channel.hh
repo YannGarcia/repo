@@ -41,12 +41,14 @@ namespace comm {
        * \see socket_address
        */
       tcp_channel(const socket_address & p_host_address, const socket_address & p_remote_address);
-      tcp_channel(const int32_t p_socket, const socket_address & p_host, const socket_address & p_remote);
+
+      tcp_channel(const int32_t p_socket, const socket_address & p_host, const socket_address & p_remote, const channel_type p_type = channel_type::tcp);
+
       /**
        * \brief Default destructor
        */
       virtual ~tcp_channel();
-      
+
       /**
        * \brief Establish a connection with the peer
        * \return 0 on success, -1 otherwise

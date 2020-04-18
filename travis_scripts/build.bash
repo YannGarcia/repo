@@ -1,24 +1,23 @@
 #!/bin/bash
 #set -e # Exit with non 0 if any command fails
-#set -vx
+set -vx
 
 OLD_PWD=`pwd`
 # Use ${PATH_DEV}/g++/projectsxs/embedded/Makefile at the end of the full review
 cd ${PATH_DEV}/g++/projects/embedded
-make clean
 if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
-then
-    make debug
+then # Debug mode
+    cmake -DCMAKE_BUILD_TYPE=Debug .
 elif [ ${TRAVIS_CONTEXT} == "WithCoveralls" ]
-then
-    make coverage
+then # Using LCov
+    cmake -DCMAKE_BUILD_TYPE=Coverage .
 elif [ ${TRAVIS_CONTEXT} == "WithValgrind" ]
-then
-    make compile
-else
-    make compile
+then # Using Valgrind
+    cmake -DCMAKE_BUILD_TYPE=Valgrind .
+else # Release mode
+    cmake -DCMAKE_BUILD_TYPE=Release .
 fi
-make gendoc
+make
 cd ${OLD_PWD}
 
 exit 0

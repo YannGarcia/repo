@@ -21,7 +21,7 @@ namespace comm {
       _socket.reset(new socket(p_host_address));
       if (_socket.get() == NULL) {
       	std::cerr << "udp_channel::udp_channel: " << std::strerror(errno) << std::endl;
-	throw new std::runtime_error("udp_channel::udp_channel");
+        throw new std::runtime_error("udp_channel::udp_channel");
       }
       // _socket->bind();
     }
@@ -30,7 +30,7 @@ namespace comm {
       _socket.reset(new socket(p_host_address, p_remote_address));
       if (_socket.get() == NULL) {
       	std::cerr << "udp_channel::udp_channel: " << std::strerror(errno) << std::endl;
-	throw new std::runtime_error("udp_channel::udp_channel");
+        throw new std::runtime_error("udp_channel::udp_channel");
       }
       _socket->bind();
     }
@@ -50,18 +50,18 @@ namespace comm {
     const int32_t udp_channel::accept_connection() const {
       return 0; // For UDP, no listen/accept
     }
-    
+
     const int32_t udp_channel::write(const std::string & p_string) const {
       if (p_string.length() == 0) {
-	return 0;
+        return 0;
       }
-      
+
       return _socket->send(converter::get_instance().string_to_bytes(p_string));
     }
 
     const int32_t udp_channel::write(const std::vector<uint8_t> & p_buffer) const {
       if (p_buffer.size() == 0) {
-	return 0;
+        return 0;
       }
 
       return _socket->send(p_buffer);
@@ -69,7 +69,7 @@ namespace comm {
 
     const int32_t udp_channel::read(std::vector<uint8_t> & p_buffer) const {
       if (p_buffer.size() == 0) {
-	return 0;
+        return 0;
       }
 
       return _socket->receive(p_buffer);

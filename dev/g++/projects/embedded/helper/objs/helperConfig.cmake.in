@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+# Install layout
+set(HELPER_INCLUDE_DIR $ENV{HOME_INC})
+set(HELPER_LIB_DIR $ENV{HOME_LIB})
+set(HELPER_LIB_NAME helper)

@@ -6,7 +6,8 @@ if [ ${TRAVIS_CONTEXT} == "NoCoveralls" ]
 then
     OLD_PWD=`pwd`
     cd ${PATH_DEV}/g++/projects/embedded
-    make pushO2
+    make prefix=$HOME install
+    # TODO make pushO2
     cd ${OLD_PWD}
 fi
 

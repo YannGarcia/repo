@@ -314,6 +314,52 @@ TEST(helper_test_suite, extract_5) {
   //clog << ">>> test_extract_5 done" << endl;
 }
 
+TEST(helper_test_suite, file_size_1) {
+  std::string name("../test/unknown.txt");
+  ASSERT_TRUE(helper::get_instance().file_size(name) == -1);
+}
+
+TEST(helper_test_suite, file_size_2) {
+  std::string name("/home/pi/repo/dev/g++/projects/embedded/helper/test/testfile.txt");
+  //  clog << "file_size: " << helper::get_instance().file_size(name) << endl;
+  ASSERT_TRUE(helper::get_instance().file_size(name) == 1563);
+}
+
+TEST(helper_test_suite, file_size_3) {
+  std::string name("/home/pi/repo/dev/g++/projects/embedded/helper/test/testfile.bin");
+  //  clog << "file_size: " << helper::get_instance().file_size(name) << endl;
+  ASSERT_TRUE(helper::get_instance().file_size(name) == 26684);
+}
+
+TEST(helper_test_suite, file_load_1) {
+  std::string name("../test/unknown.txt");
+  std::vector<unsigned char> buffer;
+  ASSERT_TRUE(helper::get_instance().file_load(name, buffer) == -1);
+  ASSERT_TRUE(buffer.size() == 0);
+}
+
+TEST(helper_test_suite, file_load_2) {
+  std::string name("/home/pi/repo/dev/g++/projects/embedded/helper/test/testfile.txt");
+  std::vector<unsigned char> buffer;
+  //  clog << "file_size: " << helper::get_instance().file_size(name) << endl;
+  ASSERT_TRUE(helper::get_instance().file_load(name, buffer) == 1563);
+  ASSERT_TRUE(buffer.size() == 1563);
+  std::string str(buffer.begin(), buffer.end());
+  ASSERT_TRUE(str.find("(2 ms total)") != std::string::npos);
+}
+
+TEST(helper_test_suite, file_load_3) {
+  std::string name("/home/pi/repo/dev/g++/projects/embedded/helper/test/testfile.bin");
+  std::vector<unsigned char> buffer;
+  //  clog << "file_size: " << helper::get_instance().file_size(name) << endl;
+  ASSERT_TRUE(helper::get_instance().file_load(name, buffer) == 26684);
+  ASSERT_TRUE(buffer.size() == 26684);
+  ASSERT_TRUE(buffer[0] == 0x7f); // .
+  ASSERT_TRUE(buffer[1] == 0x45); // E
+  ASSERT_TRUE(buffer[2] == 0x4c); // L
+  ASSERT_TRUE(buffer[3] == 0x46); // F
+}
+
 /**
  * @class helpers::date_time test suite implementation
  */

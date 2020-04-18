@@ -19,6 +19,7 @@
 #include <cryptopp/sha.h>
 #include <cryptopp/oids.h>
 
+#include "rnd.hh"
 #include "sha.hh"
 #include "keys_pair.hh"
 #include "key.hh"
@@ -33,7 +34,17 @@ protected:
   virtual void SetUp() { };
   virtual void TearDown() { };
 };
-	
+
+/*!
+ * \brief Test case for @see security::rnd
+ */
+TEST(security_test_suite, rnd) {
+  std::vector<uint8_t> iv;
+  ASSERT_TRUE(security::rnd::get_instance().generate(32, iv) == 32);
+  ASSERT_TRUE(security::rnd::get_instance().generate(48, iv) == 48);
+  ASSERT_TRUE(security::rnd::get_instance().generate(2048, iv) == 2048);
+}
+
 /*!
  * \brief Test case for @see security::sha / SHA-1
  * \sa http://www.sha1-online.com/
