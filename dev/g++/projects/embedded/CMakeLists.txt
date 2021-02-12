@@ -66,6 +66,7 @@ add_subdirectory(helper/objs)
 add_subdirectory(ipc/objs)
 add_subdirectory(comm/objs)
 add_subdirectory(security/objs)
+add_subdirectory(httpserver/objs)
 
 # Custom targets
 add_custom_target(distclean
