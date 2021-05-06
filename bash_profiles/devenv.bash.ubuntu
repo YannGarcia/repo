@@ -146,3 +146,5 @@ fi
 #fi
 
 export BROWSER=netsurf
+
+#vncserver -geometry 1920x1080 -depth 16 -pixelformat rgb565
